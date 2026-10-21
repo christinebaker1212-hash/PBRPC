@@ -1,6 +1,6 @@
 # Pokémon Battle Revolution
 
-A matching decompilation of **Pokémon Battle Revolution**, the Wii game developed by Genius Sonority. It targets the PAL release (`RPBP01`, revision 0).
+A matching decompilation of **Pokémon Battle Revolution**, the Wii game developed by Genius Sonority. It targets the PAL release (`RPBP01`, revision 0) and the USA release (`RPBE01`, revision 0); see [docs/USA.md](docs/USA.md).
 
 The build reproduces the original `main.dol` byte for byte (SHA-1 `ffcd539d239722b8bb27e45c9ad4aacc818c8933`), and every function is compared against the original binary with [objdiff](https://github.com/encounter/objdiff). A native PC port and online battles between friends are long-term goals.
 
@@ -48,7 +48,7 @@ Requirements:
 
 Steps:
 
-1. Put your disc image (ISO, RVZ, WBFS, CISO, GCZ…) in `orig/RPBP01/`. It can be deleted after the first build.
+1. Put your disc image (ISO, RVZ, WBFS, CISO, GCZ…) in `orig/RPBP01/` (or `orig/RPBE01/` for the USA version, then add `--version RPBE01` to `configure.py`). It can be deleted after the first build.
 2. Configure and build:
 
    ```sh
@@ -67,6 +67,7 @@ Steps:
 | [docs/architecture.md](docs/architecture.md) | Map of `main.dol` by area: addresses, sizes, dependencies |
 | [docs/STYLE.md](docs/STYLE.md) | Code conventions and what makes a unit finished |
 | [docs/PROGRESS.md](docs/PROGRESS.md) | Progress log and compiler notes |
+| [docs/USA.md](docs/USA.md) | The USA version: how its config is ported from PAL and verified |
 
 ## Repository layout
 
@@ -78,6 +79,7 @@ Steps:
 | `include/` | Headers, one per module, mirroring `src/` |
 | `libs/` | Revolution SDK, RevoEX, Metrowerks runtime and C library, MetroTRK |
 | `config/RPBP01/` | `splits.txt` and `symbols.txt` for [decomp-toolkit](https://github.com/encounter/decomp-toolkit) |
+| `config/RPBE01/` | USA config, generated from the PAL one by `tools/port_version.py` |
 | `tools/` | Build scripts and `progress.py` |
 | `ghidra_scripts/` | Imports `symbols.txt` into a Ghidra project |
 | `docs/` | Architecture map, progress log and code style |

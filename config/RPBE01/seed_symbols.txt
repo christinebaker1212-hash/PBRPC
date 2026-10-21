@@ -1,0 +1,1 @@
+jumptable_803F5FA0 = .rodata:0x803F5FA0; // type:object size:0x10C scope:local

@@ -30,6 +30,7 @@ from tools.project import (
 DEFAULT_VERSION = 0
 VERSIONS = [
     "RPBP01",  # 0
+    "RPBE01",  # 1
 ]
 
 parser = argparse.ArgumentParser()
@@ -1101,6 +1102,18 @@ config.progress_report_args = [
     # Default is "functionRelocDiffs=none", which is most lenient
     # "--config functionRelocDiffs=data_value",
 ]
+
+# Units are matched against RPBP01 first. Other versions only link the units
+# that have been verified against them, listed in config/<version>/linked.txt.
+if config.version != VERSIONS[0]:
+    linked_path = Path("config") / config.version / "linked.txt"
+    linked = set()
+    if linked_path.exists():
+        linked = {l.strip() for l in linked_path.read_text().splitlines() if l.strip() and not l.startswith("#")}
+    config.reconfig_deps.append(linked_path)
+    for lib in config.libs:
+        for obj in lib["objects"]:
+            obj.completed = obj.completed and obj.name in linked
 
 if args.mode == "configure":
     # Write build.ninja and objdiff.json

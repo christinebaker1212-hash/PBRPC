@@ -1,0 +1,1807 @@
+Sections:
+	.init       type:code align:4
+	extab       type:rodata align:32
+	extabindex  type:rodata align:32
+	.text       type:code align:32
+	.ctors      type:rodata align:32
+	.dtors      type:rodata align:32
+	.rodata     type:rodata align:32
+	.data       type:data align:32
+	.bss        type:bss align:32
+	.sdata      type:data align:32
+	.sbss       type:bss align:16
+	.sdata2     type:rodata align:32
+	.sbss2      type:bss align:32
+
+src/main.cpp:
+	.text       start:0x80006980 end:0x80007458
+	.data       start:0x803F6CA0 end:0x803F6CC8
+	.sdata      start:0x80625600 end:0x80625610
+	.sbss       start:0x80626C08 end:0x80626C38
+	.sdata2     start:0x806288E0 end:0x806288F0
+
+src/.unsorted/8000748C.cpp:
+	.text       start:0x80007458 end:0x80007900
+
+src/.unsorted/80007940.cpp:
+	.text       start:0x80007900 end:0x80009648
+
+src/.unsorted/800097D8.cpp:
+	.text       start:0x80009648 end:0x8000A604
+
+src/.unsorted/8000A7C4.cpp:
+	.text       start:0x8000A604 end:0x8000A904
+
+src/.unsorted/8000AAC4.cpp:
+	.text       start:0x8000A904 end:0x8000AC00
+
+src/.unsorted/8000ADC0.cpp:
+	.text       start:0x8000AC00 end:0x80024768
+
+src/.unsorted/80024914.cpp:
+	.text       start:0x80024768 end:0x800276D4
+
+src/.unsorted/80025390.cpp:
+	.text       start:0x800276D4 end:0x8002A79C
+
+src/.unsorted/800284B0.cpp:
+	.text       start:0x8002A79C end:0x8002CBFC
+
+src/.unsorted/8002A910.cpp:
+	.text       start:0x8002CBFC end:0x8002CED4
+
+src/.unsorted/8002ABE8.cpp:
+	.text       start:0x8002CED4 end:0x8002DE30
+
+src/.unsorted/8002BB44.cpp:
+	.text       start:0x8002DE30 end:0x8002EDEC
+
+src/.unsorted/8002CB00.cpp:
+	.text       start:0x8002EDEC end:0x80030118
+
+src/.unsorted/8002DE2C.cpp:
+	.text       start:0x80030118 end:0x80032420
+
+src/.unsorted/80030134.cpp:
+	.text       start:0x80032420 end:0x8003260C
+
+src/.unsorted/80030320.cpp:
+	.text       start:0x8003260C end:0x80032E8C
+
+src/.unsorted/80030BA0.cpp:
+	.text       start:0x80032E8C end:0x800333C4
+
+src/.unsorted/800310D8.cpp:
+	.text       start:0x800333C4 end:0x80033830
+
+src/.unsorted/80031544.cpp:
+	.text       start:0x80033830 end:0x800344D0
+
+src/.unsorted/800321E4.cpp:
+	.text       start:0x800344D0 end:0x80034794
+
+src/.unsorted/800324A8.cpp:
+	.text       start:0x80034794 end:0x80034EB4
+
+src/.unsorted/80032BC8.cpp:
+	.text       start:0x80034EB4 end:0x8003514C
+
+src/.unsorted/80032E60.cpp:
+	.text       start:0x8003514C end:0x800352D4
+
+src/.unsorted/80032FE8.cpp:
+	.text       start:0x800352D4 end:0x80037F7C
+
+src/.unsorted/80035CB0.cpp:
+	.text       start:0x80037F7C end:0x80039254
+
+src/.unsorted/80036F88.cpp:
+	.text       start:0x80039254 end:0x80040308
+
+src/.unsorted/8003E03C.cpp:
+	.text       start:0x80040308 end:0x80040B20
+
+src/.unsorted/8003E854.cpp:
+	.text       start:0x80040B20 end:0x800423B4
+
+src/.unsorted/800400E8.cpp:
+	.text       start:0x800423B4 end:0x80046AB0
+
+src/.unsorted/800447E4.cpp:
+	.text       start:0x80046AB0 end:0x800471F4
+
+src/.unsorted/80044F28.cpp:
+	.text       start:0x800471F4 end:0x80049840
+
+src/.unsorted/800477E8.cpp:
+	.text       start:0x80049840 end:0x80049918
+	.sbss       start:0x80626DC0 end:0x80626DC8
+
+src/.unsorted/800478C0.cpp:
+	.text       start:0x80049918 end:0x8004A780
+
+src/.unsorted/80048728.cpp:
+	.text       start:0x8004A780 end:0x8004B0DC
+
+src/.unsorted/80049084.cpp:
+	.text       start:0x8004B0DC end:0x8004CD4C
+
+src/.unsorted/8004ACF4.cpp:
+	.text       start:0x8004CD4C end:0x8004F77C
+
+src/.unsorted/8004D724.cpp:
+	.text       start:0x8004F77C end:0x8004FEE0
+
+src/.unsorted/8004DE88.cpp:
+	.text       start:0x8004FEE0 end:0x80050A48
+
+src/.unsorted/8004E9F0.cpp:
+	.text       start:0x80050A48 end:0x800513D4
+
+src/.unsorted/8004F37C.cpp:
+	.text       start:0x800513D4 end:0x800521E4
+
+src/.unsorted/8005018C.cpp:
+	.text       start:0x800521E4 end:0x8005237C
+
+src/.unsorted/80050324.cpp:
+	.text       start:0x8005237C end:0x80057564
+
+src/.unsorted/80055504.cpp:
+	.text       start:0x80057564 end:0x80057A34
+
+src/.unsorted/800559D4.cpp:
+	.text       start:0x80057A34 end:0x8005B478
+
+src/.unsorted/800598F8.cpp:
+	.text       start:0x8005B478 end:0x8005C108
+
+src/.unsorted/8005A588.cpp:
+	.text       start:0x8005C108 end:0x8005CF94
+
+src/.unsorted/8005B4A4.cpp:
+	.text       start:0x8005CF94 end:0x8005E99C
+
+src/.unsorted/8005CEAC.cpp:
+	.text       start:0x8005E99C end:0x8006C680
+
+src/.unsorted/8006A878.cpp:
+	.text       start:0x8006C680 end:0x80070348
+
+src/.unsorted/8006E554.cpp:
+	.text       start:0x80070348 end:0x8007E494
+
+src/.unsorted/8007CFB0.cpp:
+	.text       start:0x8007E494 end:0x8008121C
+
+src/.unsorted/8007F8C4.cpp:
+	.text       start:0x8008121C end:0x8008BAFC
+
+src/.unsorted/8008A2D4.cpp:
+	.text       start:0x8008BAFC end:0x8008F0F8
+
+src/.unsorted/8008D8CC.cpp:
+	.text       start:0x8008F0F8 end:0x8009292C
+
+src/.unsorted/80091268.cpp:
+	.text       start:0x8009292C end:0x80096424
+
+src/.unsorted/80094DC0.cpp:
+	.text       start:0x80096424 end:0x80096FF0
+
+src/.unsorted/8009598C.cpp:
+	.text       start:0x80096FF0 end:0x8009B8C8
+
+src/.unsorted/8009A2BC.cpp:
+	.text       start:0x8009B8C8 end:0x8009D748
+
+src/.unsorted/8009C1A8.cpp:
+	.text       start:0x8009D748 end:0x800A0B54
+
+src/.unsorted/8009F6C4.cpp:
+	.text       start:0x800A0B54 end:0x800AB3E4
+
+src/.unsorted/800AA038.cpp:
+	.text       start:0x800AB3E4 end:0x800AB81C
+
+src/.unsorted/800AA470.cpp:
+	.text       start:0x800AB81C end:0x800BCAF4
+
+src/.unsorted/800B9E10.cpp:
+	.text       start:0x800BCAF4 end:0x800C8620
+
+src/.unsorted/800C5968.cpp:
+	.text       start:0x800C8620 end:0x800DA904
+
+src/.unsorted/800D7C90.cpp:
+	.text       start:0x800DA904 end:0x800E6D58
+
+src/.unsorted/800E4234.cpp:
+	.text       start:0x800E6D58 end:0x800EC188
+
+src/.unsorted/800E96C4.cpp:
+	.text       start:0x800EC188 end:0x800FB4B8
+
+src/.unsorted/800F8AC4.cpp:
+	.text       start:0x800FB4B8 end:0x80106CB8
+
+src/.unsorted/80104354.cpp:
+	.text       start:0x80106CB8 end:0x80119140
+
+src/.unsorted/801166F8.cpp:
+	.text       start:0x80119140 end:0x8011DCB0
+
+src/.unsorted/8011B19C.cpp:
+	.text       start:0x8011DCB0 end:0x8011F438
+
+src/.unsorted/8011C954.cpp:
+	.text       start:0x8011F438 end:0x8011F458
+
+src/.unsorted/8011C974.cpp:
+	.text       start:0x8011F458 end:0x80120CE0
+
+src/.unsorted/8011E1FC.cpp:
+	.text       start:0x80120CE0 end:0x80133F9C
+
+src/.unsorted/8012F0D8.cpp:
+	.text       start:0x80133F9C end:0x80136ADC
+
+src/.unsorted/80131CF0.cpp:
+	.text       start:0x80136ADC end:0x8013F71C
+
+src/.unsorted/8013A930.cpp:
+	.text       start:0x8013F71C end:0x8014415C
+
+src/.unsorted/8013F044.cpp:
+	.text       start:0x8014415C end:0x80154A14
+
+src/.unsorted/8014FEA8.cpp:
+	.text       start:0x80154A14 end:0x80155FE0
+
+src/.unsorted/80151474.cpp:
+	.text       start:0x80155FE0 end:0x8015A6BC
+
+src/.unsorted/80155B50.cpp:
+	.text       start:0x8015A6BC end:0x8015C3C0
+
+src/.unsorted/80157854.cpp:
+	.text       start:0x8015C3C0 end:0x8015CD24
+
+src/.unsorted/801581B8.cpp:
+	.text       start:0x8015CD24 end:0x8015D9BC
+
+src/.unsorted/80158E50.cpp:
+	.text       start:0x8015D9BC end:0x80161E98
+
+src/.unsorted/8015D390.cpp:
+	.text       start:0x80161E98 end:0x801672B0
+
+src/.unsorted/80162784.cpp:
+	.text       start:0x801672B0 end:0x8016769C
+
+src/.unsorted/80162B70.cpp:
+	.text       start:0x8016769C end:0x80167DC4
+
+src/.unsorted/8016340C.cpp:
+	.text       start:0x80167DC4 end:0x8016802C
+
+src/.unsorted/80163674.cpp:
+	.text       start:0x8016802C end:0x801696A0
+
+src/.unsorted/80164CE8.cpp:
+	.text       start:0x801696A0 end:0x801697F4
+
+src/.unsorted/80164E3C.cpp:
+	.text       start:0x801697F4 end:0x80169958
+	.sbss       start:0x80627390 end:0x806273A0
+
+src/.unsorted/80164FA0.cpp:
+	.text       start:0x80169958 end:0x80169EEC
+
+src/.unsorted/80165534.cpp:
+	.text       start:0x80169EEC end:0x8016B724
+
+src/.unsorted/80166D6C.cpp:
+	.text       start:0x8016B724 end:0x8016BC34
+
+src/.unsorted/80167298.cpp:
+	.text       start:0x8016BC34 end:0x8016C1B4
+
+src/.unsorted/80167820.cpp:
+	.text       start:0x8016C1B4 end:0x8016C328
+
+src/.unsorted/80167994.cpp:
+	.text       start:0x8016C328 end:0x8016C38C
+	.sbss       start:0x806273D8 end:0x806273E0
+
+src/.unsorted/801679F8.cpp:
+	.text       start:0x8016C38C end:0x8016CC64
+
+src/.unsorted/801682D0.cpp:
+	.text       start:0x8016CC64 end:0x8016D12C
+
+src/.unsorted/80168798.cpp:
+	.text       start:0x8016D12C end:0x8016D5B0
+
+src/.unsorted/80168C1C.cpp:
+	.text       start:0x8016D5B0 end:0x8016DBFC
+
+src/.unsorted/80169268.cpp:
+	.text       start:0x8016DBFC end:0x8016E140
+
+src/.unsorted/801697AC.cpp:
+	.text       start:0x8016E140 end:0x8016EBDC
+
+src/.unsorted/8016A25C.cpp:
+	.text       start:0x8016EBDC end:0x80172C2C
+
+src/.unsorted/8016E2B8.cpp:
+	.text       start:0x80172C2C end:0x80173940
+
+src/.unsorted/8016EFCC.cpp:
+	.text       start:0x80173940 end:0x80175250
+
+src/.unsorted/801708DC.cpp:
+	.text       start:0x80175250 end:0x8017B7F4
+
+src/.unsorted/80176EB4.cpp:
+	.text       start:0x8017B7F4 end:0x8017C564
+
+src/.unsorted/80177C24.cpp:
+	.text       start:0x8017C564 end:0x8017FDF8
+
+src/.unsorted/8017B4B8.cpp:
+	.text       start:0x8017FDF8 end:0x80180EC8
+
+src/.unsorted/8017C588.cpp:
+	.text       start:0x80180EC8 end:0x801812C0
+
+src/.unsorted/8017C980.cpp:
+	.text       start:0x801812C0 end:0x8018156C
+
+src/.unsorted/8017CC8C.cpp:
+	.text       start:0x8018156C end:0x80182CF0
+
+src/.unsorted/8017E3F4.cpp:
+	.text       start:0x80182CF0 end:0x80183250
+
+src/.unsorted/8017E954.cpp:
+	.text       start:0x80183250 end:0x8018A480
+
+src/.unsorted/80185AE0.cpp:
+	.text       start:0x8018A480 end:0x8018C12C
+
+src/.unsorted/8018777C.cpp:
+	.text       start:0x8018C12C end:0x801A0954
+
+src/.unsorted/8019BEC4.cpp:
+	extab       start:0x800064E0 end:0x80006520
+	extabindex  start:0x800066C0 end:0x800066F0
+	.text       start:0x801A0954 end:0x801CC3FC
+
+libs/Runtime/src/__init_cpp_exceptions.cpp:
+	.text       start:0x801CC3FC end:0x801CC46C
+	.ctors      start:0x803E54A0 end:0x803E54A4 rename:.ctors$10
+	.dtors      start:0x803E58E0 end:0x803E58E4 rename:.dtors$10
+	.dtors      start:0x803E58E4 end:0x803E58E8 rename:.dtors$15
+	.sdata      start:0x806259B8 end:0x806259C0
+
+src/.unsorted/801C7830.cpp:
+	.text       start:0x801CC46C end:0x801CC4D0
+
+libs/MSL_C/src/ansi_files.c:
+	extab       start:0x80006520 end:0x80006538
+	extabindex  start:0x800066F0 end:0x80006714
+	.text       start:0x801CC4D0 end:0x801CC664
+
+libs/MSL_C/src/ansi_fp.c:
+	extab       start:0x80006538 end:0x80006570
+	extabindex  start:0x80006714 end:0x80006768
+	.text       start:0x801CC664 end:0x801CDFD4
+
+libs/MSL_C/src/arith.c:
+	.text       start:0x801CDFD4 end:0x801CDFE4
+
+libs/MSL_C/src/buffer_io.c:
+	extab       start:0x80006570 end:0x80006580
+	extabindex  start:0x80006768 end:0x80006780
+	.text       start:0x801CDFE4 end:0x801CE1C0
+
+src/.unsorted/801C9584.cpp:
+	extab       start:0x80006580 end:0x80006588
+	extabindex  start:0x80006780 end:0x8000678C
+	.text       start:0x801CE1C0 end:0x801CE504
+
+libs/MSL_C/src/direct_io.c:
+	extab       start:0x80006588 end:0x80006590
+	extabindex  start:0x8000678C end:0x80006798
+	.text       start:0x801CE504 end:0x801CE80C
+
+libs/MSL_C/src/file_io.c:
+	extab       start:0x80006590 end:0x800065A0
+	extabindex  start:0x80006798 end:0x800067B0
+	.text       start:0x801CE80C end:0x801CEABC
+
+libs/MSL_C/src/FILE_POS.c:
+	extab       start:0x800065A0 end:0x800065A8
+	extabindex  start:0x800067B0 end:0x800067BC
+	.text       start:0x801CEABC end:0x801CED30
+
+src/.unsorted/801CA0F4.cpp:
+	extab       start:0x800065A8 end:0x800065B0
+	extabindex  start:0x800067BC end:0x800067C8
+	.text       start:0x801CED30 end:0x801CED78
+
+libs/MSL_C/src/mbstring.c:
+	extab       start:0x800065B0 end:0x800065B8
+	extabindex  start:0x800067C8 end:0x800067D4
+	.text       start:0x801CED78 end:0x801CEEB0
+
+libs/MSL_C/src/mem.c:
+	extab       start:0x800065B8 end:0x800065C0
+	extabindex  start:0x800067D4 end:0x800067E0
+	.text       start:0x801CEEB0 end:0x801CF020
+
+libs/MSL_C/src/mem_funcs.c:
+	.text       start:0x801CF020 end:0x801CF2F0
+
+libs/MSL_C/src/math_api.c:
+	extab       start:0x800065C0 end:0x800065D8
+	extabindex  start:0x800067E0 end:0x80006804
+	.text       start:0x801CF2F0 end:0x801CF3EC
+
+libs/MSL_C/src/misc_io.c:
+	.text       start:0x801CF3EC end:0x801CF3FC
+
+libs/MSL_C/src/printf.c:
+	extab       start:0x800065D8 end:0x80006638
+	extabindex  start:0x80006804 end:0x80006894
+	.text       start:0x801CF3FC end:0x801D1808
+
+src/.unsorted/801CCBCC.cpp:
+	extab       start:0x80006638 end:0x80006640
+	extabindex  start:0x80006894 end:0x800068A0
+	.text       start:0x801D1808 end:0x801D19A0
+
+libs/MSL_C/src/scanf.c:
+	extab       start:0x80006640 end:0x80006658
+	extabindex  start:0x800068A0 end:0x800068C4
+	.text       start:0x801D19A0 end:0x801D2F0C
+
+libs/MSL_C/src/string.c:
+	extab       start:0x80006658 end:0x80006668
+	extabindex  start:0x800068C4 end:0x800068DC
+	.text       start:0x801D2F0C end:0x801D3448
+
+libs/MSL_C/src/strtold.c:
+	extab       start:0x80006668 end:0x80006670
+	extabindex  start:0x800068DC end:0x800068E8
+	.text       start:0x801D3448 end:0x801D483C
+
+src/.unsorted/801CFC00.cpp:
+	extab       start:0x80006670 end:0x80006678
+	extabindex  start:0x800068E8 end:0x800068F4
+	.text       start:0x801D483C end:0x801D48C0
+
+libs/MSL_C/src/strtoul.c:
+	extab       start:0x80006678 end:0x800066A0
+	extabindex  start:0x800068F4 end:0x80006930
+	.text       start:0x801D48C0 end:0x801D540C
+
+libs/MSL_C/src/wstring.c:
+	.text       start:0x801D540C end:0x801D54A0
+
+libs/MSL_C/src/wchar_io.c:
+	.text       start:0x801D54A0 end:0x801D5524
+
+libs/MSL_C/src/uart_console_io_gcn.c:
+	extab       start:0x800066A0 end:0x800066A8
+	extabindex  start:0x80006930 end:0x8000693C
+	.text       start:0x801D5524 end:0x801D55FC
+
+libs/MSL_C/src/math_sun.c:
+	extab       start:0x800066A8 end:0x800066B0
+	extabindex  start:0x8000693C end:0x80006948
+	.text       start:0x801D55FC end:0x801D563C
+
+libs/MSL_C/src/extras.c:
+	.text       start:0x801D563C end:0x801D5838
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_acos.c:
+	.text       start:0x801D5838 end:0x801D5AFC
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_asin.c:
+	.text       start:0x801D5AFC end:0x801D5D94
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_atan2.c:
+	.text       start:0x801D5D94 end:0x801D6004
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_fmod.c:
+	.text       start:0x801D6004 end:0x801D6334
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_pow.c:
+	.text       start:0x801D6334 end:0x801D6B7C
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_rem_pio2.c:
+	.text       start:0x801D6B7C end:0x801D6F14
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/k_cos.c:
+	.text       start:0x801D6F14 end:0x801D7024
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/k_rem_pio2.c:
+	.text       start:0x801D7024 end:0x801D8730
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/k_sin.c:
+	.text       start:0x801D8730 end:0x801D87F0
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/k_tan.c:
+	.text       start:0x801D87F0 end:0x801D8A48
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_atan.c:
+	.text       start:0x801D8A48 end:0x801D8C88
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_copysign.c:
+	.text       start:0x801D8C88 end:0x801D8CB4
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_cos.c:
+	.text       start:0x801D8CB4 end:0x801D8D88
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_floor.c:
+	.text       start:0x801D8D88 end:0x801D8ECC
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_frexp.c:
+	.text       start:0x801D8ECC end:0x801D8F54
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_ldexp.c:
+	.text       start:0x801D8F54 end:0x801D90C0
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_sin.c:
+	.text       start:0x801D90C0 end:0x801D9198
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_tan.c:
+	.text       start:0x801D9198 end:0x801D9210
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_acos.c:
+	.text       start:0x801D9210 end:0x801D9214
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_asin.c:
+	.text       start:0x801D9214 end:0x801D9218
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_atan2.c:
+	.text       start:0x801D9218 end:0x801D921C
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_fmod.c:
+	.text       start:0x801D921C end:0x801D9220
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_pow.c:
+	.text       start:0x801D9220 end:0x801D9224
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_sqrt.c:
+	.text       start:0x801D9224 end:0x801D946C
+
+libs/MSL_C/src/PPC_EABI/SRC/math_ppc.c:
+	.text       start:0x801D946C end:0x801D9470
+
+libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_sqrt.c:
+	.text       start:0x801D9470 end:0x801D9474
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/mainloop.c:
+	.text       start:0x801D9474 end:0x801D956C
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/nubevent.c:
+	.text       start:0x801D956C end:0x801D9794
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/nubinit.c:
+	.text       start:0x801D9794 end:0x801D9918
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/msg.c:
+	.text       start:0x801D9918 end:0x801D9944
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/msgbuf.c:
+	.text       start:0x801D9944 end:0x801DA180
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/serpoll.c:
+	.text       start:0x801DA180 end:0x801DA32C
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Os/dolphin/usr_put.c:
+	.text       start:0x801DA32C end:0x801DA3B8
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/dispatch.c:
+	.text       start:0x801DA3B8 end:0x801DA500
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/msghndlr.c:
+	.text       start:0x801DA500 end:0x801DB5DC
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/support.c:
+	.text       start:0x801DB5DC end:0x801DBC90
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/mutex_TRK.c:
+	.text       start:0x801DBC90 end:0x801DBCA8
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/notify.c:
+	.text       start:0x801DBCA8 end:0x801DBD40
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/flush_cache.c:
+	.text       start:0x801DBD40 end:0x801DBD78
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/mem_TRK.c:
+	.text       start:0x801DBD78 end:0x801DBE30
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/string_TRK.c:
+	.text       start:0x801DBE30 end:0x801DBE4C
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/targimpl.c:
+	.text       start:0x801DBE4C end:0x801DD870
+
+src/.unsorted/801D8C30.cpp:
+	.text       start:0x801DD870 end:0x801DD890
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Processor/ppc/Generic/mpc_7xx_603e.c:
+	.text       start:0x801DD890 end:0x801DDC00
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Export/mslsupp.c:
+	.text       start:0x801DDC00 end:0x801DDD78
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk.c:
+	.text       start:0x801DDD78 end:0x801DE094
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Portable/main_TRK.c:
+	.text       start:0x801DE094 end:0x801DE0D8
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Os/dolphin/dolphin_trk_glue.c:
+	.text       start:0x801DE0D8 end:0x801DE598
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Os/dolphin/targcont.c:
+	.text       start:0x801DE598 end:0x801DE5CC
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Os/dolphin/target_options.c:
+	.text       start:0x801DE5CC end:0x801DE5E8
+
+libs/MetroTRK/src/debugger/embedded/MetroTRK/Os/dolphin/UDP_Stubs.c:
+	.text       start:0x801DE5E8 end:0x801DE630
+
+libs/MetroTRK/src/gamedev/cust_connection/cc/exi2/GCN/EXI2_GDEV_GCN/main.c:
+	.text       start:0x801DE630 end:0x801DE8F0
+
+libs/MetroTRK/src/gamedev/cust_connection/utils/common/CircleBuffer.c:
+	.text       start:0x801DE8F0 end:0x801DEB58
+
+libs/MetroTRK/src/gamedev/cust_connection/utils/gc/MWCriticalSection_gc.c:
+	.text       start:0x801DEB58 end:0x801DEBB0
+
+src/.unsorted/801D9F70.cpp:
+	.text       start:0x801DEBB0 end:0x801DF670
+
+src/gs/operators.cpp:
+	.text       start:0x801DF670 end:0x801DF720
+	.sbss       start:0x806275B8 end:0x806275C0
+
+src/gs/GSmem.cpp:
+	.text       start:0x801DF720 end:0x801DFC80
+	.bss        start:0x804798D8 end:0x80479998
+	.sbss       start:0x806275C0 end:0x806275D0
+
+src/gs/cache/GScache.cpp:
+	.text       start:0x801DFC80 end:0x801E045C
+	.sbss       start:0x806275D0 end:0x806275E0
+
+src/gs/cache/GScacheScratchpad.cpp:
+	.text       start:0x801E045C end:0x801E077C
+	.bss        start:0x80479998 end:0x80479A98
+	.sbss       start:0x806275E0 end:0x80627600
+
+src/gs/cache/GScachePool.cpp:
+	.text       start:0x801E077C end:0x801E0AD0
+	.bss        start:0x80479A98 end:0x80479E18
+	.sbss       start:0x80627600 end:0x80627608
+
+src/gs/GSfile.cpp:
+	.text       start:0x801E0AD0 end:0x801E19F4
+	.data       start:0x80412678 end:0x804126E8
+	.bss        start:0x80479E18 end:0x80479E98
+	.sdata      start:0x806259F0 end:0x80625A18
+	.sbss       start:0x80627608 end:0x80627630
+
+src/gs/GSnand.cpp:
+	.text       start:0x801E19F4 end:0x801E2150
+	.sdata      start:0x80625A18 end:0x80625A20
+	.sbss       start:0x80627630 end:0x80627638
+
+src/gs/scene/GSanimationPlayer.cpp:
+	.text       start:0x801E2150 end:0x801E2448
+	.sbss       start:0x80627638 end:0x80627640
+	.sdata2     start:0x80629E48 end:0x80629E58
+
+src/gs/scene/GSanimationObject.cpp:
+	.text       start:0x801E2448 end:0x801E2B00
+	.sbss       start:0x80627640 end:0x80627648
+	.sdata2     start:0x80629E58 end:0x80629E60
+
+src/gs/scene/GScamera.cpp:
+	.text       start:0x801E2B00 end:0x801E3BC8
+
+src/gs/scene/GSvolumeNode.cpp:
+	.text       start:0x801E3BC8 end:0x801E5370
+
+src/.unsorted/801E07E8.cpp:
+	.text       start:0x801E5370 end:0x801E5398
+	.sbss       start:0x80627658 end:0x80627660
+
+src/.unsorted/801E0810.cpp:
+	.text       start:0x801E5398 end:0x801E55DC
+
+src/gs/GSsceneData.cpp:
+	.text       start:0x801E55DC end:0x801E8EE8
+
+src/gs/scene/GSjointNode.cpp:
+	.text       start:0x801E8EE8 end:0x801E92D4
+
+src/.unsorted/801E474C.cpp:
+	.text       start:0x801E92D4 end:0x801EAB04
+
+src/gs/scene/GSlight.cpp:
+	.text       start:0x801EAB04 end:0x801EB780
+
+src/gs/scene/GSmaterial.cpp:
+	.text       start:0x801EB780 end:0x801F1F78
+
+src/gs/scene/GSmesh.cpp:
+	.text       start:0x801F1F78 end:0x801F2BCC
+	.data       start:0x80412A00 end:0x80412A0C
+	.sbss       start:0x806276A8 end:0x806276B0
+
+src/gs/scene/GSmodel.cpp:
+	.text       start:0x801F2BCC end:0x801F6670
+	.sbss       start:0x806276B0 end:0x806276B8
+
+src/gs/scene/GSnull.cpp:
+	.text       start:0x801F6670 end:0x801F8C68
+	.data       start:0x80412A58 end:0x80412A90
+	.sdata      start:0x80625A28 end:0x80625A50
+	.sbss       start:0x806276B8 end:0x806276CC
+	.sdata2     start:0x8062A058 end:0x8062A068
+
+src/gs/GSobject.cpp:
+	.text       start:0x801F8C68 end:0x801FE474
+	.data       start:0x80412A90 end:0x80412AB0
+	.sdata2     start:0x8062A068 end:0x8062A088
+
+src/gs/scene/GSparticle.cpp:
+	.text       start:0x801FE474 end:0x801FEC1C
+
+src/gs/GSscene.cpp:
+	.text       start:0x801FEC1C end:0x801FEF14
+	.sbss       start:0x806276E0 end:0x806276E8
+
+src/.unsorted/801FA38C.cpp:
+	.text       start:0x801FEF14 end:0x801FFFB4
+
+src/.unsorted/801FB42C.cpp:
+	.text       start:0x801FFFB4 end:0x80203E90
+
+src/.unsorted/801FF308.cpp:
+	.text       start:0x80203E90 end:0x80204C44
+
+src/gs/GShierarchyModule.cpp:
+	.text       start:0x80204C44 end:0x802079DC
+	.sbss       start:0x80627750 end:0x80627758
+	.sdata2     start:0x8062A168 end:0x8062A170
+
+src/gs/GSmenuModule.cpp:
+	.text       start:0x802079DC end:0x80208BE0
+
+src/.unsorted/80204058.cpp:
+	.text       start:0x80208BE0 end:0x8020A4DC
+
+src/.unsorted/80205954.cpp:
+	.text       start:0x8020A4DC end:0x8020C440
+
+src/.unsorted/802078B8.cpp:
+	.text       start:0x8020C440 end:0x8020C7D4
+
+src/.unsorted/80207C4C.cpp:
+	.text       start:0x8020C7D4 end:0x80210080
+
+src/.unsorted/8020B4F8.cpp:
+	.text       start:0x80210080 end:0x802115C0
+
+src/.unsorted/8020CA38.cpp:
+	.text       start:0x802115C0 end:0x80211DD8
+
+src/.unsorted/8020D250.cpp:
+	.text       start:0x80211DD8 end:0x802136A4
+
+src/.unsorted/8020EB1C.cpp:
+	.text       start:0x802136A4 end:0x80214520
+
+src/.unsorted/8020F998.cpp:
+	.text       start:0x80214520 end:0x802160EC
+
+src/.unsorted/80211564.cpp:
+	.text       start:0x802160EC end:0x8021658C
+
+src/.unsorted/80211A04.cpp:
+	.text       start:0x8021658C end:0x8021821C
+
+src/.unsorted/80213694.cpp:
+	.text       start:0x8021821C end:0x8021E9D0
+
+src/.unsorted/80219E48.cpp:
+	.text       start:0x8021E9D0 end:0x80220DA8
+
+src/.unsorted/8021C220.cpp:
+	.text       start:0x80220DA8 end:0x80221628
+
+src/.unsorted/8021CAA0.cpp:
+	.text       start:0x80221628 end:0x80221C68
+
+src/.unsorted/8021D0E0.cpp:
+	.text       start:0x80221C68 end:0x80221FAC
+
+src/.unsorted/8021D424.cpp:
+	.text       start:0x80221FAC end:0x802235D0
+
+src/.unsorted/8021EA48.cpp:
+	.text       start:0x802235D0 end:0x802246CC
+
+src/.unsorted/8021FB44.cpp:
+	.text       start:0x802246CC end:0x802251C4
+
+src/gs/math/GSboundingBox.cpp:
+	.text       start:0x802251C4 end:0x8022594C
+	.bss        start:0x8047B878 end:0x8047B8D8
+	.sbss       start:0x80627858 end:0x80627860
+	.sdata2     start:0x8062A458 end:0x8062A460
+
+src/.unsorted/80220DC4.cpp:
+	.text       start:0x8022594C end:0x80227F50
+	.sdata2     start:0x8062A460 end:0x8062A488
+
+src/.unsorted/802233C8.cpp:
+	.text       start:0x80227F50 end:0x8022821C
+
+src/.unsorted/80223694.cpp:
+	.text       start:0x8022821C end:0x80228248
+
+src/.unsorted/802236C0.cpp:
+	.text       start:0x80228248 end:0x802283B8
+
+src/gs/math/GSrand.cpp:
+	.text       start:0x802283B8 end:0x80228428
+	.bss        start:0x8047B948 end:0x8047B958
+	.sbss       start:0x80627888 end:0x80627890
+
+src/gs/math/GStrig.cpp:
+	.text       start:0x80228428 end:0x80228594
+	.bss        start:0x8047B958 end:0x8047BC30
+	.sbss       start:0x80627890 end:0x80627898
+	.sdata2     start:0x8062A4A0 end:0x8062A4D0
+
+src/gs/math/GSquat.cpp:
+	.text       start:0x80228594 end:0x80228750
+	.bss        start:0x8047BC30 end:0x8047BC70
+	.sbss       start:0x80627898 end:0x806278B0
+	.sdata2     start:0x8062A4D0 end:0x8062A4E0
+
+src/gs/math/GSmathInit.cpp:
+	.text       start:0x80228750 end:0x802287DC
+	.sbss       start:0x806278B0 end:0x806278B8
+
+src/gs/GStask.cpp:
+	.text       start:0x802287DC end:0x80228C8C
+	.sbss       start:0x806278B8 end:0x806278E8
+
+src/gs/GSthread.cpp:
+	.text       start:0x80228C8C end:0x80229328
+	.data       start:0x80412FC0 end:0x80412FD0
+	.sbss       start:0x806278E8 end:0x806278F8
+
+src/gs/GStimeline.cpp:
+	.text       start:0x80229328 end:0x802294D4
+	.data       start:0x80412FD0 end:0x80412FE8
+	.sbss       start:0x806278F8 end:0x80627908
+	.sdata2     start:0x8062A4E0 end:0x8062A4E8
+
+src/.unsorted/8022494C.cpp:
+	.text       start:0x802294D4 end:0x80229698
+
+src/.unsorted/80224B10.cpp:
+	.text       start:0x80229698 end:0x8022A9CC
+
+src/.unsorted/80225E44.cpp:
+	.text       start:0x8022A9CC end:0x8022AEEC
+
+src/.unsorted/80226364.cpp:
+	.text       start:0x8022AEEC end:0x8022C2C4
+
+src/.unsorted/8022773C.cpp:
+	.text       start:0x8022C2C4 end:0x8022D4F8
+
+src/.unsorted/80228970.cpp:
+	.text       start:0x8022D4F8 end:0x8022D694
+
+src/.unsorted/80228B0C.cpp:
+	.text       start:0x8022D694 end:0x8022DC94
+
+src/.unsorted/8022910C.cpp:
+	.text       start:0x8022DC94 end:0x802322B4
+
+src/.unsorted/8022D72C.cpp:
+	.text       start:0x802322B4 end:0x8023575C
+
+src/.unsorted/80230BD4.cpp:
+	.text       start:0x8023575C end:0x802359D0
+
+src/gs/render/GSrender.cpp:
+	.text       start:0x802359D0 end:0x80236EAC
+	.data       start:0x80413948 end:0x80413990
+	.sbss       start:0x80627980 end:0x80627998
+	.sdata2     start:0x8062A568 end:0x8062A598
+
+src/gs/render/8023234C.cpp:
+	.text       start:0x80236EAC end:0x8023739C
+
+src/gs/render/8023283C.cpp:
+	.text       start:0x8023739C end:0x80237884
+
+src/gs/render/80232D24.cpp:
+	.text       start:0x80237884 end:0x80239F58
+	.data       start:0x80413990 end:0x804139B0
+	.sbss       start:0x806279B0 end:0x806279B8
+
+src/gs/render/802353F8.cpp:
+	.text       start:0x80239F58 end:0x80239FD4
+
+src/gs/render/GSrenderLight.cpp:
+	.text       start:0x80239FD4 end:0x8023A5D4
+	.sbss       start:0x806279C0 end:0x806279C8
+	.sdata2     start:0x8062A5E0 end:0x8062A5F8
+
+src/gs/render/80235A74.cpp:
+	.text       start:0x8023A5D4 end:0x8023B264
+
+src/gs/render/80236704.cpp:
+	.text       start:0x8023B264 end:0x8023B4AC
+
+src/gs/render/GSrenderModule.cpp:
+	.text       start:0x8023B4AC end:0x8023B668
+	.data       start:0x80413A08 end:0x80413A20
+	.sdata      start:0x80625C70 end:0x80625C78
+	.sbss       start:0x806279D8 end:0x806279E8
+
+src/gs/render/GSrenderPass.cpp:
+	.text       start:0x8023B668 end:0x8023C2F4
+
+src/gs/render/80237794.cpp:
+	.text       start:0x8023C2F4 end:0x8023C31C
+
+src/gs/render/802377BC.cpp:
+	.text       start:0x8023C31C end:0x8023FAEC
+	.data       start:0x80413AA8 end:0x80413AC8
+	.bss        start:0x8047ED88 end:0x8047EDC8
+	.sbss       start:0x80627A08 end:0x80627A10
+	.sdata2     start:0x8062A610 end:0x8062A620
+
+src/gs/render/GSrenderTarget.cpp:
+	.text       start:0x8023FAEC end:0x802401AC
+	.sbss       start:0x80627A10 end:0x80627A20
+
+src/gs/render/8023B64C.cpp:
+	.text       start:0x802401AC end:0x80240554
+	.bss        start:0x8047EDC8 end:0x8047EDE8
+	.sbss       start:0x80627A28 end:0x80627A40
+
+src/gs/render/8023B9F4.cpp:
+	.text       start:0x80240554 end:0x80241B68
+
+src/gs/render/GStexture.cpp:
+	.text       start:0x80241B68 end:0x802435A4
+	.sbss       start:0x80627A50 end:0x80627A60
+
+src/gs/render/8023EA44.cpp:
+	.text       start:0x802435A4 end:0x802439CC
+
+src/gs/GSvideo.cpp:
+	.text       start:0x802439CC end:0x80244BA4
+	.sbss       start:0x80627A70 end:0x80627A80
+	.sdata2     start:0x8062A650 end:0x8062A688
+
+src/.unsorted/80240060.cpp:
+	.text       start:0x80244BA4 end:0x80245070
+
+src/.unsorted/8024052C.cpp:
+	.text       start:0x80245070 end:0x80248330
+
+src/gs/input/GSinput.cpp:
+	.text       start:0x80248330 end:0x80249420
+	.sbss       start:0x80627A98 end:0x80627AA8
+	.sdata2     start:0x8062A6F0 end:0x8062A728
+
+src/gs/input/802448E8.cpp:
+	.text       start:0x80249420 end:0x80249550
+	.sbss       start:0x80627AA8 end:0x80627AB0
+	.sdata2     start:0x8062A728 end:0x8062A738
+
+src/gs/fsys/GSfsysMem.cpp:
+	.text       start:0x80249550 end:0x80249A14
+	.sdata      start:0x80625CB8 end:0x80625CC0
+	.sbss       start:0x80627AB0 end:0x80627AC0
+
+src/gs/fsys/GSfsysChunk.cpp:
+	.text       start:0x80249A14 end:0x80249E20
+	.sbss       start:0x80627AC0 end:0x80627AE0
+
+src/gs/fsys/GSfsysCache.cpp:
+	.text       start:0x80249E20 end:0x8024A798
+	.sbss       start:0x80627AE0 end:0x80627B20
+
+src/gs/fsys/GSfsysRead.cpp:
+	.text       start:0x8024A798 end:0x8024B804
+	.data       start:0x80413D08 end:0x80413D18
+	.sbss       start:0x80627B20 end:0x80627B30
+
+src/gs/fsys/GSfsysStream.cpp:
+	.text       start:0x8024B804 end:0x8024BB70
+	.sbss       start:0x80627B30 end:0x80627B38
+
+src/gs/fsys/80247038.cpp:
+	.text       start:0x8024BB70 end:0x8024BDB8
+	.sbss       start:0x80627B38 end:0x80627B40
+
+src/gs/fsys/GSfsys.cpp:
+	.text       start:0x8024BDB8 end:0x8024E6B4
+	.data       start:0x80413D18 end:0x80413E30
+	.bss        start:0x804805E0 end:0x80480620
+	.sdata      start:0x80625CC0 end:0x80625CC8
+	.sbss       start:0x80627B40 end:0x80627B88
+
+src/.unsorted/80249B7C.cpp:
+	.text       start:0x8024E6B4 end:0x8024E6D8
+	.sbss       start:0x80627B88 end:0x80627B90
+
+src/.unsorted/80249BA0.cpp:
+	.text       start:0x8024E6D8 end:0x8024E700
+	.sbss       start:0x80627B90 end:0x80627B98
+
+src/gs/debug/regionOverride.cpp:
+	.text       start:0x8024E700 end:0x8024E728
+	.sbss       start:0x80627B98 end:0x80627BA8
+
+src/gs/GSlinkedList.cpp:
+	.text       start:0x8024E728 end:0x8024E870
+	.sbss       start:0x80627BA8 end:0x80627BB8
+
+src/.unsorted/80249D38.cpp:
+	.text       start:0x8024E870 end:0x80255A50
+
+src/.unsorted/80250F18.cpp:
+	.text       start:0x80255A50 end:0x80258B24
+
+src/.unsorted/80253FEC.cpp:
+	.text       start:0x80258B24 end:0x80258D98
+
+src/.unsorted/80254260.cpp:
+	.text       start:0x80258D98 end:0x80258F98
+
+src/.unsorted/80254460.cpp:
+	.text       start:0x80258F98 end:0x8025BB14
+
+src/.unsorted/8025716C.cpp:
+	.text       start:0x8025BB14 end:0x8025E44C
+
+src/.unsorted/80259AA4.cpp:
+	.text       start:0x8025E44C end:0x8025F0B8
+
+src/.unsorted/8025A710.cpp:
+	.text       start:0x8025F0B8 end:0x8025F72C
+
+src/.unsorted/8025AD84.cpp:
+	.text       start:0x8025F72C end:0x8025FB0C
+
+src/.unsorted/8025B164.cpp:
+	.text       start:0x8025FB0C end:0x80260054
+
+src/.unsorted/8025B6AC.cpp:
+	.text       start:0x80260054 end:0x80260090
+	.sbss       start:0x80627C40 end:0x80627C48
+	.sdata2     start:0x8062A850 end:0x8062A858
+
+src/.unsorted/8025B6E8.cpp:
+	.text       start:0x80260090 end:0x80261D60
+
+src/.unsorted/8025D3B8.cpp:
+	.text       start:0x80261D60 end:0x80262174
+
+src/.unsorted/8025D7CC.cpp:
+	.text       start:0x80262174 end:0x80262668
+
+src/.unsorted/8025DCC0.cpp:
+	.text       start:0x80262668 end:0x80262928
+
+src/.unsorted/8025DF80.cpp:
+	.text       start:0x80262928 end:0x80262CF0
+
+src/.unsorted/8025E348.cpp:
+	.text       start:0x80262CF0 end:0x80263214
+
+src/.unsorted/8025E86C.cpp:
+	.text       start:0x80263214 end:0x80263610
+
+src/.unsorted/8025EC68.cpp:
+	.text       start:0x80263610 end:0x80263A24
+
+src/.unsorted/8025F07C.cpp:
+	.text       start:0x80263A24 end:0x802649A0
+
+src/.unsorted/8025FFF8.cpp:
+	.text       start:0x802649A0 end:0x80265388
+
+src/.unsorted/802609E0.cpp:
+	.text       start:0x80265388 end:0x80265D34
+
+src/.unsorted/8026138C.cpp:
+	.text       start:0x80265D34 end:0x802674A8
+
+src/.unsorted/80262B00.cpp:
+	.text       start:0x802674A8 end:0x80267838
+
+src/.unsorted/80262E90.cpp:
+	.text       start:0x80267838 end:0x80268664
+
+src/.unsorted/80263CBC.cpp:
+	.text       start:0x80268664 end:0x8026BE74
+
+src/.unsorted/802674CC.cpp:
+	.text       start:0x8026BE74 end:0x8026CBD0
+
+libs/RVL_SDK/src/base/PPCArch.c:
+	.text       start:0x8026CBD0 end:0x8026CD40
+
+libs/RVL_SDK/src/os/OS.c:
+	.text       start:0x8026CD40 end:0x8026E074
+
+libs/RVL_SDK/src/os/OSAlarm.c:
+	.text       start:0x8026E074 end:0x8026E858
+
+libs/RVL_SDK/src/os/OSAlloc.c:
+	.text       start:0x8026E858 end:0x8026EA74
+
+libs/RVL_SDK/src/os/OSArena.c:
+	.text       start:0x8026EA74 end:0x8026EB08
+
+libs/RVL_SDK/src/os/OSAudioSystem.c:
+	.text       start:0x8026EB08 end:0x8026EFBC
+
+libs/RVL_SDK/src/os/OSCache.c:
+	.text       start:0x8026EFBC end:0x8026F5BC
+
+libs/RVL_SDK/src/os/OSContext.c:
+	.text       start:0x8026F5BC end:0x8026FE44
+
+libs/RVL_SDK/src/os/OSError.c:
+	.text       start:0x8026FE44 end:0x802704E8
+
+src/.unsorted/8026BB40.cpp:
+	.text       start:0x802704E8 end:0x802706B0
+
+libs/RVL_SDK/src/os/OSExec.c:
+	.text       start:0x802706B0 end:0x80271818
+
+src/.unsorted/8026CE70.cpp:
+	.text       start:0x80271818 end:0x8027243C
+
+libs/RVL_SDK/src/os/OSFont.c:
+	.text       start:0x8027243C end:0x80273104
+
+libs/RVL_SDK/src/os/OSInterrupt.c:
+	.text       start:0x80273104 end:0x80273888
+
+libs/RVL_SDK/src/os/OSLink.c:
+	.text       start:0x80273888 end:0x802738A0
+
+libs/RVL_SDK/src/os/OSMessage.c:
+	.text       start:0x802738A0 end:0x80273B74
+
+libs/RVL_SDK/src/os/OSMemory.c:
+	.text       start:0x80273B74 end:0x80274388
+
+libs/RVL_SDK/src/os/OSMutex.c:
+	.text       start:0x80274388 end:0x8027468C
+
+src/.unsorted/8026FC14.cpp:
+	.text       start:0x8027468C end:0x80274708
+
+libs/RVL_SDK/src/os/OSReset.c:
+	.text       start:0x80274708 end:0x80274E54
+	.data       start:0x804170D8 end:0x80417188
+	.sbss       start:0x80627DC8 end:0x80627DD8
+
+libs/RVL_SDK/src/os/OSRtc.c:
+	.text       start:0x80274E54 end:0x802758E0
+	.bss        start:0x804FCDC0 end:0x804FCE18
+
+libs/RVL_SDK/src/os/OSSemaphore.c:
+	.text       start:0x802758E0 end:0x80275A58
+
+libs/RVL_SDK/src/os/OSSync.c:
+	.text       start:0x80275A58 end:0x80275AD8
+
+libs/RVL_SDK/src/os/OSThread.c:
+	.text       start:0x80275AD8 end:0x80277230
+	.bss        start:0x804FCE18 end:0x804FD820
+	.sdata      start:0x80625DC0 end:0x80625DC8
+	.sbss       start:0x80627DD8 end:0x80627DE8
+
+libs/RVL_SDK/src/os/OSTime.c:
+	.text       start:0x80277230 end:0x80277644
+
+src/.unsorted/80272BCC.cpp:
+	.text       start:0x80277644 end:0x802778E4
+
+libs/RVL_SDK/src/os/OSUtf.c:
+	.text       start:0x802778E4 end:0x80277B1C
+
+libs/RVL_SDK/src/os/OSIpc.c:
+	.text       start:0x80277B1C end:0x80277B44
+
+libs/RVL_SDK/src/os/OSStateTM.c:
+	.text       start:0x80277B44 end:0x80278284
+
+libs/RVL_SDK/src/os/OSPlayRecord.c:
+	.text       start:0x80278284 end:0x8027897C
+
+libs/RVL_SDK/src/os/OSStateFlags.c:
+	.text       start:0x8027897C end:0x80278B88
+
+libs/RVL_SDK/src/os/OSNet.c:
+	.text       start:0x80278B88 end:0x80278C2C
+
+libs/RVL_SDK/src/os/OSNandbootInfo.c:
+	.text       start:0x80278C2C end:0x80278F1C
+
+libs/RVL_SDK/src/os/__ppc_eabi_init.cpp:
+	.text       start:0x80278F1C end:0x80278FD0
+
+libs/RVL_SDK/src/exi/EXIBios.c:
+	.text       start:0x80278FD0 end:0x8027A864
+
+src/.unsorted/80275DEC.cpp:
+	.text       start:0x8027A864 end:0x8027A9DC
+
+libs/RVL_SDK/src/exi/EXIUart.c:
+	.text       start:0x8027A9DC end:0x8027AB98
+
+src/.unsorted/80276120.cpp:
+	.text       start:0x8027AB98 end:0x8027BD2C
+
+libs/RVL_SDK/src/si/SISamplingRate.c:
+	.text       start:0x8027BD2C end:0x8027BE04
+
+src/.unsorted/8027738C.cpp:
+	.text       start:0x8027BE04 end:0x8027BE0C
+
+libs/RVL_SDK/src/db/db.c:
+	.text       start:0x8027BE0C end:0x8027BF10
+
+src/.unsorted/80277498.cpp:
+	.text       start:0x8027BF10 end:0x8027C0A4
+
+libs/RVL_SDK/src/vi/vi.c:
+	.text       start:0x8027C0A4 end:0x8027E8E4
+
+libs/RVL_SDK/src/vi/i2c.c:
+	.text       start:0x8027E8E4 end:0x8027F300
+
+libs/RVL_SDK/src/vi/vi3in1.c:
+	.text       start:0x8027F300 end:0x802809A4
+
+libs/RVL_SDK/src/mtx/mtx.c:
+	.text       start:0x802809A4 end:0x80281038
+
+src/.unsorted/8027C5C0.cpp:
+	.text       start:0x80281038 end:0x80281474
+
+libs/RVL_SDK/src/mtx/mtxvec.c:
+	.text       start:0x80281474 end:0x802814C8
+
+src/.unsorted/8027CA50.cpp:
+	.text       start:0x802814C8 end:0x802817A0
+
+libs/RVL_SDK/src/mtx/vec.c:
+	.text       start:0x802817A0 end:0x8028189C
+
+src/.unsorted/8027CE24.cpp:
+	.text       start:0x8028189C end:0x8028209C
+
+libs/RVL_SDK/src/gx/GXInit.c:
+	.text       start:0x8028209C end:0x80283264
+
+libs/RVL_SDK/src/gx/GXFifo.c:
+	.text       start:0x80283264 end:0x80283E6C
+
+libs/RVL_SDK/src/gx/GXAttr.c:
+	.text       start:0x80283E6C end:0x80285090
+
+libs/RVL_SDK/src/gx/GXMisc.c:
+	.text       start:0x80285090 end:0x80285948
+
+libs/RVL_SDK/src/gx/GXGeometry.c:
+	.text       start:0x80285948 end:0x80285EE4
+
+libs/RVL_SDK/src/gx/GXFrameBuf.c:
+	.text       start:0x80285EE4 end:0x80286924
+
+src/.unsorted/80281F38.cpp:
+	.text       start:0x80286924 end:0x80286B98
+
+libs/RVL_SDK/src/gx/GXLight.c:
+	.text       start:0x80286B98 end:0x80286FFC
+
+libs/RVL_SDK/src/gx/GXTexture.c:
+	.text       start:0x80286FFC end:0x80287D50
+
+libs/RVL_SDK/src/gx/GXBump.c:
+	.text       start:0x80287D50 end:0x8028852C
+
+libs/RVL_SDK/src/gx/GXTev.c:
+	.text       start:0x8028852C end:0x80288BAC
+
+libs/RVL_SDK/src/gx/GXPixel.c:
+	.text       start:0x80288BAC end:0x8028933C
+
+src/.unsorted/80284950.cpp:
+	.text       start:0x8028933C end:0x8028B028
+
+libs/RVL_SDK/src/gx/GXDisplayList.c:
+	.text       start:0x8028B028 end:0x8028B1F8
+
+src/.unsorted/8028680C.cpp:
+	.text       start:0x8028B1F8 end:0x8028B380
+
+libs/RVL_SDK/src/gx/GXTransform.c:
+	.text       start:0x8028B380 end:0x8028B83C
+
+libs/RVL_SDK/src/gx/GXPerf.c:
+	.text       start:0x8028B83C end:0x8028C078
+
+libs/RVL_SDK/src/dvd/dvdfs.c:
+	.text       start:0x8028C078 end:0x8028CB78
+
+libs/RVL_SDK/src/dvd/dvd.c:
+	.text       start:0x8028CB78 end:0x80291378
+
+libs/RVL_SDK/src/dvd/dvdqueue.c:
+	.text       start:0x80291378 end:0x802915D0
+
+libs/RVL_SDK/src/dvd/dvderror.c:
+	.text       start:0x802915D0 end:0x802918D8
+
+libs/RVL_SDK/src/dvd/dvdidutils.c:
+	.text       start:0x802918D8 end:0x802919C8
+
+libs/RVL_SDK/src/dvd/dvdFatal.c:
+	.text       start:0x802919C8 end:0x80291B04
+
+libs/RVL_SDK/src/dvd/dvd_broadway.c:
+	.text       start:0x80291B04 end:0x802934F0
+
+libs/RVL_SDK/src/ai/ai.c:
+	.text       start:0x802934F0 end:0x80293A24
+
+libs/RVL_SDK/src/ax/AX.c:
+	.text       start:0x80293A24 end:0x80293A80
+
+libs/RVL_SDK/src/ax/AXAlloc.c:
+	.text       start:0x80293A80 end:0x80293F38
+
+libs/RVL_SDK/src/ax/AXAux.c:
+	.text       start:0x80293F38 end:0x80294750
+
+libs/RVL_SDK/src/ax/AXCL.c:
+	.text       start:0x80294750 end:0x802951DC
+
+libs/RVL_SDK/src/ax/AXOut.c:
+	.text       start:0x802951DC end:0x802959C8
+
+libs/RVL_SDK/src/ax/AXSPB.c:
+	.text       start:0x802959C8 end:0x80295DE8
+
+libs/RVL_SDK/src/ax/AXVPB.c:
+	.text       start:0x80295DE8 end:0x80296D08
+
+libs/RVL_SDK/src/ax/AXProf.c:
+	.text       start:0x80296D08 end:0x80296D48
+
+libs/RVL_SDK/src/axfx/AXFXReverbHi.c:
+	.text       start:0x80296D48 end:0x80296E44
+
+libs/RVL_SDK/src/axfx/AXFXReverbHiDpl2.c:
+	.text       start:0x80296E44 end:0x80296F80
+
+src/.unsorted/8029259C.cpp:
+	.text       start:0x80296F80 end:0x80298EAC
+
+libs/RVL_SDK/src/axfx/AXFXDelay.c:
+	.text       start:0x80298EAC end:0x80299540
+
+src/.unsorted/80294B5C.cpp:
+	.text       start:0x80299540 end:0x8029A278
+
+libs/RVL_SDK/src/axfx/AXFXChorus.c:
+	.text       start:0x8029A278 end:0x8029A3DC
+
+src/.unsorted/802959F8.cpp:
+	.text       start:0x8029A3DC end:0x8029AE64
+
+libs/RVL_SDK/src/axfx/AXFXSrcCoef.c:
+	.text       start:0x8029AE64 end:0x8029AE78
+
+libs/RVL_SDK/src/axfx/AXFXHooks.c:
+	.text       start:0x8029AE78 end:0x8029AEB0
+
+libs/RVL_SDK/src/mem/mem_heapCommon.c:
+	.text       start:0x8029AEB0 end:0x8029B31C
+
+libs/RVL_SDK/src/mem/mem_expHeap.c:
+	.text       start:0x8029B31C end:0x8029BDDC
+
+src/.unsorted/802973F8.cpp:
+	.text       start:0x8029BDDC end:0x8029BDF0
+
+libs/RVL_SDK/src/mem/mem_frameHeap.c:
+	.text       start:0x8029BDF0 end:0x8029C0DC
+
+libs/RVL_SDK/src/mem/mem_allocator.c:
+	.text       start:0x8029C0DC end:0x8029C160
+
+libs/RVL_SDK/src/mem/mem_list.c:
+	.text       start:0x8029C160 end:0x8029C274
+
+src/.unsorted/80297890.cpp:
+	.text       start:0x8029C274 end:0x802A6FD4
+
+libs/RVL_SDK/src/cx/CXUncompression.c:
+	.text       start:0x802A6FD4 end:0x802A7148
+
+libs/RVL_SDK/src/ipc/ipcMain.c:
+	.text       start:0x802A7148 end:0x802A71CC
+
+src/.unsorted/802A2904.cpp:
+	.text       start:0x802A71CC end:0x802A88CC
+
+libs/RVL_SDK/src/ipc/memory.c:
+	.text       start:0x802A88CC end:0x802A8DF0
+
+libs/RVL_SDK/src/ipc/ipcProfile.c:
+	.text       start:0x802A8DF0 end:0x802A8F28
+
+src/.unsorted/802A4660.cpp:
+	.text       start:0x802A8F28 end:0x802AA44C
+
+libs/RVL_SDK/src/wpad/WPAD.c:
+	.text       start:0x802AA44C end:0x802B18A8
+
+src/.unsorted/802AD0D4.cpp:
+	.text       start:0x802B18A8 end:0x802B61F4
+
+libs/RVL_SDK/src/wpad/WPADEncrypt.c:
+	.text       start:0x802B61F4 end:0x802B7184
+
+src/.unsorted/802B2D18.cpp:
+	.text       start:0x802B7184 end:0x802B7F98
+
+libs/RVL_SDK/src/wpad/debug_msg.c:
+	.text       start:0x802B7F98 end:0x802B7FE8
+
+libs/RVL_SDK/src/euart/euart.c:
+	.text       start:0x802B7FE8 end:0x802B8358
+
+src/.unsorted/802B3C20.cpp:
+	.text       start:0x802B8358 end:0x802EBAE0
+
+libs/RVL_SDK/src/nand/nand.c:
+	.text       start:0x802EBAE0 end:0x802EC984
+
+libs/RVL_SDK/src/nand/NANDOpenClose.c:
+	.text       start:0x802EC984 end:0x802ED678
+
+libs/RVL_SDK/src/nand/NANDCore.c:
+	.text       start:0x802ED678 end:0x802EECFC
+
+src/.unsorted/802EA66C.cpp:
+	.text       start:0x802EECFC end:0x802EEFDC
+
+libs/RVL_SDK/src/sc/scsystem.c:
+	.text       start:0x802EEFDC end:0x802F09B0
+
+libs/RVL_SDK/src/sc/scapi.c:
+	.text       start:0x802F09B0 end:0x802F0E1C
+
+libs/RVL_SDK/src/sc/scapi_prdinfo.c:
+	.text       start:0x802F0E1C end:0x802F100C
+
+src/.unsorted/802EC97C.cpp:
+	.text       start:0x802F100C end:0x80309588
+
+libs/RVL_SDK/src/vf/pf_clib.c:
+	.text       start:0x80309588 end:0x80309888
+
+libs/RVL_SDK/src/vf/pf_code.c:
+	.text       start:0x80309888 end:0x803098A4
+
+libs/RVL_SDK/src/vf/pf_service.c:
+	.text       start:0x803098A4 end:0x803099CC
+
+libs/RVL_SDK/src/vf/pf_str.c:
+	.text       start:0x803099CC end:0x80309F54
+
+libs/RVL_SDK/src/vf/pf_w_clib.c:
+	.text       start:0x80309F54 end:0x80309FE8
+
+libs/RVL_SDK/src/vf/pf_driver.c:
+	.text       start:0x80309FE8 end:0x8030A9B8
+
+libs/RVL_SDK/src/vf/pdm_bpb.c:
+	.text       start:0x8030A9B8 end:0x8030B214
+
+libs/RVL_SDK/src/vf/pdm_disk.c:
+	.text       start:0x8030B214 end:0x8030BFD4
+
+libs/RVL_SDK/src/vf/pdm_partition.c:
+	.text       start:0x8030BFD4 end:0x8030CEE4
+
+libs/RVL_SDK/src/vf/pdm_mbr.c:
+	.text       start:0x8030CEE4 end:0x8030D4A4
+
+libs/RVL_SDK/src/vf/pdm_dskmng.c:
+	.text       start:0x8030D4A4 end:0x8030D5CC
+
+libs/RVL_SDK/src/vf/pf_cache.c:
+	.text       start:0x8030D5CC end:0x8030F474
+
+libs/RVL_SDK/src/vf/pf_cluster.c:
+	.text       start:0x8030F474 end:0x8030F92C
+
+libs/RVL_SDK/src/vf/pf_dir.c:
+	.text       start:0x8030F92C end:0x8030F9BC
+
+libs/RVL_SDK/src/vf/pf_entry.c:
+	.text       start:0x8030F9BC end:0x803112F0
+
+libs/RVL_SDK/src/vf/pf_entry_iterator.c:
+	.text       start:0x803112F0 end:0x80312C2C
+
+libs/RVL_SDK/src/vf/pf_fat.c:
+	.text       start:0x80312C2C end:0x80315864
+
+libs/RVL_SDK/src/vf/pf_fat12.c:
+	.text       start:0x80315864 end:0x8031634C
+
+libs/RVL_SDK/src/vf/pf_fat16.c:
+	.text       start:0x8031634C end:0x803168C4
+
+libs/RVL_SDK/src/vf/pf_fat32.c:
+	.text       start:0x803168C4 end:0x80316F08
+
+libs/RVL_SDK/src/vf/pf_file.c:
+	.text       start:0x80316F08 end:0x8031A324
+
+libs/RVL_SDK/src/vf/pf_path.c:
+	.text       start:0x8031A324 end:0x8031D064
+
+libs/RVL_SDK/src/vf/pf_sector.c:
+	.text       start:0x8031D064 end:0x8031D754
+
+libs/RVL_SDK/src/vf/pf_volume.c:
+	.text       start:0x8031D754 end:0x8031E718
+
+libs/RVL_SDK/src/vf/pf_cp932.c:
+	.text       start:0x8031E718 end:0x8031E804
+
+libs/RVL_SDK/src/vf/pf_api_util.c:
+	.text       start:0x8031E804 end:0x8031E94C
+
+libs/RVL_SDK/src/vf/pf_errnum.c:
+	.text       start:0x8031E94C end:0x8031E970
+
+libs/RVL_SDK/src/vf/pf_fclose.c:
+	.text       start:0x8031E970 end:0x8031E994
+
+libs/RVL_SDK/src/vf/pf_finfo.c:
+	.text       start:0x8031E994 end:0x8031E9B8
+
+libs/RVL_SDK/src/vf/pf_fopen.c:
+	.text       start:0x8031E9B8 end:0x8031EA54
+
+libs/RVL_SDK/src/vf/pf_fread.c:
+	.text       start:0x8031EA54 end:0x8031EA7C
+
+libs/RVL_SDK/src/vf/pf_fseek.c:
+	.text       start:0x8031EA7C end:0x8031EAA0
+
+libs/RVL_SDK/src/vf/pf_fwrite.c:
+	.text       start:0x8031EAA0 end:0x8031EAC8
+
+libs/RVL_SDK/src/vf/pf_init_prfile2.c:
+	.text       start:0x8031EAC8 end:0x8031EB08
+
+libs/RVL_SDK/src/vf/pf_filelock.c:
+	.text       start:0x8031EB08 end:0x8031EB1C
+
+libs/RVL_SDK/src/vf/pf_system.c:
+	.text       start:0x8031EB1C end:0x8031EB94
+
+libs/RVL_SDK/src/vf/d_vf.c:
+	.text       start:0x8031EB94 end:0x8031F160
+
+libs/RVL_SDK/src/vf/d_vf_sys.c:
+	.text       start:0x8031F160 end:0x8031FE24
+
+libs/RVL_SDK/src/vf/d_hash.c:
+	.text       start:0x8031FE24 end:0x80320244
+
+libs/RVL_SDK/src/vf/d_time.c:
+	.text       start:0x80320244 end:0x803202D4
+
+libs/RVL_SDK/src/vf/d_common.c:
+	.text       start:0x803202D4 end:0x80320510
+
+libs/RVL_SDK/src/vf/nand_drv.c:
+	.text       start:0x80320510 end:0x80320814
+
+libs/RVL_SDK/src/vf/sd_drv.c:
+	.text       start:0x80320814 end:0x80320818
+
+src/.unsorted/8031C124.cpp:
+	.text       start:0x80320818 end:0x80367C04
+
+src/.unsorted/80363510.cpp:
+	.text       start:0x80367C04 end:0x80367D0C
+
+src/.unsorted/80363618.cpp:
+	.text       start:0x80367D0C end:0x80368324
+
+src/.unsorted/80363C30.cpp:
+	.text       start:0x80368324 end:0x80368578
+
+src/.unsorted/80363E84.cpp:
+	.text       start:0x80368578 end:0x8036C6A0
+
+src/.unsorted/80367FAC.cpp:
+	.text       start:0x8036C6A0 end:0x803729D8
+
+src/.unsorted/8036E198.cpp:
+	.text       start:0x803729D8 end:0x80379D68
+
+src/.unsorted/8037536C.cpp:
+	.text       start:0x80379D68 end:0x80380E4C
+
+src/.unsorted/8037C450.cpp:
+	.text       start:0x80380E4C end:0x80384404
+
+src/.unsorted/8037F908.cpp:
+	.text       start:0x80384404 end:0x803886BC
+
+src/.unsorted/803839A4.cpp:
+	.text       start:0x803886BC end:0x8038AB38
+
+src/.unsorted/80385E20.cpp:
+	.text       start:0x8038AB38 end:0x8038BFF4
+
+src/.unsorted/803872DC.cpp:
+	.text       start:0x8038BFF4 end:0x8038CBCC
+
+src/.unsorted/80387EB4.cpp:
+	.text       start:0x8038CBCC end:0x8038F044
+
+src/.unsorted/8038A32C.cpp:
+	.text       start:0x8038F044 end:0x8038F0F0
+
+src/.unsorted/8038A3D8.cpp:
+	.text       start:0x8038F0F0 end:0x8039413C
+
+src/.unsorted/8038F424.cpp:
+	.text       start:0x8039413C end:0x8039DBE0
+
+src/.unsorted/8039A068.cpp:
+	.text       start:0x8039DBE0 end:0x803A98B8
+
+src/ds/battle/battle_io_command.cpp:
+	.text       start:0x803A98B8 end:0x803AABF8
+	.rodata     start:0x803F5FA0 end:0x803F60B0
+
+src/ds/battle/battle_display.cpp:
+	.text       start:0x803AABF8 end:0x803AED14
+	.data       start:0x80448BD0 end:0x80448C10
+	.bss        start:0x806253C0 end:0x806253D8
+
+src/ds/battle/battle_main.cpp:
+	.text       start:0x803AED14 end:0x803B0000
+	.rodata     start:0x803F60B0 end:0x803F60C0
+	.data       start:0x80448C10 end:0x80448C50
+	.sdata2     start:0x8062B230 end:0x8062B248
+
+src/ds/battle/battle_system.cpp:
+	.text       start:0x803B0000 end:0x803B2B30
+
+src/ds/battle/battle_controller.cpp:
+	.text       start:0x803B2B30 end:0x803B61E4
+
+src/ds/battle/battle_controller_player.cpp:
+	.text       start:0x803B61E4 end:0x803BDA0C
+	.rodata     start:0x803F60D0 end:0x803F61A0
+	.data       start:0x80448E98 end:0x80449030
+
+src/ds/battle/battle_lib.cpp:
+	.text       start:0x803BDA0C end:0x803CCB44
+
+src/ds/battle/battle_script.cpp:
+	.text       start:0x803CCB44 end:0x803DC848
+
+src/ds/DSbridge.cpp:
+	.text       start:0x803DC848 end:0x803DD4E4
+	.rodata     start:0x803F6A90 end:0x803F6B38
+	.data       start:0x80449F20 end:0x8044A00C
+	.sbss       start:0x806288B8 end:0x806288C8
+
+src/.unsorted/803D9EB4.cpp:
+	.text       start:0x803DD4E4 end:0x803DD648
+
+src/ds/trainer_info.cpp:
+	.text       start:0x803DD648 end:0x803DD7A4
+
+src/ds/field_battle_data_transfer.cpp:
+	.text       start:0x803DD7A4 end:0x803DD888
+
+src/ds/pokemon.cpp:
+	.text       start:0x803DD888 end:0x803E1E08
+	.rodata     start:0x803F6B38 end:0x803F6C50
+	.data       start:0x8044A010 end:0x8044A840
+	.bss        start:0x806253D8 end:0x80625570
+
+src/ds/party.cpp:
+	.text       start:0x803E1E08 end:0x803E1FC4
+
+src/ds/trainer_data.cpp:
+	.text       start:0x803E1FC4 end:0x803E1FEC
+
+src/ds/move_table.cpp:
+	.text       start:0x803E1FEC end:0x803E2254
+	.data       start:0x8044A840 end:0x8044A870
+
+src/ds/charcode_util.cpp:
+	.text       start:0x803E2254 end:0x803E232C
+
+src/ds/overlay_manager.cpp:
+	.text       start:0x803E232C end:0x803E24D4
+
+src/.unsorted/803DEEA4.cpp:
+	.text       start:0x803E24D4 end:0x803E2604
+	.bss        start:0x80625570 end:0x806255F0
+
+src/ds/strbuf.cpp:
+	.text       start:0x803E2604 end:0x803E2B38
+	.rodata     start:0x803F6C50 end:0x803F6CA0
+	.data       start:0x8044A870 end:0x8044A960
+
+src/ds/charcode.cpp:
+	.text       start:0x803E2B38 end:0x803E2B80
+
+src/ds/message_util.cpp:
+	.text       start:0x803E2B80 end:0x803E2BF0
+
+src/ds/string_template.cpp:
+	.text       start:0x803E2BF0 end:0x803E3458
+	.data       start:0x8044A960 end:0x8044A978
+
+src/ds/message.cpp:
+	.text       start:0x803E3458 end:0x803E38E4
+	.data       start:0x8044A978 end:0x8044A9A8
+
+src/ds/convert_pokemon.cpp:
+	.text       start:0x803E38E4 end:0x803E50A8
+	.data       start:0x8044A9A8 end:0x8044AA68
+
+src/ds/convert_save.cpp:
+	.text       start:0x803E50A8 end:0x803E5484
+

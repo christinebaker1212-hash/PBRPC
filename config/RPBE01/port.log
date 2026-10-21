@@ -1,0 +1,1107 @@
+hint conflict src/main.cpp .sbss: ['0x80626c00', '0x80626c01']
+hint conflict src/.unsorted/800400E8.cpp .sdata2: ['0x80628b98', '0x80628c18']
+hint conflict src/.unsorted/800C5968.cpp .sdata2: ['0x806292c0', '0x80629308', '0x806292e4', '0x806292e0', '0x806292f0', '0x806292bc', '0x80629304', '0x806292dc', '0x806292ec', '0x806292c4', '0x806292cc']
+hint conflict libs/MSL_C/src/string.c .sbss: ['0x806259d4', '0x806259cc']
+hint conflict src/gs/scene/GSmaterial.cpp .sdata2: ['0x80629ffc', '0x80629fe8']
+hint conflict src/gs/scene/GSmodel.cpp .sdata2: ['0x8062a040', '0x8062a020', '0x8062a03c']
+hint conflict src/gs/GSobject.cpp .sdata2: ['0x8062a068', '0x8062a070']
+hint conflict src/gs/GShierarchyModule.cpp .sbss: ['0x80627750', '0x80627756']
+hint conflict src/gs/render/GSrender.cpp .data: ['0x80413944', '0x80413948']
+hint conflict src/gs/render/GStexture.cpp .sbss: ['0x80627a50', '0x80627a54', '0x80627a4c']
+hint conflict src/gs/GSvideo.cpp .sdata2: ['0x8062a650', '0x8062a654']
+hint conflict libs/RVL_SDK/src/vi/vi.c .data: ['0x80423450', '0x80423398']
+hint conflict libs/RVL_SDK/src/ax/AXVPB.c .sbss: ['0x806281c8', '0x806281bc']
+hint conflict libs/RVL_SDK/src/vf/pf_path.c .sdata: ['0x806262d8', '0x806262e8', '0x806262dc', '0x8062ace0', '0x8062acdd', '0x806262d9', '0x8062ace4', '0x8062ace1', '0x806262f0', '0x806262b0', '0x8062ace8', '0x8062ace5', '0x806262ac']
+hint conflict libs/RVL_SDK/src/vf/nand_drv.c .sbss: ['0x80628594', '0x8062859c']
+hint conflict src/ds/battle/battle_lib.cpp .rodata: ['0x803f6186', '0x803f635a', '0x803f6194', '0x803f61a0']
+hint conflict src/ds/pokemon.cpp .data: ['0x8044a031', '0x8044a060', '0x8044a370', '0x80449ba0', '0x80449bb0', '0x8044a3cc', '0x80449eac', '0x80449f31']
+hints: 3651 symbols, 311 unit sections from relocations
+hints: 209 static initializers from .ctors
+hint rejected fn_8000A0F0 0x8000A0F0 -> 0x80009F48
+hint rejected fn_8005A588 0x8005A588 -> 0x8005C108
+hint rejected fn_800AA470 0x800AA470 -> 0x800AB81C
+hint rejected fn_80104354 0x80104354 -> 0x80106CB8
+hint rejected fn_8011E1FC 0x8011E1FC -> 0x80120CE0
+hint rejected fn_8013A930 0x8013A930 -> 0x8013F71C
+hint rejected fn_8000B170__Fiif 0x8000B170 -> 0x8000AEB0
+hint rejected fn_80058B10__Fb 0x80058B10 -> 0x8005A824
+hint rejected fn_801493A0__Fsi 0x801493A0 -> 0x8014E434
+hint rejected fn_80149488__Fsi 0x80149488 -> 0x8014E564
+hint rejected fn_8014A510__FsPUc 0x8014A510 -> 0x8014F59C
+hint rejected fn_8014A71C__FsP11Unk8014FC0C 0x8014A71C -> 0x8014F810
+hint rejected fn_8014AE08__Fv 0x8014AE08 -> 0x8014FDC8
+hint rejected fn_8014C078__Fv 0x8014C078 -> 0x80151048
+hint rejected fn_8014D148__Fsi 0x8014D148 -> 0x801520F8
+hint rejected fn_8014D370__Fv 0x8014D370 -> 0x80152330
+hint rejected fn_8014E0E8__Fsi 0x8014E0E8 -> 0x80152F34
+hint rejected fn_8012D530 0x8012D530 -> 0x801308C4
+hint rejected fn_8011F050 0x8011F050 -> 0x80121BDC
+hint rejected fn_801670E4 0x801670E4 -> 0x8016BA9C
+hint rejected fn_8015ABD8 0x8015ABD8 -> 0x8015F744
+hint rejected fn_801803D8 0x801803D8 -> 0x80184CF4
+hint rejected fn_801802D0 0x801802D0 -> 0x80184BE0
+hint rejected fn_80180328 0x80180328 -> 0x80184C3C
+hint rejected fn_80180380 0x80180380 -> 0x80184C98
+hint rejected fn_8017F9F0 0x8017F9F0 -> 0x801842E8
+hint rejected fn_8017F838 0x8017F838 -> 0x80184128
+hint rejected fn_80180618 0x80180618 -> 0x80184F48
+hint rejected fn_8017F8DC 0x8017F8DC -> 0x801841D0
+hint rejected fn_801805A0 0x801805A0 -> 0x80184ECC
+hint rejected fn_801810F4 0x801810F4 -> 0x80185A38
+hint rejected fn_80182848 0x80182848 -> 0x801871C4
+hint rejected fn_8017F464 0x8017F464 -> 0x80183D74
+hint rejected fn_80181718 0x80181718 -> 0x80186080
+hint rejected fn_801A0C34 0x801A0C34 -> 0x801A56D8
+hint rejected fn_80180478 0x80180478 -> 0x80184D98
+hint rejected fn_801BF4C0 0x801BF4C0 -> 0x801C4164
+hint rejected fn_801A5B34 0x801A5B34 -> 0x801AA50C
+hint rejected fn_801804B8 0x801804B8 -> 0x80184DDC
+hint rejected fn_801800D0 0x801800D0 -> 0x801849CC
+hint rejected fn_80180190 0x80180190 -> 0x80184A94
+hint rejected fn_80180130 0x80180130 -> 0x80184A30
+hint rejected fn_801801F0 0x801801F0 -> 0x80184AF8
+hint rejected fn_8019C308 0x8019C308 -> 0x801A0D9C
+hint rejected errorTaskCallback__6GSfileFUlPv 0x801DC9CC -> 0x801E160C
+hint rejected __ct__7GSvideoFUcUs11VideoFormat 0x8023EFB0 -> 0x80243B10
+hint rejected KPADRead 0x802A1524 -> 0x802A5F08
+hint rejected WPADDisconnect 0x802A8CB4 -> 0x802AD740
+hint rejected KPADInit 0x802A1C3C -> 0x802A6618
+hint rejected WPADGetInfoAsync 0x802A9088 -> 0x802ADAAC
+hint rejected BattleMessage_Print 0x803ADE6C -> 0x803B164C
+hint rejected BattleMessage_CheckSide 0x803ADF40 -> 0x803B1758
+hint rejected BattleMessage_FillFormatBuffers 0x803AE378 -> 0x803B1B68
+hint rejected BattleSystem_TriggerEffectOnSwitch__FP12BattleSystemP13BattleContext 0x803C0B8C -> 0x803C4234
+hint rejected BattleSystem_Divide__Fii 0x803C0B68 -> 0x803C4214
+hint rejected fn_8017CED8 0x8017CED8 -> 0x801817C0
+hint rejected fn_8017CC8C 0x8017CC8C -> 0x8018156C
+hint rejected sInstance__7GSvideo 0x8063F788 -> 0x80627A78: conflicts with alignment
+hint rejected lbl_8063F410 0x8063F410 -> 0x80627700: conflicts with alignment
+hint rejected lbl_8064080C 0x8064080C -> 0x80628AE8: conflicts with alignment
+hint rejected lbl_80640810 0x80640810 -> 0x80628AEC: conflicts with alignment
+hint rejected lbl_8063D500 0x8063D500 -> 0x80625828: conflicts with alignment
+hint rejected lbl_80640F68 0x80640F68 -> 0x806291FC: conflicts with alignment
+hint rejected lbl_80641444 0x80641444 -> 0x806296A8: conflicts with alignment
+hint rejected lbl_8064144C 0x8064144C -> 0x806296B0: conflicts with alignment
+hint rejected lbl_80641450 0x80641450 -> 0x806296B4: conflicts with alignment
+hint rejected lbl_80641454 0x80641454 -> 0x806296B8: conflicts with alignment
+hint rejected lbl_8063D5BC 0x8063D5BC -> 0x806258F0: conflicts with alignment
+hint rejected fn_8018028C 0x8018028C -> 0x80184B9C: conflicts with alignment
+hint rejected fn_8018043C 0x8018043C -> 0x80184D5C: conflicts with alignment
+hint rejected sInstance__17_UnkClass801FA38C 0x8063F400 -> 0x806276F0: conflicts with alignment
+hint rejected lbl_8063F5B0 0x8063F5B0 -> 0x806278A0: conflicts with alignment
+hint rejected lbl_8063F5B8 0x8063F5B8 -> 0x806278A8: conflicts with alignment
+hint rejected DEBUGPrint 0x802B3860 -> 0x80007924: conflicts with alignment
+hint rejected __sinit_\800AA470_cpp 0x800B9DFC -> 0x800BCAD4: conflicts with alignment
+section .init: 17/18 mapped (18 found in target)
+section extab: 54/54 mapped (54 found in target)
+section extabindex: 55/55 mapped (55 found in target)
+fuzzy .text fn_80006A88 0x80006A88 -> 0x80006A88 size 0x13C -> 0x130
+fuzzy .text fn_800071F8 0x800071F8 -> 0x800071EC size 0x68 -> 0x54
+fuzzy .text fn_80007260 0x80007260 -> 0x80007240 size 0x64 -> 0x50
+fuzzy .text fn_80007890 0x80007890 -> 0x8000785C size 0x90 -> 0x84
+fuzzy .text fn_80007940 0x80007940 -> 0x80007900 size 0x80 -> 0xC
+fuzzy .text fn_800079C0 0x800079C0 -> 0x8000790C size 0x80 -> 0xC
+fuzzy .text fn_80007A40 0x80007A40 -> 0x80007918 size 0x84 -> 0xC
+fuzzy .text fn_80009590 0x80009590 -> 0x800093F0 size 0xB0 -> 0xC0
+fuzzy .text fn_800099EC 0x800099EC -> 0x8000985C size 0x8C -> 0x74
+fuzzy .text fn_8000A0F0 0x8000A0F0 -> 0x80009F48 size 0x45C -> 0x444
+fuzzy .text fn_8000AEB0__FUc 0x8000AEB0 -> 0x8000ACF0 size 0x130 -> 0x30
+fuzzy .text fn_8000B170__Fiif 0x8000B170 -> 0x8000AEB0 size 0xA0 -> 0xA4
+fuzzy .text fn_8000B210__Fiif 0x8000B210 -> 0x8000AF54 size 0xB8 -> 0xBC
+fuzzy .text fn_8000B3B4__Fii 0x8000B3B4 -> 0x8000B0FC size 0x78 -> 0x80
+fuzzy .text fn_8000B914__FiPv 0x8000B914 -> 0x8000B62C size 0x2A0 -> 0x2B0
+fuzzy .text fn_8000C764__Fv 0x8000C764 -> 0x8000C43C size 0x84 -> 0xD4
+fuzzy .text fn_8000C7F0__FPv 0x8000C7F0 -> 0x8000C518 size 0x3E4 -> 0x3D4
+fuzzy .text fn_8000CC28__FPvi 0x8000CC28 -> 0x8000C940 size 0x5C -> 0x9C
+fuzzy .text fn_800101FC 0x800101FC -> 0x8000FD14 size 0x76C -> 0x7B0
+fuzzy .text fn_800153A8__FP11Unk8063E970iiii 0x800153A8 -> 0x80015070 size 0x260 -> 0x218
+fuzzy .text fn_80015608__FP11Unk8063E970iPiPi 0x80015608 -> 0x80015288 size 0x138 -> 0x13C
+fuzzy .text fn_80015740__FP11Unk8063E970iPi 0x80015740 -> 0x800153C4 size 0x11C -> 0xC4
+fuzzy .text fn_8001585C__FP11Unk8063E970iPiPiPUlUl 0x8001585C -> 0x80015488 size 0x10C -> 0x114
+fuzzy .text fn_80015968__FPviiiPiPi 0x80015968 -> 0x8001559C size 0x3D0 -> 0x390
+fuzzy .text fn_80015E7C__FPvPUcPUcPUcPUcPUcPUsPUc 0x80015E7C -> 0x80015A70 size 0x704 -> 0x110C
+fuzzy .text fn_8001D544 0x8001D544 -> 0x8001F798 size 0xA28 -> 0xA7C
+fuzzy .text fn_8001DF6C 0x8001DF6C -> 0x80020214 size 0xC88 -> 0xD64
+fuzzy .text fn_8001F3B0 0x8001F3B0 -> 0x800217B0 size 0x6EC -> 0x894
+fuzzy .text fn_8001FA9C__FP11Unk8063E970iP11Unk8001FA9C 0x8001FA9C -> 0x80022044 size 0x140 -> 0x17C
+fuzzy .text fn_8001FBDC__FP11Unk8063E970Uc 0x8001FBDC -> 0x800221C0 size 0xB8 -> 0xE0
+fuzzy .text fn_80020E34__FP11Unk8063E970 0x80020E34 -> 0x80023600 size 0x84 -> 0x8C
+fuzzy .text fn_80020EB8__FP11Unk8063E970i 0x80020EB8 -> 0x8002368C size 0x214 -> 0x1C4
+fuzzy .text fn_800210FC__FP11Unk8063E970iUcUcUssUcUl 0x800210FC -> 0x80023880 size 0x2D4 -> 0x2D0
+fuzzy .text fn_800213D0__FPviiPiPi 0x800213D0 -> 0x80023B50 size 0x3FC -> 0x3E0
+fuzzy .text fn_80021A0C 0x80021A0C -> 0x80024170 size 0x19C -> 0x1A0
+fuzzy .text fn_80021BA8__FP11Unk8063E970i 0x80021BA8 -> 0x80024310 size 0x1D0 -> 0x1DC
+fuzzy .text fn_80021DE0__FP11Unk8063E970Pv 0x80021DE0 -> 0x80024554 size 0x54 -> 0x84
+fuzzy .text fn_80021E34__FP11Unk8063E970Ul 0x80021E34 -> 0x800245D8 size 0x90 -> 0x98
+fuzzy .text fn_80021F34__FP11Unk8063E970i 0x80021F34 -> 0x800246E0 size 0xB4 -> 0x88
+fuzzy .text fn_80021FE8__FP11Unk8063E970 0x80021FE8 -> 0x80024768 size 0x108 -> 0x10C
+fuzzy .text fn_800220F0__FP11Unk8063E970Ul 0x800220F0 -> 0x80024874 size 0x1B0 -> 0x1AC
+fuzzy .text fn_800222A0 0x800222A0 -> 0x80024A20 size 0x2BC -> 0x258
+fuzzy .text fn_8002255C 0x8002255C -> 0x80024C78 size 0x120 -> 0x124
+fuzzy .text fn_8002267C 0x8002267C -> 0x80024D9C size 0x2BC -> 0x2C4
+fuzzy .text fn_80022938 0x80022938 -> 0x80025060 size 0x120 -> 0x124
+fuzzy .text fn_80022A58 0x80022A58 -> 0x80025184 size 0x108 -> 0x10C
+fuzzy .text fn_80022C40 0x80022C40 -> 0x80025370 size 0x83C -> 0x848
+fuzzy .text fn_80023AB0__FP11Unk8063E970UsUlUcUsP11Unk80035D9C 0x80023AB0 -> 0x800261EC size 0x110 -> 0x118
+fuzzy .text fn_80023BC0__FPvPvPvUcUsP11Unk80035D9C 0x80023BC0 -> 0x80026304 size 0x230 -> 0x238
+fuzzy .text fn_80023E28__FP11Unk8063E970iPv 0x80023E28 -> 0x80026574 size 0x350 -> 0x348
+fuzzy .text fn_80024178__FP11Unk8063E970ii 0x80024178 -> 0x800268BC size 0x30 -> 0x34
+fuzzy .text fn_800241D4__FPvi 0x800241D4 -> 0x8002691C size 0x80 -> 0x8C
+fuzzy .text fn_80024480__FP11Unk8063E970P11Unk80035D9C 0x80024480 -> 0x80026BD4 size 0x208 -> 0x294
+fuzzy .text fn_800257F0 0x800257F0 -> 0x80027B34 size 0x2264 -> 0x220C
+fuzzy .text fn_8003469C__FP11Unk80033090Pvlfffff 0x8003469C -> 0x80036988 size 0x120 -> 0x100
+fuzzy .text fn_80053770 0x80053770 -> 0x800557C8 size 0x4D8 -> 0x690
+fuzzy .text fn_800547FC 0x800547FC -> 0x80056A0C size 0x118 -> 0x104
+fuzzy .text fn_80054A34 0x80054A34 -> 0x80056C30 size 0x424 -> 0x3F8
+fuzzy .text fn_80055064 0x80055064 -> 0x80057234 size 0x214 -> 0x21C
+fuzzy .text fn_80058778__Fi 0x80058778 -> 0x8005A780 size 0x398 -> 0xA4
+fuzzy .text fn_80058B10__Fb 0x80058B10 -> 0x8005A824 size 0x94 -> 0x5C
+fuzzy .text fn_8005A588 0x8005A588 -> 0x8005C108 size 0x40C -> 0x37C
+fuzzy .text fn_8005CEEC 0x8005CEEC -> 0x8005E9DC size 0x60 -> 0xBC
+fuzzy .text fn_8005CF4C 0x8005CF4C -> 0x8005EA98 size 0x6F4 -> 0x744
+fuzzy .text fn_8005D640 0x8005D640 -> 0x8005F1DC size 0x14C -> 0x144
+fuzzy .text fn_8005D7D0 0x8005D7D0 -> 0x8005F364 size 0x1450 -> 0x1498
+fuzzy .text fn_8005F9BC 0x8005F9BC -> 0x80061598 size 0x6F8 -> 0x700
+fuzzy .text fn_80060B30 0x80060B30 -> 0x80062714 size 0x2D4 -> 0x3BC
+fuzzy .text fn_80060E84 0x80060E84 -> 0x80062B50 size 0xD18 -> 0xD10
+fuzzy .text fn_8006455C 0x8006455C -> 0x8006637C size 0x3A4 -> 0x3AC
+fuzzy .text fn_800675CC 0x800675CC -> 0x800693F4 size 0x584 -> 0x550
+fuzzy .text fn_8006806C 0x8006806C -> 0x80069E60 size 0x2CC -> 0x2D4
+fuzzy .text fn_8006CE28 0x8006CE28 -> 0x8006EC30 size 0x140C -> 0x13F8
+fuzzy .text fn_8006F168 0x8006F168 -> 0x80070F5C size 0x1A0 -> 0x158
+fuzzy .text fn_80071020 0x80071020 -> 0x80072DCC size 0xC94 -> 0xC84
+fuzzy .text fn_80071EA4 0x80071EA4 -> 0x80073C40 size 0x190 -> 0x170
+fuzzy .text fn_800753F8 0x800753F8 -> 0x80077174 size 0x2664 -> 0x25E4
+fuzzy .text fn_8007A27C 0x8007A27C -> 0x8007BF78 size 0x184 -> 0x164
+fuzzy .text fn_8007A8AC 0x8007A8AC -> 0x8007C588 size 0x188 -> 0x16C
+fuzzy .text fn_8007AB28 0x8007AB28 -> 0x8007C7E8 size 0xFC -> 0xE0
+fuzzy .text fn_8007B050 0x8007B050 -> 0x8007CCF4 size 0x30C -> 0x2CC
+fuzzy .text fn_8007D224 0x8007D224 -> 0x8007E708 size 0x58 -> 0x40
+fuzzy .text fn_8007D27C 0x8007D27C -> 0x8007E748 size 0x44 -> 0x2C
+fuzzy .text fn_8007D3F8 0x8007D3F8 -> 0x8007E8AC size 0x1688 -> 0x1854
+fuzzy .text fn_8007EE34 0x8007EE34 -> 0x800804B4 size 0x180 -> 0x278
+fuzzy .text fn_8007F0A8 0x8007F0A8 -> 0x80080820 size 0x4 -> 0x1AC
+fuzzy .text fn_8007F328 0x8007F328 -> 0x80080C48 size 0xB0 -> 0xE8
+fuzzy .text fn_8007FA58 0x8007FA58 -> 0x800813B0 size 0x4C8 -> 0x4C4
+fuzzy .text fn_8007FF20 0x8007FF20 -> 0x80081874 size 0xDC -> 0xC8
+fuzzy .text fn_800801D4 0x800801D4 -> 0x80081B14 size 0xC8 -> 0x48
+fuzzy .text fn_80080658 0x80080658 -> 0x80081F18 size 0x500 -> 0x4F0
+fuzzy .text fn_80080F0C 0x80080F0C -> 0x800827BC size 0x35C -> 0x31C
+fuzzy .text fn_80081308 0x80081308 -> 0x80082B78 size 0x1850 -> 0x1810
+fuzzy .text fn_800834E0 0x800834E0 -> 0x80084D10 size 0x6708 -> 0x6700
+fuzzy .text fn_8008D5D8 0x8008D5D8 -> 0x8008EE00 size 0x2D4 -> 0x2D8
+fuzzy .text fn_8008E8A8 0x8008E8A8 -> 0x800900D4 size 0x2A0 -> 0x280
+fuzzy .text fn_8008EB48 0x8008EB48 -> 0x80090354 size 0x228 -> 0x230
+fuzzy .text fn_8008F644 0x8008F644 -> 0x80090E58 size 0x424 -> 0x3F8
+fuzzy .text fn_8008FA68 0x8008FA68 -> 0x80091250 size 0x3E0 -> 0x398
+fuzzy .text fn_800930FC 0x800930FC -> 0x800947A8 size 0x2FC -> 0x2F0
+fuzzy .text fn_800933F8 0x800933F8 -> 0x80094A98 size 0x1B4 -> 0x1D8
+fuzzy .text fn_800937C0 0x800937C0 -> 0x80094E84 size 0x734 -> 0x6D4
+fuzzy .text fn_800959B4 0x800959B4 -> 0x80097018 size 0x70 -> 0x18
+fuzzy .text fn_8009B6B4 0x8009B6B4 -> 0x8009CCC0 size 0x568 -> 0x57C
+fuzzy .text fn_8009BC1C 0x8009BC1C -> 0x8009D23C size 0x4D4 -> 0x454
+fuzzy .text fn_8009C1A8 0x8009C1A8 -> 0x8009D748 size 0x1658 -> 0x15F4
+fuzzy .text fn_8009F21C 0x8009F21C -> 0x800A0758 size 0x2F4 -> 0x248
+fuzzy .text fn_800A04EC 0x800A04EC -> 0x800A197C size 0x6458 -> 0x6444
+fuzzy .text fn_800A806C 0x800A806C -> 0x800A94E8 size 0xB60 -> 0xA98
+fuzzy .text fn_800A9138 0x800A9138 -> 0x800AA4EC size 0x1C0 -> 0x1B8
+fuzzy .text fn_800AA470 0x800AA470 -> 0x800AB81C size 0x98 -> 0x140
+fuzzy .text fn_800B0FFC 0x800B0FFC -> 0x800B3B78 size 0xC8 -> 0x70
+fuzzy .text fn_800B10C4 0x800B10C4 -> 0x800B3BE8 size 0x7EC -> 0x770
+fuzzy .text fn_800B1E40 0x800B1E40 -> 0x800B48E8 size 0x7B0 -> 0x7B8
+fuzzy .text fn_800B2D00 0x800B2D00 -> 0x800B57B0 size 0x56C -> 0x574
+fuzzy .text fn_800B3A10 0x800B3A10 -> 0x800B64C8 size 0x198 -> 0x1A0
+fuzzy .text fn_800B3FC8 0x800B3FC8 -> 0x800B6A88 size 0x118 -> 0x120
+fuzzy .text fn_800B4404 0x800B4404 -> 0x800B6ECC size 0x1A0 -> 0x1A8
+fuzzy .text fn_800B48BC 0x800B48BC -> 0x800B738C size 0xF8 -> 0x100
+fuzzy .text fn_800B4CC0 0x800B4CC0 -> 0x800B7798 size 0x118 -> 0x120
+fuzzy .text fn_800B5770 0x800B5770 -> 0x800B8328 size 0x158 -> 0x160
+fuzzy .text fn_800B5EA8 0x800B5EA8 -> 0x800B8A68 size 0x158 -> 0x160
+fuzzy .text fn_800B6834 0x800B6834 -> 0x800B93FC size 0x218 -> 0x220
+fuzzy .text fn_800B6BDC 0x800B6BDC -> 0x800B97AC size 0xD0 -> 0xD8
+fuzzy .text fn_800B7480 0x800B7480 -> 0x800BA058 size 0x13C -> 0x144
+fuzzy .text fn_800B8088 0x800B8088 -> 0x800BAC68 size 0x1CC -> 0x1D0
+fuzzy .text fn_800B84F8 0x800B84F8 -> 0x800BB0DC size 0x1DC -> 0x1E4
+fuzzy .text fn_800B86D4 0x800B86D4 -> 0x800BB2C0 size 0x120 -> 0x128
+fuzzy .text fn_800B8E3C 0x800B8E3C -> 0x800BBA30 size 0x14 -> 0x18
+fuzzy .text fn_800B8E50 0x800B8E50 -> 0x800BBA48 size 0x190 -> 0x180
+fuzzy .text fn_800B8FE0 0x800B8FE0 -> 0x800BBBC8 size 0x100 -> 0x104
+fuzzy .text fn_800B91E8 0x800B91E8 -> 0x800BBDD4 size 0x14C -> 0x150
+fuzzy .text fn_800B9334 0x800B9334 -> 0x800BBF24 size 0xDC -> 0xE0
+fuzzy .text fn_800BA2A8 0x800BA2A8 -> 0x800BCF8C size 0x2A8 -> 0x2A0
+fuzzy .text fn_800BAB90 0x800BAB90 -> 0x800BD86C size 0xE10 -> 0xE08
+fuzzy .text fn_800BBB54 0x800BBB54 -> 0x800BE828 size 0x1BB4 -> 0x1BA4
+fuzzy .text fn_800C28E4 0x800C28E4 -> 0x800C55A8 size 0x134 -> 0x128
+fuzzy .text fn_800C5968 0x800C5968 -> 0x800C8620 size 0x5138 -> 0x5144
+fuzzy .text fn_800CACF8 0x800CACF8 -> 0x800CD9BC size 0x66BC -> 0x6604
+fuzzy .text fn_800D6550 0x800D6550 -> 0x800D91B4 size 0x858 -> 0x854
+fuzzy .text fn_800D7704 0x800D7704 -> 0x800DA364 size 0x4F4 -> 0x4F8
+fuzzy .text fn_800D8438 0x800D8438 -> 0x800DB0AC size 0xB30 -> 0xB14
+fuzzy .text fn_800DD7F8 0x800DD7F8 -> 0x800E0450 size 0x1470 -> 0x1344
+fuzzy .text fn_800E2594 0x800E2594 -> 0x800E50C0 size 0x1B8 -> 0x1B0
+fuzzy .text fn_800E4234 0x800E4234 -> 0x800E6D58 size 0xEC -> 0xC8
+fuzzy .text fn_800E46A4 0x800E46A4 -> 0x800E71A4 size 0x11C -> 0xE0
+fuzzy .text fn_800EA3A8 0x800EA3A8 -> 0x800ECE6C size 0x2E54 -> 0x2DAC
+fuzzy .text fn_800EDF30 0x800EDF30 -> 0x800F094C size 0x800 -> 0x7D8
+fuzzy .text fn_800F27C4 0x800F27C4 -> 0x800F51B0 size 0x3F0 -> 0x3F8
+fuzzy .text fn_800FE368 0x800FE368 -> 0x80100D5C size 0x44C -> 0x3BC
+fuzzy .text fn_80104354 0x80104354 -> 0x80106CB8 size 0x8C -> 0x134
+fuzzy .text fn_801043E0 0x801043E0 -> 0x80106DEC size 0xDB0 -> 0xDA0
+fuzzy .text fn_801162BC 0x801162BC -> 0x80119140 size 0x88 -> 0xC8
+fuzzy .text fn_8011670C 0x8011670C -> 0x801195B4 size 0x6B8 -> 0x618
+fuzzy .text fn_80118E48 0x80118E48 -> 0x8011BC50 size 0x13C -> 0x14C
+fuzzy .text fn_80118F84 0x80118F84 -> 0x8011BD9C size 0x8E8 -> 0x698
+fuzzy .text fn_8011C788 0x8011C788 -> 0x8011F29C size 0xF4 -> 0xC4
+fuzzy .text fn_8011E1FC 0x8011E1FC -> 0x80120CE0 size 0x5C -> 0x104
+fuzzy .text fn_801266E0 0x801266E0 -> 0x80129E20 size 0x254 -> 0x25C
+fuzzy .text fn_80126E40 0x80126E40 -> 0x8012A588 size 0x7CC -> 0x708
+fuzzy .text fn_8012760C 0x8012760C -> 0x8012AC90 size 0x2A4 -> 0x2AC
+fuzzy .text fn_80127970 0x80127970 -> 0x8012AFFC size 0x420 -> 0x428
+fuzzy .text fn_80127F9C 0x80127F9C -> 0x8012B630 size 0x13C -> 0x104
+fuzzy .text fn_801280D8 0x801280D8 -> 0x8012B734 size 0x1DC -> 0x16C
+fuzzy .text fn_801282B4 0x801282B4 -> 0x8012B8A0 size 0x10C -> 0x114
+fuzzy .text fn_80128430 0x80128430 -> 0x8012BA24 size 0x5E4 -> 0x5A0
+fuzzy .text fn_80128A14 0x80128A14 -> 0x8012BFC4 size 0x9C4 -> 0x8F0
+fuzzy .text fn_80129E30 0x80129E30 -> 0x8012D30C size 0x3FC -> 0x400
+fuzzy .text fn_8012A418 0x8012A418 -> 0x8012D8F8 size 0x294 -> 0x274
+fuzzy .text fn_8012A6AC 0x8012A6AC -> 0x8012DB6C size 0x13C -> 0x14C
+fuzzy .text fn_8012A7E8 0x8012A7E8 -> 0x8012DCB8 size 0x8E8 -> 0x698
+fuzzy .text fn_8012B99C 0x8012B99C -> 0x8012EC1C size 0x360 -> 0x3E0
+fuzzy .text fn_8012BCFC 0x8012BCFC -> 0x8012EFFC size 0x578 -> 0x508
+fuzzy .text fn_8012C274 0x8012C274 -> 0x8012F504 size 0xE24 -> 0xC68
+fuzzy .text fn_8012D1DC 0x8012D1DC -> 0x801302B0 size 0x10C -> 0x3CC
+fuzzy .text fn_8012D530 0x8012D530 -> 0x801308C4 size 0x110 -> 0x100
+fuzzy .text fn_8012D74C 0x8012D74C -> 0x80130AD0 size 0x170 -> 0x17C
+fuzzy .text fn_8012D8BC 0x8012D8BC -> 0x80130C4C size 0x184 -> 0x190
+fuzzy .text fn_8012DA40 0x8012DA40 -> 0x80130DDC size 0x168 -> 0x174
+fuzzy .text fn_8012E81C 0x8012E81C -> 0x80131D80 size 0x134 -> 0x138
+fuzzy .text fn_8012E950 0x8012E950 -> 0x80131EB8 size 0xBC -> 0x154
+fuzzy .text fn_8012EA0C 0x8012EA0C -> 0x8013200C size 0x390 -> 0x56C
+fuzzy .text fn_8012EE40 0x8012EE40 -> 0x8013261C size 0x120 -> 0xCE8
+fuzzy .text fn_8012EF60 0x8012EF60 -> 0x80133304 size 0x68 -> 0xC30
+fuzzy .text fn_8013A930 0x8013A930 -> 0x8013F71C size 0x8C -> 0x16C
+fuzzy .text fn_8013A9BC 0x8013A9BC -> 0x8013F888 size 0x524 -> 0x4D0
+fuzzy .text fn_8013B2EC 0x8013B2EC -> 0x801402D8 size 0x18C -> 0x26C
+fuzzy .text fn_8013B768 0x8013B768 -> 0x80140834 size 0xB8 -> 0xC0
+fuzzy .text fn_8013B820 0x8013B820 -> 0x801408F4 size 0x1A8 -> 0x1B8
+fuzzy .text fn_8013B9C8 0x8013B9C8 -> 0x80140AAC size 0xC4 -> 0xCC
+fuzzy .text fn_8013C434 0x8013C434 -> 0x80141520 size 0x168 -> 0x158
+fuzzy .text fn_8013C59C 0x8013C59C -> 0x80141678 size 0x148 -> 0x150
+fuzzy .text fn_8013C7E4 0x8013C7E4 -> 0x801418C8 size 0xF0 -> 0xCC
+fuzzy .text fn_8013C8D4 0x8013C8D4 -> 0x80141994 size 0x21C -> 0x22C
+fuzzy .text fn_8013CAF4 0x8013CAF4 -> 0x80141BC4 size 0x68 -> 0x70
+fuzzy .text fn_8013CC50 0x8013CC50 -> 0x80141D28 size 0x78 -> 0x80
+fuzzy .text fn_8013CD30 0x8013CD30 -> 0x80141E10 size 0xA4 -> 0x9C
+fuzzy .text fn_8013CDD4 0x8013CDD4 -> 0x80141EAC size 0x18C -> 0x208
+fuzzy .text fn_8013CF84 0x8013CF84 -> 0x801420D8 size 0x80 -> 0x88
+fuzzy .text fn_8013D0F0 0x8013D0F0 -> 0x8014224C size 0x1D60 -> 0x1D10
+fuzzy .text fn_80140068 0x80140068 -> 0x80145180 size 0x91CC -> 0x9148
+fuzzy .text fn_801493A0__Fsi 0x801493A0 -> 0x8014E434 size 0xE8 -> 0x130
+fuzzy .text fn_80149488__Fsi 0x80149488 -> 0x8014E564 size 0x120 -> 0xD0
+fuzzy .text fn_8014A510__FsPUc 0x8014A510 -> 0x8014F59C size 0x20C -> 0x274
+fuzzy .text fn_8014A71C__FsP11Unk8014FC0C 0x8014A71C -> 0x8014F810 size 0x388 -> 0x254
+fuzzy .text fn_8014AE08__Fv 0x8014AE08 -> 0x8014FDC8 size 0x614 -> 0x624
+fuzzy .text fn_8014C078__Fv 0x8014C078 -> 0x80151048 size 0x240 -> 0x220
+fuzzy .text fn_8014D148__Fsi 0x8014D148 -> 0x801520F8 size 0x228 -> 0x238
+fuzzy .text fn_8014D370__Fv 0x8014D370 -> 0x80152330 size 0x57C -> 0x408
+fuzzy .text fn_8014E0E8__Fsi 0x8014E0E8 -> 0x80152F34 size 0x104 -> 0xA0
+fuzzy .text fn_8015ABD8 0x8015ABD8 -> 0x8015F744 size 0xA84 -> 0xA20
+fuzzy .text fn_80161208 0x80161208 -> 0x80165D10 size 0x8C -> 0x84
+fuzzy .text fn_80161504 0x80161504 -> 0x80166004 size 0xB58 -> 0xB80
+fuzzy .text fn_80162498 0x80162498 -> 0x80166FC0 size 0x28C -> 0x290
+fuzzy .text fn_80162C78 0x80162C78 -> 0x801677A4 size 0xF4 -> 0x78
+fuzzy .text fn_80162D78 0x80162D78 -> 0x80167828 size 0x164 -> 0x98
+fuzzy .text fn_80162F48 0x80162F48 -> 0x8016792C size 0x8C -> 0x80
+fuzzy .text fn_801670E4 0x801670E4 -> 0x8016BA9C size 0x148 -> 0x12C
+fuzzy .text fn_801672A0 0x801672A0 -> 0x8016BC3C size 0xB4 -> 0xAC
+fuzzy .text fn_801697AC 0x801697AC -> 0x8016E140 size 0x3C -> 0x28
+fuzzy .text fn_8016A7E0 0x8016A7E0 -> 0x8016F160 size 0x1920 -> 0x1914
+fuzzy .text fn_80171A98 0x80171A98 -> 0x8017640C size 0xD18 -> 0xCE4
+fuzzy .text fn_8017CC8C 0x8017CC8C -> 0x8018156C size 0x14C -> 0x154
+fuzzy .text fn_8017CED8 0x8017CED8 -> 0x801817C0 size 0x228 -> 0x230
+fuzzy .text fn_8017D2A8 0x8017D2A8 -> 0x80181B98 size 0x34 -> 0x38
+fuzzy .text fn_8017D568 0x8017D568 -> 0x80181E5C size 0x4B8 -> 0x4C0
+fuzzy .text fn_8017EC74 0x8017EC74 -> 0x80183570 size 0x2C4 -> 0x2D0
+fuzzy .text fn_8017EF38 0x8017EF38 -> 0x80183840 size 0x124 -> 0x128
+fuzzy .text fn_8017F074 0x8017F074 -> 0x80183980 size 0x1B0 -> 0x1B4
+fuzzy .text fn_8017F464 0x8017F464 -> 0x80183D74 size 0x15C -> 0x138
+fuzzy .text fn_8017F778 0x8017F778 -> 0x80184064 size 0x38 -> 0x3C
+fuzzy .text fn_8017F838 0x8017F838 -> 0x80184128 size 0xA4 -> 0xA8
+fuzzy .text fn_8017F8DC 0x8017F8DC -> 0x801841D0 size 0x114 -> 0x118
+fuzzy .text fn_8017F9F0 0x8017F9F0 -> 0x801842E8 size 0x11C -> 0x120
+fuzzy .text fn_801805A0 0x801805A0 -> 0x80184ECC size 0x78 -> 0x7C
+fuzzy .text fn_80180618 0x80180618 -> 0x80184F48 size 0x1E4 -> 0x1E8
+fuzzy .text fn_80181718 0x80181718 -> 0x80186080 size 0xB8 -> 0xBC
+fuzzy .text fn_80181BE4 0x80181BE4 -> 0x80186550 size 0x198 -> 0x19C
+fuzzy .text fn_80181DF4 0x80181DF4 -> 0x80186764 size 0x55C -> 0x560
+fuzzy .text fn_80182350 0x80182350 -> 0x80186CC4 size 0x1A8 -> 0x1AC
+fuzzy .text fn_801824F8 0x801824F8 -> 0x80186E70 size 0x12C -> 0x130
+fuzzy .text fn_80182848 0x80182848 -> 0x801871C4 size 0x140 -> 0x144
+fuzzy .text fn_80182D00 0x80182D00 -> 0x80187680 size 0x46C -> 0x470
+fuzzy .text fn_801833DC 0x801833DC -> 0x80187D60 size 0x25C -> 0x260
+fuzzy .text fn_80183720 0x80183720 -> 0x801880A8 size 0x8F4 -> 0x8F8
+fuzzy .text fn_80184014 0x80184014 -> 0x801889A0 size 0xF4 -> 0xF8
+fuzzy .text fn_801846D4 0x801846D4 -> 0x80189064 size 0x220 -> 0x224
+fuzzy .text fn_801848F4 0x801848F4 -> 0x80189288 size 0x768 -> 0x76C
+fuzzy .text fn_80185074 0x80185074 -> 0x80189A0C size 0x12C -> 0x130
+fuzzy .text fn_801858D0 0x801858D0 -> 0x8018A26C size 0xD8 -> 0xDC
+fuzzy .text fn_801861E0 0x801861E0 -> 0x8018AB80 size 0xE4 -> 0xE8
+fuzzy .text fn_801862C4 0x801862C4 -> 0x8018AC68 size 0xF4 -> 0xF8
+fuzzy .text fn_801868AC 0x801868AC -> 0x8018B254 size 0x7B4 -> 0x7B8
+fuzzy .text fn_80187348 0x80187348 -> 0x8018BCF4 size 0x228 -> 0x22C
+fuzzy .text fn_8018B994 0x8018B994 -> 0x80190344 size 0x584 -> 0x588
+fuzzy .text fn_8018BF30 0x8018BF30 -> 0x801908E4 size 0x5E0 -> 0x5E4
+fuzzy .text fn_8018C510 0x8018C510 -> 0x80190EC8 size 0x624 -> 0x628
+fuzzy .text fn_8018DDD8 0x8018DDD8 -> 0x80192794 size 0x5B0 -> 0x5B4
+fuzzy .text fn_8018E3A0 0x8018E3A0 -> 0x80192D60 size 0x720 -> 0x724
+fuzzy .text fn_8018EAC0 0x8018EAC0 -> 0x80193484 size 0x6F4 -> 0x6F8
+fuzzy .text fn_8018F1B4 0x8018F1B4 -> 0x80193B7C size 0x670 -> 0x674
+fuzzy .text fn_8019024C 0x8019024C -> 0x80194C18 size 0x4FC -> 0x500
+fuzzy .text fn_80190B28 0x80190B28 -> 0x801954F8 size 0x560 -> 0x564
+fuzzy .text fn_80191088 0x80191088 -> 0x80195A5C size 0x4B4 -> 0x4B8
+fuzzy .text fn_8019153C 0x8019153C -> 0x80195F14 size 0x5C4 -> 0x5C8
+fuzzy .text fn_80193C20 0x80193C20 -> 0x801985FC size 0x544 -> 0x548
+fuzzy .text fn_80194164 0x80194164 -> 0x80198B44 size 0x5A0 -> 0x5A4
+fuzzy .text fn_80194704 0x80194704 -> 0x801990E8 size 0x4E4 -> 0x4E8
+fuzzy .text fn_80194BE8 0x80194BE8 -> 0x801995D0 size 0x544 -> 0x548
+fuzzy .text fn_8019512C 0x8019512C -> 0x80199B18 size 0x7F0 -> 0x880
+fuzzy .text fn_80196790 0x80196790 -> 0x8019B20C size 0x280 -> 0x284
+fuzzy .text fn_80198D84 0x80198D84 -> 0x8019D804 size 0x22C -> 0x230
+fuzzy .text fn_8019AB74 0x8019AB74 -> 0x8019F5F8 size 0x1F8 -> 0x1FC
+fuzzy .text fn_8019AD6C 0x8019AD6C -> 0x8019F7F4 size 0x3C4 -> 0x3C8
+fuzzy .text fn_8019B130 0x8019B130 -> 0x8019FBBC size 0xCD8 -> 0xCDC
+fuzzy .text fn_8019C0D4 0x8019C0D4 -> 0x801A0B64 size 0x234 -> 0x238
+fuzzy .text fn_8019C308 0x8019C308 -> 0x801A0D9C size 0x1E0 -> 0x1E4
+fuzzy .text fn_8019C4E8 0x8019C4E8 -> 0x801A0F80 size 0x1E0 -> 0x1E4
+fuzzy .text fn_8019C6E8 0x8019C6E8 -> 0x801A1184 size 0x11FC -> 0x1204
+fuzzy .text fn_801A0C34 0x801A0C34 -> 0x801A56D8 size 0x40C -> 0x338
+fuzzy .text fn_801A4A88 0x801A4A88 -> 0x801A9458 size 0x84 -> 0x88
+fuzzy .text fn_801A529C 0x801A529C -> 0x801A9C70 size 0x30 -> 0x34
+fuzzy .text fn_801A5B34 0x801A5B34 -> 0x801AA50C size 0xA4 -> 0xA8
+fuzzy .text fn_801A5C38 0x801A5C38 -> 0x801AA614 size 0x124 -> 0x128
+fuzzy .text fn_801A5D5C 0x801A5D5C -> 0x801AA73C size 0x180 -> 0x184
+fuzzy .text fn_801A6284 0x801A6284 -> 0x801AAC68 size 0x2C0 -> 0x2C4
+fuzzy .text fn_801A6544 0x801A6544 -> 0x801AAF2C size 0x1A0 -> 0x1A4
+fuzzy .text fn_801A6960 0x801A6960 -> 0x801AB34C size 0x444 -> 0x448
+fuzzy .text fn_801A6DA4 0x801A6DA4 -> 0x801AB794 size 0x4EC -> 0x4F0
+fuzzy .text fn_801A7290 0x801A7290 -> 0x801ABC84 size 0x410 -> 0x414
+fuzzy .text fn_801A76A0 0x801A76A0 -> 0x801AC098 size 0x174 -> 0x178
+fuzzy .text fn_801A7A10 0x801A7A10 -> 0x801AC40C size 0x540 -> 0x544
+fuzzy .text fn_801A7F50 0x801A7F50 -> 0x801AC950 size 0x28C -> 0x290
+fuzzy .text fn_801A8868 0x801A8868 -> 0x801AD26C size 0x224 -> 0x22C
+fuzzy .text fn_801A8A8C 0x801A8A8C -> 0x801AD498 size 0x1B4 -> 0x1BC
+fuzzy .text fn_801A8C40 0x801A8C40 -> 0x801AD654 size 0x2BC -> 0x2C4
+fuzzy .text fn_801A919C 0x801A919C -> 0x801ADBB8 size 0x32C -> 0x330
+fuzzy .text fn_801A94C8 0x801A94C8 -> 0x801ADEE8 size 0x2FC -> 0x300
+fuzzy .text fn_801A991C 0x801A991C -> 0x801AE340 size 0x234 -> 0x238
+fuzzy .text fn_801A9DC0 0x801A9DC0 -> 0x801AE7E8 size 0x278 -> 0x27C
+fuzzy .text fn_801AA2FC 0x801AA2FC -> 0x801AED28 size 0x24C -> 0x250
+fuzzy .text fn_801AA57C 0x801AA57C -> 0x801AEFAC size 0x1F4 -> 0x1F8
+fuzzy .text fn_801AA770 0x801AA770 -> 0x801AF1A4 size 0x3B8 -> 0x3C4
+fuzzy .text fn_801AAB48 0x801AAB48 -> 0x801AF588 size 0x1D8 -> 0x1DC
+fuzzy .text fn_801ABEF0 0x801ABEF0 -> 0x801B0934 size 0x64 -> 0x68
+fuzzy .text fn_801ABF6C 0x801ABF6C -> 0x801B09B4 size 0x70 -> 0x74
+fuzzy .text fn_801AC0E0 0x801AC0E0 -> 0x801B0B2C size 0x3EC -> 0x3F0
+fuzzy .text fn_801AC590 0x801AC590 -> 0x801B0FE0 size 0x124 -> 0x16C
+fuzzy .text fn_801AC6B4 0x801AC6B4 -> 0x801B114C size 0xD8 -> 0xDC
+fuzzy .text fn_801AC78C 0x801AC78C -> 0x801B1228 size 0x174 -> 0x178
+fuzzy .text fn_801AC900 0x801AC900 -> 0x801B13A0 size 0x294 -> 0x298
+fuzzy .text fn_801ACB94 0x801ACB94 -> 0x801B1638 size 0x368 -> 0x36C
+fuzzy .text fn_801ACEFC 0x801ACEFC -> 0x801B19A4 size 0x380 -> 0x384
+fuzzy .text fn_801AD27C 0x801AD27C -> 0x801B1D28 size 0x388 -> 0x38C
+fuzzy .text fn_801AD604 0x801AD604 -> 0x801B20B4 size 0x3E0 -> 0x3E4
+fuzzy .text fn_801AD9E4 0x801AD9E4 -> 0x801B2498 size 0x1AC -> 0x1B0
+fuzzy .text fn_801ADB90 0x801ADB90 -> 0x801B2648 size 0x108 -> 0x10C
+fuzzy .text fn_801ADC98 0x801ADC98 -> 0x801B2754 size 0x188 -> 0x18C
+fuzzy .text fn_801ADE20 0x801ADE20 -> 0x801B28E0 size 0x158 -> 0x15C
+fuzzy .text fn_801ADF78 0x801ADF78 -> 0x801B2A3C size 0x38 -> 0x3C
+fuzzy .text fn_801ADFB0 0x801ADFB0 -> 0x801B2A78 size 0x11C -> 0x120
+fuzzy .text fn_801AE0CC 0x801AE0CC -> 0x801B2B98 size 0x7E8 -> 0x7EC
+fuzzy .text fn_801AE8C0 0x801AE8C0 -> 0x801B3390 size 0x1EC -> 0x1F4
+fuzzy .text fn_801AEAAC 0x801AEAAC -> 0x801B3584 size 0x1D4 -> 0x1DC
+fuzzy .text fn_801AED4C 0x801AED4C -> 0x801B382C size 0x148 -> 0x14C
+fuzzy .text fn_801AF9F4 0x801AF9F4 -> 0x801B44F8 size 0x28C -> 0x290
+fuzzy .text fn_801AFC80 0x801AFC80 -> 0x801B4788 size 0x20C -> 0x210
+fuzzy .text fn_801AFE8C 0x801AFE8C -> 0x801B4998 size 0x20C -> 0x210
+fuzzy .text fn_801B0098 0x801B0098 -> 0x801B4BA8 size 0x1A0 -> 0x1A4
+fuzzy .text fn_801B0238 0x801B0238 -> 0x801B4D4C size 0x138 -> 0x13C
+fuzzy .text fn_801B0370 0x801B0370 -> 0x801B4E88 size 0x224 -> 0x228
+fuzzy .text fn_801B0594 0x801B0594 -> 0x801B50B0 size 0x260 -> 0x264
+fuzzy .text fn_801B07F4 0x801B07F4 -> 0x801B5314 size 0x3BC -> 0x3C0
+fuzzy .text fn_801B0BB0 0x801B0BB0 -> 0x801B56D4 size 0x194 -> 0x198
+fuzzy .text fn_801B0D44 0x801B0D44 -> 0x801B586C size 0x1AC -> 0x1B0
+fuzzy .text fn_801B0FAC 0x801B0FAC -> 0x801B5AD8 size 0x36C -> 0x374
+fuzzy .text fn_801B139C 0x801B139C -> 0x801B5ED0 size 0x244 -> 0x248
+fuzzy .text fn_801B15E0 0x801B15E0 -> 0x801B6118 size 0x15C -> 0x160
+fuzzy .text fn_801B173C 0x801B173C -> 0x801B6278 size 0x208 -> 0x20C
+fuzzy .text fn_801B1944 0x801B1944 -> 0x801B6484 size 0xF4 -> 0xF8
+fuzzy .text fn_801B1A38 0x801B1A38 -> 0x801B657C size 0x224 -> 0x228
+fuzzy .text fn_801B1C5C 0x801B1C5C -> 0x801B67A4 size 0x55C -> 0x560
+fuzzy .text fn_801B21B8 0x801B21B8 -> 0x801B6D04 size 0xC8 -> 0xCC
+fuzzy .text fn_801B22EC 0x801B22EC -> 0x801B6E3C size 0x1B4 -> 0x1B8
+fuzzy .text fn_801B24A0 0x801B24A0 -> 0x801B6FF4 size 0x31C -> 0x320
+fuzzy .text fn_801B2854 0x801B2854 -> 0x801B73AC size 0x188 -> 0x18C
+fuzzy .text fn_801B29DC 0x801B29DC -> 0x801B7538 size 0x24C -> 0x250
+fuzzy .text fn_801B2C28 0x801B2C28 -> 0x801B7788 size 0xBBC -> 0xBC0
+fuzzy .text fn_801B6370 0x801B6370 -> 0x801BAF2C size 0x124 -> 0x128
+fuzzy .text fn_801B6494 0x801B6494 -> 0x801BB054 size 0x230 -> 0x238
+fuzzy .text fn_801B66C4 0x801B66C4 -> 0x801BB28C size 0x2A8 -> 0x2AC
+fuzzy .text fn_801B696C 0x801B696C -> 0x801BB538 size 0xDC -> 0xE0
+fuzzy .text fn_801B6A48 0x801B6A48 -> 0x801BB618 size 0x178 -> 0x17C
+fuzzy .text fn_801B6BC0 0x801B6BC0 -> 0x801BB794 size 0x4F8 -> 0x500
+fuzzy .text fn_801B70D8 0x801B70D8 -> 0x801BBCB4 size 0x124 -> 0x128
+fuzzy .text fn_801B7288 0x801B7288 -> 0x801BBE68 size 0xB4 -> 0xB8
+fuzzy .text fn_801B75C0 0x801B75C0 -> 0x801BC1A4 size 0x104 -> 0x108
+fuzzy .text fn_801B76C4 0x801B76C4 -> 0x801BC2AC size 0x220 -> 0x228
+fuzzy .text fn_801B78E4 0x801B78E4 -> 0x801BC4D4 size 0x10C -> 0x110
+fuzzy .text fn_801B79F0 0x801B79F0 -> 0x801BC5E4 size 0x218 -> 0x21C
+fuzzy .text fn_801B7E34 0x801B7E34 -> 0x801BCA2C size 0xDC -> 0xE0
+fuzzy .text fn_801B7F10 0x801B7F10 -> 0x801BCB0C size 0x164 -> 0x168
+fuzzy .text fn_801B8114 0x801B8114 -> 0x801BCD14 size 0x240 -> 0x244
+fuzzy .text fn_801B8354 0x801B8354 -> 0x801BCF58 size 0x184 -> 0x188
+fuzzy .text fn_801B84D8 0x801B84D8 -> 0x801BD0E0 size 0x52C -> 0x530
+fuzzy .text fn_801B8A04 0x801B8A04 -> 0x801BD610 size 0x240 -> 0x244
+fuzzy .text fn_801B8C64 0x801B8C64 -> 0x801BD874 size 0x1B0 -> 0x1B4
+fuzzy .text fn_801B8E14 0x801B8E14 -> 0x801BDA28 size 0x1C0 -> 0x1C4
+fuzzy .text fn_801B8FD4 0x801B8FD4 -> 0x801BDBEC size 0x1F0 -> 0x1F4
+fuzzy .text fn_801B91C4 0x801B91C4 -> 0x801BDDE0 size 0x2A0 -> 0x2A4
+fuzzy .text fn_801B9464 0x801B9464 -> 0x801BE084 size 0x270 -> 0x278
+fuzzy .text fn_801B96D4 0x801B96D4 -> 0x801BE2FC size 0x4AC -> 0x4B0
+fuzzy .text fn_801BA3C4 0x801BA3C4 -> 0x801BEFF0 size 0x270 -> 0x274
+fuzzy .text fn_801BA634 0x801BA634 -> 0x801BF264 size 0x1F8 -> 0x204
+fuzzy .text fn_801BA82C 0x801BA82C -> 0x801BF468 size 0x9BC -> 0x9C0
+fuzzy .text fn_801BB1E8 0x801BB1E8 -> 0x801BFE28 size 0x928 -> 0x92C
+fuzzy .text fn_801BBB10 0x801BBB10 -> 0x801C0754 size 0x2B4 -> 0x2B8
+fuzzy .text fn_801BBDC4 0x801BBDC4 -> 0x801C0A0C size 0x20C -> 0x210
+fuzzy .text fn_801BBFD0 0x801BBFD0 -> 0x801C0C1C size 0x188 -> 0x18C
+fuzzy .text fn_801BC158 0x801BC158 -> 0x801C0DA8 size 0x3CC -> 0x3D0
+fuzzy .text fn_801BC524 0x801BC524 -> 0x801C1178 size 0x5F8 -> 0x5FC
+fuzzy .text fn_801BCB1C 0x801BCB1C -> 0x801C1774 size 0xD4 -> 0xD8
+fuzzy .text fn_801BCBF0 0x801BCBF0 -> 0x801C184C size 0x170 -> 0x174
+fuzzy .text fn_801BCD60 0x801BCD60 -> 0x801C19C0 size 0x198 -> 0x19C
+fuzzy .text fn_801BCEF8 0x801BCEF8 -> 0x801C1B5C size 0x23C -> 0x244
+fuzzy .text fn_801BD37C 0x801BD37C -> 0x801C1FE8 size 0x494 -> 0x498
+fuzzy .text fn_801BD810 0x801BD810 -> 0x801C2480 size 0x338 -> 0x33C
+fuzzy .text fn_801BDC24 0x801BDC24 -> 0x801C2898 size 0x314 -> 0x31C
+fuzzy .text fn_801BDF38 0x801BDF38 -> 0x801C2BB4 size 0x23C -> 0x244
+fuzzy .text fn_801BE174 0x801BE174 -> 0x801C2DF8 size 0x1B0 -> 0x1B4
+fuzzy .text fn_801BE324 0x801BE324 -> 0x801C2FAC size 0x164 -> 0x168
+fuzzy .text fn_801BE488 0x801BE488 -> 0x801C3114 size 0x51C -> 0x520
+fuzzy .text fn_801BE9A4 0x801BE9A4 -> 0x801C3634 size 0x2B8 -> 0x2BC
+fuzzy .text fn_801BEC5C 0x801BEC5C -> 0x801C38F0 size 0x108 -> 0x10C
+fuzzy .text fn_801BED64 0x801BED64 -> 0x801C39FC size 0x264 -> 0x268
+fuzzy .text fn_801BF040 0x801BF040 -> 0x801C3CDC size 0xD4 -> 0xD8
+fuzzy .text fn_801BF114 0x801BF114 -> 0x801C3DB4 size 0xEC -> 0xF0
+fuzzy .text fn_801BF4C0 0x801BF4C0 -> 0x801C4164 size 0x118 -> 0x11C
+fuzzy .text fn_801C2E3C 0x801C2E3C -> 0x801C7AE4 size 0xF4 -> 0xF8
+fuzzy .text fn_801C4858 0x801C4858 -> 0x801C9504 size 0x2D4 -> 0x264
+fuzzy .text errorTaskCallback__6GSfileFUlPv 0x801DC9CC -> 0x801E160C size 0x1F4 -> 0x13C
+fuzzy .text fn_802310C0__8GSrenderFv 0x802310C0 -> 0x80235C48 size 0xEC -> 0xC4
+fuzzy .text __ct__7GSvideoFUcUs11VideoFormat 0x8023EFB0 -> 0x80243B10 size 0x3A4 -> 0x388
+fuzzy .text fn_80254C74 0x80254C74 -> 0x80259764 size 0x1FC -> 0x1F4
+fuzzy .text fn_80254E70 0x80254E70 -> 0x80259958 size 0x12C -> 0x108
+fuzzy .text fn_80254F9C 0x80254F9C -> 0x80259A60 size 0x15C -> 0x138
+fuzzy .text fn_802550F8 0x802550F8 -> 0x80259B98 size 0x1B4 -> 0x188
+fuzzy .text fn_80255520 0x80255520 -> 0x80259F94 size 0x40 -> 0x38
+fuzzy .text fn_80255904 0x80255904 -> 0x8025A370 size 0x1C -> 0x8
+fuzzy .text fn_802568BC 0x802568BC -> 0x8025B580 size 0x304 -> 0x300
+fuzzy .text KPADRead 0x802A1524 -> 0x802A5F08 size 0x718 -> 0x710
+fuzzy .text KPADInit 0x802A1C3C -> 0x802A6618 size 0x35C -> 0x248
+fuzzy .text WPADGetSensorBarPosition 0x802A7B40 -> 0x802AC24C size 0x34 -> 0x20C
+fuzzy .text setupCallback 0x802A7B74 -> 0x802AC458 size 0xD4 -> 0x1C8
+fuzzy .text abortConnCallback 0x802A7C48 -> 0x802AC620 size 0xE4 -> 0x1C8
+fuzzy .text firmwareCheckCallback 0x802A7D2C -> 0x802AC7E8 size 0x8DC -> 0x8D0
+fuzzy .text __dpdCb 0x802AB6CC -> 0x802AFEA8 size 0x30 -> 0x1C
+fuzzy .text __SendData 0x802AC778 -> 0x802B0F40 size 0x234 -> 0x240
+fuzzy .text fn_802AD1BC 0x802AD1BC -> 0x802B1990 size 0x128 -> 0x9C
+fuzzy .text fn_802AE2D8 0x802AE2D8 -> 0x802B2A20 size 0x410 -> 0x3E8
+fuzzy .text fn_802AE6E8 0x802AE6E8 -> 0x802B2E08 size 0x390 -> 0x37C
+fuzzy .text WPADiCreateKey 0x802B1C70 -> 0x802B61F4 size 0x6F0 -> 0x5D8
+fuzzy .text fn_802B2D4C 0x802B2D4C -> 0x802B71B8 size 0x170 -> 0x220
+fuzzy .text fn_802B2EBC 0x802B2EBC -> 0x802B73D8 size 0x140 -> 0x184
+fuzzy .text fn_802B618C 0x802B618C -> 0x802BA8C4 size 0xE4 -> 0xA4
+fuzzy .text BattleMessage_Print 0x803ADE6C -> 0x803B164C size 0x84 -> 0xBC
+fuzzy .text BattleControllerPlayer_CheckMonConditions__FP12BattleSystemP13BattleContext 0x803B4884 -> 0x803B7F70 size 0xD18 -> 0xD0C
+fuzzy .text BattleControllerPlayer_CheckMoveHitOverrides__FP12BattleSystemP13BattleContextiii 0x803B67D4 -> 0x803B9EB4 size 0x290 -> 0x270
+fuzzy .text BattleControllerPlayer_UpdateMoveBuffers__FP12BattleSystemP13BattleContext 0x803B9298 -> 0x803BC958 size 0x198 -> 0x184
+fuzzy .text BattleSystem_Divide__Fii 0x803C0B68 -> 0x803C4214 size 0x24 -> 0x20
+fuzzy .text BattleSystem_TriggerEffectOnSwitch__FP12BattleSystemP13BattleContext 0x803C0B8C -> 0x803C4234 size 0xFC0 -> 0xF90
+fuzzy .text fn_803CBF18 0x803CBF18 -> 0x803CF590 size 0x110 -> 0xF4
+fuzzy .text fn_803D2634 0x803D2634 -> 0x803D5C90 size 0x108 -> 0xF4
+fuzzy .text fn_803D3230 0x803D3230 -> 0x803D6878 size 0x10C -> 0x104
+section .text: 13624/13957 mapped (13833 found in target)
+section .ctors: 1/2 mapped (2 found in target)
+section .dtors: 2/3 mapped (3 found in target)
+fuzzy .rodata lbl_803FC1D8 0x803FC1D8 -> 0x803ED150 size 0x14 -> 0x18
+section .rodata: 211/228 mapped (213 found in target)
+fuzzy .data lbl_8040607C 0x8040607C -> 0x803F6FBC size 0x13E -> 0x144
+fuzzy .data lbl_804061BA 0x804061BA -> 0x803F7100 size 0xFA -> 0x100
+fuzzy .data lbl_804062B4 0x804062B4 -> 0x803F7200 size 0x5E -> 0x60
+fuzzy .data lbl_80406312 0x80406312 -> 0x803F7260 size 0x8C -> 0x90
+fuzzy .data lbl_8040639E 0x8040639E -> 0x803F72F0 size 0x16E -> 0x174
+fuzzy .data lbl_80406534 0x80406534 -> 0x803F748C size 0xF9 -> 0x100
+fuzzy .data lbl_804066A5 0x804066A5 -> 0x803F7608 size 0xD7 -> 0xDC
+fuzzy .data lbl_804068E0 0x804068E0 -> 0x803F7850 size 0x494 -> 0x4BC
+fuzzy .data lbl_80406E04 0x80406E04 -> 0x803F7D9C size 0xC0 -> 0x84
+fuzzy .data lbl_80407210 0x80407210 -> 0x803F8188 size 0x92 -> 0x98
+fuzzy .data lbl_804074C2 0x804074C2 -> 0x803F8448 size 0x622 -> 0x660
+fuzzy .data lbl_80407AE4 0x80407AE4 -> 0x803F8AA8 size 0x159 -> 0x168
+fuzzy .data lbl_80407C3D 0x80407C3D -> 0x803F8C10 size 0x3FD -> 0x424
+fuzzy .data lbl_8040803A 0x8040803A -> 0x803F9034 size 0x278 -> 0x290
+fuzzy .data lbl_804082E1 0x804082E1 -> 0x803F92F8 size 0x141 -> 0x150
+fuzzy .data lbl_80408508 0x80408508 -> 0x803F9534 size 0x194 -> 0x1A8
+fuzzy .data lbl_804087EB 0x804087EB -> 0x803F9830 size 0xA5 -> 0xAC
+fuzzy .data lbl_80408AB9 0x80408AB9 -> 0x803F9AF8 size 0x75 -> 0x78
+fuzzy .data lbl_80408B2E 0x80408B2E -> 0x803F9B70 size 0x119 -> 0x124
+fuzzy .data lbl_80408DBE 0x80408DBE -> 0x803F9E18 size 0x26A -> 0x278
+fuzzy .data lbl_80409170 0x80409170 -> 0x803FA1D8 size 0x6C -> 0x70
+fuzzy .data lbl_80409278 0x80409278 -> 0x803FA2E8 size 0x5E -> 0x68
+fuzzy .data lbl_804092D6 0x804092D6 -> 0x803FA350 size 0x66 -> 0x68
+fuzzy .data lbl_8040933C 0x8040933C -> 0x803FA3B8 size 0x91 -> 0x98
+fuzzy .data jumptable_80409500 0x80409500 -> 0x803FA588 size 0x15C -> 0x158
+fuzzy .data lbl_8040B7A8 0x8040B7A8 -> 0x803FC828 size 0xA -> 0xC
+fuzzy .data lbl_8040B7B2 0x8040B7B2 -> 0x803FC834 size 0x16 -> 0x18
+fuzzy .data lbl_8040C354 0x8040C354 -> 0x803FD3D8 size 0xA4 -> 0xA0
+fuzzy .data jumptable_8040C8F0 0x8040C8F0 -> 0x803FD970 size 0x98 -> 0x94
+fuzzy .data jumptable_8040D77C 0x8040D77C -> 0x803FE81C size 0xD8 -> 0x90
+fuzzy .data jumptable_8040D8DC 0x8040D8DC -> 0x803FE934 size 0xD8 -> 0x90
+fuzzy .data jumptable_8040DDCC 0x8040DDCC -> 0x803FEDDC size 0xF8 -> 0xF4
+fuzzy .data jumptable_8040DEC4 0x8040DEC4 -> 0x803FEED0 size 0xF8 -> 0xE8
+fuzzy .data jumptable_8040E0AC 0x8040E0AC -> 0x803FF0A8 size 0x1A8 -> 0x190
+fuzzy .data jumptable_8040E9A4 0x8040E9A4 -> 0x803FF98C size 0x1A0 -> 0x184
+fuzzy .data jumptable_8040EB44 0x8040EB44 -> 0x803FFB10 size 0x1AC -> 0x118
+fuzzy .data jumptable_8040EFE4 0x8040EFE4 -> 0x803FFF1C size 0xAC -> 0x9C
+fuzzy .data lbl_8040F508 0x8040F508 -> 0x80400430 size 0x3C -> 0x28
+fuzzy .data lbl_8040F544 0x8040F544 -> 0x80400458 size 0x3C -> 0x28
+fuzzy .data lbl_8040F7D8 0x8040F7D8 -> 0x804006D8 size 0x3F78 -> 0x2578
+fuzzy .data lbl_804137F8 0x804137F8 -> 0x80402CF8 size 0x82C -> 0x854
+fuzzy .data jumptable_80417604 0x80417604 -> 0x80406B34 size 0x64 -> 0x60
+fuzzy .data lbl_8041B8C0 0x8041B8C0 -> 0x8040ADF4 size 0x28 -> 0x24
+fuzzy .data jumptable_8041C3C0 0x8041C3C0 -> 0x8040B8F0 size 0x88 -> 0x40
+fuzzy .data jumptable_8041C4A4 0x8041C4A4 -> 0x8040B98C size 0x24 -> 0x28
+fuzzy .data jumptable_8041C4C8 0x8041C4C8 -> 0x8040B9B4 size 0x40 -> 0x2C
+fuzzy .data jumptable_8041C934 0x8041C934 -> 0x8040BE0C size 0x130 -> 0x138
+fuzzy .data jumptable_8041CA64 0x8041CA64 -> 0x8040BF44 size 0x11C -> 0x110
+fuzzy .data jumptable_8041D570 0x8041D570 -> 0x8040CA40 size 0x368 -> 0x360
+fuzzy .data jumptable_8041DA38 0x8041DA38 -> 0x8040CED4 size 0x30 -> 0x34
+fuzzy .data jumptable_8041DA68 0x8041DA68 -> 0x8040CF08 size 0x40 -> 0x20
+fuzzy .data jumptable_8041DEC8 0x8041DEC8 -> 0x8040D348 size 0xF8 -> 0xE8
+fuzzy .data jumptable_8041DFC0 0x8041DFC0 -> 0x8040D430 size 0xD8 -> 0x90
+fuzzy .data lbl_8041FB18 0x8041FB18 -> 0x8040EED8 size 0x150 -> 0x148
+fuzzy .data lbl_80420320 0x80420320 -> 0x8040F6D8 size 0x110 -> 0x108
+fuzzy .data lbl_8043E4AC 0x8043E4AC -> 0x8042D7D0 size 0x34 -> 0x30
+fuzzy .data lbl_8043E54C 0x8043E54C -> 0x8042D870 size 0xBC -> 0x40
+fuzzy .data lbl_8043E608 0x8043E608 -> 0x8042D8B0 size 0x5C -> 0x50
+fuzzy .data lbl_8043E664 0x8043E664 -> 0x8042D900 size 0x138 -> 0x134
+fuzzy .data lbl_8044EA60 0x8044EA60 -> 0x8043DD00 size 0xA338 -> 0x4850
+fuzzy .data lbl_80458F10 0x80458F10 -> 0x804426C8 size 0xA948 -> 0x2958
+section .data: 2355/2381 mapped (2364 found in target)
+fuzzy .bss lbl_80478408 0x80478408 -> 0x8044DF88 size 0x155C -> 0x1560
+fuzzy .bss lbl_8047997C 0x8047997C -> 0x8044F500 size 0x44 -> 0x40
+fuzzy .bss lbl_8047C1F8 0x8047C1F8 -> 0x80451D78 size 0x504 -> 0x508
+fuzzy .bss lbl_8047CB4C 0x8047CB4C -> 0x804526D0 size 0x44 -> 0x40
+fuzzy .bss lbl_80483800 0x80483800 -> 0x80459380 size 0x1C -> 0x20
+fuzzy .bss lbl_80485BFC 0x80485BFC -> 0x8045B780 size 0x204 -> 0x200
+fuzzy .bss lbl_80496BA0 0x80496BA0 -> 0x8047F1C8 size 0x1400 -> 0x1418
+fuzzy .bss lbl_80537D80 0x80537D80 -> 0x805203C0 size 0x26C0 -> 0x23C0
+section .bss: 463/463 mapped (460 found in target)
+section .sdata: 853/868 mapped (860 found in target)
+fuzzy .sbss lbl_8063EDA0 0x8063EDA0 -> 0x8062709C size 0x8 -> 0x4
+fuzzy .sbss lbl_8063FF44 0x8063FF44 -> 0x80628234 size 0x1C -> 0xC
+section .sbss: 1389/1427 mapped (1414 found in target)
+section .sdata2: 2136/2166 mapped (2145 found in target)
+section .sbss2: 6/6 mapped (6 found in target)
+unmapped .text fn_8000B5D0__Fi 0x8000B5D0
+unmapped .text fn_8000BCB0__Fi 0x8000BCB0
+unmapped .text fn_8000BD2C__Fv 0x8000BD2C
+unmapped .text fn_8000BD6C__FP11Unk8063E970Ul 0x8000BD6C
+unmapped .text fn_8000CD70__FPv 0x8000CD70
+unmapped .text fn_8000D1B8__FP11Unk8063E970 0x8000D1B8
+unmapped .text fn_8000D230__FPv 0x8000D230
+unmapped .text fn_8000D26C__FP11Unk8063E970 0x8000D26C
+unmapped .text fn_8000D3C4__FP11Unk8063E970 0x8000D3C4
+unmapped .text fn_8000D68C__FP11Unk8063E970 0x8000D68C
+unmapped .text fn_8000D734__FP11Unk8063E970 0x8000D734
+unmapped .text fn_8000D7B8__FPP7OSMutexi 0x8000D7B8
+unmapped .text fn_8000D810__FP11Unk8063E970Uc 0x8000D810
+unmapped .text fn_8000D818__FP11Unk8063E970iPvi 0x8000D818
+unmapped .text fn_8000D8AC__FPv 0x8000D8AC
+unmapped .text fn_8000DE70__FP11Unk8063E970 0x8000DE70
+unmapped .text fn_8000DEC4__FP11Unk8063E970 0x8000DEC4
+unmapped .text fn_8000DFC4__FP11Unk8063E970iUcii 0x8000DFC4
+unmapped .text fn_8000E06C__FP11Unk8063E970 0x8000E06C
+unmapped .text fn_8000E194__FP11Unk8063E970Pv 0x8000E194
+unmapped .text fn_8000E2C8__FP11Unk8063E970 0x8000E2C8
+unmapped .text fn_8000E4A0__FPv 0x8000E4A0
+unmapped .text fn_8000E88C__FP11Unk8063E970 0x8000E88C
+unmapped .text fn_8000EA70__FP11Unk8063E970i 0x8000EA70
+unmapped .text fn_8000EAE0__FP11Unk8063E970UcUs 0x8000EAE0
+unmapped .text fn_8000EBAC__FP11Unk8063E970Ul 0x8000EBAC
+unmapped .text fn_8000EC58__FP11Unk8063E970P11Unk80035D9C 0x8000EC58
+unmapped .text fn_8000EDB0__FP11Unk8063E970 0x8000EDB0
+unmapped .text fn_8000EEBC__FP11Unk8063E970 0x8000EEBC
+unmapped .text fn_8000EEF4__FPvPiPiPv 0x8000EEF4
+unmapped .text fn_8000FE58__FPvUlUlUlUl 0x8000FE58
+unmapped .text fn_8000FECC__FUl 0x8000FECC
+unmapped .text fn_8000FF40__FPUl 0x8000FF40
+unmapped .text fn_80010AF0 0x80010AF0
+unmapped .text fn_80011290__FPvPiPiii 0x80011290
+unmapped .text fn_80011514 0x80011514
+unmapped .text fn_80012908__FPvUlUlUlUl 0x80012908
+unmapped .text fn_8001297C 0x8001297C
+unmapped .text fn_8001370C__FP11Unk8063E970i 0x8001370C
+unmapped .text fn_8001377C__FP11Unk8063E970i 0x8001377C
+unmapped .text fn_800137EC__FP11Unk8063E970P11Unk800137EC 0x800137EC
+unmapped .text fn_800138FC 0x800138FC
+unmapped .text fn_80014E88__FPvUlUlUl 0x80014E88
+unmapped .text fn_80014EE8__FP11Unk8063E970iUl 0x80014EE8
+unmapped .text fn_800150E0__FP11Unk8063E970iPv 0x800150E0
+unmapped .text fn_8001515C__FPviPv 0x8001515C
+unmapped .text fn_80016640__FPviiUl 0x80016640
+unmapped .text fn_80016EE0__FPvUc 0x80016EE0
+unmapped .text fn_80017B08__FP11Unk8063E970UlUl 0x80017B08
+unmapped .text fn_80017BB4__FP11Unk8063E970UlUlUlUl 0x80017BB4
+unmapped .text fn_80017CE8__FP11Unk8000CC84 0x80017CE8
+unmapped .text fn_80017D10__FP11Unk8063E970UlUlUl 0x80017D10
+unmapped .text fn_80017E00 0x80017E00
+unmapped .text fn_80019090__FP11Unk8000CC84Ul 0x80019090
+unmapped .text fn_800190B4__FP11Unk8000CC84 0x800190B4
+unmapped .text fn_80019380__FP11Unk80019380UcP11Unk80035D9C 0x80019380
+unmapped .text fn_800195A8__FPv 0x800195A8
+unmapped .text fn_8001A544__FP11Unk8000CC84 0x8001A544
+unmapped .text fn_8001A56C__FPvUc 0x8001A56C
+unmapped .text fn_8001D1E0__FP11Unk8000CC84i 0x8001D1E0
+unmapped .text fn_8001FCAC__FPv 0x8001FCAC
+unmapped .text fn_8002062C__FPv 0x8002062C
+unmapped .text fn_80020BF8__FP11Unk8063E970 0x80020BF8
+unmapped .text __ct__7VersionFUcUsUc 0x80024914
+unmapped .text fn_80024924 0x80024924
+unmapped .text fn_80024960 0x80024960
+unmapped .text fn_80024970 0x80024970
+unmapped .text fn_80024A34 0x80024A34
+unmapped .text fn_80024A70 0x80024A70
+unmapped .text fn_80024AEC 0x80024AEC
+unmapped .text fn_80024B50 0x80024B50
+unmapped .text fn_80024BCC 0x80024BCC
+unmapped .text fn_80024C88 0x80024C88
+unmapped .text fn_80024D04 0x80024D04
+unmapped .text fn_80024D80 0x80024D80
+unmapped .text fn_80046C8C 0x80046C8C
+unmapped .text fn_800552F8 0x800552F8
+unmapped .text fn_80055328 0x80055328
+unmapped .text fn_80055358 0x80055358
+unmapped .text fn_8005538C 0x8005538C
+unmapped .text fn_800553C0 0x800553C0
+unmapped .text fn_800553F4 0x800553F4
+unmapped .text fn_80055428 0x80055428
+unmapped .text fn_80056EDC__FP10BoxPokemon 0x80056EDC
+unmapped .text fn_80058BFC__Fiii 0x80058BFC
+unmapped .text fn_8005983C__Fi 0x8005983C
+unmapped .text fn_80059884__Fi 0x80059884
+unmapped .text fn_80062494 0x80062494
+unmapped .text fn_8006296C 0x8006296C
+unmapped .text fn_80062A7C 0x80062A7C
+unmapped .text fn_80062AC8 0x80062AC8
+unmapped .text fn_80062D74 0x80062D74
+unmapped .text fn_8007C810 0x8007C810
+unmapped .text fn_8007CD68 0x8007CD68
+unmapped .text fn_8007CE48 0x8007CE48
+unmapped .text fn_8009116C 0x8009116C
+unmapped .text fn_800AAE4C 0x800AAE4C
+unmapped .text fn_800AB9EC 0x800AB9EC
+unmapped .text fn_800ABAE8 0x800ABAE8
+unmapped .text fn_800ABAFC 0x800ABAFC
+unmapped .text fn_800ACC1C 0x800ACC1C
+unmapped .text fn_800B4F5C 0x800B4F5C
+unmapped .text fn_800B501C 0x800B501C
+unmapped .text fn_800B50FC 0x800B50FC
+unmapped .text fn_800B94C8 0x800B94C8
+unmapped .text fn_800B98B4 0x800B98B4
+unmapped .text fn_800B98FC 0x800B98FC
+unmapped .text fn_800B990C 0x800B990C
+unmapped .text fn_800B991C 0x800B991C
+unmapped .text fn_800B9BC8 0x800B9BC8
+unmapped .text fn_800B9C4C 0x800B9C4C
+unmapped .text fn_800B9D24 0x800B9D24
+unmapped .text fn_80105298 0x80105298
+unmapped .text fn_801060E0 0x801060E0
+unmapped .text fn_80106128 0x80106128
+unmapped .text fn_80114758 0x80114758
+unmapped .text fn_80114790 0x80114790
+unmapped .text fn_80114A70 0x80114A70
+unmapped .text fn_80114B34 0x80114B34
+unmapped .text fn_80114B5C 0x80114B5C
+unmapped .text fn_80114D94 0x80114D94
+unmapped .text fn_80114EE4 0x80114EE4
+unmapped .text fn_80114F1C 0x80114F1C
+unmapped .text fn_80114FCC 0x80114FCC
+unmapped .text fn_8011505C 0x8011505C
+unmapped .text fn_801150AC 0x801150AC
+unmapped .text fn_8011563C 0x8011563C
+unmapped .text fn_80115A38 0x80115A38
+unmapped .text fn_80115C44 0x80115C44
+unmapped .text fn_80115D8C 0x80115D8C
+unmapped .text fn_80115E3C 0x80115E3C
+unmapped .text fn_80115ECC 0x80115ECC
+unmapped .text fn_801166BC 0x801166BC
+unmapped .text fn_801166F8 0x801166F8
+unmapped .text fn_8011B0C8 0x8011B0C8
+unmapped .text fn_8011B128 0x8011B128
+unmapped .text fn_8011F050 0x8011F050
+unmapped .text fn_8011F1C8 0x8011F1C8
+unmapped .text fn_80125858 0x80125858
+unmapped .text fn_80125B80 0x80125B80
+unmapped .text fn_80126420 0x80126420
+unmapped .text fn_801264C4 0x801264C4
+unmapped .text fn_8012DFF0 0x8012DFF0
+unmapped .text fn_8012E208 0x8012E208
+unmapped .text fn_8012E3D4 0x8012E3D4
+unmapped .text fn_8012E52C 0x8012E52C
+unmapped .text fn_8012F010 0x8012F010
+unmapped .text fn_8012F070 0x8012F070
+unmapped .text fn_801317CC 0x801317CC
+unmapped .text fn_80131BF4 0x80131BF4
+unmapped .text fn_8013B048 0x8013B048
+unmapped .text fn_8013B094 0x8013B094
+unmapped .text fn_8013B298 0x8013B298
+unmapped .text fn_8014FC0C__FiP11Unk8014FC0Ci 0x8014FC0C
+unmapped .text fn_8014FCFC__Fv 0x8014FCFC
+unmapped .text fn_801633CC 0x801633CC
+unmapped .text fn_801633E4 0x801633E4
+unmapped .text fn_8017C980 0x8017C980
+unmapped .text fn_801800D0 0x801800D0
+unmapped .text fn_80180130 0x80180130
+unmapped .text fn_80180190 0x80180190
+unmapped .text fn_801801F0 0x801801F0
+unmapped .text fn_801802D0 0x801802D0
+unmapped .text fn_80180328 0x80180328
+unmapped .text fn_80180380 0x80180380
+unmapped .text fn_801803D8 0x801803D8
+unmapped .text fn_8018043C 0x8018043C
+unmapped .text fn_80180478 0x80180478
+unmapped .text fn_801804B8 0x801804B8
+unmapped .text fn_801804F8 0x801804F8
+unmapped .text fn_80180E78 0x80180E78
+unmapped .text fn_801810F4 0x801810F4
+unmapped .text fn_801AF020 0x801AF020
+unmapped .text fn_801AF164 0x801AF164
+unmapped .text fn_801AF28C 0x801AF28C
+unmapped .text fn_801AF3BC 0x801AF3BC
+unmapped .text fn_801AF5E0 0x801AF5E0
+unmapped .text fn_801AF834 0x801AF834
+unmapped .text fn_801B3804 0x801B3804
+unmapped .text fn_801B39C4 0x801B39C4
+unmapped .text fn_801B3EA4 0x801B3EA4
+unmapped .text fn_801B4288 0x801B4288
+unmapped .text fn_801B473C 0x801B473C
+unmapped .text fn_801B492C 0x801B492C
+unmapped .text fn_801B4D60 0x801B4D60
+unmapped .text fn_801B4F78 0x801B4F78
+unmapped .text fn_801B5260 0x801B5260
+unmapped .text fn_801B5478 0x801B5478
+unmapped .text fn_801B5608 0x801B5608
+unmapped .text fn_801B57A8 0x801B57A8
+unmapped .text fn_801B5878 0x801B5878
+unmapped .text fn_801B5B28 0x801B5B28
+unmapped .text fn_801B5DA8 0x801B5DA8
+unmapped .text fn_801B5FA4 0x801B5FA4
+unmapped .text fn_8021EA24 0x8021EA24
+unmapped .text fn_802448BC__7GSinputFv 0x802448BC
+unmapped .text fn_8025450C 0x8025450C
+unmapped .text fn_802545D0 0x802545D0
+unmapped .text fn_8025463C 0x8025463C
+unmapped .text fn_802549D0 0x802549D0
+unmapped .text fn_80256E34 0x80256E34
+unmapped .text fn_80256E40 0x80256E40
+unmapped .text fn_80256E80 0x80256E80
+unmapped .text fn_80256E8C 0x80256E8C
+unmapped .text fn_80256EE0 0x80256EE0
+unmapped .text fn_80256F5C 0x80256F5C
+unmapped .text fn_80256FD8 0x80256FD8
+unmapped .text fn_80257054 0x80257054
+unmapped .text fn_802570D0 0x802570D0
+unmapped .text fn_8025D404 0x8025D404
+unmapped .text fn_80262A24 0x80262A24
+unmapped .text fn_80263AC4 0x80263AC4
+unmapped .text fn_80263B84 0x80263B84
+unmapped .text GXGetNumXfbLines 0x80281674
+unmapped .text AXGetMaxVoices 0x8029231C
+unmapped .text noAlloc 0x802A5B84
+unmapped .text noFree 0x802A5BB4
+unmapped .text OnShutdown 0x802A5BE4
+unmapped .text WPADiSendData 0x802A5DA8
+unmapped .text CheckButtonCombination 0x802A6C34
+unmapped .text WPADiCheckContInputs 0x802A6D40
+unmapped .text WPADiManageHandler 0x802A6EC4
+unmapped .text __ClearControlBlock 0x802A760C
+unmapped .text WPADiInitSub 0x802A787C
+unmapped .text WPADInit 0x802A7A8C
+unmapped .text CloseCallback 0x802A8C90
+unmapped .text WPADDisconnect 0x802A8CB4
+unmapped .text __infoCallback 0x802A9034
+unmapped .text WPADGetInfoAsync 0x802A9088
+unmapped .text WPADControlLed 0x802A93DC
+unmapped .text fn_802AEF94 0x802AEF94
+unmapped .text fn_802AF14C 0x802AF14C
+unmapped .text fn_802AF38C 0x802AF38C
+unmapped .text fn_802AFB44 0x802AFB44
+unmapped .text fn_802B0628 0x802B0628
+unmapped .text fn_802B0834 0x802B0834
+unmapped .text __a1_3e_data_type 0x802B1094
+unmapped .text fn_802B306C 0x802B306C
+unmapped .text fn_802B341C 0x802B341C
+unmapped .text fn_802B3570 0x802B3570
+unmapped .text fn_802B363C 0x802B363C
+unmapped .text InitCore 0x802B6334
+unmapped .text WUDInit 0x802B66C0
+unmapped .text reset_again_cb 0x802B6F30
+unmapped .text remove_patch_cb 0x802B6F34
+unmapped .text write_patch_cb 0x802B70AC
+unmapped .text install_patch_cb 0x802B72DC
+unmapped .text fn_802EE638 0x802EE638
+unmapped .text fn_802EE6D8 0x802EE6D8
+unmapped .text fn_802EE778 0x802EE778
+unmapped .text fn_802EE848 0x802EE848
+unmapped .text fn_802EE98C 0x802EE98C
+unmapped .text fn_802EE9E4 0x802EE9E4
+unmapped .text fn_802EEB4C 0x802EEB4C
+unmapped .text fn_802EEB88 0x802EEB88
+unmapped .text fn_802EEC4C 0x802EEC4C
+unmapped .text fn_802EEDC8 0x802EEDC8
+unmapped .text fn_802EEEC8 0x802EEEC8
+unmapped .text fn_802EEF54 0x802EEF54
+unmapped .text fn_802EEFA0 0x802EEFA0
+unmapped .text fn_802EF004 0x802EF004
+unmapped .text fn_802EF150 0x802EF150
+unmapped .text fn_802EF244 0x802EF244
+unmapped .text fn_802EF76C 0x802EF76C
+unmapped .text fn_802EF850 0x802EF850
+unmapped .text fn_802EF9A0 0x802EF9A0
+unmapped .text fn_802EFCD0 0x802EFCD0
+unmapped .text fn_802EFFCC 0x802EFFCC
+unmapped .text fn_802F0418 0x802F0418
+unmapped .text fn_80369444 0x80369444
+unmapped .text fn_8036950C 0x8036950C
+unmapped .text fn_80390CE4 0x80390CE4
+unmapped .text fn_80390D18 0x80390D18
+unmapped .text fn_80390D4C 0x80390D4C
+unmapped .text fn_80390D80 0x80390D80
+unmapped .text fn_80390DB4 0x80390DB4
+unmapped .text fn_80390DE8 0x80390DE8
+unmapped .text fn_80390E1C 0x80390E1C
+unmapped .text fn_80390E50 0x80390E50
+unmapped .text fn_80393980 0x80393980
+unmapped .text fn_803939B4 0x803939B4
+unmapped .text fn_80393AC8 0x80393AC8
+unmapped .text fn_80393B54 0x80393B54
+unmapped .text fn_80393BA8 0x80393BA8
+unmapped .text fn_80393C34 0x80393C34
+unmapped .text fn_80393C88 0x80393C88
+unmapped .text fn_80393CE0 0x80393CE0
+unmapped .text fn_80393D14 0x80393D14
+unmapped .text fn_80393D68 0x80393D68
+unmapped .text fn_80393DC0 0x80393DC0
+unmapped .text fn_80393DF4 0x80393DF4
+unmapped .text fn_803942A4 0x803942A4
+unmapped .text fn_803942F8 0x803942F8
+unmapped .text fn_80394350 0x80394350
+unmapped .text fn_80394390 0x80394390
+unmapped .text fn_80394528 0x80394528
+unmapped .text fn_8039457C 0x8039457C
+unmapped .text fn_803945D4 0x803945D4
+unmapped .text fn_80394614 0x80394614
+unmapped .text fn_803947AC 0x803947AC
+unmapped .text fn_80394800 0x80394800
+unmapped .text fn_80394858 0x80394858
+unmapped .text fn_80394898 0x80394898
+unmapped .text fn_803949FC 0x803949FC
+unmapped .text fn_80394A30 0x80394A30
+unmapped .text fn_80394A84 0x80394A84
+unmapped .text fn_80394ADC 0x80394ADC
+unmapped .text fn_80394B1C 0x80394B1C
+unmapped .text fn_80394C80 0x80394C80
+unmapped .text fn_80394CB4 0x80394CB4
+unmapped .text fn_80394D08 0x80394D08
+unmapped .text fn_80394D60 0x80394D60
+unmapped .text fn_80394DA0 0x80394DA0
+unmapped .text fn_80394F04 0x80394F04
+unmapped .text fn_80394F38 0x80394F38
+unmapped .text fn_8039A1A8 0x8039A1A8
+unmapped .text fn_8039A6AC 0x8039A6AC
+unmapped .text fn_803A50E8 0x803A50E8
+unmapped .text BattleMessage_CheckSide 0x803ADF40
+unmapped .text BattleMessage_FillFormatBuffers 0x803AE378
+unmapped .text fn_803AF0D8 0x803AF0D8
+unmapped .text BattleMessage_SetNickname 0x803AF190
+unmapped .text fn_803D9BAC__Fv 0x803D9BAC
+unmapped .text fn_803D9BB4__FPv 0x803D9BB4
+unmapped .rodata lbl_803E22E8 0x803E22E8
+unmapped .rodata lbl_803E6838 0x803E6838
+unmapped .rodata lbl_803EEF80 0x803EEF80
+unmapped .rodata lbl_803EF300 0x803EF300
+unmapped .rodata lbl_803F803B 0x803F803B
+unmapped .rodata lbl_803F9170 0x803F9170
+unmapped .rodata lbl_803FAADF 0x803FAADF
+unmapped .rodata lbl_803FB7A8 0x803FB7A8
+unmapped .rodata lbl_803FB7BC 0x803FB7BC
+unmapped .rodata lbl_803FB7D0 0x803FB7D0
+unmapped .rodata lbl_803FB880 0x803FB880
+unmapped .rodata lbl_803FB8D0 0x803FB8D0
+unmapped .rodata lbl_803FB8E4 0x803FB8E4
+unmapped .rodata lbl_803FB950 0x803FB950
+unmapped .rodata lbl_803FC33C 0x803FC33C
+unmapped .rodata lbl_803FC358 0x803FC358
+unmapped .rodata lbl_803FC460 0x803FC460
+unmapped .data lbl_80406FAC 0x80406FAC
+unmapped .data lbl_804089EA 0x804089EA
+unmapped .data lbl_8040CFF8 0x8040CFF8
+unmapped .data jumptable_8041D91C 0x8041D91C
+unmapped .data lbl_8041F110 0x8041F110
+unmapped .data lbl_8041F124 0x8041F124
+unmapped .data lbl_8041F138 0x8041F138
+unmapped .data lbl_8041F14C 0x8041F14C
+unmapped .data lbl_8041F160 0x8041F160
+unmapped .data lbl_8043C004 0x8043C004
+unmapped .data lbl_8043C020 0x8043C020
+unmapped .data lbl_8043C03C 0x8043C03C
+unmapped .data lbl_8043C080 0x8043C080
+unmapped .data lbl_8043E3E4 0x8043E3E4
+unmapped .data lbl_80445BD8 0x80445BD8
+unmapped .data lbl_80465F50 0x80465F50
+unmapped .data lbl_804685E8 0x804685E8
+unmapped .data lbl_80468618 0x80468618
+unmapped .data lbl_8046ACB0 0x8046ACB0
+unmapped .data lbl_8046ACE0 0x8046ACE0
+unmapped .data lbl_8046D378 0x8046D378
+unmapped .data lbl_8046D3A8 0x8046D3A8
+unmapped .data lbl_8046FA40 0x8046FA40
+unmapped .data lbl_8046FA70 0x8046FA70
+unmapped .data lbl_80471F00 0x80471F00
+unmapped .data lbl_80471F30 0x80471F30
+unmapped .sdata lbl_8063D2D8 0x8063D2D8
+unmapped .sdata lbl_8063D2DC 0x8063D2DC
+unmapped .sdata lbl_8063D330 0x8063D330
+unmapped .sdata lbl_8063D335 0x8063D335
+unmapped .sdata lbl_8063D500 0x8063D500
+unmapped .sdata lbl_8063D50C 0x8063D50C
+unmapped .sdata lbl_8063D540 0x8063D540
+unmapped .sdata lbl_8063D54C 0x8063D54C
+unmapped .sdata lbl_8063D57C 0x8063D57C
+unmapped .sdata lbl_8063D5B8 0x8063D5B8
+unmapped .sdata lbl_8063D5BC 0x8063D5BC
+unmapped .sdata lbl_8063D5C0 0x8063D5C0
+unmapped .sdata lbl_8063D5C4 0x8063D5C4
+unmapped .sdata lbl_8063D5C8 0x8063D5C8
+unmapped .sdata lbl_8063D5CC 0x8063D5CC
+unmapped .sbss lbl_8063E978 0x8063E978
+unmapped .sbss lbl_8063E990 0x8063E990
+unmapped .sbss lbl_8063E994 0x8063E994
+unmapped .sbss lbl_8063E998 0x8063E998
+unmapped .sbss lbl_8063E99C 0x8063E99C
+unmapped .sbss lbl_8063E9A0 0x8063E9A0
+unmapped .sbss lbl_8063ED88 0x8063ED88
+unmapped .sbss lbl_8063F248 0x8063F248
+unmapped .sbss lbl_8063F24C 0x8063F24C
+unmapped .sbss lbl_8063F338 0x8063F338
+unmapped .sbss lbl_8063F340 0x8063F340
+unmapped .sbss version 0x8063F348
+unmapped .sbss version 0x8063F350
+unmapped .sbss version 0x8063F368
+unmapped .sbss sDepth__6GSnull 0x8063F3D8
+unmapped .sbss lbl_8063F3E0 0x8063F3E0
+unmapped .sbss lbl_8063F3E8 0x8063F3E8
+unmapped .sbss version 0x8063F3F0
+unmapped .sbss version 0x8063F460
+unmapped .sbss version 0x8063F570
+unmapped .sbss lbl_8063F598 0x8063F598
+unmapped .sbss lbl_8063F5A0 0x8063F5A0
+unmapped .sbss lbl_8063F5C0 0x8063F5C0
+unmapped .sbss version 0x8063F6C0
+unmapped .sbss lbl_8063F6C8 0x8063F6C8
+unmapped .sbss lbl_8063F6D0 0x8063F6D0
+unmapped .sbss version 0x8063F6E8
+unmapped .sbss lbl_8063F780 0x8063F780
+unmapped .sbss sInstance__7GSvideo 0x8063F788
+unmapped .sbss lbl_8063F7A8 0x8063F7A8
+unmapped .sbss lbl_8063F7B0 0x8063F7B0
+unmapped .sbss lbl_8063F7B8 0x8063F7B8
+unmapped .sbss lbl_8063F7C0 0x8063F7C0
+unmapped .sbss lbl_8063F7C8 0x8063F7C8
+unmapped .sbss lbl_80640104 0x80640104
+unmapped .sbss lbl_80640108 0x80640108
+unmapped .sbss lbl_80640138 0x80640138
+unmapped .sbss sUnk806405F8 0x806405F8
+unmapped .sdata2 lbl_80640810 0x80640810
+unmapped .sdata2 lbl_80640C30 0x80640C30
+unmapped .sdata2 lbl_80640C38 0x80640C38
+unmapped .sdata2 lbl_80640C80 0x80640C80
+unmapped .sdata2 lbl_80640C84 0x80640C84
+unmapped .sdata2 lbl_80640D20 0x80640D20
+unmapped .sdata2 lbl_80640D28 0x80640D28
+unmapped .sdata2 lbl_80640D30 0x80640D30
+unmapped .sdata2 lbl_80640DB8 0x80640DB8
+unmapped .sdata2 lbl_80640DBC 0x80640DBC
+unmapped .sdata2 lbl_80640ED0 0x80640ED0
+unmapped .sdata2 lbl_80640ED4 0x80640ED4
+unmapped .sdata2 lbl_80640F18 0x80640F18
+unmapped .sdata2 lbl_80640F68 0x80640F68
+unmapped .sdata2 lbl_80640FB8 0x80640FB8
+unmapped .sdata2 lbl_80641198 0x80641198
+unmapped .sdata2 lbl_8064119C 0x8064119C
+unmapped .sdata2 lbl_806412C8 0x806412C8
+unmapped .sdata2 lbl_806412D8 0x806412D8
+unmapped .sdata2 lbl_806412E0 0x806412E0
+unmapped .sdata2 lbl_806412E8 0x806412E8
+unmapped .sdata2 lbl_80641360 0x80641360
+unmapped .sdata2 lbl_80641368 0x80641368
+unmapped .sdata2 lbl_80641370 0x80641370
+unmapped .sdata2 lbl_806413B8 0x806413B8
+unmapped .sdata2 lbl_806415FC 0x806415FC
+unmapped .sdata2 lbl_80641600 0x80641600
+unmapped .sdata2 lbl_806423F8 0x806423F8
+unmapped .sdata2 lbl_806429A0 0x806429A0
+unmapped .sdata2 lbl_806429A4 0x806429A4
+split src/.unsorted/8000ADC0.cpp .text 0x8000ADC0-0x80024914: unresolved (0x8000ac00, None)
+split src/.unsorted/80024914.cpp .text 0x80024914-0x80025390: unresolved (None, 0x800276d4)
+split src/.unsorted/80104354.cpp .text 0x80104354-0x801166F8: unresolved (0x80106cb8, None)
+split src/.unsorted/801166F8.cpp .text 0x801166F8-0x8011B19C: unresolved (None, 0x8011dcb0)
+split src/.unsorted/8017C588.cpp .text 0x8017C588-0x8017C980: unresolved (0x80180ec8, None)
+split src/.unsorted/8017C980.cpp .text 0x8017C980-0x8017CC8C: unresolved (None, 0x8018156c)
+split src/gs/GSfile.cpp .sbss 0x8063F318-0x8063F340: unresolved (0x80627608, None)
+split src/gs/GSnand.cpp .sbss: start 0x80627630 from relocations (was None)
+split src/gs/scene/GSanimationPlayer.cpp .sbss: start 0x80627638 from relocations (was None)
+split src/gs/scene/GSanimationObject.cpp .sbss: start 0x80627640 from relocations (was None)
+split src/.unsorted/801E07E8.cpp .sbss: start 0x80627658 from relocations (was None)
+split src/gs/scene/GSnull.cpp .sbss 0x8063F3C8-0x8063F3DC: unresolved (0x806276b8, None)
+split src/gs/GSscene.cpp .sbss: start 0x806276E0 from relocations (was None)
+split src/gs/GShierarchyModule.cpp .sbss 0x8063F460-0x8063F468: unresolved (None, 0x80627758)
+split src/gs/math/GSboundingBox.cpp .sbss 0x8063F570-0x8063F578: unresolved (None, 0x80627860)
+split src/.unsorted/80220DC4.cpp .sdata2: start 0x8062A460 from relocations (was 0x8062a468)
+split src/gs/math/GSrand.cpp .sbss: start 0x80627888 from relocations (was None)
+split src/gs/math/GStrig.cpp .sbss: start 0x80627890 from relocations (was None)
+split src/gs/math/GSquat.cpp .sbss: start 0x80627898 from relocations (was 0x80627880)
+split src/gs/math/GSmathInit.cpp .sbss: start 0x806278B0 from relocations (was None)
+split src/gs/render/80232D24.cpp .sbss: start 0x806279B0 from relocations (was None)
+split src/gs/render/GSrenderLight.cpp .sbss: start 0x806279C0 from relocations (was None)
+split src/gs/render/GSrenderModule.cpp .sbss: start 0x806279D8 from relocations (was None)
+split src/gs/GSvideo.cpp .sbss: start 0x80627A70 from relocations (was None)
+split src/gs/input/GSinput.cpp .sbss: start 0x80627A98 from relocations (was None)
+split src/gs/input/802448E8.cpp .sbss 0x8063F7B8-0x8063F7C0: unresolved (None, None)
+split src/gs/fsys/GSfsysMem.cpp .sbss: start 0x80627AB0 from relocations (was None)
+split src/.unsorted/802A4660.cpp .text 0x802A4660-0x802A5B84: unresolved (0x802a8f28, None)
+split libs/RVL_SDK/src/wpad/WPAD.c .text 0x802A5B84-0x802AD0D4: unresolved (None, 0x802b18a8)
+split src/ds/DSbridge.cpp .sbss 0x806405E8-0x806405FC: unresolved (0x806288b8, None)
+split src/.unsorted/8000ADC0.cpp .text: resolved from neighbours
+split src/.unsorted/80024914.cpp .text: resolved from neighbours
+split src/.unsorted/80104354.cpp .text: resolved from neighbours
+split src/.unsorted/801166F8.cpp .text: resolved from neighbours
+split src/.unsorted/8017C588.cpp .text: resolved from neighbours
+split src/.unsorted/8017C980.cpp .text: resolved from neighbours
+split src/gs/GSfile.cpp .sbss: resolved from neighbours
+split src/gs/scene/GSnull.cpp .sbss: resolved from neighbours
+split src/gs/GShierarchyModule.cpp .sbss: resolved from neighbours
+split src/gs/math/GSboundingBox.cpp .sbss: resolved from neighbours
+split src/gs/input/802448E8.cpp .sbss: resolved from neighbours
+split src/.unsorted/802A4660.cpp .text: resolved from neighbours
+split libs/RVL_SDK/src/wpad/WPAD.c .text: resolved from neighbours
+split src/ds/DSbridge.cpp .sbss: resolved from neighbours
