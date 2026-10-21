@@ -7,6 +7,7 @@
 
 #include <private/bte/bt_types.h>
 #include <private/bte/bta_api.h>
+#include <private/bte/bta_hh_api.h>
 
 #include <revolution/os.h>
 
@@ -19,6 +20,8 @@ extern "C" {
 #endif
 
 void WUD_DEBUGPrint(const char* format, ...);
+
+void WUDHidHostCallback(tBTA_HH_EVT event, tBTA_HH* pData);
 
 #define WUD_BDCMP(LHS, RHS) memcmp(LHS, RHS, BD_ADDR_LEN)
 #define WUD_BDCPY(DST, SRC) memcpy(DST, SRC, BD_ADDR_LEN)
@@ -199,9 +202,7 @@ typedef struct WUDCB {
 
     u16 bufferStatus0;          // 0x744
     u16 bufferStatus1;          // 0x746
-    s16 waitStartSearchFrames;  // 0x748
-    s16 waitIncomingFrames;     // 0x74A
-} WUDCB;
+} WUDCB; // size: 0x748
 
 extern WUDCB _wcb;
 extern WUDDevInfo _work;
