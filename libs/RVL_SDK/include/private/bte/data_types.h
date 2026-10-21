@@ -44,6 +44,10 @@ typedef uint_least32_t UINT32;
 
 typedef unsigned char BOOLEAN;
 
+#ifndef NULL
+# define NULL	0
+#endif
+
 #ifndef TRUE
 # define TRUE	1
 #endif
