@@ -15,6 +15,10 @@
 #define KPAD_DPD_RESO_WX 1024
 #define KPAD_DPD_RESO_WY 768
 
+#define KPAD_DPD_SCALE (2.0f / KPAD_DPD_RESO_WX)
+#define KPAD_DPD_CX ((f32)(KPAD_DPD_RESO_WX - 1) / KPAD_DPD_RESO_WX)
+#define KPAD_DPD_CY ((f32)(KPAD_DPD_RESO_WY - 1) / KPAD_DPD_RESO_WX)
+
 #define KPAD_USE_OBJECTS 2
 #define KPAD_RING_BUFS 16
 
@@ -127,12 +131,13 @@ static s32 kp_cl_trigger_max = 180;
 static f32 kp_rm_acc_max = 3.4f;
 static f32 kp_fs_acc_max = 2.1f;
 
-// TODO Selects clamp_stick_circle instead of clamp_stick_cross when nonzero; its setter is not in the binary
-static s32 kp_stick_clamp_mode;
+// TODO An 8-byte object whose first word selects clamp_stick_circle instead of clamp_stick_cross; nothing in the
+// binary writes it
+static s32 kp_stick_clamp_mode[2] = {0, 0};
 
 static Vec2 Vec2_0 = {0.0f, 0.0f};
-static f32 kp_dist_vv1;
 static f32 kp_err_dist_min;
+static f32 kp_dist_vv1;
 
 KPADInsideStatus inside_kpads[WPAD_MAX_CONTROLLERS];
 
@@ -505,18 +510,16 @@ static void read_kpad_acc(KPADInsideStatus* kp, KPADUnifiedWpadStatus* uwp) {
 }
 
 static inline void get_kobj(KPADInsideStatus* kp, KPADUnifiedWpadStatus* uwp) {
-    DPDObject* wobj_p = &uwp->u.core.obj[WPAD_MAX_DPD_OBJECTS - 1];
-    const f32 dpd_scale = 2.0f / (f32)KPAD_DPD_RESO_WX;
-    const f32 dpd_cx = (f32)(KPAD_DPD_RESO_WX - 1) / (f32)KPAD_DPD_RESO_WX;
-    const f32 dpd_cy = (f32)(KPAD_DPD_RESO_WY - 1) / (f32)KPAD_DPD_RESO_WX;
+    DPDObject* wobj_p;
     KPADObject* kobj_p;
 
     kobj_p = &kp->kobj_sample[WPAD_MAX_DPD_OBJECTS - 1];
+    wobj_p = &uwp->u.core.obj[WPAD_MAX_DPD_OBJECTS - 1];
 
     do {
         if (wobj_p->size) {
-            kobj_p->center.x = (f32)(s32)wobj_p->x * dpd_scale - dpd_cx;
-            kobj_p->center.y = (f32)(s32)wobj_p->y * dpd_scale - dpd_cy;
+            kobj_p->center.x = (f32)(s32)wobj_p->x * KPAD_DPD_SCALE - KPAD_DPD_CX;
+            kobj_p->center.y = (f32)(s32)wobj_p->y * KPAD_DPD_SCALE - KPAD_DPD_CY;
 
             kobj_p->error_fg = 0;
             kobj_p->state_fg = 0;
@@ -1109,7 +1112,7 @@ static void read_kpad_stick(KPADInsideStatus* kp, KPADUnifiedWpadStatus* uwp) {
     KPADEXStatus* ep = &kp->status.ex_status;
     u8 dev;
 
-    if (kp_stick_clamp_mode != 0) {
+    if (kp_stick_clamp_mode[0] != 0) {
         clamp_stick = clamp_stick_circle;
     }
 
