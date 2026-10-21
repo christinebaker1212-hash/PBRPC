@@ -143,6 +143,7 @@ KPADInsideStatus inside_kpads[WPAD_MAX_CONTROLLERS];
 
 void KPADiControlDpdCallback(s32 chan, s32 result);
 static void KPADiSamplingCallback(s32 chan);
+void KPADReset(void);
 
 void KPADSetFSStickClamp(s8 min, s8 max) {
     kp_fs_fstick_min = min;
@@ -1370,12 +1371,7 @@ void KPADInit(void) {
         kp->pos_play_radius = kp->hori_play_radius = kp->dist_play_radius = kp->acc_play_radius = 0.0f;
         kp->pos_sensitivity = kp->hori_sensitivity = kp->dist_sensitivity = kp->acc_sensitivity = 1.0f;
 
-        kp->btn_repeat_delay = KPAD_BTN_NO_RPT_DELAY;
-        kp->btn_repeat_pulse = 0;
-        kp->btn_repeat_time = 0;
-        kp->btn_repeat_next = KPAD_BTN_NO_RPT_DELAY;
-        kp->btn_cl_repeat_time = 0;
-        kp->btn_cl_repeat_next = KPAD_BTN_NO_RPT_DELAY;
+        KPADSetBtnRepeat(i, 0.0f, 0.0f);
 
         j = 0;
         do {
@@ -1383,14 +1379,19 @@ void KPADInit(void) {
         } while (++j < KPAD_RING_BUFS);
     }
 
+    KPADReset();
+    OSRegisterVersion(__KPADVersion);
+}
+
+void KPADReset(void) {
+    s32 chan;
+
     KPADSetObjInterval(kp_obj_interval);
 
-    for (i = WPAD_MAX_CONTROLLERS - 1; i >= 0; i--) {
-        WPADControlMotor(i, WPAD_MOTOR_STOP);
-        inside_kpads[i].reset_req = TRUE;
+    for (chan = WPAD_MAX_CONTROLLERS - 1; chan >= 0; chan--) {
+        WPADControlMotor(chan, WPAD_MOTOR_STOP);
+        inside_kpads[chan].reset_req = TRUE;
     }
-
-    OSRegisterVersion(__KPADVersion);
 }
 
 void KPADDisableDPD(s32 chan) {
