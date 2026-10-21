@@ -10,8 +10,8 @@
 # Usage:
 #   python tools/verify_linked.py --version RPBE01 [candidates.txt]
 #
-# Without a candidate list, every unit marked Matching in configure.py is
-# tried.
+# Without a candidate list, every unit marked Matching or MatchingFor in
+# configure.py, and every unit already in linked.txt, is tried.
 ###
 
 import argparse
@@ -55,7 +55,16 @@ def main() -> None:
             if l.strip() and not l.startswith("#")
         ]
     else:
-        candidates = re.findall(r'Object\(Matching, "([^"]+)"', Path("configure.py").read_text())
+        candidates = re.findall(
+            r'Object\(\s*(?:Matching|MatchingFor\([^)]*\)),\s*"([^"]+)"',
+            Path("configure.py").read_text(),
+        )
+        linked = Path("config") / args.version / "linked.txt"
+        if linked.exists():
+            for l in linked.read_text().splitlines():
+                l = l.strip()
+                if l and not l.startswith("#") and l not in candidates:
+                    candidates.append(l)
 
     good = []
     for unit in candidates:
