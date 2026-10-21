@@ -4,3 +4,6 @@ hash: b8d70d7500497dc74bed4223260f3c0ac8540c83
 symbols: config/RPBE01/symbols.txt
 splits: config/RPBE01/splits.txt
 mw_comment_version: 14 # 3.0a3+
+block_relocations:
+  # Bytes in a .rodata blob that look like a pointer into the HBM strings
+  - source: 0x803EB6F8

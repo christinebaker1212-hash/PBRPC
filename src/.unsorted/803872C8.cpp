@@ -4,9 +4,9 @@
 
 extern "C" {
 
-extern u32 lbl_80640578;
+extern u32 typeInfo__Q34nw4r3lyt7Picture;
 
 u32 *fn_803872C8(void) {
-    return &lbl_80640578;
+    return &typeInfo__Q34nw4r3lyt7Picture;
 }
 }

@@ -1,5 +1,5 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_SoundHeap.cpp
-// TODO Functions of the binary not in this source yet: fn_8037AAF4 and fn_8037AAFC.
+// TODO Functions of the binary not in this source yet: Create and Destroy (inline in this version).
 #include <nw4r/snd.h>
 #include <nw4r/ut.h>
 

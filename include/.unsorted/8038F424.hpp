@@ -625,7 +625,6 @@ s32 fn_803CE6B4(u8 *a, u8 *b);
 s32 fn_803D5D84(u8 *a, u8 *b);
 s32 fn_803D6A14(u8 *a, u8 *b);
 s32 fn_803D6A80(u8 *a, u8 *b);
-extern const f32 lbl_80642FC4;
 void *MEMAllocFromAllocator(void *a, u32 size);
 void MEMFreeToAllocator(void *a, void *p);
 void OSCancelAlarm(void *a);
@@ -664,9 +663,6 @@ struct VObj {
 };
 
 extern "C" {
-extern u8 lbl_80472EF0[];
-extern u8 lbl_806405B0[4];
-extern u32 lbl_806405A8;
 extern u8 lbl_80405AC1[];
 struct U8Pair {
     u8 a;
@@ -700,11 +696,8 @@ struct VObj2 {
 };
 
 extern "C" {
-extern const char *lbl_8063E808;
-extern u8 *lbl_806405B8;
 void OSRegisterVersion(const char *v);
 void MEMDestroyFrmHeap(void *h);
-u8 *fn_80362AEC(u8 *p, u16 x);
 void WPADControlMotor(s32 ch, u32 cmd);
 s32 WPADControlSpeaker(s32 ch, u32 cmd, void *cb);
 s32 fn_803D4C24(u8 *a, u8 *b);
@@ -817,7 +810,6 @@ struct VObj3 {
 extern "C" {
 u32 *fn_803D6E8C(u8 *a, u8 *b, u32 c);
 s32 WPADIsSpeakerEnabled(s32 ch);
-extern u8 *lbl_8063D070[];
 s32 fn_803C9F44(u8 *a, u8 *b);
 s32 fn_803D5AF8(u8 *a, u8 *b);
 s32 fn_803D5B60(u8 *a, u8 *b);
@@ -835,7 +827,6 @@ void fn_803A66C8(u8 *a, u8 *b);
 s32 fn_803CDA14(u8 *a, u8 *b);
 s32 fn_803D2E38(u8 *a, u8 *b);
 extern U8Pair lbl_80405A50[];
-extern u8 lbl_8063CED8[];
 void fn_80379514(u32 a);
 void OSLockMutex(void *m);
 void OSUnlockMutex(void *m);
@@ -861,8 +852,6 @@ s32 fn_803CF3B4(u8 *a, u8 *b);
 void fn_803D71CC(u8 *a, u8 *b);
 void fn_8017CED8(u8 *a);
 s32 WPADGetInfoAsync(s32 ch, void *info, void *cb);
-extern u8 lbl_8063CEF0[];
-extern u8 lbl_8063CFB0[];
 void DetachSound__Q34nw4r3snd11SoundHandleFv(u8 *p); // nw4r::snd::SoundHandle::DetachSound
 extern u8 lbl_80405248[];
 s32 fn_803D50C8(u8 *a, u8 *b);
@@ -906,7 +895,6 @@ s32 fn_803D3F98(u8 *a, u8 *b);
 s32 fn_803D1F84(u8 *a, u8 *b);
 s32 fn_803CBB14(u8 *a, u8 *b);
 s32 fn_803CDC28(u8 *a, u8 *b);
-extern u8 lbl_80473058[];
 s32 fn_803D6894(u8 *a, u8 *b);
 s32 fn_803CC648(u8 *a, u8 *b);
 s32 fn_803D4DA8(u8 *a, u8 *b);

@@ -4,14 +4,14 @@
 
 extern "C" {
 
-extern u32 lbl_80640588;
-extern u32 lbl_80640590;
+extern u32 typeInfo__Q34nw4r3lyt6Window;
+extern u32 typeInfo__Q34nw4r3lyt8Bounding;
 
 u32 *fn_8038A318(void) {
-    return &lbl_80640588;
+    return &typeInfo__Q34nw4r3lyt6Window;
 }
 void fn_8038A3C0(void) {}
 u32 *fn_8038A3C4(void) {
-    return &lbl_80640590;
+    return &typeInfo__Q34nw4r3lyt8Bounding;
 }
 }

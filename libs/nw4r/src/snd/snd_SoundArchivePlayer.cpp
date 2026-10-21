@@ -1,5 +1,5 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_SoundArchivePlayer.cpp
-// TODO Functions of the binary not in this source yet: fn_80378D74, fn_80378F68, fn_803790E4, fn_80379E9C and
+// TODO Functions of the binary not in this source yet: Setup, GetRequiredMemSize, fn_803790E4, fn_80379E9C and
 // fn_8037A1A0.
 #include <nw4r/snd.h>
 #include <nw4r/ut.h>

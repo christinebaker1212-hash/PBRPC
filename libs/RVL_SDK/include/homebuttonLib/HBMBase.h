@@ -207,6 +207,10 @@ private:
 public:
     void update_sound();
 
+    void initSound(const char* pPath);
+    void createSound(nw4r::snd::DvdSoundArchive* pArchive, bool createHeap);
+    void deleteSound();
+
 private:
     static HomeButton* spHomeButtonObj;
     static OSMutex sMutex;

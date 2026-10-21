@@ -234,6 +234,44 @@ void Controller::initSound() {
     mCheckSoundIntervalFlag = false;
 }
 
+void Controller::updateSound() {
+    int chan = getChan();
+
+    if (!isPlayingSound()) {
+        if (mCheckSoundTimeFlag) {
+            if (!mCheckSoundIntervalFlag) {
+                mStopSoundTime = OSGetTime();
+                mCheckSoundIntervalFlag = true;
+            } else {
+                OSTime time = OSGetTime();
+
+                if (OSTicksToMilliseconds(OSDiffTick(time, mStopSoundTime)) >= 1000) {
+                    mCheckSoundTimeFlag = false;
+                    mCheckSoundIntervalFlag = false;
+                }
+            }
+        }
+    } else {
+        if (mCheckSoundTimeFlag) {
+            mCheckSoundIntervalFlag = false;
+
+            OSTime time = OSGetTime();
+
+            if (OSTicksToMilliseconds(OSDiffTick(time, mPlaySoundTime)) >= 480000) {
+                mCheckSoundTimeFlag = false;
+                mCheckSoundIntervalFlag = false;
+                soundOff(1000);
+                return;
+            }
+        }
+
+        // Average radio sensitivity is 80
+        if (!mSoundOffFlag && WPADGetRadioSensitivity(chan) <= 85) {
+            soundOff(1000);
+        }
+    }
+}
+
 void Controller::soundOff(int msec) {
     int chan = getChan();
 

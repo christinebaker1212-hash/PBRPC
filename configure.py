@@ -861,12 +861,12 @@ config.libs = [
     HBMLib(
         "homebuttonLib",
         [
-            Object(NonMatching, "homebuttonLib/HBMBase.cpp"),
-            Object(NonMatching, "homebuttonLib/HBMAnmController.cpp"),
-            Object(NonMatching, "homebuttonLib/HBMFrameController.cpp"),
-            Object(NonMatching, "homebuttonLib/HBMGUIManager.cpp"),
-            Object(NonMatching, "homebuttonLib/HBMController.cpp"),
-            Object(NonMatching, "homebuttonLib/HBMRemoteSpk.cpp"),
+            Object(MatchingFor("RPBE01"), "homebuttonLib/HBMBase.cpp"),
+            Object(MatchingFor("RPBE01"), "homebuttonLib/HBMAnmController.cpp"),
+            Object(MatchingFor("RPBE01"), "homebuttonLib/HBMFrameController.cpp"),
+            Object(MatchingFor("RPBE01"), "homebuttonLib/HBMGUIManager.cpp"),
+            Object(MatchingFor("RPBE01"), "homebuttonLib/HBMController.cpp"),
+            Object(MatchingFor("RPBE01"), "homebuttonLib/HBMRemoteSpk.cpp"),
         ],
     ),
     RVLSDKLib(
