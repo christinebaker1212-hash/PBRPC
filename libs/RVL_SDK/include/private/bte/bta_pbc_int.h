@@ -1,7 +1,7 @@
 #ifndef BTE_BTA_PBC_INT_H
 #define BTE_BTA_PBC_INT_H
 
-#include "bta_pbc_api.h"
+#include <private/bte/bta_pbc_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

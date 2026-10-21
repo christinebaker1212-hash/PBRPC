@@ -26,16 +26,16 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_target.h"
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_target.h>
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "bta_api.h"
-#include "bta_sys.h"
-#include "btm_api.h"
-#include "gki.h"
-#include "hcidefs.h"
-#include "sdp_api.h"
+#include <private/bte/bta_api.h>
+#include <private/bte/bta_sys.h>
+#include <private/bte/btm_api.h>
+#include <private/bte/gki.h>
+#include <private/bte/hcidefs.h>
+#include <private/bte/sdp_api.h>
 
 #define BTA_ALL_APP_ID				255
 

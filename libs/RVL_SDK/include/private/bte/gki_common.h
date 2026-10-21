@@ -26,10 +26,10 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
-#include "gki_target.h"
+#include <private/bte/data_types.h>
+#include <private/bte/gki_target.h>
 
-#include "gki.h"
+#include <private/bte/gki.h>
 
 #define ALIGN_POOL(pl_size)	(((pl_size) + 3) / sizeof(UINT32) * sizeof(UINT32))
 #define BUFFER_PADDING_SIZE	(sizeof(BUFFER_HDR_T) + sizeof(UINT32))

@@ -28,11 +28,11 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "btm_api.h"
-#include "profiles_api.h"
+#include <private/bte/btm_api.h>
+#include <private/bte/profiles_api.h>
 
 #define GAP_INVALID_HANDLE			0xffff
 

@@ -26,13 +26,13 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_target.h"
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_target.h>
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "gki.h"
-#include "l2c_api.h"
-#include "sdp_api.h"
+#include <private/bte/gki.h>
+#include <private/bte/l2c_api.h>
+#include <private/bte/sdp_api.h>
 
 #define SDP_CONTINUATION_LEN		2
 #define SDP_MAX_CONTINUATION_LEN	16

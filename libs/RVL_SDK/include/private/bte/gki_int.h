@@ -26,9 +26,9 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
-#include "gki_common.h"
+#include <private/bte/gki_common.h>
 
 #define MAX_INT_STATE	20	/* name known from asserts */
 

@@ -26,11 +26,11 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "hiddefs.h"
-#include "sdp_api.h"
+#include <private/bte/hiddefs.h>
+#include <private/bte/sdp_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

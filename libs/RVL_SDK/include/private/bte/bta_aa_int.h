@@ -1,9 +1,9 @@
 #ifndef BTE_BTA_AA_INT_H
 #define BTE_BTA_AA_INT_H
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
-#include "bta_aa_api.h"
+#include <private/bte/bta_aa_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

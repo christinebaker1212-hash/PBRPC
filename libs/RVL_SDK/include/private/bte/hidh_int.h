@@ -26,16 +26,16 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_target.h"
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_target.h>
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "gki.h"
-#include "hid_conn.h"
-#include "hiddefs.h"
-#include "hidh_api.h"
-#include "l2c_api.h"
-#include "sdp_api.h"
+#include <private/bte/gki.h>
+#include <private/bte/hid_conn.h>
+#include <private/bte/hiddefs.h>
+#include <private/bte/hidh_api.h>
+#include <private/bte/l2c_api.h>
+#include <private/bte/sdp_api.h>
 
 #define MAX_SERVICE_DB_SIZE	4000
 

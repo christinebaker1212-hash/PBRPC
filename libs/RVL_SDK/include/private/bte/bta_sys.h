@@ -26,10 +26,10 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "gki.h"
+#include <private/bte/gki.h>
 
 #define BTA_SYS_EVT_START(id)	((id) << 8)
 

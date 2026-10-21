@@ -26,8 +26,8 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
-#include "bt_types.h"
+#include <private/bte/data_types.h>
+#include <private/bte/bt_types.h>
 
 #define HCIC_PARAM_SIZE_INQUIRY					5
 #define HCIC_PARAM_SIZE_INQ_CANCEL				0

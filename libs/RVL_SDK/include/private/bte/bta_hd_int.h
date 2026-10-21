@@ -6,14 +6,14 @@
  * [1] components/bt/host/bluedroid/bta/hd/include/bta_hd_int.h
  */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "bta_hd_api.h"
-#include "bta_sys.h"
-#include "gki.h"
-#include "hidd_api.h"
-#include "hiddefs.h"
+#include <private/bte/bta_hd_api.h>
+#include <private/bte/bta_sys.h>
+#include <private/bte/gki.h>
+#include <private/bte/hidd_api.h>
+#include <private/bte/hiddefs.h>
 
 #define BTA_HD_APP_NAME_LEN	35	// [1]: name
 

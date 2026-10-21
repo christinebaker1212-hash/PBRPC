@@ -26,13 +26,13 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_target.h"
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_target.h>
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "l2c_api.h"
-#include "port_api.h"
-#include "port_int.h"
+#include <private/bte/l2c_api.h>
+#include <private/bte/port_api.h>
+#include <private/bte/port_int.h>
 
 #define RFCOMM_MIN_MTU						23
 #define RFCOMM_MAX_MTU						32767

@@ -26,10 +26,10 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "bta_fs_co.h"
+#include <private/bte/bta_fs_co.h>
 
 #ifdef __cplusplus
 	extern "C" {

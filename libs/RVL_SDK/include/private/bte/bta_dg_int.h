@@ -1,7 +1,7 @@
 #ifndef BTE_BTA_DG_INT_H
 #define BTE_BTA_DG_INT_H
 
-#include "bta_dg_api.h"
+#include <private/bte/bta_dg_api.h>
 
 #ifdef __cplusplus
 	extern "C" {
