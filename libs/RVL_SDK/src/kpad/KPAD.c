@@ -511,11 +511,8 @@ static void read_kpad_acc(KPADInsideStatus* kp, KPADUnifiedWpadStatus* uwp) {
 }
 
 static inline void get_kobj(KPADInsideStatus* kp, KPADUnifiedWpadStatus* uwp) {
-    DPDObject* wobj_p;
-    KPADObject* kobj_p;
-
-    kobj_p = &kp->kobj_sample[WPAD_MAX_DPD_OBJECTS - 1];
-    wobj_p = &uwp->u.core.obj[WPAD_MAX_DPD_OBJECTS - 1];
+    KPADObject* kobj_p = &kp->kobj_sample[WPAD_MAX_DPD_OBJECTS - 1];
+    DPDObject* wobj_p = &uwp->u.core.obj[WPAD_MAX_DPD_OBJECTS - 1];
 
     do {
         if (wobj_p->size) {
@@ -901,19 +898,17 @@ static void calc_dpd_variable(KPADInsideStatus* kp, s8 valid_fg_next) {
 }
 
 static inline void calc_obj_horizon(KPADInsideStatus* kp) {
-    f32 vx, vy, f1;
+    f32 vx, vy, f2, f1;
 
     vx = kp->kobj_regular[1].center.x - kp->kobj_regular[0].center.x;
     vy = kp->kobj_regular[1].center.y - kp->kobj_regular[0].center.y;
-    kp->sec_length = sqrt(vx * vx + vy * vy);
-
-    f1 = 1.0f / kp->sec_length;
-    vx *= f1;
-    vy *= f1;
+    f2 = sqrt(vx * vx + vy * vy);
+    kp->sec_length = f2;
+    f1 = 1.0f / f2;
     kp->sec_dist = kp->dist_vv1 * f1;
 
-    kp->sec_nrm.x = vx;
-    kp->sec_nrm.y = vy;
+    kp->sec_nrm.x = (vx *= f1);
+    kp->sec_nrm.y = (vy *= f1);
 
     kp->obj_horizon.x = kp->sec_nrm_hori.x * vx + kp->sec_nrm_hori.y * vy;
     kp->obj_horizon.y = kp->sec_nrm_hori.y * vx - kp->sec_nrm_hori.x * vy;
