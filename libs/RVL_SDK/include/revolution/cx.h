@@ -13,6 +13,7 @@ static inline int CXGetCompressionType(const void* data) {
     return *(u8*)data & CX_COMPRESSION_TYPE_MASK;
 }
 
+#include <revolution/cx/CXCompression.h>
 #include <revolution/cx/CXSecureUncompression.h>
 #include <revolution/cx/CXStreamingUncompression.h>
 #include <revolution/cx/CXUncompression.h>

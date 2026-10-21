@@ -54,3 +54,5 @@ ds/string_template.cpp
 ds/message.cpp
 ds/convert_pokemon.cpp
 ds/convert_save.cpp
+tpl/TPL.c
+cx/CXCompression.c

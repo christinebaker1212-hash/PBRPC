@@ -1727,8 +1727,31 @@ libs/RVL_SDK/src/dsp/dsp_task.c:
 	.text       start:0x8029FA68 end:0x802A02FC
 	.sbss       start:0x80628220 end:0x80628238
 
-src/.unsorted/8029B918.cpp:
-	.text       start:0x802A02FC end:0x802A6FD4
+libs/RVL_SDK/src/tpl/TPL.c:
+	.text       start:0x802A02FC end:0x802A0510
+	.data       start:0x8042B280 end:0x8042B2B0
+	.sdata      start:0x80625EE8 end:0x80625EF0
+	.sdata2     start:0x8062ABE0 end:0x8062ABE8
+
+libs/RVL_SDK/src/thp/THPDec.c:
+	.text       start:0x802A0510 end:0x802A3D74
+	.rodata     start:0x803EE930 end:0x803EE9C0
+	.data       start:0x8042B2B0 end:0x8042B2F8
+	.bss        start:0x8051DBC0 end:0x8051DD10
+	.sdata      start:0x80625EF0 end:0x80625EF8
+	.sbss       start:0x80628240 end:0x80628368
+	.sdata2     start:0x8062ABE8 end:0x8062AC08
+
+libs/RVL_SDK/src/kpad/KPAD.c:
+	.text       start:0x802A3D74 end:0x802A6B0C
+	.data       start:0x8042B2F8 end:0x8042B350
+	.bss        start:0x8051DD10 end:0x8051F1A0
+	.sdata      start:0x80625EF8 end:0x80625F68
+	.sbss       start:0x80628368 end:0x80628388
+	.sdata2     start:0x8062AC08 end:0x8062AC60
+
+libs/RVL_SDK/src/cx/CXCompression.c:
+	.text       start:0x802A6B0C end:0x802A6FD4
 
 libs/RVL_SDK/src/cx/CXUncompression.c:
 	.text       start:0x802A6FD4 end:0x802A7148
