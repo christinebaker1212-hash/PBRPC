@@ -806,6 +806,7 @@ config.libs = [
             Object(NonMatching, "ipc/ipcMain.c"),
             Object(NonMatching, "ipc/memory.c"),
             Object(NonMatching, "ipc/ipcProfile.c"),
+            Object(NonMatching, "ipc/fs.c"),
         ],
     ),
     RVLSDKLib(
@@ -1162,7 +1163,7 @@ config.libs = [
             Object(NonMatching, ".unsorted/802973F8.cpp"),
             Object(NonMatching, ".unsorted/80297890.cpp"),
             Object(NonMatching, ".unsorted/802A2904.cpp"),
-            Object(NonMatching, ".unsorted/802A4660.cpp"),
+            Object(NonMatching, ".unsorted/802A5B28.cpp"),
             Object(NonMatching, ".unsorted/802AD0D4.cpp"),
             Object(NonMatching, ".unsorted/802B2D18.cpp"),
             Object(NonMatching, ".unsorted/802B3C20.cpp"),
