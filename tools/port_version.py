@@ -374,6 +374,20 @@ def main() -> None:
         out[s.addr] = [s]
         names.add(s.name)
 
+    # Hand-placed target symbols, for code that differs between versions
+    # so that the alignment can't place it.
+    overrides_path = dst_dir / "symbol_overrides.txt"
+    if overrides_path.exists():
+        for o in read_symbols(overrides_path):
+            for addr in list(out):
+                out[addr] = [
+                    s for s in out[addr]
+                    if s.name != o.name and not (addr == o.addr and s.kind == o.kind)
+                ]
+                if not out[addr]:
+                    del out[addr]
+            out.setdefault(o.addr, []).append(o)
+
     with open(dst_dir / "symbols.txt", "w", newline="\n") as f:
         for addr in sorted(out):
             for sym in out[addr]:

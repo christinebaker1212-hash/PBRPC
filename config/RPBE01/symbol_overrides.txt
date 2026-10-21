@@ -1,0 +1,2 @@
+WPADDisconnect = .text:0x802AD740; // type:function size:0xB0
+WPADGetInfoAsync = .text:0x802ADAAC; // type:function size:0x1C0
