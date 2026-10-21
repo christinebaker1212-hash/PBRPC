@@ -177,74 +177,74 @@ typedef struct WPADCB {
     WPADCommandQueue stdCmdQueue;       // 0x160
     WPADCommand stdCmdQueueList[24];    // 0x16C
     WPADCommandQueue extCmdQueue;       // 0x5EC
-    WPADCommand extCmdQueueList[12];    // 0x5F8
-    WPADInfo wpInfo;                    // 0x838
-    WPADInfo* wpInfoOut;                // 0x850
-    WPADDevConfig devConfig;            // 0x854
-    WPADExtConfig extConfig;            // 0x882
-    WPADCallback cmdBlkCB;              // 0x89C
-    WPADExtensionCallback extensionCB;  // 0x8A0
-    WPADConnectCallback connectCB;      // 0x8A4
-    WPADSamplingCallback samplingCB;    // 0x8A8
+    WPADCommand extCmdQueueList[8];     // 0x5F8
+    WPADInfo wpInfo;                    // 0x778
+    WPADInfo* wpInfoOut;                // 0x790
+    WPADDevConfig devConfig;            // 0x794
+    WPADExtConfig extConfig;            // 0x7C2
+    WPADCallback cmdBlkCB;              // 0x7DC
+    WPADExtensionCallback extensionCB;  // 0x7E0
+    WPADConnectCallback connectCB;      // 0x7E4
+    WPADSamplingCallback samplingCB;    // 0x7E8
     union {
         WPADStatus* samplingBuf;
         WPADStatusEx* samplingBufEx;
         WPADFSStatus* samplingBufFS;
         WPADCLStatus* samplingBufCL;
-    };  // 0x8AC
-    u32 samplingBufIndex;  // 0x8B0
-    u32 samplingBufSize;   // 0x8B4
-    u32 dataFormat;        // 0x8B8
-    s32 status;            // 0x8BC
-    u8 statusReqBusy;      // 0x8C0
-    u8 devType;            // 0x8C1
-    u8 devMode;            // 0x8C2
-    s8 devHandle;          // 0x8C3
-    s32 unk_0x8C4;
-    u8 rxBufIndex;  // 0x8C8
-    s8 unk_0x8C9;
-    u8 defaultDpdSize;             // 0x8CA
-    u8 currentDpdCommand;          // 0x8CB
-    u8 pendingDpdCommand;          // 0x8CC
-    u8 radioQuality;               // 0x8CD
-    u8 radioQualityOkMs;           // 0x8CE
-    u8 audioFrames;                // 0x8CF
-    u32 motorBusy;                 // 0x8D0
-    BOOL motorRunning;             // 0x8D4
-    BOOL used;                     // 0x8D8
-    BOOL handshakeFinished;        // 0x8DC
-    s32 configIndex;               // 0x8E0
-    OSThreadQueue threadQueue;     // 0x8E4
-    s64 lastControllerDataUpdate;  // 0x8F0
-    u16 filterDiffDpd;             // 0x8F8
-    u16 filterSameDpd;             // 0x8FA
-    u16 filterDiffAcc;             // 0x8FC
-    u16 filterSameAcc;             // 0x8FE
-    u16 filterDiffExt;             // 0x900
-    u16 filterSameExt;             // 0x902
-    s64 lastReportSendTime;        // 0x908
-    u8 unk_0x910;
-    u8 calibrated;          // 0x911
-    u16 comboHeld;          // 0x912
-    u8 encryptionKey[16];   // 0x914
-    u8 decryptAddTable[8];  // 0x924
-    u8 decryptXorTable[8];  // 0x92C
-    u8 wmReadDataBuf[64];   // 0x934
-    u8* wmReadDataPtr;      // 0x974
-    u32 wmReadAddress;      // 0x978
-    int wmReadHadError;     // 0x97C
-    u16 wmReadLength;       // 0x980
-    s8 unk_0x982;
-    u8 radioSensitivity;     // 0x983
-    u16 copyOutCount;        // 0x984
-    u8 sleeping;             // 0x986
-    u8 lastReportID;         // 0x987
-    WPADCallback getInfoCB;  // 0x988
-    u8 getInfoBusy;          // 0x98C
+    };  // 0x7EC
+    u32 samplingBufIndex;  // 0x7F0
+    u32 samplingBufSize;   // 0x7F4
+    u32 dataFormat;        // 0x7F8
+    s32 status;            // 0x7FC
+    u8 statusReqBusy;      // 0x800
+    u8 devType;            // 0x801
+    u8 devMode;            // 0x802
+    s8 devHandle;          // 0x803
+    s32 unk_0x804;
+    u8 rxBufIndex;  // 0x808
+    s8 unk_0x809;
+    u8 defaultDpdSize;             // 0x80A
+    u8 currentDpdCommand;          // 0x80B
+    u8 pendingDpdCommand;          // 0x80C
+    u8 radioQuality;               // 0x80D
+    u8 radioQualityOkMs;           // 0x80E
+    u8 audioFrames;                // 0x80F
+    u32 motorBusy;                 // 0x810
+    BOOL motorRunning;             // 0x814
+    BOOL used;                     // 0x818
+    BOOL handshakeFinished;        // 0x81C
+    s32 configIndex;               // 0x820
+    OSThreadQueue threadQueue;     // 0x824
+    s64 lastControllerDataUpdate;  // 0x830
+    u16 filterDiffDpd;             // 0x838
+    u16 filterSameDpd;             // 0x83A
+    u16 filterDiffAcc;             // 0x83C
+    u16 filterSameAcc;             // 0x83E
+    u16 filterDiffExt;             // 0x840
+    u16 filterSameExt;             // 0x842
+    s64 lastReportSendTime;        // 0x848
+    u8 unk_0x850;
+    u8 calibrated;          // 0x851
+    u16 comboHeld;          // 0x852
+    u8 encryptionKey[16];   // 0x854
+    u8 decryptAddTable[8];  // 0x864
+    u8 decryptXorTable[8];  // 0x86C
+    u8 wmReadDataBuf[64];   // 0x874
+    u8* wmReadDataPtr;      // 0x8B4
+    u32 wmReadAddress;      // 0x8B8
+    int wmReadHadError;     // 0x8BC
+    u16 wmReadLength;       // 0x8C0
+    s8 unk_0x8C2;
+    u8 radioSensitivity;     // 0x8C3
+    u16 copyOutCount;        // 0x8C4
+    u8 sleeping;             // 0x8C6
+    u8 lastReportID;         // 0x8C7
+    WPADCallback getInfoCB;  // 0x8C8
+    u8 getInfoBusy;          // 0x8CC
 
-    u8 unk_0x98D;  // 0x98D
-    u8 unk_0x98E;  // 0x98E
-    u8 unk_0x98F[0x9A0 - 0x990];
+    u8 unk_0x8CD;  // 0x8CD
+    u8 unk_0x8CE;  // 0x8CE
+    u8 unk_0x8CF[0x8E0 - 0x8CF];
 } WPADCB;
 
 extern WPADCB _wpd[WPAD_MAX_CONTROLLERS];
