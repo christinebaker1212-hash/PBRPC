@@ -1107,12 +1107,12 @@ u8 fn_801C5F40(u8 *p) {
     }
     return fn_8038FD78(lbl_8063CE34 + 0xc, v);
 }
-u8 fn_801C5F84(u8 *p) {
+u32 fn_801C5F84(u8 *p) {
     u16 v = fn_801C5F28(p);
     if (v == 0) {
         return 0;
     }
-    return fn_8038FDAC(lbl_8063CE34 + 0xc, v);
+    return (u8)fn_8038FDAC(lbl_8063CE34 + 0xc, v);
 }
 s32 fn_801A5328(s32 a, s32 b) {
     s32 v = fn_80180478(a, b);
@@ -7159,5 +7159,99 @@ u32 fn_801C6818(s32 a) {
 }
 u32 fn_801C6858(s32 a) {
     return lbl_80422180[(u16)fn_80392B38((s32)(lbl_8063CE34 + 0x18), a)];
+}
+inline u16 inl_hp(u8 *p) {
+    if (p == 0) {
+        return 0;
+    }
+    return *(u16 *)(p + 4);
+}
+inline u8 *inl_3c(u8 *p) {
+    if (p == 0) {
+        return 0;
+    }
+    return p + 0x3c;
+}
+inline u16 inl_maxhp(u8 *p) {
+    if (p == 0) {
+        return 0;
+    }
+    return inl_1B9C(inl_3c(p));
+}
+inline u32 inl_E89C(u8 *p) {
+    if (p == 0) {
+        return 0;
+    }
+    return (*(u32 *)(*(u8 **)(p + 0x798) + 0x0) >> 8) & 7;
+}
+s32 fn_801A3D08(s32 a, u8 *p) {
+    s16 x;
+    if ((u8)inl_E89C(p) == 0) {
+        x = 0;
+    } else {
+        x = (u8)inl_E89C(p);
+    }
+    if (x >= 3) {
+        return 0;
+    }
+    return 1;
+}
+u16 fn_801C41F0(u8 *p) {
+    u8 *q = fn_801C3AA4(p);
+    if (q == 0) {
+        return 0;
+    }
+    if (fn_801C45C8(p, 0x3d) == 1) {
+        return 0;
+    }
+    return fn_801C5F84(q);
+}
+u16 fn_801C5EC0(u8 *p, u16 v, s32 flag) {
+    if (p == 0) {
+        return 0;
+    }
+    if (flag == 0) {
+        v = fn_801C5F28(p);
+        if (p) {
+            *(u16 *)(p + 2) = 0;
+        }
+    } else {
+        if (p) {
+            *(u16 *)(p + 2) = v;
+        }
+    }
+    return v;
+}
+s32 fn_801C6068(u8 *p, s32 d) {
+    if (d == 0) {
+        return 0;
+    }
+    if (p == 0) {
+        return 0;
+    }
+    if (inl_hp(p) <= inl_maxhp(p) / d) {
+        return 1;
+    }
+    return 0;
+}
+s32 fn_801C60E8(u8 *p, s32 d) {
+    u16 r;
+    if (p == 0) {
+        return 0;
+    }
+    if (d == 0) {
+        return 0;
+    }
+    r = inl_maxhp(p) / d;
+    if (r == 0) {
+        return 1;
+    }
+    return r;
+}
+s32 fn_801C6188(u8 *p) {
+    if (p == 0) {
+        return 0;
+    }
+    return inl_hp(p) * 100 / inl_maxhp(p);
 }
 }
