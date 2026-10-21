@@ -17,11 +17,17 @@ from typing import (
     TypedDict,
 )
 import json
+import os
 import re
 import struct
 
-VERSION = "RPBP01"
 ROOT = Path(__file__).resolve().parents[2]
+# PBR_VERSION selects the version; otherwise the one that has been built,
+# PAL first.
+VERSION = os.environ.get("PBR_VERSION") or next(
+    (v for v in ("RPBP01", "RPBE01") if (ROOT / "build" / v / "report.json").exists()),
+    "RPBP01",
+)
 CONFIG_DIR = ROOT / "config" / VERSION
 BUILD_DIR = ROOT / "build" / VERSION
 
