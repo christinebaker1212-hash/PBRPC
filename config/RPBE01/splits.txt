@@ -15,6 +15,7 @@ Sections:
 
 src/main.cpp:
 	.text       start:0x80006980 end:0x80007458
+	.ctors      start:0x803E54A4 end:0x803E54A8
 	.data       start:0x803F6CA0 end:0x803F6CC8
 	.sdata      start:0x80625600 end:0x80625610
 	.sbss       start:0x80626C08 end:0x80626C38
@@ -22,357 +23,472 @@ src/main.cpp:
 
 src/.unsorted/8000748C.cpp:
 	.text       start:0x80007458 end:0x80007900
+	.ctors      start:0x803E54A8 end:0x803E54AC
 
 src/.unsorted/80007940.cpp:
 	.text       start:0x80007900 end:0x80009648
+	.ctors      start:0x803E54AC end:0x803E54B0
 
 src/.unsorted/800097D8.cpp:
 	.text       start:0x80009648 end:0x8000A604
+	.ctors      start:0x803E54B0 end:0x803E54B4
 
 src/.unsorted/8000A7C4.cpp:
 	.text       start:0x8000A604 end:0x8000A904
+	.ctors      start:0x803E54B4 end:0x803E54B8
 
 src/.unsorted/8000AAC4.cpp:
 	.text       start:0x8000A904 end:0x8000AC00
+	.ctors      start:0x803E54B8 end:0x803E54BC
 
 src/.unsorted/8000ADC0.cpp:
 	.text       start:0x8000AC00 end:0x80024768
 
 src/.unsorted/80024914.cpp:
 	.text       start:0x80024768 end:0x800276D4
+	.ctors      start:0x803E54BC end:0x803E54C4
 
 src/.unsorted/80025390.cpp:
 	.text       start:0x800276D4 end:0x8002A79C
+	.ctors      start:0x803E54C4 end:0x803E54C8
 
 src/.unsorted/800284B0.cpp:
 	.text       start:0x8002A79C end:0x8002CBFC
+	.ctors      start:0x803E54C8 end:0x803E54CC
 
 src/.unsorted/8002A910.cpp:
 	.text       start:0x8002CBFC end:0x8002CED4
+	.ctors      start:0x803E54CC end:0x803E54D0
 
 src/.unsorted/8002ABE8.cpp:
 	.text       start:0x8002CED4 end:0x8002DE30
+	.ctors      start:0x803E54D0 end:0x803E54D4
 
 src/.unsorted/8002BB44.cpp:
 	.text       start:0x8002DE30 end:0x8002EDEC
+	.ctors      start:0x803E54D4 end:0x803E54D8
 
 src/.unsorted/8002CB00.cpp:
 	.text       start:0x8002EDEC end:0x80030118
+	.ctors      start:0x803E54D8 end:0x803E54DC
 
 src/.unsorted/8002DE2C.cpp:
 	.text       start:0x80030118 end:0x80032420
+	.ctors      start:0x803E54DC end:0x803E54E0
 
 src/.unsorted/80030134.cpp:
 	.text       start:0x80032420 end:0x8003260C
+	.ctors      start:0x803E54E0 end:0x803E54E4
 
 src/.unsorted/80030320.cpp:
 	.text       start:0x8003260C end:0x80032E8C
+	.ctors      start:0x803E54E4 end:0x803E54E8
 
 src/.unsorted/80030BA0.cpp:
 	.text       start:0x80032E8C end:0x800333C4
+	.ctors      start:0x803E54E8 end:0x803E54EC
 
 src/.unsorted/800310D8.cpp:
 	.text       start:0x800333C4 end:0x80033830
+	.ctors      start:0x803E54EC end:0x803E54F0
 
 src/.unsorted/80031544.cpp:
 	.text       start:0x80033830 end:0x800344D0
+	.ctors      start:0x803E54F0 end:0x803E54F4
 
 src/.unsorted/800321E4.cpp:
 	.text       start:0x800344D0 end:0x80034794
+	.ctors      start:0x803E54F4 end:0x803E54F8
 
 src/.unsorted/800324A8.cpp:
 	.text       start:0x80034794 end:0x80034EB4
+	.ctors      start:0x803E54F8 end:0x803E54FC
 
 src/.unsorted/80032BC8.cpp:
 	.text       start:0x80034EB4 end:0x8003514C
+	.ctors      start:0x803E54FC end:0x803E5500
 
 src/.unsorted/80032E60.cpp:
 	.text       start:0x8003514C end:0x800352D4
+	.ctors      start:0x803E5500 end:0x803E5504
 
 src/.unsorted/80032FE8.cpp:
 	.text       start:0x800352D4 end:0x80037F7C
+	.ctors      start:0x803E5504 end:0x803E5508
 
 src/.unsorted/80035CB0.cpp:
 	.text       start:0x80037F7C end:0x80039254
+	.ctors      start:0x803E5508 end:0x803E550C
 
 src/.unsorted/80036F88.cpp:
 	.text       start:0x80039254 end:0x80040308
+	.ctors      start:0x803E550C end:0x803E5510
 
 src/.unsorted/8003E03C.cpp:
 	.text       start:0x80040308 end:0x80040B20
+	.ctors      start:0x803E5510 end:0x803E5514
 
 src/.unsorted/8003E854.cpp:
 	.text       start:0x80040B20 end:0x800423B4
+	.ctors      start:0x803E5514 end:0x803E5518
 
 src/.unsorted/800400E8.cpp:
 	.text       start:0x800423B4 end:0x80046AB0
+	.ctors      start:0x803E5518 end:0x803E551C
 
 src/.unsorted/800447E4.cpp:
 	.text       start:0x80046AB0 end:0x800471F4
+	.ctors      start:0x803E551C end:0x803E5520
 
 src/.unsorted/80044F28.cpp:
 	.text       start:0x800471F4 end:0x80049840
+	.ctors      start:0x803E5520 end:0x803E5524
 
 src/.unsorted/800477E8.cpp:
 	.text       start:0x80049840 end:0x80049918
+	.ctors      start:0x803E5524 end:0x803E5528
 	.sbss       start:0x80626DC0 end:0x80626DC8
 
 src/.unsorted/800478C0.cpp:
 	.text       start:0x80049918 end:0x8004A780
+	.ctors      start:0x803E5528 end:0x803E552C
 
 src/.unsorted/80048728.cpp:
 	.text       start:0x8004A780 end:0x8004B0DC
+	.ctors      start:0x803E552C end:0x803E5530
 
 src/.unsorted/80049084.cpp:
 	.text       start:0x8004B0DC end:0x8004CD4C
+	.ctors      start:0x803E5530 end:0x803E5534
 
 src/.unsorted/8004ACF4.cpp:
 	.text       start:0x8004CD4C end:0x8004F77C
+	.ctors      start:0x803E5534 end:0x803E5538
 
 src/.unsorted/8004D724.cpp:
 	.text       start:0x8004F77C end:0x8004FEE0
+	.ctors      start:0x803E5538 end:0x803E553C
 
 src/.unsorted/8004DE88.cpp:
 	.text       start:0x8004FEE0 end:0x80050A48
+	.ctors      start:0x803E553C end:0x803E5540
 
 src/.unsorted/8004E9F0.cpp:
 	.text       start:0x80050A48 end:0x800513D4
+	.ctors      start:0x803E5540 end:0x803E5544
 
 src/.unsorted/8004F37C.cpp:
 	.text       start:0x800513D4 end:0x800521E4
+	.ctors      start:0x803E5544 end:0x803E5548
 
 src/.unsorted/8005018C.cpp:
 	.text       start:0x800521E4 end:0x8005237C
+	.ctors      start:0x803E5548 end:0x803E554C
 
 src/.unsorted/80050324.cpp:
 	.text       start:0x8005237C end:0x80057564
+	.ctors      start:0x803E554C end:0x803E5550
 
 src/.unsorted/80055504.cpp:
 	.text       start:0x80057564 end:0x80057A34
+	.ctors      start:0x803E5550 end:0x803E5554
 
 src/.unsorted/800559D4.cpp:
 	.text       start:0x80057A34 end:0x8005B478
+	.ctors      start:0x803E5554 end:0x803E5558
 
 src/.unsorted/800598F8.cpp:
 	.text       start:0x8005B478 end:0x8005C108
+	.ctors      start:0x803E5558 end:0x803E555C
 
 src/.unsorted/8005A588.cpp:
 	.text       start:0x8005C108 end:0x8005CF94
+	.ctors      start:0x803E555C end:0x803E5560
 
 src/.unsorted/8005B4A4.cpp:
 	.text       start:0x8005CF94 end:0x8005E99C
+	.ctors      start:0x803E5560 end:0x803E5564
 
 src/.unsorted/8005CEAC.cpp:
 	.text       start:0x8005E99C end:0x8006C680
+	.ctors      start:0x803E5564 end:0x803E5568
 
 src/.unsorted/8006A878.cpp:
 	.text       start:0x8006C680 end:0x80070348
+	.ctors      start:0x803E5568 end:0x803E556C
 
 src/.unsorted/8006E554.cpp:
 	.text       start:0x80070348 end:0x8007E494
+	.ctors      start:0x803E556C end:0x803E5570
 
 src/.unsorted/8007CFB0.cpp:
 	.text       start:0x8007E494 end:0x8008121C
+	.ctors      start:0x803E5570 end:0x803E5574
 
 src/.unsorted/8007F8C4.cpp:
 	.text       start:0x8008121C end:0x8008BAFC
+	.ctors      start:0x803E5574 end:0x803E5578
 
 src/.unsorted/8008A2D4.cpp:
 	.text       start:0x8008BAFC end:0x8008F0F8
+	.ctors      start:0x803E5578 end:0x803E557C
 
 src/.unsorted/8008D8CC.cpp:
 	.text       start:0x8008F0F8 end:0x8009292C
+	.ctors      start:0x803E557C end:0x803E5580
 
 src/.unsorted/80091268.cpp:
 	.text       start:0x8009292C end:0x80096424
+	.ctors      start:0x803E5580 end:0x803E5584
 
 src/.unsorted/80094DC0.cpp:
 	.text       start:0x80096424 end:0x80096FF0
+	.ctors      start:0x803E5584 end:0x803E5588
 
 src/.unsorted/8009598C.cpp:
 	.text       start:0x80096FF0 end:0x8009B8C8
+	.ctors      start:0x803E5588 end:0x803E558C
 
 src/.unsorted/8009A2BC.cpp:
 	.text       start:0x8009B8C8 end:0x8009D748
+	.ctors      start:0x803E558C end:0x803E5590
 
 src/.unsorted/8009C1A8.cpp:
 	.text       start:0x8009D748 end:0x800A0B54
+	.ctors      start:0x803E5590 end:0x803E5594
 
 src/.unsorted/8009F6C4.cpp:
 	.text       start:0x800A0B54 end:0x800AB3E4
+	.ctors      start:0x803E5594 end:0x803E5598
 
 src/.unsorted/800AA038.cpp:
 	.text       start:0x800AB3E4 end:0x800AB81C
+	.ctors      start:0x803E5598 end:0x803E559C
 
 src/.unsorted/800AA470.cpp:
 	.text       start:0x800AB81C end:0x800BCAF4
+	.ctors      start:0x803E559C end:0x803E55A0
 
 src/.unsorted/800B9E10.cpp:
 	.text       start:0x800BCAF4 end:0x800C8620
+	.ctors      start:0x803E55A0 end:0x803E55A4
 
 src/.unsorted/800C5968.cpp:
 	.text       start:0x800C8620 end:0x800DA904
+	.ctors      start:0x803E55A4 end:0x803E55A8
 
 src/.unsorted/800D7C90.cpp:
 	.text       start:0x800DA904 end:0x800E6D58
+	.ctors      start:0x803E55A8 end:0x803E55AC
 
 src/.unsorted/800E4234.cpp:
 	.text       start:0x800E6D58 end:0x800EC188
+	.ctors      start:0x803E55AC end:0x803E55B0
 
 src/.unsorted/800E96C4.cpp:
 	.text       start:0x800EC188 end:0x800FB4B8
+	.ctors      start:0x803E55B0 end:0x803E55B4
 
 src/.unsorted/800F8AC4.cpp:
 	.text       start:0x800FB4B8 end:0x80106CB8
+	.ctors      start:0x803E55B4 end:0x803E55B8
 
 src/.unsorted/80104354.cpp:
 	.text       start:0x80106CB8 end:0x80119140
 
 src/.unsorted/801166F8.cpp:
 	.text       start:0x80119140 end:0x8011DCB0
+	.ctors      start:0x803E55B8 end:0x803E55C0
 
 src/.unsorted/8011B19C.cpp:
 	.text       start:0x8011DCB0 end:0x8011F438
+	.ctors      start:0x803E55C0 end:0x803E55C4
 
 src/.unsorted/8011C954.cpp:
 	.text       start:0x8011F438 end:0x8011F458
+	.ctors      start:0x803E55C4 end:0x803E55C8
 
 src/.unsorted/8011C974.cpp:
 	.text       start:0x8011F458 end:0x80120CE0
+	.ctors      start:0x803E55C8 end:0x803E55CC
 
 src/.unsorted/8011E1FC.cpp:
 	.text       start:0x80120CE0 end:0x80133F9C
+	.ctors      start:0x803E55CC end:0x803E55D0
 
 src/.unsorted/8012F0D8.cpp:
 	.text       start:0x80133F9C end:0x80136ADC
+	.ctors      start:0x803E55D0 end:0x803E55D4
 
 src/.unsorted/80131CF0.cpp:
 	.text       start:0x80136ADC end:0x8013F71C
+	.ctors      start:0x803E55D4 end:0x803E55D8
 
 src/.unsorted/8013A930.cpp:
 	.text       start:0x8013F71C end:0x8014415C
+	.ctors      start:0x803E55D8 end:0x803E55DC
 
 src/.unsorted/8013F044.cpp:
 	.text       start:0x8014415C end:0x80154A14
+	.ctors      start:0x803E55DC end:0x803E55E0
 
 src/.unsorted/8014FEA8.cpp:
 	.text       start:0x80154A14 end:0x80155FE0
+	.ctors      start:0x803E55E0 end:0x803E55E4
 
 src/.unsorted/80151474.cpp:
 	.text       start:0x80155FE0 end:0x8015A6BC
+	.ctors      start:0x803E55E4 end:0x803E55E8
 
 src/.unsorted/80155B50.cpp:
 	.text       start:0x8015A6BC end:0x8015C3C0
+	.ctors      start:0x803E55E8 end:0x803E55EC
 
 src/.unsorted/80157854.cpp:
 	.text       start:0x8015C3C0 end:0x8015CD24
+	.ctors      start:0x803E55EC end:0x803E55F0
 
 src/.unsorted/801581B8.cpp:
 	.text       start:0x8015CD24 end:0x8015D9BC
+	.ctors      start:0x803E55F0 end:0x803E55F4
 
 src/.unsorted/80158E50.cpp:
 	.text       start:0x8015D9BC end:0x80161E98
+	.ctors      start:0x803E55F4 end:0x803E55F8
 
 src/.unsorted/8015D390.cpp:
 	.text       start:0x80161E98 end:0x801672B0
+	.ctors      start:0x803E55F8 end:0x803E55FC
 
 src/.unsorted/80162784.cpp:
 	.text       start:0x801672B0 end:0x8016769C
+	.ctors      start:0x803E55FC end:0x803E5600
 
 src/.unsorted/80162B70.cpp:
 	.text       start:0x8016769C end:0x80167DC4
+	.ctors      start:0x803E5600 end:0x803E5604
 
 src/.unsorted/8016340C.cpp:
 	.text       start:0x80167DC4 end:0x8016802C
+	.ctors      start:0x803E5604 end:0x803E5608
 
 src/.unsorted/80163674.cpp:
 	.text       start:0x8016802C end:0x801696A0
+	.ctors      start:0x803E5608 end:0x803E560C
 
 src/.unsorted/80164CE8.cpp:
 	.text       start:0x801696A0 end:0x801697F4
+	.ctors      start:0x803E560C end:0x803E5610
 
 src/.unsorted/80164E3C.cpp:
 	.text       start:0x801697F4 end:0x80169958
+	.ctors      start:0x803E5610 end:0x803E5614
 	.sbss       start:0x80627390 end:0x806273A0
 
 src/.unsorted/80164FA0.cpp:
 	.text       start:0x80169958 end:0x80169EEC
+	.ctors      start:0x803E5614 end:0x803E5618
 
 src/.unsorted/80165534.cpp:
 	.text       start:0x80169EEC end:0x8016B724
+	.ctors      start:0x803E5618 end:0x803E561C
 
 src/.unsorted/80166D6C.cpp:
 	.text       start:0x8016B724 end:0x8016BC34
+	.ctors      start:0x803E561C end:0x803E5620
 
 src/.unsorted/80167298.cpp:
 	.text       start:0x8016BC34 end:0x8016C1B4
+	.ctors      start:0x803E5620 end:0x803E5624
 
 src/.unsorted/80167820.cpp:
 	.text       start:0x8016C1B4 end:0x8016C328
+	.ctors      start:0x803E5624 end:0x803E5628
 
 src/.unsorted/80167994.cpp:
 	.text       start:0x8016C328 end:0x8016C38C
+	.ctors      start:0x803E5628 end:0x803E562C
 	.sbss       start:0x806273D8 end:0x806273E0
 
 src/.unsorted/801679F8.cpp:
 	.text       start:0x8016C38C end:0x8016CC64
+	.ctors      start:0x803E562C end:0x803E5630
 
 src/.unsorted/801682D0.cpp:
 	.text       start:0x8016CC64 end:0x8016D12C
+	.ctors      start:0x803E5630 end:0x803E5634
 
 src/.unsorted/80168798.cpp:
 	.text       start:0x8016D12C end:0x8016D5B0
+	.ctors      start:0x803E5634 end:0x803E5638
 
 src/.unsorted/80168C1C.cpp:
 	.text       start:0x8016D5B0 end:0x8016DBFC
+	.ctors      start:0x803E5638 end:0x803E563C
 
 src/.unsorted/80169268.cpp:
 	.text       start:0x8016DBFC end:0x8016E140
+	.ctors      start:0x803E563C end:0x803E5640
 
 src/.unsorted/801697AC.cpp:
 	.text       start:0x8016E140 end:0x8016EBDC
+	.ctors      start:0x803E5640 end:0x803E5644
 
 src/.unsorted/8016A25C.cpp:
 	.text       start:0x8016EBDC end:0x80172C2C
+	.ctors      start:0x803E5644 end:0x803E5648
 
 src/.unsorted/8016E2B8.cpp:
 	.text       start:0x80172C2C end:0x80173940
+	.ctors      start:0x803E5648 end:0x803E564C
 
 src/.unsorted/8016EFCC.cpp:
 	.text       start:0x80173940 end:0x80175250
+	.ctors      start:0x803E564C end:0x803E5650
 
 src/.unsorted/801708DC.cpp:
 	.text       start:0x80175250 end:0x8017B7F4
+	.ctors      start:0x803E5650 end:0x803E5654
 
 src/.unsorted/80176EB4.cpp:
 	.text       start:0x8017B7F4 end:0x8017C564
+	.ctors      start:0x803E5654 end:0x803E5658
 
 src/.unsorted/80177C24.cpp:
 	.text       start:0x8017C564 end:0x8017FDF8
+	.ctors      start:0x803E5658 end:0x803E565C
 
 src/.unsorted/8017B4B8.cpp:
 	.text       start:0x8017FDF8 end:0x80180EC8
+	.ctors      start:0x803E565C end:0x803E5660
 
 src/.unsorted/8017C588.cpp:
 	.text       start:0x80180EC8 end:0x801812C0
+	.ctors      start:0x803E5660 end:0x803E5664
 
 src/.unsorted/8017C980.cpp:
 	.text       start:0x801812C0 end:0x8018156C
+	.ctors      start:0x803E5664 end:0x803E5668
 
 src/.unsorted/8017CC8C.cpp:
 	.text       start:0x8018156C end:0x80182CF0
+	.ctors      start:0x803E5668 end:0x803E566C
 
 src/.unsorted/8017E3F4.cpp:
 	.text       start:0x80182CF0 end:0x80183250
+	.ctors      start:0x803E566C end:0x803E5670
 
 src/.unsorted/8017E954.cpp:
 	.text       start:0x80183250 end:0x8018A480
+	.ctors      start:0x803E5670 end:0x803E5674
 
 src/.unsorted/80185AE0.cpp:
 	.text       start:0x8018A480 end:0x8018C12C
+	.ctors      start:0x803E5674 end:0x803E5678
 
 src/.unsorted/8018777C.cpp:
 	.text       start:0x8018C12C end:0x801A0954
+	.ctors      start:0x803E5678 end:0x803E567C
 
 src/.unsorted/8019BEC4.cpp:
 	extab       start:0x800064E0 end:0x80006520
@@ -674,29 +790,35 @@ src/.unsorted/801D9F70.cpp:
 
 src/gs/operators.cpp:
 	.text       start:0x801DF670 end:0x801DF720
+	.ctors      start:0x803E567C end:0x803E5680
 	.sbss       start:0x806275B8 end:0x806275C0
 
 src/gs/GSmem.cpp:
 	.text       start:0x801DF720 end:0x801DFC80
+	.ctors      start:0x803E5680 end:0x803E5684
 	.bss        start:0x804798D8 end:0x80479998
 	.sbss       start:0x806275C0 end:0x806275D0
 
 src/gs/cache/GScache.cpp:
 	.text       start:0x801DFC80 end:0x801E045C
+	.ctors      start:0x803E5684 end:0x803E5688
 	.sbss       start:0x806275D0 end:0x806275E0
 
 src/gs/cache/GScacheScratchpad.cpp:
 	.text       start:0x801E045C end:0x801E077C
+	.ctors      start:0x803E5688 end:0x803E568C
 	.bss        start:0x80479998 end:0x80479A98
 	.sbss       start:0x806275E0 end:0x80627600
 
 src/gs/cache/GScachePool.cpp:
 	.text       start:0x801E077C end:0x801E0AD0
+	.ctors      start:0x803E568C end:0x803E5690
 	.bss        start:0x80479A98 end:0x80479E18
 	.sbss       start:0x80627600 end:0x80627608
 
 src/gs/GSfile.cpp:
 	.text       start:0x801E0AD0 end:0x801E19F4
+	.ctors      start:0x803E5690 end:0x803E5694
 	.data       start:0x80412678 end:0x804126E8
 	.bss        start:0x80479E18 end:0x80479E98
 	.sdata      start:0x806259F0 end:0x80625A18
@@ -704,279 +826,354 @@ src/gs/GSfile.cpp:
 
 src/gs/GSnand.cpp:
 	.text       start:0x801E19F4 end:0x801E2150
+	.ctors      start:0x803E5694 end:0x803E5698
 	.sdata      start:0x80625A18 end:0x80625A20
 	.sbss       start:0x80627630 end:0x80627638
 
 src/gs/scene/GSanimationPlayer.cpp:
 	.text       start:0x801E2150 end:0x801E2448
+	.ctors      start:0x803E5698 end:0x803E569C
 	.sbss       start:0x80627638 end:0x80627640
 	.sdata2     start:0x80629E48 end:0x80629E58
 
 src/gs/scene/GSanimationObject.cpp:
 	.text       start:0x801E2448 end:0x801E2B00
+	.ctors      start:0x803E569C end:0x803E56A0
 	.sbss       start:0x80627640 end:0x80627648
 	.sdata2     start:0x80629E58 end:0x80629E60
 
 src/gs/scene/GScamera.cpp:
 	.text       start:0x801E2B00 end:0x801E3BC8
+	.ctors      start:0x803E56A0 end:0x803E56A4
 
 src/gs/scene/GSvolumeNode.cpp:
 	.text       start:0x801E3BC8 end:0x801E5370
+	.ctors      start:0x803E56A4 end:0x803E56A8
 
 src/.unsorted/801E07E8.cpp:
 	.text       start:0x801E5370 end:0x801E5398
+	.ctors      start:0x803E56A8 end:0x803E56AC
 	.sbss       start:0x80627658 end:0x80627660
 
 src/.unsorted/801E0810.cpp:
 	.text       start:0x801E5398 end:0x801E55DC
+	.ctors      start:0x803E56AC end:0x803E56B0
 
 src/gs/GSsceneData.cpp:
 	.text       start:0x801E55DC end:0x801E8EE8
+	.ctors      start:0x803E56B0 end:0x803E56B4
 
 src/gs/scene/GSjointNode.cpp:
 	.text       start:0x801E8EE8 end:0x801E92D4
+	.ctors      start:0x803E56B4 end:0x803E56B8
 
 src/.unsorted/801E474C.cpp:
 	.text       start:0x801E92D4 end:0x801EAB04
+	.ctors      start:0x803E56B8 end:0x803E56BC
 
 src/gs/scene/GSlight.cpp:
 	.text       start:0x801EAB04 end:0x801EB780
+	.ctors      start:0x803E56BC end:0x803E56C0
 
 src/gs/scene/GSmaterial.cpp:
 	.text       start:0x801EB780 end:0x801F1F78
+	.ctors      start:0x803E56C0 end:0x803E56C4
 
 src/gs/scene/GSmesh.cpp:
 	.text       start:0x801F1F78 end:0x801F2BCC
+	.ctors      start:0x803E56C4 end:0x803E56C8
 	.data       start:0x80412A00 end:0x80412A0C
 	.sbss       start:0x806276A8 end:0x806276B0
 
 src/gs/scene/GSmodel.cpp:
 	.text       start:0x801F2BCC end:0x801F6670
+	.ctors      start:0x803E56C8 end:0x803E56CC
 	.sbss       start:0x806276B0 end:0x806276B8
 
 src/gs/scene/GSnull.cpp:
 	.text       start:0x801F6670 end:0x801F8C68
+	.ctors      start:0x803E56CC end:0x803E56D0
 	.data       start:0x80412A58 end:0x80412A90
 	.sdata      start:0x80625A28 end:0x80625A50
-	.sbss       start:0x806276B8 end:0x806276CC
+	.sbss       start:0x806276B8 end:0x806276C8
 	.sdata2     start:0x8062A058 end:0x8062A068
 
 src/gs/GSobject.cpp:
 	.text       start:0x801F8C68 end:0x801FE474
+	.ctors      start:0x803E56D0 end:0x803E56D4
 	.data       start:0x80412A90 end:0x80412AB0
 	.sdata2     start:0x8062A068 end:0x8062A088
 
 src/gs/scene/GSparticle.cpp:
 	.text       start:0x801FE474 end:0x801FEC1C
+	.ctors      start:0x803E56D4 end:0x803E56D8
 
 src/gs/GSscene.cpp:
 	.text       start:0x801FEC1C end:0x801FEF14
+	.ctors      start:0x803E56D8 end:0x803E56DC
 	.sbss       start:0x806276E0 end:0x806276E8
 
 src/.unsorted/801FA38C.cpp:
 	.text       start:0x801FEF14 end:0x801FFFB4
+	.ctors      start:0x803E56DC end:0x803E56E0
 
 src/.unsorted/801FB42C.cpp:
 	.text       start:0x801FFFB4 end:0x80203E90
+	.ctors      start:0x803E56E0 end:0x803E56E4
 
 src/.unsorted/801FF308.cpp:
 	.text       start:0x80203E90 end:0x80204C44
+	.ctors      start:0x803E56E4 end:0x803E56E8
 
 src/gs/GShierarchyModule.cpp:
 	.text       start:0x80204C44 end:0x802079DC
+	.ctors      start:0x803E56E8 end:0x803E56EC
 	.sbss       start:0x80627750 end:0x80627758
 	.sdata2     start:0x8062A168 end:0x8062A170
 
 src/gs/GSmenuModule.cpp:
 	.text       start:0x802079DC end:0x80208BE0
+	.ctors      start:0x803E56EC end:0x803E56F0
 
 src/.unsorted/80204058.cpp:
 	.text       start:0x80208BE0 end:0x8020A4DC
+	.ctors      start:0x803E56F0 end:0x803E56F4
 
 src/.unsorted/80205954.cpp:
 	.text       start:0x8020A4DC end:0x8020C440
+	.ctors      start:0x803E56F4 end:0x803E56F8
 
 src/.unsorted/802078B8.cpp:
 	.text       start:0x8020C440 end:0x8020C7D4
+	.ctors      start:0x803E56F8 end:0x803E56FC
 
 src/.unsorted/80207C4C.cpp:
 	.text       start:0x8020C7D4 end:0x80210080
+	.ctors      start:0x803E56FC end:0x803E5700
 
 src/.unsorted/8020B4F8.cpp:
 	.text       start:0x80210080 end:0x802115C0
+	.ctors      start:0x803E5700 end:0x803E5704
 
 src/.unsorted/8020CA38.cpp:
 	.text       start:0x802115C0 end:0x80211DD8
+	.ctors      start:0x803E5704 end:0x803E5708
 
 src/.unsorted/8020D250.cpp:
 	.text       start:0x80211DD8 end:0x802136A4
+	.ctors      start:0x803E5708 end:0x803E570C
 
 src/.unsorted/8020EB1C.cpp:
 	.text       start:0x802136A4 end:0x80214520
+	.ctors      start:0x803E570C end:0x803E5710
 
 src/.unsorted/8020F998.cpp:
 	.text       start:0x80214520 end:0x802160EC
+	.ctors      start:0x803E5710 end:0x803E5714
 
 src/.unsorted/80211564.cpp:
 	.text       start:0x802160EC end:0x8021658C
+	.ctors      start:0x803E5714 end:0x803E5718
 
 src/.unsorted/80211A04.cpp:
 	.text       start:0x8021658C end:0x8021821C
+	.ctors      start:0x803E5718 end:0x803E571C
 
 src/.unsorted/80213694.cpp:
 	.text       start:0x8021821C end:0x8021E9D0
+	.ctors      start:0x803E571C end:0x803E5720
 
 src/.unsorted/80219E48.cpp:
 	.text       start:0x8021E9D0 end:0x80220DA8
+	.ctors      start:0x803E5720 end:0x803E5724
 
 src/.unsorted/8021C220.cpp:
 	.text       start:0x80220DA8 end:0x80221628
+	.ctors      start:0x803E5724 end:0x803E5728
 
 src/.unsorted/8021CAA0.cpp:
 	.text       start:0x80221628 end:0x80221C68
+	.ctors      start:0x803E5728 end:0x803E572C
 
 src/.unsorted/8021D0E0.cpp:
 	.text       start:0x80221C68 end:0x80221FAC
+	.ctors      start:0x803E572C end:0x803E5730
 
 src/.unsorted/8021D424.cpp:
 	.text       start:0x80221FAC end:0x802235D0
+	.ctors      start:0x803E5730 end:0x803E5734
 
 src/.unsorted/8021EA48.cpp:
 	.text       start:0x802235D0 end:0x802246CC
+	.ctors      start:0x803E5734 end:0x803E5738
 
 src/.unsorted/8021FB44.cpp:
 	.text       start:0x802246CC end:0x802251C4
+	.ctors      start:0x803E5738 end:0x803E573C
 
 src/gs/math/GSboundingBox.cpp:
 	.text       start:0x802251C4 end:0x8022594C
+	.ctors      start:0x803E573C end:0x803E5740
 	.bss        start:0x8047B878 end:0x8047B8D8
 	.sbss       start:0x80627858 end:0x80627860
 	.sdata2     start:0x8062A458 end:0x8062A460
 
 src/.unsorted/80220DC4.cpp:
 	.text       start:0x8022594C end:0x80227F50
+	.ctors      start:0x803E5740 end:0x803E5744
 	.sdata2     start:0x8062A460 end:0x8062A488
 
 src/.unsorted/802233C8.cpp:
 	.text       start:0x80227F50 end:0x8022821C
+	.ctors      start:0x803E5744 end:0x803E5748
 
 src/.unsorted/80223694.cpp:
 	.text       start:0x8022821C end:0x80228248
+	.ctors      start:0x803E5748 end:0x803E574C
 
 src/.unsorted/802236C0.cpp:
 	.text       start:0x80228248 end:0x802283B8
+	.ctors      start:0x803E574C end:0x803E5750
 
 src/gs/math/GSrand.cpp:
 	.text       start:0x802283B8 end:0x80228428
+	.ctors      start:0x803E5750 end:0x803E5754
 	.bss        start:0x8047B948 end:0x8047B958
 	.sbss       start:0x80627888 end:0x80627890
 
 src/gs/math/GStrig.cpp:
 	.text       start:0x80228428 end:0x80228594
+	.ctors      start:0x803E5754 end:0x803E5758
 	.bss        start:0x8047B958 end:0x8047BC30
 	.sbss       start:0x80627890 end:0x80627898
 	.sdata2     start:0x8062A4A0 end:0x8062A4D0
 
 src/gs/math/GSquat.cpp:
 	.text       start:0x80228594 end:0x80228750
+	.ctors      start:0x803E5758 end:0x803E575C
 	.bss        start:0x8047BC30 end:0x8047BC70
 	.sbss       start:0x80627898 end:0x806278B0
 	.sdata2     start:0x8062A4D0 end:0x8062A4E0
 
 src/gs/math/GSmathInit.cpp:
 	.text       start:0x80228750 end:0x802287DC
+	.ctors      start:0x803E575C end:0x803E5760
 	.sbss       start:0x806278B0 end:0x806278B8
 
 src/gs/GStask.cpp:
 	.text       start:0x802287DC end:0x80228C8C
+	.ctors      start:0x803E5760 end:0x803E5764
 	.sbss       start:0x806278B8 end:0x806278E8
 
 src/gs/GSthread.cpp:
 	.text       start:0x80228C8C end:0x80229328
+	.ctors      start:0x803E5764 end:0x803E5768
 	.data       start:0x80412FC0 end:0x80412FD0
 	.sbss       start:0x806278E8 end:0x806278F8
 
 src/gs/GStimeline.cpp:
 	.text       start:0x80229328 end:0x802294D4
+	.ctors      start:0x803E5768 end:0x803E576C
 	.data       start:0x80412FD0 end:0x80412FE8
 	.sbss       start:0x806278F8 end:0x80627908
 	.sdata2     start:0x8062A4E0 end:0x8062A4E8
 
 src/.unsorted/8022494C.cpp:
 	.text       start:0x802294D4 end:0x80229698
+	.ctors      start:0x803E576C end:0x803E5770
 
 src/.unsorted/80224B10.cpp:
 	.text       start:0x80229698 end:0x8022A9CC
+	.ctors      start:0x803E5770 end:0x803E5774
 
 src/.unsorted/80225E44.cpp:
 	.text       start:0x8022A9CC end:0x8022AEEC
+	.ctors      start:0x803E5774 end:0x803E5778
 
 src/.unsorted/80226364.cpp:
 	.text       start:0x8022AEEC end:0x8022C2C4
+	.ctors      start:0x803E5778 end:0x803E577C
 
 src/.unsorted/8022773C.cpp:
 	.text       start:0x8022C2C4 end:0x8022D4F8
+	.ctors      start:0x803E577C end:0x803E5780
 
 src/.unsorted/80228970.cpp:
 	.text       start:0x8022D4F8 end:0x8022D694
+	.ctors      start:0x803E5780 end:0x803E5784
+	.sbss       start:0x80627940 end:0x8062794C
 
 src/.unsorted/80228B0C.cpp:
 	.text       start:0x8022D694 end:0x8022DC94
+	.ctors      start:0x803E5784 end:0x803E5788
 
 src/.unsorted/8022910C.cpp:
 	.text       start:0x8022DC94 end:0x802322B4
+	.ctors      start:0x803E5788 end:0x803E578C
 
 src/.unsorted/8022D72C.cpp:
 	.text       start:0x802322B4 end:0x8023575C
+	.ctors      start:0x803E578C end:0x803E5790
 
 src/.unsorted/80230BD4.cpp:
 	.text       start:0x8023575C end:0x802359D0
+	.ctors      start:0x803E5790 end:0x803E5794
 
 src/gs/render/GSrender.cpp:
 	.text       start:0x802359D0 end:0x80236EAC
+	.ctors      start:0x803E5794 end:0x803E5798
 	.data       start:0x80413948 end:0x80413990
-	.sbss       start:0x80627980 end:0x80627998
+	.sbss       start:0x80627980 end:0x806279C8
 	.sdata2     start:0x8062A568 end:0x8062A598
 
 src/gs/render/8023234C.cpp:
 	.text       start:0x80236EAC end:0x8023739C
+	.ctors      start:0x803E5798 end:0x803E579C
 
 src/gs/render/8023283C.cpp:
 	.text       start:0x8023739C end:0x80237884
+	.ctors      start:0x803E579C end:0x803E57A0
 
 src/gs/render/80232D24.cpp:
 	.text       start:0x80237884 end:0x80239F58
+	.ctors      start:0x803E57A0 end:0x803E57A4
 	.data       start:0x80413990 end:0x804139B0
-	.sbss       start:0x806279B0 end:0x806279B8
 
 src/gs/render/802353F8.cpp:
 	.text       start:0x80239F58 end:0x80239FD4
+	.ctors      start:0x803E57A4 end:0x803E57A8
 
 src/gs/render/GSrenderLight.cpp:
 	.text       start:0x80239FD4 end:0x8023A5D4
-	.sbss       start:0x806279C0 end:0x806279C8
+	.ctors      start:0x803E57A8 end:0x803E57AC
 	.sdata2     start:0x8062A5E0 end:0x8062A5F8
 
 src/gs/render/80235A74.cpp:
 	.text       start:0x8023A5D4 end:0x8023B264
+	.ctors      start:0x803E57AC end:0x803E57B0
 
 src/gs/render/80236704.cpp:
 	.text       start:0x8023B264 end:0x8023B4AC
+	.ctors      start:0x803E57B0 end:0x803E57B4
 
 src/gs/render/GSrenderModule.cpp:
 	.text       start:0x8023B4AC end:0x8023B668
+	.ctors      start:0x803E57B4 end:0x803E57B8
 	.data       start:0x80413A08 end:0x80413A20
 	.sdata      start:0x80625C70 end:0x80625C78
 	.sbss       start:0x806279D8 end:0x806279E8
 
 src/gs/render/GSrenderPass.cpp:
 	.text       start:0x8023B668 end:0x8023C2F4
+	.ctors      start:0x803E57B8 end:0x803E57BC
 
 src/gs/render/80237794.cpp:
 	.text       start:0x8023C2F4 end:0x8023C31C
+	.ctors      start:0x803E57BC end:0x803E57C0
 
 src/gs/render/802377BC.cpp:
 	.text       start:0x8023C31C end:0x8023FAEC
+	.ctors      start:0x803E57C0 end:0x803E57C4
 	.data       start:0x80413AA8 end:0x80413AC8
 	.bss        start:0x8047ED88 end:0x8047EDC8
 	.sbss       start:0x80627A08 end:0x80627A10
@@ -984,72 +1181,88 @@ src/gs/render/802377BC.cpp:
 
 src/gs/render/GSrenderTarget.cpp:
 	.text       start:0x8023FAEC end:0x802401AC
+	.ctors      start:0x803E57C4 end:0x803E57C8
 	.sbss       start:0x80627A10 end:0x80627A20
 
 src/gs/render/8023B64C.cpp:
 	.text       start:0x802401AC end:0x80240554
+	.ctors      start:0x803E57C8 end:0x803E57CC
 	.bss        start:0x8047EDC8 end:0x8047EDE8
 	.sbss       start:0x80627A28 end:0x80627A40
 
 src/gs/render/8023B9F4.cpp:
 	.text       start:0x80240554 end:0x80241B68
+	.ctors      start:0x803E57CC end:0x803E57D0
 
 src/gs/render/GStexture.cpp:
 	.text       start:0x80241B68 end:0x802435A4
+	.ctors      start:0x803E57D0 end:0x803E57D4
 	.sbss       start:0x80627A50 end:0x80627A60
 
 src/gs/render/8023EA44.cpp:
 	.text       start:0x802435A4 end:0x802439CC
+	.ctors      start:0x803E57D4 end:0x803E57D8
 
 src/gs/GSvideo.cpp:
 	.text       start:0x802439CC end:0x80244BA4
-	.sbss       start:0x80627A70 end:0x80627A80
+	.ctors      start:0x803E57D8 end:0x803E57DC
 	.sdata2     start:0x8062A650 end:0x8062A688
 
 src/.unsorted/80240060.cpp:
 	.text       start:0x80244BA4 end:0x80245070
+	.ctors      start:0x803E57DC end:0x803E57E0
 
 src/.unsorted/8024052C.cpp:
 	.text       start:0x80245070 end:0x80248330
+	.ctors      start:0x803E57E0 end:0x803E57E4
 
 src/gs/input/GSinput.cpp:
 	.text       start:0x80248330 end:0x80249420
+	.ctors      start:0x803E57E4 end:0x803E57E8
 	.sbss       start:0x80627A98 end:0x80627AA8
 	.sdata2     start:0x8062A6F0 end:0x8062A728
 
 src/gs/input/802448E8.cpp:
 	.text       start:0x80249420 end:0x80249550
+	.ctors      start:0x803E57E8 end:0x803E57EC
 	.sbss       start:0x80627AA8 end:0x80627AB0
 	.sdata2     start:0x8062A728 end:0x8062A738
 
 src/gs/fsys/GSfsysMem.cpp:
 	.text       start:0x80249550 end:0x80249A14
+	.ctors      start:0x803E57EC end:0x803E57F0
 	.sdata      start:0x80625CB8 end:0x80625CC0
 	.sbss       start:0x80627AB0 end:0x80627AC0
 
 src/gs/fsys/GSfsysChunk.cpp:
 	.text       start:0x80249A14 end:0x80249E20
+	.ctors      start:0x803E57F0 end:0x803E57F4
 	.sbss       start:0x80627AC0 end:0x80627AE0
 
 src/gs/fsys/GSfsysCache.cpp:
 	.text       start:0x80249E20 end:0x8024A798
+	.ctors      start:0x803E57F4 end:0x803E57F8
 	.sbss       start:0x80627AE0 end:0x80627B20
 
 src/gs/fsys/GSfsysRead.cpp:
 	.text       start:0x8024A798 end:0x8024B804
+	.ctors      start:0x803E57F8 end:0x803E57FC
 	.data       start:0x80413D08 end:0x80413D18
 	.sbss       start:0x80627B20 end:0x80627B30
 
 src/gs/fsys/GSfsysStream.cpp:
 	.text       start:0x8024B804 end:0x8024BB70
+	.ctors      start:0x803E57FC end:0x803E5800
 	.sbss       start:0x80627B30 end:0x80627B38
 
 src/gs/fsys/80247038.cpp:
 	.text       start:0x8024BB70 end:0x8024BDB8
+	.ctors      start:0x803E5800 end:0x803E5804
 	.sbss       start:0x80627B38 end:0x80627B40
 
 src/gs/fsys/GSfsys.cpp:
 	.text       start:0x8024BDB8 end:0x8024E6B4
+	.ctors      start:0x803E5804 end:0x803E5808
 	.data       start:0x80413D18 end:0x80413E30
 	.bss        start:0x804805E0 end:0x80480620
 	.sdata      start:0x80625CC0 end:0x80625CC8
@@ -1057,102 +1270,133 @@ src/gs/fsys/GSfsys.cpp:
 
 src/.unsorted/80249B7C.cpp:
 	.text       start:0x8024E6B4 end:0x8024E6D8
+	.ctors      start:0x803E5808 end:0x803E580C
 	.sbss       start:0x80627B88 end:0x80627B90
 
 src/.unsorted/80249BA0.cpp:
 	.text       start:0x8024E6D8 end:0x8024E700
+	.ctors      start:0x803E580C end:0x803E5810
 	.sbss       start:0x80627B90 end:0x80627B98
 
 src/gs/debug/regionOverride.cpp:
 	.text       start:0x8024E700 end:0x8024E728
+	.ctors      start:0x803E5810 end:0x803E5814
 	.sbss       start:0x80627B98 end:0x80627BA8
 
 src/gs/GSlinkedList.cpp:
 	.text       start:0x8024E728 end:0x8024E870
+	.ctors      start:0x803E5814 end:0x803E5818
 	.sbss       start:0x80627BA8 end:0x80627BB8
 
 src/.unsorted/80249D38.cpp:
 	.text       start:0x8024E870 end:0x80255A50
+	.ctors      start:0x803E5818 end:0x803E581C
 
 src/.unsorted/80250F18.cpp:
 	.text       start:0x80255A50 end:0x80258B24
+	.ctors      start:0x803E581C end:0x803E5820
 
 src/.unsorted/80253FEC.cpp:
 	.text       start:0x80258B24 end:0x80258D98
+	.ctors      start:0x803E5820 end:0x803E5824
 
 src/.unsorted/80254260.cpp:
 	.text       start:0x80258D98 end:0x80258F98
+	.ctors      start:0x803E5824 end:0x803E5828
 
 src/.unsorted/80254460.cpp:
 	.text       start:0x80258F98 end:0x8025BB14
+	.ctors      start:0x803E5828 end:0x803E582C
 
 src/.unsorted/8025716C.cpp:
 	.text       start:0x8025BB14 end:0x8025E44C
+	.ctors      start:0x803E582C end:0x803E5830
 
 src/.unsorted/80259AA4.cpp:
 	.text       start:0x8025E44C end:0x8025F0B8
+	.ctors      start:0x803E5830 end:0x803E5834
 
 src/.unsorted/8025A710.cpp:
 	.text       start:0x8025F0B8 end:0x8025F72C
+	.ctors      start:0x803E5834 end:0x803E5838
 
 src/.unsorted/8025AD84.cpp:
 	.text       start:0x8025F72C end:0x8025FB0C
+	.ctors      start:0x803E5838 end:0x803E583C
 
 src/.unsorted/8025B164.cpp:
 	.text       start:0x8025FB0C end:0x80260054
+	.ctors      start:0x803E583C end:0x803E5840
 
 src/.unsorted/8025B6AC.cpp:
 	.text       start:0x80260054 end:0x80260090
+	.ctors      start:0x803E5840 end:0x803E5844
 	.sbss       start:0x80627C40 end:0x80627C48
 	.sdata2     start:0x8062A850 end:0x8062A858
 
 src/.unsorted/8025B6E8.cpp:
 	.text       start:0x80260090 end:0x80261D60
+	.ctors      start:0x803E5844 end:0x803E5848
 
 src/.unsorted/8025D3B8.cpp:
 	.text       start:0x80261D60 end:0x80262174
+	.ctors      start:0x803E5848 end:0x803E584C
 
 src/.unsorted/8025D7CC.cpp:
 	.text       start:0x80262174 end:0x80262668
+	.ctors      start:0x803E584C end:0x803E5850
 
 src/.unsorted/8025DCC0.cpp:
 	.text       start:0x80262668 end:0x80262928
+	.ctors      start:0x803E5850 end:0x803E5854
 
 src/.unsorted/8025DF80.cpp:
 	.text       start:0x80262928 end:0x80262CF0
+	.ctors      start:0x803E5854 end:0x803E5858
 
 src/.unsorted/8025E348.cpp:
 	.text       start:0x80262CF0 end:0x80263214
+	.ctors      start:0x803E5858 end:0x803E585C
 
 src/.unsorted/8025E86C.cpp:
 	.text       start:0x80263214 end:0x80263610
+	.ctors      start:0x803E585C end:0x803E5860
 
 src/.unsorted/8025EC68.cpp:
 	.text       start:0x80263610 end:0x80263A24
+	.ctors      start:0x803E5860 end:0x803E5864
 
 src/.unsorted/8025F07C.cpp:
 	.text       start:0x80263A24 end:0x802649A0
+	.ctors      start:0x803E5864 end:0x803E5868
 
 src/.unsorted/8025FFF8.cpp:
 	.text       start:0x802649A0 end:0x80265388
+	.ctors      start:0x803E5868 end:0x803E586C
 
 src/.unsorted/802609E0.cpp:
 	.text       start:0x80265388 end:0x80265D34
+	.ctors      start:0x803E586C end:0x803E5870
 
 src/.unsorted/8026138C.cpp:
 	.text       start:0x80265D34 end:0x802674A8
+	.ctors      start:0x803E5870 end:0x803E5874
 
 src/.unsorted/80262B00.cpp:
 	.text       start:0x802674A8 end:0x80267838
+	.ctors      start:0x803E5874 end:0x803E5878
 
 src/.unsorted/80262E90.cpp:
 	.text       start:0x80267838 end:0x80268664
+	.ctors      start:0x803E5878 end:0x803E587C
 
 src/.unsorted/80263CBC.cpp:
 	.text       start:0x80268664 end:0x8026BE74
+	.ctors      start:0x803E587C end:0x803E5880
 
 src/.unsorted/802674CC.cpp:
 	.text       start:0x8026BE74 end:0x8026CBD0
+	.ctors      start:0x803E5880 end:0x803E5884
 
 libs/RVL_SDK/src/base/PPCArch.c:
 	.text       start:0x8026CBD0 end:0x8026CD40
@@ -1187,8 +1431,9 @@ src/.unsorted/8026BB40.cpp:
 libs/RVL_SDK/src/os/OSExec.c:
 	.text       start:0x802706B0 end:0x80271818
 
-src/.unsorted/8026CE70.cpp:
+libs/RVL_SDK/src/os/OSFatal.c:
 	.text       start:0x80271818 end:0x8027243C
+	.bss        start:0x804FCAE0 end:0x804FCDB4
 
 libs/RVL_SDK/src/os/OSFont.c:
 	.text       start:0x8027243C end:0x80273104
@@ -1302,16 +1547,25 @@ src/.unsorted/8027C5C0.cpp:
 	.text       start:0x80281038 end:0x80281474
 
 libs/RVL_SDK/src/mtx/mtxvec.c:
-	.text       start:0x80281474 end:0x802814C8
+	.text       start:0x80281474 end:0x8028151C
 
-src/.unsorted/8027CA50.cpp:
-	.text       start:0x802814C8 end:0x802817A0
+libs/RVL_SDK/src/mtx/mtx44.c:
+	.text       start:0x8028151C end:0x8028173C
+
+src/.unsorted/8027CCC4.cpp:
+	.text       start:0x8028173C end:0x802817A0
 
 libs/RVL_SDK/src/mtx/vec.c:
 	.text       start:0x802817A0 end:0x8028189C
 
 src/.unsorted/8027CE24.cpp:
-	.text       start:0x8028189C end:0x8028209C
+	.text       start:0x8028189C end:0x80281A9C
+
+libs/RVL_SDK/src/mtx/quat.c:
+	.text       start:0x80281A9C end:0x80282050
+
+src/.unsorted/8027D5D8.cpp:
+	.text       start:0x80282050 end:0x8028209C
 
 libs/RVL_SDK/src/gx/GXInit.c:
 	.text       start:0x8028209C end:0x80283264
@@ -1349,8 +1603,9 @@ libs/RVL_SDK/src/gx/GXTev.c:
 libs/RVL_SDK/src/gx/GXPixel.c:
 	.text       start:0x80288BAC end:0x8028933C
 
-src/.unsorted/80284950.cpp:
+libs/RVL_SDK/src/gx/GXDraw.c:
 	.text       start:0x8028933C end:0x8028B028
+	.bss        start:0x804FE638 end:0x804FE8C0
 
 libs/RVL_SDK/src/gx/GXDisplayList.c:
 	.text       start:0x8028B028 end:0x8028B1F8
@@ -1458,7 +1713,22 @@ libs/RVL_SDK/src/mem/mem_list.c:
 	.text       start:0x8029C160 end:0x8029C274
 
 src/.unsorted/80297890.cpp:
-	.text       start:0x8029C274 end:0x802A6FD4
+	.text       start:0x8029C274 end:0x8029F7DC
+
+libs/RVL_SDK/src/dsp/dsp.c:
+	.text       start:0x8029F7DC end:0x8029FA18
+	.sdata      start:0x80625EE0 end:0x80625EE4
+	.sbss       start:0x80628218 end:0x8062821C
+
+libs/RVL_SDK/src/dsp/dsp_debug.c:
+	.text       start:0x8029FA18 end:0x8029FA68
+
+libs/RVL_SDK/src/dsp/dsp_task.c:
+	.text       start:0x8029FA68 end:0x802A02FC
+	.sbss       start:0x80628220 end:0x80628238
+
+src/.unsorted/8029B918.cpp:
+	.text       start:0x802A02FC end:0x802A6FD4
 
 libs/RVL_SDK/src/cx/CXUncompression.c:
 	.text       start:0x802A6FD4 end:0x802A7148
@@ -1473,10 +1743,15 @@ libs/RVL_SDK/src/ipc/memory.c:
 	.text       start:0x802A88CC end:0x802A8DF0
 
 libs/RVL_SDK/src/ipc/ipcProfile.c:
-	.text       start:0x802A8DF0 end:0x802A8F28
+	.text       start:0x802A8DF0 end:0x802A8FB4
 
-src/.unsorted/802A4660.cpp:
-	.text       start:0x802A8F28 end:0x802AA44C
+libs/RVL_SDK/src/ipc/fs.c:
+	.text       start:0x802A8FB4 end:0x802AA3F0
+	.sdata      start:0x80625F70 end:0x80625F80
+	.sbss       start:0x806283B8 end:0x806283CC
+
+src/.unsorted/802A5B28.cpp:
+	.text       start:0x802AA3F0 end:0x802AA44C
 
 libs/RVL_SDK/src/wpad/WPAD.c:
 	.text       start:0x802AA44C end:0x802B18A8
@@ -1496,8 +1771,13 @@ libs/RVL_SDK/src/wpad/debug_msg.c:
 libs/RVL_SDK/src/euart/euart.c:
 	.text       start:0x802B7FE8 end:0x802B8358
 
-src/.unsorted/802B3C20.cpp:
-	.text       start:0x802B8358 end:0x802EBAE0
+libs/RVL_SDK/src/usb/usb.c:
+	.text       start:0x802B8358 end:0x802B93F8
+	.sdata      start:0x80625F90 end:0x80625FA0
+	.sbss       start:0x80628428 end:0x80628438
+
+src/.unsorted/802B4CC0.cpp:
+	.text       start:0x802B93F8 end:0x802EBAE0
 
 libs/RVL_SDK/src/nand/nand.c:
 	.text       start:0x802EBAE0 end:0x802EC984
@@ -1521,7 +1801,69 @@ libs/RVL_SDK/src/sc/scapi_prdinfo.c:
 	.text       start:0x802F0E1C end:0x802F100C
 
 src/.unsorted/802EC97C.cpp:
-	.text       start:0x802F100C end:0x80309588
+	.text       start:0x802F100C end:0x802F1388
+
+libs/RVL_SDK/src/arc/arc.c:
+	.text       start:0x802F1388 end:0x802F1894
+
+src/.unsorted/802ED204.cpp:
+	.text       start:0x802F1894 end:0x803056D8
+
+libs/RVL_SDK/src/nwc24/NWC24StdApi.c:
+	.text       start:0x803056D8 end:0x8030623C
+
+libs/RVL_SDK/src/nwc24/NWC24FileApi.c:
+	.text       start:0x8030623C end:0x8030724C
+	.sbss       start:0x80628508 end:0x80628518
+
+libs/RVL_SDK/src/nwc24/NWC24Config.c:
+	.text       start:0x8030724C end:0x80307748
+	.sdata      start:0x80626270 end:0x80626280
+	.sbss       start:0x80628518 end:0x80628520
+
+libs/RVL_SDK/src/nwc24/NWC24Manage.c:
+	.text       start:0x80307748 end:0x80307AA0
+	.sdata      start:0x80626280 end:0x80626288
+	.sbss       start:0x80628520 end:0x80628530
+
+libs/RVL_SDK/src/nwc24/NWC24MBoxCtrl.c:
+	.text       start:0x80307AA0 end:0x80307E08
+	.sbss       start:0x80628538 end:0x80628540
+
+libs/RVL_SDK/src/nwc24/NWC24Mime.c:
+	.text       start:0x80307E08 end:0x803080E8
+
+libs/RVL_SDK/src/nwc24/NWC24Schedule.c:
+	.text       start:0x803080E8 end:0x8030895C
+	.bss        start:0x80566AE0 end:0x80566C60
+	.sbss       start:0x80628540 end:0x80628550
+
+libs/RVL_SDK/src/nwc24/NWC24FriendList.c:
+	.text       start:0x8030895C end:0x80308A78
+	.sdata      start:0x80626290 end:0x80626298
+
+libs/RVL_SDK/src/nwc24/NWC24SecretFList.c:
+	.text       start:0x80308A78 end:0x80308B94
+	.sdata      start:0x80626298 end:0x806262A0
+
+libs/RVL_SDK/src/nwc24/NWC24Time.c:
+	.text       start:0x80308B94 end:0x80308D70
+	.bss        start:0x80566C60 end:0x80566D40
+	.sbss       start:0x80628550 end:0x80628558
+
+libs/RVL_SDK/src/nwc24/NWC24Ipc.c:
+	.text       start:0x80308D70 end:0x80308EE4
+	.sbss       start:0x80628558 end:0x80628560
+
+libs/RVL_SDK/src/nwc24/NWC24Download.c:
+	.text       start:0x80308EE4 end:0x80309410
+	.sdata      start:0x806262A0 end:0x806262A8
+
+libs/RVL_SDK/src/nwc24/NWC24System.c:
+	.text       start:0x80309410 end:0x80309588
+	.bss        start:0x80566D40 end:0x80566DA0
+	.sdata      start:0x806262A8 end:0x806262B0
+	.sbss       start:0x80628560 end:0x80628570
 
 libs/RVL_SDK/src/vf/pf_clib.c:
 	.text       start:0x80309588 end:0x80309888
@@ -1654,54 +1996,317 @@ libs/RVL_SDK/src/vf/sd_drv.c:
 
 src/.unsorted/8031C124.cpp:
 	.text       start:0x80320818 end:0x80367C04
+	.ctors      start:0x803E5884 end:0x803E5888
 
-src/.unsorted/80363510.cpp:
-	.text       start:0x80367C04 end:0x80367D0C
+libs/nw4r/src/ut/ut_FileStream.cpp:
+	.text       start:0x80367C04 end:0x80367D00
 
-src/.unsorted/80363618.cpp:
-	.text       start:0x80367D0C end:0x80368324
+src/.unsorted/8036360C.cpp:
+	.text       start:0x80367D00 end:0x80367D0C
+	.ctors      start:0x803E5888 end:0x803E588C
 
-src/.unsorted/80363C30.cpp:
-	.text       start:0x80368324 end:0x80368578
+libs/nw4r/src/ut/ut_DvdFileStream.cpp:
+	.text       start:0x80367D0C end:0x80368310
 
-src/.unsorted/80363E84.cpp:
-	.text       start:0x80368578 end:0x8036C6A0
+src/.unsorted/80363C1C.cpp:
+	.text       start:0x80368310 end:0x80368660
+	.ctors      start:0x803E588C end:0x803E5894
 
-src/.unsorted/80367FAC.cpp:
-	.text       start:0x8036C6A0 end:0x803729D8
+libs/nw4r/src/ut/ut_ResFontBase.cpp:
+	.text       start:0x80368660 end:0x80368C30
 
-src/.unsorted/8036E198.cpp:
-	.text       start:0x803729D8 end:0x80379D68
+src/.unsorted/8036453C.cpp:
+	.text       start:0x80368C30 end:0x80368CC4
 
-src/.unsorted/8037536C.cpp:
-	.text       start:0x80379D68 end:0x80380E4C
+libs/nw4r/src/ut/ut_ResFont.cpp:
+	.text       start:0x80368CC4 end:0x80368F34
 
-src/.unsorted/8037C450.cpp:
-	.text       start:0x80380E4C end:0x80384404
+libs/nw4r/src/ut/ut_CharWriter.cpp:
+	.text       start:0x80368F34 end:0x8036A65C
 
-src/.unsorted/8037F908.cpp:
-	.text       start:0x80384404 end:0x803886BC
+src/.unsorted/80365F68.cpp:
+	.text       start:0x8036A65C end:0x8036A6D8
 
-src/.unsorted/803839A4.cpp:
-	.text       start:0x803886BC end:0x8038AB38
+libs/nw4r/src/ut/ut_TextWriterBase.cpp:
+	.text       start:0x8036A6D8 end:0x8036C6A0
+	.ctors      start:0x803E5894 end:0x803E5898
 
-src/.unsorted/80385E20.cpp:
-	.text       start:0x8038AB38 end:0x8038BFF4
+libs/nw4r/src/snd/snd_AxManager.cpp:
+	.text       start:0x8036C6A0 end:0x8036DBE0
 
-src/.unsorted/803872DC.cpp:
-	.text       start:0x8038BFF4 end:0x8038CBCC
+libs/nw4r/src/snd/snd_AxVoice.cpp:
+	.text       start:0x8036DBE0 end:0x80370550
 
-src/.unsorted/80387EB4.cpp:
-	.text       start:0x8038CBCC end:0x8038F044
+libs/nw4r/src/snd/snd_AxVoiceManager.cpp:
+	.text       start:0x80370550 end:0x80370F24
 
-src/.unsorted/8038A32C.cpp:
-	.text       start:0x8038F044 end:0x8038F0F0
+libs/nw4r/src/snd/snd_AxfxImpl.cpp:
+	.text       start:0x80370F24 end:0x80371094
 
-src/.unsorted/8038A3D8.cpp:
-	.text       start:0x8038F0F0 end:0x8039413C
+libs/nw4r/src/snd/snd_Bank.cpp:
+	.text       start:0x80371094 end:0x803712BC
 
-src/.unsorted/8038F424.cpp:
-	.text       start:0x8039413C end:0x8039DBE0
+libs/nw4r/src/snd/snd_BankFile.cpp:
+	.text       start:0x803712BC end:0x803716C4
+
+libs/nw4r/src/snd/snd_BasicPlayer.cpp:
+	.text       start:0x803716C4 end:0x803717E4
+
+src/.unsorted/8036CFA4.cpp:
+	.text       start:0x803717E4 end:0x80371824
+
+libs/nw4r/src/snd/snd_BasicSound.cpp:
+	.text       start:0x80371824 end:0x80372984
+
+src/.unsorted/8036E144.cpp:
+	.text       start:0x80372984 end:0x80372A68
+	.ctors      start:0x803E5898 end:0x803E589C
+
+libs/nw4r/src/snd/snd_Channel.cpp:
+	.text       start:0x80372A68 end:0x80373C10
+
+src/.unsorted/8036F258.cpp:
+	.text       start:0x80373C10 end:0x80374040
+
+libs/nw4r/src/snd/snd_DvdSoundArchive.cpp:
+	.text       start:0x80374040 end:0x80374588
+
+src/.unsorted/8036FBD0.cpp:
+	.text       start:0x80374588 end:0x803745F0
+
+libs/nw4r/src/snd/snd_EnvGenerator.cpp:
+	.text       start:0x803745F0 end:0x80374934
+
+libs/nw4r/src/snd/snd_ExternalSoundPlayer.cpp:
+	.text       start:0x80374934 end:0x80374A14
+
+libs/nw4r/src/snd/snd_FrameHeap.cpp:
+	.text       start:0x80374A14 end:0x80374FF8
+
+src/.unsorted/80370640.cpp:
+	.text       start:0x80374FF8 end:0x803762FC
+
+libs/nw4r/src/snd/snd_InstancePool.cpp:
+	.text       start:0x803762FC end:0x803765B4
+
+libs/nw4r/src/snd/snd_Lfo.cpp:
+	.text       start:0x803765B4 end:0x803767A4
+
+src/.unsorted/80371DEC.cpp:
+	.text       start:0x803767A4 end:0x80377590
+
+libs/nw4r/src/snd/snd_MmlParser.cpp:
+	.text       start:0x80377590 end:0x80377714
+
+src/.unsorted/80372D5C.cpp:
+	.text       start:0x80377714 end:0x8037794C
+
+libs/nw4r/src/snd/snd_RemoteSpeaker.cpp:
+	.text       start:0x8037794C end:0x80378160
+
+libs/nw4r/src/snd/snd_RemoteSpeakerManager.cpp:
+	.text       start:0x80378160 end:0x803783E0
+
+libs/nw4r/src/snd/snd_SeqFile.cpp:
+	.text       start:0x803783E0 end:0x8037845C
+
+src/.unsorted/80373A60.cpp:
+	.text       start:0x8037845C end:0x80378F64
+
+libs/nw4r/src/snd/snd_SeqPlayer.cpp:
+	.text       start:0x80378F64 end:0x80379618
+
+src/.unsorted/80374C1C.cpp:
+	.text       start:0x80379618 end:0x80379754
+
+libs/nw4r/src/snd/snd_SeqSound.cpp:
+	.text       start:0x80379754 end:0x80379D3C
+
+src/.unsorted/80375340.cpp:
+	.text       start:0x80379D3C end:0x80379EF8
+	.ctors      start:0x803E589C end:0x803E58A0
+
+libs/nw4r/src/snd/snd_SeqTrack.cpp:
+	.text       start:0x80379EF8 end:0x8037A078
+
+src/.unsorted/8037567C.cpp:
+	.text       start:0x8037A078 end:0x8037AF78
+
+libs/nw4r/src/snd/snd_Sound3DManager.cpp:
+	.text       start:0x8037AF78 end:0x8037B978
+
+src/.unsorted/80376F7C.cpp:
+	.text       start:0x8037B978 end:0x8037B988
+
+libs/nw4r/src/snd/snd_SoundArchive.cpp:
+	.text       start:0x8037B988 end:0x8037BF78
+
+libs/nw4r/src/snd/snd_SoundArchiveFile.cpp:
+	.text       start:0x8037BF78 end:0x8037CD4C
+
+libs/nw4r/src/snd/snd_SoundArchiveLoader.cpp:
+	.text       start:0x8037CD4C end:0x8037D39C
+
+src/.unsorted/803789A0.cpp:
+	.text       start:0x8037D39C end:0x8037D6B8
+
+libs/nw4r/src/snd/snd_SoundArchivePlayer.cpp:
+	.text       start:0x8037D6B8 end:0x8037F2A8
+
+src/.unsorted/8037A8AC.cpp:
+	.text       start:0x8037F2A8 end:0x8037F320
+
+libs/nw4r/src/snd/snd_SoundHandle.cpp:
+	.text       start:0x8037F320 end:0x8037F438
+
+libs/nw4r/src/snd/snd_SoundHeap.cpp:
+	.text       start:0x8037F438 end:0x8037F5D8
+
+libs/nw4r/src/snd/snd_SoundPlayer.cpp:
+	.text       start:0x8037F5D8 end:0x8037FC80
+
+src/.unsorted/8037B284.cpp:
+	.text       start:0x8037FC80 end:0x80380B18
+
+libs/nw4r/src/snd/snd_SoundStartable.cpp:
+	.text       start:0x80380B18 end:0x80380B9C
+
+libs/nw4r/src/snd/snd_SoundSystem.cpp:
+	.text       start:0x80380B9C end:0x80380E4C
+	.ctors      start:0x803E58A0 end:0x803E58A4
+
+libs/nw4r/src/snd/snd_SoundThread.cpp:
+	.text       start:0x80380E4C end:0x80381318
+
+src/.unsorted/8037C81C.cpp:
+	.text       start:0x80381318 end:0x803815C0
+
+libs/nw4r/src/snd/snd_StrmChannel.cpp:
+	.text       start:0x803815C0 end:0x803817E0
+
+src/.unsorted/8037CCE4.cpp:
+	.text       start:0x803817E0 end:0x803817F0
+
+libs/nw4r/src/snd/snd_StrmFile.cpp:
+	.text       start:0x803817F0 end:0x80381DAC
+
+src/.unsorted/8037D2B0.cpp:
+	.text       start:0x80381DAC end:0x803826D0
+
+libs/nw4r/src/snd/snd_StrmPlayer.cpp:
+	.text       start:0x803826D0 end:0x803840AC
+
+src/.unsorted/8037F5B0.cpp:
+	.text       start:0x803840AC end:0x80384128
+
+libs/nw4r/src/snd/snd_StrmSound.cpp:
+	.text       start:0x80384128 end:0x803843F0
+
+src/.unsorted/8037F8F4.cpp:
+	.text       start:0x803843F0 end:0x8038447C
+	.ctors      start:0x803E58A4 end:0x803E58A8
+
+libs/nw4r/src/snd/snd_TaskManager.cpp:
+	.text       start:0x8038447C end:0x80384BE8
+
+libs/nw4r/src/snd/snd_TaskThread.cpp:
+	.text       start:0x80384BE8 end:0x80384E04
+
+libs/nw4r/src/snd/snd_Voice.cpp:
+	.text       start:0x80384E04 end:0x80387534
+
+src/.unsorted/803828FC.cpp:
+	.text       start:0x80387534 end:0x80387538
+
+libs/nw4r/src/snd/snd_VoiceManager.cpp:
+	.text       start:0x80387538 end:0x80387CC0
+
+libs/nw4r/src/snd/snd_Util.cpp:
+	.text       start:0x80387CC0 end:0x80388124
+
+src/.unsorted/8038340C.cpp:
+	.text       start:0x80388124 end:0x8038812C
+
+libs/nw4r/src/snd/snd_WaveFile.cpp:
+	.text       start:0x8038812C end:0x80388364
+
+src/.unsorted/8038364C.cpp:
+	.text       start:0x80388364 end:0x803886F4
+	.ctors      start:0x803E58A8 end:0x803E58AC
+
+libs/nw4r/src/snd/snd_WsdFile.cpp:
+	.text       start:0x803886F4 end:0x80388A3C
+
+src/.unsorted/80383D24.cpp:
+	.text       start:0x80388A3C end:0x803899F4
+
+libs/nw4r/src/math/math_triangular.cpp:
+	.text       start:0x803899F4 end:0x80389C64
+
+libs/nw4r/src/lyt/lyt_pane.cpp:
+	.text       start:0x80389C64 end:0x8038AB1C
+
+src/.unsorted/80385E04.cpp:
+	.text       start:0x8038AB1C end:0x8038AB38
+	.ctors      start:0x803E58AC end:0x803E58B0
+
+libs/nw4r/src/lyt/lyt_group.cpp:
+	.text       start:0x8038AB38 end:0x8038ADE0
+
+src/.unsorted/803860C8.cpp:
+	.text       start:0x8038ADE0 end:0x8038AE5C
+
+libs/nw4r/src/lyt/lyt_layout.cpp:
+	.text       start:0x8038AE5C end:0x8038BACC
+
+src/.unsorted/80386DB4.cpp:
+	.text       start:0x8038BACC end:0x8038BAD8
+
+libs/nw4r/src/lyt/lyt_picture.cpp:
+	.text       start:0x8038BAD8 end:0x8038BFE0
+
+src/.unsorted/803872C8.cpp:
+	.text       start:0x8038BFE0 end:0x8038BFF4
+	.ctors      start:0x803E58B0 end:0x803E58B4
+
+libs/nw4r/src/lyt/lyt_textBox.cpp:
+	.text       start:0x8038BFF4 end:0x8038CBB8
+
+src/.unsorted/80387EA0.cpp:
+	.text       start:0x8038CBB8 end:0x8038CBCC
+	.ctors      start:0x803E58B4 end:0x803E58B8
+
+libs/nw4r/src/lyt/lyt_window.cpp:
+	.text       start:0x8038CBCC end:0x8038D548
+
+src/.unsorted/80388830.cpp:
+	.text       start:0x8038D548 end:0x80390430
+	.ctors      start:0x803E58B8 end:0x803E58C0
+
+libs/nw4r/src/lyt/lyt_material.cpp:
+	.text       start:0x80390430 end:0x803920A0
+
+libs/nw4r/src/lyt/lyt_texMap.cpp:
+	.text       start:0x803920A0 end:0x803923A0
+
+src/.unsorted/8038D688.cpp:
+	.text       start:0x803923A0 end:0x80392454
+
+libs/nw4r/src/lyt/lyt_animation.cpp:
+	.text       start:0x80392454 end:0x80392FF8
+
+src/.unsorted/8038E2E0.cpp:
+	.text       start:0x80392FF8 end:0x80393050
+
+libs/nw4r/src/lyt/lyt_arcResourceAccessor.cpp:
+	.text       start:0x80393050 end:0x80393430
+
+libs/nw4r/src/lyt/lyt_common.cpp:
+	.text       start:0x80393430 end:0x80393EE4
+
+src/.unsorted/8038F1CC.cpp:
+	.text       start:0x80393EE4 end:0x8039DBE0
+	.ctors      start:0x803E58C0 end:0x803E58C4
 
 src/.unsorted/8039A068.cpp:
 	.text       start:0x8039DBE0 end:0x803A98B8
@@ -1737,9 +2342,11 @@ src/ds/battle/battle_lib.cpp:
 
 src/ds/battle/battle_script.cpp:
 	.text       start:0x803CCB44 end:0x803DC848
+	.ctors      start:0x803E58C4 end:0x803E58C8
 
 src/ds/DSbridge.cpp:
 	.text       start:0x803DC848 end:0x803DD4E4
+	.ctors      start:0x803E58C8 end:0x803E58CC
 	.rodata     start:0x803F6A90 end:0x803F6B38
 	.data       start:0x80449F20 end:0x8044A00C
 	.sbss       start:0x806288B8 end:0x806288C8
@@ -1804,4 +2411,3 @@ src/ds/convert_pokemon.cpp:
 
 src/ds/convert_save.cpp:
 	.text       start:0x803E50A8 end:0x803E5484
-

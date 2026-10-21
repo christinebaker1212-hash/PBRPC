@@ -303,6 +303,10 @@ def main() -> None:
         )
     pure_inv = {t: a for a, t in pure.items()}
     for a, t in list(seed.items()):
+        # Data references are reliable; a call can go to a different
+        # function in the other version (DEBUGPrint vs OSReport).
+        if src_by_addr[a].kind != "function":
+            continue
         if pure.get(a, t) != t or pure_inv.get(t, a) != a:
             log.write(f"hint rejected {src_by_addr[a].name} 0x{a:08X} -> 0x{t:08X}: conflicts with alignment\n")
             del seed[a]
@@ -471,6 +475,38 @@ def main() -> None:
             for sec, st, en, extra in sp.ranges
         ]
         sp.ranges = [r for r in sp.ranges if r[2] > r[1]]
+
+    # Range edges must fall between symbols.
+    sym_ranges: Dict[str, List[Tuple[int, int]]] = {}
+    for sym in all_syms:
+        if sym.size:
+            sym_ranges.setdefault(sym.section, []).append((sym.addr, sym.addr + sym.size))
+    for v in sym_ranges.values():
+        v.sort()
+
+    def inside(sec: str, addr: int) -> Optional[Tuple[int, int]]:
+        rs = sym_ranges.get(sec, [])
+        i = bisect.bisect_right(rs, (addr, 0xFFFFFFFF)) - 1
+        while i >= 0 and rs[i][0] < addr:
+            if rs[i][1] > addr:
+                return rs[i]
+            i -= 1
+            if i >= 0 and addr - rs[i][0] > 0x100000:
+                break
+        return None
+
+    for sp in ported:
+        fixed = []
+        for sec, st, en, extra in sp.ranges:
+            r = inside(sec, st)
+            if r:
+                st = r[0]
+            r = inside(sec, en)
+            if r:
+                en = r[0] if r[0] > st else r[1]
+            if en > st:
+                fixed.append((sec, st, en, extra))
+        sp.ranges = fixed
 
     # Ranges must not overlap; drop the later one if they do.
     for sec in SECTION_ORDER:

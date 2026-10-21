@@ -10,14 +10,33 @@ hint conflict src/gs/render/GSrender.cpp .data: ['0x80413944', '0x80413948']
 hint conflict src/gs/render/GStexture.cpp .sbss: ['0x80627a50', '0x80627a54', '0x80627a4c']
 hint conflict src/gs/GSvideo.cpp .sdata2: ['0x8062a650', '0x8062a654']
 hint conflict libs/RVL_SDK/src/vi/vi.c .data: ['0x80423450', '0x80423398']
+hint conflict libs/RVL_SDK/src/mtx/quat.c .sdata2: ['0x8062a91c', '0x8062a918']
 hint conflict libs/RVL_SDK/src/ax/AXVPB.c .sbss: ['0x806281c8', '0x806281bc']
+hint conflict libs/RVL_SDK/src/wpad/WPAD.c .data: ['0x8042b378', '0x8042b2e8']
+hint conflict libs/RVL_SDK/src/nwc24/NWC24MBoxCtrl.c .data: ['0x80435710', '0x80435730']
 hint conflict libs/RVL_SDK/src/vf/pf_path.c .sdata: ['0x806262d8', '0x806262e8', '0x806262dc', '0x8062ace0', '0x8062acdd', '0x806262d9', '0x8062ace4', '0x8062ace1', '0x806262f0', '0x806262b0', '0x8062ace8', '0x8062ace5', '0x806262ac']
 hint conflict libs/RVL_SDK/src/vf/nand_drv.c .sbss: ['0x80628594', '0x8062859c']
+hint conflict libs/nw4r/src/math/math_triangular.cpp .sdata2: ['0x8062b080', '0x8062b07c', '0x8062b078']
+hint conflict libs/nw4r/src/lyt/lyt_pane.cpp .sdata2: ['0x8062b0a0', '0x8062b098']
 hint conflict src/ds/battle/battle_lib.cpp .rodata: ['0x803f6186', '0x803f635a', '0x803f6194', '0x803f61a0']
 hint conflict src/ds/pokemon.cpp .data: ['0x8044a031', '0x8044a060', '0x8044a370', '0x80449ba0', '0x80449bb0', '0x8044a3cc', '0x80449eac', '0x80449f31']
-hints: 3651 symbols, 311 unit sections from relocations
-hints: 209 static initializers from .ctors
+hints: 4050 symbols, 440 unit sections from relocations
+hints: 211 static initializers from .ctors
 hint rejected fn_8000A0F0 0x8000A0F0 -> 0x80009F48
+hint rejected fn_8000B914__FiPv 0x8000B914 -> 0x8000B62C
+hint rejected fn_802549D0 0x802549D0 -> 0x802594E0
+hint rejected fn_80255520 0x80255520 -> 0x80259F94
+hint rejected fn_8000CD70__FPv 0x8000CD70 -> 0x8000CAC8
+hint rejected fn_80020BF8__FP11Unk8063E970 0x80020BF8 -> 0x800233B4
+hint rejected fn_8000EDB0__FP11Unk8063E970 0x8000EDB0 -> 0x8000EAC4
+hint rejected fn_80016640__FPviiUl 0x80016640 -> 0x80016C3C
+hint rejected fn_800195A8__FPv 0x800195A8 -> 0x8001A0B4
+hint rejected fn_8002062C__FPv 0x8002062C -> 0x80022D70
+hint rejected fn_8001FCAC__FPv 0x8001FCAC -> 0x800222B8
+hint rejected fn_80020EB8__FP11Unk8063E970i 0x80020EB8 -> 0x8002368C
+hint rejected fn_8000EC58__FP11Unk8063E970P11Unk80035D9C 0x8000EC58 -> 0x8000E948
+hint rejected fn_8000E06C__FP11Unk8063E970 0x8000E06C -> 0x8000DD08
+hint rejected fn_8000EAE0__FP11Unk8063E970UcUs 0x8000EAE0 -> 0x8000E7B8
 hint rejected fn_8005A588 0x8005A588 -> 0x8005C108
 hint rejected fn_800AA470 0x800AA470 -> 0x800AB81C
 hint rejected fn_80104354 0x80104354 -> 0x80106CB8
@@ -74,23 +93,9 @@ hint rejected BattleSystem_TriggerEffectOnSwitch__FP12BattleSystemP13BattleConte
 hint rejected BattleSystem_Divide__Fii 0x803C0B68 -> 0x803C4214
 hint rejected fn_8017CED8 0x8017CED8 -> 0x801817C0
 hint rejected fn_8017CC8C 0x8017CC8C -> 0x8018156C
-hint rejected sInstance__7GSvideo 0x8063F788 -> 0x80627A78: conflicts with alignment
-hint rejected lbl_8063F410 0x8063F410 -> 0x80627700: conflicts with alignment
-hint rejected lbl_8064080C 0x8064080C -> 0x80628AE8: conflicts with alignment
-hint rejected lbl_80640810 0x80640810 -> 0x80628AEC: conflicts with alignment
-hint rejected lbl_8063D500 0x8063D500 -> 0x80625828: conflicts with alignment
-hint rejected lbl_80640F68 0x80640F68 -> 0x806291FC: conflicts with alignment
-hint rejected lbl_80641444 0x80641444 -> 0x806296A8: conflicts with alignment
-hint rejected lbl_8064144C 0x8064144C -> 0x806296B0: conflicts with alignment
-hint rejected lbl_80641450 0x80641450 -> 0x806296B4: conflicts with alignment
-hint rejected lbl_80641454 0x80641454 -> 0x806296B8: conflicts with alignment
-hint rejected lbl_8063D5BC 0x8063D5BC -> 0x806258F0: conflicts with alignment
 hint rejected fn_8018028C 0x8018028C -> 0x80184B9C: conflicts with alignment
 hint rejected fn_8018043C 0x8018043C -> 0x80184D5C: conflicts with alignment
-hint rejected sInstance__17_UnkClass801FA38C 0x8063F400 -> 0x806276F0: conflicts with alignment
-hint rejected lbl_8063F5B0 0x8063F5B0 -> 0x806278A0: conflicts with alignment
-hint rejected lbl_8063F5B8 0x8063F5B8 -> 0x806278A8: conflicts with alignment
-hint rejected DEBUGPrint 0x802B3860 -> 0x80007924: conflicts with alignment
+hint rejected AXGetMaxVoices 0x8029231C -> 0x80296D00: conflicts with alignment
 hint rejected __sinit_\800AA470_cpp 0x800B9DFC -> 0x800BCAD4: conflicts with alignment
 section .init: 17/18 mapped (18 found in target)
 section extab: 54/54 mapped (54 found in target)
@@ -544,13 +549,9 @@ fuzzy .data lbl_804066A5 0x804066A5 -> 0x803F7608 size 0xD7 -> 0xDC
 fuzzy .data lbl_804068E0 0x804068E0 -> 0x803F7850 size 0x494 -> 0x4BC
 fuzzy .data lbl_80406E04 0x80406E04 -> 0x803F7D9C size 0xC0 -> 0x84
 fuzzy .data lbl_80407210 0x80407210 -> 0x803F8188 size 0x92 -> 0x98
-fuzzy .data lbl_804074C2 0x804074C2 -> 0x803F8448 size 0x622 -> 0x660
-fuzzy .data lbl_80407AE4 0x80407AE4 -> 0x803F8AA8 size 0x159 -> 0x168
 fuzzy .data lbl_80407C3D 0x80407C3D -> 0x803F8C10 size 0x3FD -> 0x424
-fuzzy .data lbl_8040803A 0x8040803A -> 0x803F9034 size 0x278 -> 0x290
 fuzzy .data lbl_804082E1 0x804082E1 -> 0x803F92F8 size 0x141 -> 0x150
 fuzzy .data lbl_80408508 0x80408508 -> 0x803F9534 size 0x194 -> 0x1A8
-fuzzy .data lbl_804087EB 0x804087EB -> 0x803F9830 size 0xA5 -> 0xAC
 fuzzy .data lbl_80408AB9 0x80408AB9 -> 0x803F9AF8 size 0x75 -> 0x78
 fuzzy .data lbl_80408B2E 0x80408B2E -> 0x803F9B70 size 0x119 -> 0x124
 fuzzy .data lbl_80408DBE 0x80408DBE -> 0x803F9E18 size 0x26A -> 0x278
@@ -604,12 +605,11 @@ fuzzy .bss lbl_80483800 0x80483800 -> 0x80459380 size 0x1C -> 0x20
 fuzzy .bss lbl_80485BFC 0x80485BFC -> 0x8045B780 size 0x204 -> 0x200
 fuzzy .bss lbl_80496BA0 0x80496BA0 -> 0x8047F1C8 size 0x1400 -> 0x1418
 fuzzy .bss lbl_80537D80 0x80537D80 -> 0x805203C0 size 0x26C0 -> 0x23C0
-section .bss: 463/463 mapped (460 found in target)
-section .sdata: 853/868 mapped (860 found in target)
+section .bss: 460/470 mapped (460 found in target)
+section .sdata: 855/868 mapped (860 found in target)
 fuzzy .sbss lbl_8063EDA0 0x8063EDA0 -> 0x8062709C size 0x8 -> 0x4
-fuzzy .sbss lbl_8063FF44 0x8063FF44 -> 0x80628234 size 0x1C -> 0xC
-section .sbss: 1389/1427 mapped (1414 found in target)
-section .sdata2: 2136/2166 mapped (2145 found in target)
+section .sbss: 1383/1427 mapped (1414 found in target)
+section .sdata2: 2135/2166 mapped (2145 found in target)
 section .sbss2: 6/6 mapped (6 found in target)
 unmapped .text fn_8000B5D0__Fi 0x8000B5D0
 unmapped .text fn_8000BCB0__Fi 0x8000BCB0
@@ -628,7 +628,7 @@ unmapped .text fn_8000D818__FP11Unk8063E970iPvi 0x8000D818
 unmapped .text fn_8000D8AC__FPv 0x8000D8AC
 unmapped .text fn_8000DE70__FP11Unk8063E970 0x8000DE70
 unmapped .text fn_8000DEC4__FP11Unk8063E970 0x8000DEC4
-unmapped .text fn_8000DFC4__FP11Unk8063E970iUcii 0x8000DFC4
+unmapped .text fn_8000DFC4__FP11Unk8063E970iUciPv 0x8000DFC4
 unmapped .text fn_8000E06C__FP11Unk8063E970 0x8000E06C
 unmapped .text fn_8000E194__FP11Unk8063E970Pv 0x8000E194
 unmapped .text fn_8000E2C8__FP11Unk8063E970 0x8000E2C8
@@ -880,8 +880,8 @@ unmapped .text fn_802EF9A0 0x802EF9A0
 unmapped .text fn_802EFCD0 0x802EFCD0
 unmapped .text fn_802EFFCC 0x802EFFCC
 unmapped .text fn_802F0418 0x802F0418
-unmapped .text fn_80369444 0x80369444
-unmapped .text fn_8036950C 0x8036950C
+unmapped .text PrepareReset__Q44nw4r3snd6detail9AxManagerFv 0x80369444
+unmapped .text AiDmaCallbackFunc__Q44nw4r3snd6detail9AxManagerFv 0x8036950C
 unmapped .text fn_80390CE4 0x80390CE4
 unmapped .text fn_80390D18 0x80390D18
 unmapped .text fn_80390D4C 0x80390D4C
@@ -978,22 +978,31 @@ unmapped .data lbl_8046FA40 0x8046FA40
 unmapped .data lbl_8046FA70 0x8046FA70
 unmapped .data lbl_80471F00 0x80471F00
 unmapped .data lbl_80471F30 0x80471F30
+unmapped .bss lbl_8057B780 0x8057B780
+unmapped .bss nwc24ScdCommandMutex 0x8057E7A0
+unmapped .bss nwc24ScdCounterMutex 0x8057E7B8
+unmapped .bss nwc24ScdCommonResult 0x8057E800
+unmapped .bss nwc24ScdStatBuf 0x8057E820
+unmapped .bss buf 0x8057E920
+unmapped .bss nwc24TimeCommandMutex 0x8057E9A0
+unmapped .bss nwc24TimeCommonBuffer 0x8057E9C0
+unmapped .bss nwc24TimeCommonResult 0x8057E9E0
+unmapped .bss ShutdownFuncInfo 0x8057EA00
 unmapped .sdata lbl_8063D2D8 0x8063D2D8
 unmapped .sdata lbl_8063D2DC 0x8063D2DC
 unmapped .sdata lbl_8063D330 0x8063D330
 unmapped .sdata lbl_8063D335 0x8063D335
-unmapped .sdata lbl_8063D500 0x8063D500
-unmapped .sdata lbl_8063D50C 0x8063D50C
 unmapped .sdata lbl_8063D540 0x8063D540
 unmapped .sdata lbl_8063D54C 0x8063D54C
 unmapped .sdata lbl_8063D57C 0x8063D57C
 unmapped .sdata lbl_8063D5B8 0x8063D5B8
-unmapped .sdata lbl_8063D5BC 0x8063D5BC
 unmapped .sdata lbl_8063D5C0 0x8063D5C0
 unmapped .sdata lbl_8063D5C4 0x8063D5C4
 unmapped .sdata lbl_8063D5C8 0x8063D5C8
 unmapped .sdata lbl_8063D5CC 0x8063D5CC
+unmapped .sdata lbl_8063D5D0 0x8063D5D0
 unmapped .sbss lbl_8063E978 0x8063E978
+duplicate lbl_8063E984 at 0x80626C9C
 unmapped .sbss lbl_8063E990 0x8063E990
 unmapped .sbss lbl_8063E994 0x8063E994
 unmapped .sbss lbl_8063E998 0x8063E998
@@ -1011,17 +1020,24 @@ unmapped .sbss sDepth__6GSnull 0x8063F3D8
 unmapped .sbss lbl_8063F3E0 0x8063F3E0
 unmapped .sbss lbl_8063F3E8 0x8063F3E8
 unmapped .sbss version 0x8063F3F0
+duplicate lbl_8063F420 at 0x806276F0
+duplicate lbl_8063F430 at 0x80627700
 unmapped .sbss version 0x8063F460
 unmapped .sbss version 0x8063F570
 unmapped .sbss lbl_8063F598 0x8063F598
 unmapped .sbss lbl_8063F5A0 0x8063F5A0
-unmapped .sbss lbl_8063F5C0 0x8063F5C0
+unmapped .sbss lbl_8063F690 0x8063F690
+unmapped .sbss lbl_8063F69C 0x8063F69C
+unmapped .sbss lbl_8063F6A0 0x8063F6A0
+unmapped .sbss lbl_8063F6A4 0x8063F6A4
 unmapped .sbss version 0x8063F6C0
 unmapped .sbss lbl_8063F6C8 0x8063F6C8
 unmapped .sbss lbl_8063F6D0 0x8063F6D0
+unmapped .sbss lbl_8063F6D8 0x8063F6D8
+unmapped .sbss lbl_8063F6E0 0x8063F6E0
 unmapped .sbss version 0x8063F6E8
-unmapped .sbss lbl_8063F780 0x8063F780
-unmapped .sbss sInstance__7GSvideo 0x8063F788
+duplicate version at 0x80627A70
+duplicate lbl_8063F798 at 0x80627A78
 unmapped .sbss lbl_8063F7A8 0x8063F7A8
 unmapped .sbss lbl_8063F7B0 0x8063F7B0
 unmapped .sbss lbl_8063F7B8 0x8063F7B8
@@ -1030,8 +1046,11 @@ unmapped .sbss lbl_8063F7C8 0x8063F7C8
 unmapped .sbss lbl_80640104 0x80640104
 unmapped .sbss lbl_80640108 0x80640108
 unmapped .sbss lbl_80640138 0x80640138
+unmapped .sbss InstanceIdGen 0x80640240
+unmapped .sbss config 0x80640248
+unmapped .sbss Opened 0x80640254
 unmapped .sbss sUnk806405F8 0x806405F8
-unmapped .sdata2 lbl_80640810 0x80640810
+unmapped .sdata2 lbl_80640808 0x80640808
 unmapped .sdata2 lbl_80640C30 0x80640C30
 unmapped .sdata2 lbl_80640C38 0x80640C38
 unmapped .sdata2 lbl_80640C80 0x80640C80
@@ -1044,7 +1063,7 @@ unmapped .sdata2 lbl_80640DBC 0x80640DBC
 unmapped .sdata2 lbl_80640ED0 0x80640ED0
 unmapped .sdata2 lbl_80640ED4 0x80640ED4
 unmapped .sdata2 lbl_80640F18 0x80640F18
-unmapped .sdata2 lbl_80640F68 0x80640F68
+unmapped .sdata2 lbl_80640F64 0x80640F64
 unmapped .sdata2 lbl_80640FB8 0x80640FB8
 unmapped .sdata2 lbl_80641198 0x80641198
 unmapped .sdata2 lbl_8064119C 0x8064119C
@@ -1056,6 +1075,7 @@ unmapped .sdata2 lbl_80641360 0x80641360
 unmapped .sdata2 lbl_80641368 0x80641368
 unmapped .sdata2 lbl_80641370 0x80641370
 unmapped .sdata2 lbl_806413B8 0x806413B8
+unmapped .sdata2 lbl_80641440 0x80641440
 unmapped .sdata2 lbl_806415FC 0x806415FC
 unmapped .sdata2 lbl_80641600 0x80641600
 unmapped .sdata2 lbl_806423F8 0x806423F8
@@ -1080,16 +1100,24 @@ split src/.unsorted/80220DC4.cpp .sdata2: start 0x8062A460 from relocations (was
 split src/gs/math/GSrand.cpp .sbss: start 0x80627888 from relocations (was None)
 split src/gs/math/GStrig.cpp .sbss: start 0x80627890 from relocations (was None)
 split src/gs/math/GSquat.cpp .sbss: start 0x80627898 from relocations (was 0x80627880)
-split src/gs/math/GSmathInit.cpp .sbss: start 0x806278B0 from relocations (was None)
-split src/gs/render/80232D24.cpp .sbss: start 0x806279B0 from relocations (was None)
+split src/.unsorted/80228970.cpp .sbss 0x8063F650-0x8063F65C: unresolved (0x80627940, None)
+split src/gs/render/GSrender.cpp .sbss: start 0x80627980 from relocations (was None)
+split src/gs/render/80232D24.cpp .sbss 0x8063F6C0-0x8063F6C8: unresolved (None, None)
 split src/gs/render/GSrenderLight.cpp .sbss: start 0x806279C0 from relocations (was None)
 split src/gs/render/GSrenderModule.cpp .sbss: start 0x806279D8 from relocations (was None)
-split src/gs/GSvideo.cpp .sbss: start 0x80627A70 from relocations (was None)
+split src/gs/GSvideo.cpp .sbss 0x8063F780-0x8063F790: unresolved (0x80627a70, 0x80627a70)
 split src/gs/input/GSinput.cpp .sbss: start 0x80627A98 from relocations (was None)
 split src/gs/input/802448E8.cpp .sbss 0x8063F7B8-0x8063F7C0: unresolved (None, None)
 split src/gs/fsys/GSfsysMem.cpp .sbss: start 0x80627AB0 from relocations (was None)
-split src/.unsorted/802A4660.cpp .text 0x802A4660-0x802A5B84: unresolved (0x802a8f28, None)
+split libs/RVL_SDK/src/dsp/dsp_task.c .sbss 0x8063FF30-0x8063FF48: unresolved (0x80628220, None)
+split src/.unsorted/802A5B28.cpp .text 0x802A5B28-0x802A5B84: unresolved (0x802aa3f0, None)
 split libs/RVL_SDK/src/wpad/WPAD.c .text 0x802A5B84-0x802AD0D4: unresolved (None, 0x802b18a8)
+split libs/RVL_SDK/src/nwc24/NWC24FileApi.c .sbss 0x80640238-0x80640248: unresolved (0x80628508, None)
+split libs/RVL_SDK/src/nwc24/NWC24Config.c .sbss: start 0x80628518 from relocations (was None)
+split libs/RVL_SDK/src/nwc24/NWC24MBoxCtrl.c .sbss: start 0x80628538 from relocations (was 0x80628530)
+split libs/RVL_SDK/src/nwc24/NWC24Schedule.c .bss: start 0x80566AE0 from relocations (was None)
+split libs/RVL_SDK/src/nwc24/NWC24Time.c .bss: start 0x80566C60 from relocations (was None)
+split libs/RVL_SDK/src/nwc24/NWC24System.c .bss: start 0x80566D40 from relocations (was None)
 split src/ds/DSbridge.cpp .sbss 0x806405E8-0x806405FC: unresolved (0x806288b8, None)
 split src/.unsorted/8000ADC0.cpp .text: resolved from neighbours
 split src/.unsorted/80024914.cpp .text: resolved from neighbours
@@ -1101,7 +1129,11 @@ split src/gs/GSfile.cpp .sbss: resolved from neighbours
 split src/gs/scene/GSnull.cpp .sbss: resolved from neighbours
 split src/gs/GShierarchyModule.cpp .sbss: resolved from neighbours
 split src/gs/math/GSboundingBox.cpp .sbss: resolved from neighbours
+split src/.unsorted/80228970.cpp .sbss: resolved from neighbours
 split src/gs/input/802448E8.cpp .sbss: resolved from neighbours
-split src/.unsorted/802A4660.cpp .text: resolved from neighbours
+split libs/RVL_SDK/src/dsp/dsp_task.c .sbss: resolved from neighbours
+split src/.unsorted/802A5B28.cpp .text: resolved from neighbours
 split libs/RVL_SDK/src/wpad/WPAD.c .text: resolved from neighbours
+split libs/RVL_SDK/src/nwc24/NWC24FileApi.c .sbss: resolved from neighbours
 split src/ds/DSbridge.cpp .sbss: resolved from neighbours
+split src/gs/render/GSrenderLight.cpp .sbss: overlaps previous unit, dropped
