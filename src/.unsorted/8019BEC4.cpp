@@ -7598,4 +7598,103 @@ s32 fn_801C65B4(u32 a, u32 b) {
     }
     return 0;
 }
+s32 fn_8018028C(s32);
+s32 fn_8019C4E8(s32, s32, u16, s32, s32);
+#pragma push
+#pragma optimize_for_size on
+s32 fn_801A04E4(s32 a, s32 b, s32 c, s32 d) {
+    u16 m;
+    s32 x = fn_803D5004(inl_lbz_d(lbl_804765C0));
+    m = fn_801C6728(c);
+    if ((u16)fn_801C6728((u16)x) != m) {
+        return fn_8019C4E8(a, b, x, d, 1);
+    }
+    return 0;
+}
+s32 fn_801A5540(s32 a, u8 *b, s32 c, s32 d) {
+    s32 w;
+    s32 x;
+    s32 y;
+    s32 m = fn_80181398(a, d);
+    x = fn_803AC828();
+    y = fn_803AC848(fn_803AC828());
+    if (b == 0) {
+        w = 0;
+    } else {
+        w = *(s32 *)(*(u8 **)(b + 0x798) + 0xc);
+    }
+    if (w == fn_803C8C48(x, y, 3, fn_8017E954((s32)b))) {
+        return 1;
+    }
+    return (u32)(-(u16)m | (u16)m) >> 31;
+}
+s32 fn_801AAE50(s32 a, s32 b) {
+    s32 r = 0;
+    if (fn_801C06CC(0, a, 1, 1, 0x10e, 0) == 1) {
+        r = fn_8017F244(0, 30);
+    }
+    if (fn_80180618(a, b, 0x36) == 1) {
+        r = fn_8017F244(r, 15);
+    }
+    return fn_8017F244(r, -5);
+}
+#pragma pop
+s32 fn_801B8074(s32 a) {
+    s32 r = 0;
+    s32 v = fn_8018028C(a);
+    if ((u8)fn_8038FD78(lbl_8063CE34 + 0xc, v)) {
+        r = fn_8017F244(0, 10);
+    }
+    if (fn_801C06CC(0, a, 1, 1, 0x10e, 0) == 1) {
+        r = fn_8017F244(r, 30);
+    }
+    return r;
+}
+u8 *fn_801C0E98(u8 *p, u32 id) {
+    u32 i;
+    for (i = 0; i < 6; i++) {
+        u8 *q = fn_801C1BC0(p, (u16)i);
+        if (fn_801C3620(q)) {
+            u32 v;
+            if (q == 0) {
+                v = 0;
+            } else {
+                v = *(u32 *)q;
+            }
+            if (v != 0 && id == v) {
+                return q;
+            }
+        }
+    }
+    return 0;
+}
+#pragma push
+#pragma optimize_for_size on
+s32 fn_801A11C0(s32 a, s32 b, s32 c, s32 d) {
+    s32 r;
+    u8 t = fn_8017F464(a, c, b);
+    s32 w;
+    r = fn_801A0C34(a, b, c, d, 0);
+    w = fn_8017F5C8(a, b, c);
+    if (fn_801808E8(a, d, t, w) == 0x43) {
+        r = 0;
+    }
+    if (r == 0) {
+        return 0;
+    }
+    return 1;
+}
+#pragma pop
+u8 fn_801C5B50(u8 *p, u16 i) {
+    if (p == 0) {
+        return 0;
+    }
+    if (inl_moveId(p, i) == 0) {
+        return 0;
+    }
+    if (inl_moveId(p, i) == 0x1d4) {
+        return 0;
+    }
+    return 1;
+}
 }
