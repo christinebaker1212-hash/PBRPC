@@ -392,6 +392,23 @@ def Nw4rLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
     }
 
 
+def HBMLib(lib_name: str, objects: List[Object]) -> Dict[str, Any]:
+    return {
+        "lib": lib_name,
+        "mw_version": config.linker_version,
+        "cflags": [
+            *cflags_sdk,
+            "-lang c++",
+            "-i libs/nw4r/include",
+            "-DREVOLUTION",
+            "-DVERSION_RSPE01_01",
+        ],
+        "progress_category": "sdk",
+        "objects": objects,
+        "src_dir": "libs/RVL_SDK/src",
+    }
+
+
 Matching = True  # Object matches and should be linked
 NonMatching = False  # Object does not match and should not be linked
 Equivalent = (
@@ -841,6 +858,17 @@ config.libs = [
             Object(NonMatching, "wpad/WPAD.c"),
         ],
     ),
+    HBMLib(
+        "homebuttonLib",
+        [
+            Object(NonMatching, "homebuttonLib/HBMBase.cpp"),
+            Object(NonMatching, "homebuttonLib/HBMAnmController.cpp"),
+            Object(NonMatching, "homebuttonLib/HBMFrameController.cpp"),
+            Object(NonMatching, "homebuttonLib/HBMGUIManager.cpp"),
+            Object(NonMatching, "homebuttonLib/HBMController.cpp"),
+            Object(NonMatching, "homebuttonLib/HBMRemoteSpk.cpp"),
+        ],
+    ),
     RVLSDKLib(
         "euart",
         [
@@ -1166,7 +1194,6 @@ config.libs = [
             Object(NonMatching, ".unsorted/8038D688.cpp"),
             Object(NonMatching, ".unsorted/8038E2E0.cpp"),
             Object(NonMatching, ".unsorted/8038F1CC.cpp"),
-            Object(NonMatching, ".unsorted/8039A068.cpp"),
             Object(NonMatching, ".unsorted/8026BB40.cpp"),
             Object(NonMatching, ".unsorted/8026FC14.cpp"),
             Object(NonMatching, ".unsorted/80272BCC.cpp"),

@@ -2308,8 +2308,39 @@ src/.unsorted/8038F1CC.cpp:
 	.text       start:0x80393EE4 end:0x8039DBE0
 	.ctors      start:0x803E58C0 end:0x803E58C4
 
-src/.unsorted/8039A068.cpp:
-	.text       start:0x8039DBE0 end:0x803A98B8
+libs/RVL_SDK/src/homebuttonLib/HBMBase.cpp:
+	.text       start:0x8039DBE0 end:0x803A6F24
+	.rodata     start:0x803F5CF0 end:0x803F5FA0
+	.data       start:0x80447E68 end:0x80448A58
+	.bss        start:0x806251F8 end:0x80625230
+	.sdata      start:0x80626B28 end:0x80626BF8
+	.sbss       start:0x80628870 end:0x80628878
+	.sdata2     start:0x8062B188 end:0x8062B208
+
+libs/RVL_SDK/src/homebuttonLib/HBMAnmController.cpp:
+	.text       start:0x803A6F24 end:0x803A7030
+	.data       start:0x80448A58 end:0x80448A68
+
+libs/RVL_SDK/src/homebuttonLib/HBMFrameController.cpp:
+	.text       start:0x803A7030 end:0x803A71D0
+	.sdata2     start:0x8062B208 end:0x8062B210
+
+libs/RVL_SDK/src/homebuttonLib/HBMGUIManager.cpp:
+	.text       start:0x803A71D0 end:0x803A8608
+	.data       start:0x80448A68 end:0x80448BC0
+	.sbss       start:0x80628878 end:0x80628880
+	.sdata2     start:0x8062B210 end:0x8062B220
+
+libs/RVL_SDK/src/homebuttonLib/HBMController.cpp:
+	.text       start:0x803A8608 end:0x803A90C4
+	.bss        start:0x80625230 end:0x806253C0
+	.sbss       start:0x80628880 end:0x80628888
+	.sdata2     start:0x8062B220 end:0x8062B230
+
+libs/RVL_SDK/src/homebuttonLib/HBMRemoteSpk.cpp:
+	.text       start:0x803A90C4 end:0x803A98B8
+	.data       start:0x80448BC0 end:0x80448BD0
+	.sbss       start:0x80628888 end:0x80628890
 
 src/ds/battle/battle_io_command.cpp:
 	.text       start:0x803A98B8 end:0x803AABF8
