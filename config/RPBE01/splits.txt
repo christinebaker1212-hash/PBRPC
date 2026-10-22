@@ -2573,14 +2573,8 @@ libs/nw4r/src/snd/snd_RemoteSpeakerManager.cpp:
 libs/nw4r/src/snd/snd_SeqFile.cpp:
 	.text       start:0x803783E0 end:0x8037845C
 
-src/.unsorted/80373A60.cpp:
-	.text       start:0x8037845C end:0x80378F64
-
 libs/nw4r/src/snd/snd_SeqPlayer.cpp:
-	.text       start:0x80378F64 end:0x80379618
-
-src/.unsorted/80374C1C.cpp:
-	.text       start:0x80379618 end:0x80379754
+	.text       start:0x8037845C end:0x80379754
 
 libs/nw4r/src/snd/snd_SeqSound.cpp:
 	.text       start:0x80379754 end:0x80379D3C
