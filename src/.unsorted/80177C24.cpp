@@ -62,3 +62,12 @@ bool Battle::fn_8017A754(u32 coloId, TrainerDeckEntry *trainer, UnkStruct1 *_r6)
 
     return true;
 }
+
+extern "C" {
+
+void fn_80177EA4(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+}
+}
