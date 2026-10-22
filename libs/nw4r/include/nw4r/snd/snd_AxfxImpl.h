@@ -22,11 +22,8 @@ struct AxfxImpl {
     bool CreateHeap(void *pBuffer, u32 size);
     void DestroyHeap();
 
+    // This revision has no null check (Wii Sports' has one).
     u32 GetHeapTotalSize() {
-        if (mHeap == NULL) {
-            return 0;
-        }
-
         return MEMGetHeapTotalSize(mHeap);
     }
 

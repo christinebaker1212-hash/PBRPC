@@ -2503,8 +2503,33 @@ libs/nw4r/src/snd/snd_ExternalSoundPlayer.cpp:
 libs/nw4r/src/snd/snd_FrameHeap.cpp:
 	.text       start:0x8037005C end:0x80370640
 
-src/.unsorted/80370640.cpp:
-	.text       start:0x80370640 end:0x80371944
+libs/nw4r/src/snd/snd_FxChorus.cpp:
+	.text       start:0x80370640 end:0x80370990
+	.rodata     start:0x80402890 end:0x804028A0
+	.data       start:0x8044CA28 end:0x8044CA68
+	.sdata2     start:0x80642C18 end:0x80642C20
+
+libs/nw4r/src/snd/snd_FxDelay.cpp:
+	.text       start:0x80370990 end:0x80370DC0
+	.rodata     start:0x804028A0 end:0x804028B0
+	.sdata2     start:0x80642C20 end:0x80642C28
+
+libs/nw4r/src/snd/snd_FxReverbHi.cpp:
+	.text       start:0x80370DC0 end:0x803711A8
+	.rodata     start:0x804028B0 end:0x804028C8
+	.data       start:0x8044CA68 end:0x8044CAA8
+	.sdata2     start:0x80642C28 end:0x80642C38
+
+libs/nw4r/src/snd/snd_FxReverbHiDpl2.cpp:
+	.text       start:0x803711A8 end:0x80371598
+	.rodata     start:0x804028C8 end:0x804028E0
+	.sdata2     start:0x80642C38 end:0x80642C48
+
+libs/nw4r/src/snd/snd_FxReverbStd.cpp:
+	.text       start:0x80371598 end:0x80371944
+	.rodata     start:0x804028E0 end:0x804028F8
+	.data       start:0x8044CAA8 end:0x8044CAF0
+	.sdata2     start:0x80642C48 end:0x80642C58
 
 libs/nw4r/src/snd/snd_InstancePool.cpp:
 	.text       start:0x80371944 end:0x80371BFC
