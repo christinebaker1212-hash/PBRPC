@@ -21,3 +21,62 @@ u32 fn_8015F660(void) {
     return *(u32 *)(lbl_80488300 + 0x18);
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_8015D390(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80161208(s32);
+
+void fn_801611CC(void) {
+    fn_80161208(0);
+    fn_80161208(1);
+    fn_80161208(2);
+    fn_80161208(3);
+}
+}
+
+extern "C" {
+
+u8 SCGetSoundMode(void);
+u8 *fn_8015F690(void);
+s32 fn_802544D8(s32);
+s32 fn_80259408(s32);
+extern s8 lbl_8063F01A;
+
+void fn_80161308(void) {
+    u8 temp_r3;
+    u8 *temp_r30;
+
+    temp_r30 = fn_8015F690();
+    temp_r3 = SCGetSoundMode();
+    switch ((s32) temp_r3) {                        /* irregular */
+    case 0:
+        (*(s8 *)((u8 *)(temp_r30) + (0x43))) = 0;
+        fn_802544D8(3);
+        fn_80259408(0);
+        return;
+    case 1:
+        (*(s8 *)((u8 *)(temp_r30) + (0x43))) = 1;
+        fn_802544D8(0);
+        fn_80259408(1);
+        return;
+    case 2:
+        (*(s8 *)((u8 *)(temp_r30) + (0x43))) = 1;
+        fn_802544D8(0);
+        fn_80259408(1);
+        lbl_8063F01A = 1;
+        return;
+    }
+}
+}
