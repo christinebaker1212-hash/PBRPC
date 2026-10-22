@@ -139,3 +139,28 @@ s32 fn_8004FA38(s32 arg0, s32 arg1) {
     return (s32) temp_r3;
 }
 }
+
+extern "C" {
+
+s32 fn_8004FBB0(s32, s32);
+s32 fn_800500C4(s32, s32);
+
+s32 fn_8004FBB0(s32 arg0, s32 arg1) {
+    s32 var_r3;
+    u8 *var_r4;
+
+    var_r3 = fn_800500C4(arg0, arg1);
+    if (var_r3 >= 0) {
+        var_r3 = arg0 + (var_r3 * 4);
+        var_r4 = (*(u8 **)((u8 *)(var_r3) + (0x2C)));
+        if (var_r4 != NULL) {
+            var_r4 = (*(u8 **)((u8 *)(var_r4) + (0xC04)));
+        }
+        if (var_r4 != NULL) {
+            (*(s32 *)((u8 *)(var_r4) + (0x40))) = 0;
+        }
+        (*(u8 **)((u8 *)(var_r3) + (0x2C))) = NULL;
+    }
+    return var_r3;
+}
+}
