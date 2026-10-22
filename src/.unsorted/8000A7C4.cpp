@@ -62,3 +62,13 @@ void fn_8000A9B8(void) {
     }
 }
 }
+
+extern "C" {
+
+s32 freeToHeap__5GSmemFP12MEMiHeapHeadPv(s32, s32);
+extern s32 gUnkHeap2;
+
+void free(s32 arg0) {
+    freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, arg0);
+}
+}
