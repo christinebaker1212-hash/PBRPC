@@ -22,3 +22,14 @@ void fn_8002CACC(Vec *v) {
     v->z = 0.0f;
 }
 }
+
+extern "C" {
+
+s32 fn_80050388(u8 *);
+
+void fn_8002CA78(u8 *arg0, f32 farg0) {
+    (*(f32 *)((u8 *)(arg0) + (0x4E0))) = farg0;
+    fn_80050388(arg0 + 4);
+    (*(s8 *)((u8 *)(arg0) + (1))) = 1;
+}
+}
