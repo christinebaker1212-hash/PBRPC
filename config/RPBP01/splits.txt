@@ -2485,8 +2485,10 @@ src/.unsorted/8036E144.cpp:
 libs/nw4r/src/snd/snd_Channel.cpp:
 	.text       start:0x8036E228 end:0x8036F258
 
-src/.unsorted/8036F258.cpp:
+libs/nw4r/src/snd/snd_DisposeCallbackManager.cpp:
 	.text       start:0x8036F258 end:0x8036F688
+	.bss        start:0x806219C0 end:0x806219F0
+	.sbss       start:0x806404C0 end:0x806404C8
 
 libs/nw4r/src/snd/snd_DvdSoundArchive.cpp:
 	.text       start:0x8036F688 end:0x8036FBD0
