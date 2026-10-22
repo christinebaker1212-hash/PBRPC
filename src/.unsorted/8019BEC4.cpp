@@ -7752,3 +7752,51 @@ block_20:
     return 1;
 }
 }
+
+extern "C" {
+
+s32 fn_801A3984(s32, s32, s32, s32);
+
+s32 fn_801A3984(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s16 spA;
+    u8 sp8;
+    s32 var_r31;
+
+    fn_801C6270((u8 *)(fn_801C3AC8((u8 *)(arg1))), (u16 *)((s32) &spA), (u8 *)((s32) &sp8));
+    var_r31 = fn_801A0C34((s32)(arg0), (s32)(arg1), (s32)(arg2), (s32)(arg3), (s32)(0));
+    if (fn_801808E8((s32)(arg0), (s32)(arg3), (u16)((s32) sp8), (s16)((s32) spA)) == 0x43U) {
+        var_r31 = 0;
+    }
+    if (var_r31 == 0) {
+        return 0;
+    }
+    return 1;
+}
+}
+
+extern "C" {
+
+s32 BattleSystem_GetBattleContext(s32);
+s32 Battler_CountMoves__FP12BattleSystemP13BattleContexti(s32, s32, s32);
+s32 fn_801A55F8(s32, s32);
+
+s32 fn_801A55F8(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+    u8 temp_r30;
+    u8 temp_r4;
+    u8 var_r0;
+
+    temp_r30 = fn_8017E954((s32)(arg1));
+    temp_r31 = BattleSystem_GetBattleContext(fn_803AC828());
+    temp_r4 = Battler_CountMoves__FP12BattleSystemP13BattleContexti(fn_803AC828(), temp_r31, (s32) temp_r30);
+    if (arg1 == 0) {
+        var_r0 = 0;
+    } else {
+        var_r0 = ((u32) (*(u32 *)((u8 *)((*(u8 **)((u8 *)(arg1) + (0x798)))) + (4))) >> 0x13U) & 7;
+    }
+    if (((s32) var_r0 < (s32) (temp_r4 - 1)) || (temp_r4 < 2U)) {
+        return 0;
+    }
+    return 1;
+}
+}
