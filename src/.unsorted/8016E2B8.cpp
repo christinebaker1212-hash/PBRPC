@@ -55,3 +55,17 @@ u8 *fn_8016E5C0(u8 *arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_8016E674(void);
+s32 fn_803D9E08__Fv(void);
+
+s32 fn_8016E674(void) {
+    if (fn_803D9E08__Fv() != 0) {
+        fn_8016E2E4((u32)(6));
+        return 6;
+    }
+    return lbl_8063F1CC;
+}
+}
