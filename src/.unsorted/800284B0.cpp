@@ -135,3 +135,77 @@ void fn_8002A850(GXColor *color, u8 r, u8 g, u8 b, u8 a) {
     color->a = a;
 }
 }
+
+extern "C" {
+
+f64 atan2(void);
+
+f32 fn_8002A460(void) {
+    return (f32) atan2();
+}
+}
+
+extern "C" {
+
+void fn_8002A4A4(s32 *arg0, s32 arg1) {
+    if (arg1 != 0) {
+        *arg0 |= 0x1000;
+        return;
+    }
+    *arg0 &= 0xFFFFEFFF;
+}
+}
+
+extern "C" {
+
+void fn_8002A4CC(s32 *arg0, s32 arg1) {
+    if (arg1 != 0) {
+        *arg0 |= 0x400000;
+        return;
+    }
+    *arg0 &= 0xFFBFFFFF;
+}
+}
+
+extern "C" {
+
+void fn_8002A4F4(s32 *arg0, s32 arg1) {
+    if (arg1 != 0) {
+        *arg0 |= 0x800000;
+        return;
+    }
+    *arg0 &= 0xFF7FFFFF;
+}
+}
+
+extern "C" {
+
+f32 PSVECDistance(s32, s32);
+extern f32 lbl_80640718;
+
+f32 fn_8002A58C(s32 arg0) {
+    return lbl_80640718 * PSVECDistance(arg0 + 0xC0C, arg0 + 0xC18);
+}
+}
+
+extern "C" {
+
+void fn_8002A7D0(s32 *arg0, s32 arg1) {
+    if (arg1 != 0) {
+        *arg0 |= 0x8000;
+        return;
+    }
+    *arg0 &= 0xFFFF7FFF;
+}
+}
+
+extern "C" {
+
+void fn_8002A824(s32 *arg0, s32 arg1) {
+    if (arg1 != 0) {
+        *arg0 |= 0x20000;
+        return;
+    }
+    *arg0 &= 0xFFFDFFFF;
+}
+}
