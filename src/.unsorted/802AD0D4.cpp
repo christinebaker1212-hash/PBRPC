@@ -44,3 +44,20 @@ void fn_802B4504(void) {
 
 }
 }
+
+extern "C" {
+
+s32 OSDisableInterrupts(void);
+s32 OSRestoreInterrupts(s32);
+s32 memset(s32, s32, s32);
+
+void WPADiClearQueue(u8 *arg0) {
+    s32 temp_r31;
+
+    temp_r31 = OSDisableInterrupts();
+    (*(s8 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (1))) = 0;
+    memset((*(s32 *)((u8 *)(arg0) + (4))), 0, (*(s32 *)((u8 *)(arg0) + (8))) * 0x30);
+    OSRestoreInterrupts(temp_r31);
+}
+}

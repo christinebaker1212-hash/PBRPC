@@ -292,3 +292,10 @@ void fn_80202DA4(u8 *arg0) {
     (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
 }
 }
+
+extern "C" {
+
+void __ct__21_UnkHierModuleClass_1Fv(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
+}
+}
