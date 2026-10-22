@@ -63,6 +63,12 @@ def main() -> None:
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--min", type=float, default=0.9)
     args = ap.parse_args()
+    # Names already in a symbols.txt belong to another function (a weak copy
+    # elsewhere, say); giving them out again would merge the two at link time
+    taken_names = set()
+    for cfg in {Path("config/RPBP01/symbols.txt"), Path("config") / args.version / "symbols.txt"}:
+        for line in cfg.read_text().splitlines():
+            taken_names.add(line.split(" = ", 1)[0])
     renames = {}
     for unit in args.units:
         base = Path("build") / args.version / re.sub(r"^libs/[^/]+/", "", unit + ".o")
@@ -71,7 +77,7 @@ def main() -> None:
             print(f"{unit}: missing objects")
             continue
         b, t = function_words(ElfObject(base)), function_words(ElfObject(target))
-        free = {n: w for n, w in b.items() if n not in t}
+        free = {n: w for n, w in b.items() if n not in t and n not in taken_names}
         taken = set()
         for tn, tw in t.items():
             if not PLACEHOLDER.match(tn):

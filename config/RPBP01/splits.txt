@@ -2430,10 +2430,7 @@ libs/nw4r/src/ut/ut_IOStream.cpp:
 	.sbss       start:0x80640460 end:0x80640468
 
 libs/nw4r/src/ut/ut_FileStream.cpp:
-	.text       start:0x80363510 end:0x8036360C
-
-src/.unsorted/8036360C.cpp:
-	.text       start:0x8036360C end:0x80363618
+	.text       start:0x80363510 end:0x80363618
 	.ctors      start:0x803E2248 end:0x803E224C
 
 libs/nw4r/src/ut/ut_DvdFileStream.cpp:
@@ -2447,20 +2444,14 @@ src/.unsorted/80363C1C.cpp:
 libs/nw4r/src/ut/ut_ResFontBase.cpp:
 	.text       start:0x80363F6C end:0x8036453C
 
-src/.unsorted/8036453C.cpp:
-	.text       start:0x8036453C end:0x803645D0
-
 libs/nw4r/src/ut/ut_ResFont.cpp:
-	.text       start:0x803645D0 end:0x80364840
+	.text       start:0x8036453C end:0x80364840
 
 libs/nw4r/src/ut/ut_CharWriter.cpp:
 	.text       start:0x80364840 end:0x80365F68
 
-src/.unsorted/80365F68.cpp:
-	.text       start:0x80365F68 end:0x80365FE4
-
 libs/nw4r/src/ut/ut_TextWriterBase.cpp:
-	.text       start:0x80365FE4 end:0x80367FAC
+	.text       start:0x80365F68 end:0x80367FAC
 	.ctors      start:0x803E2254 end:0x803E2258
 	.sbss       start:0x80640480 end:0x80640498
 
@@ -2483,16 +2474,10 @@ libs/nw4r/src/snd/snd_BankFile.cpp:
 	.text       start:0x8036CA7C end:0x8036CE84
 
 libs/nw4r/src/snd/snd_BasicPlayer.cpp:
-	.text       start:0x8036CE84 end:0x8036CFA4
-
-src/.unsorted/8036CFA4.cpp:
-	.text       start:0x8036CFA4 end:0x8036CFE4
+	.text       start:0x8036CE84 end:0x8036CFE4
 
 libs/nw4r/src/snd/snd_BasicSound.cpp:
-	.text       start:0x8036CFE4 end:0x8036E144
-
-src/.unsorted/8036E144.cpp:
-	.text       start:0x8036E144 end:0x8036E228
+	.text       start:0x8036CFE4 end:0x8036E228
 	.ctors      start:0x803E2258 end:0x803E225C
 
 libs/nw4r/src/snd/snd_Channel.cpp:
@@ -2504,10 +2489,7 @@ libs/nw4r/src/snd/snd_DisposeCallbackManager.cpp:
 	.sbss       start:0x806404C0 end:0x806404C8
 
 libs/nw4r/src/snd/snd_DvdSoundArchive.cpp:
-	.text       start:0x8036F688 end:0x8036FBD0
-
-src/.unsorted/8036FBD0.cpp:
-	.text       start:0x8036FBD0 end:0x8036FC38
+	.text       start:0x8036F688 end:0x8036FC38
 
 libs/nw4r/src/snd/snd_EnvGenerator.cpp:
 	.text       start:0x8036FC38 end:0x8036FF7C
@@ -2599,10 +2581,7 @@ libs/nw4r/src/snd/snd_Sound3DListener.cpp:
 	.text       start:0x80376568 end:0x8037657C
 
 libs/nw4r/src/snd/snd_Sound3DManager.cpp:
-	.text       start:0x8037657C end:0x80376F7C
-
-src/.unsorted/80376F7C.cpp:
-	.text       start:0x80376F7C end:0x80376F8C
+	.text       start:0x8037657C end:0x80376F8C
 
 libs/nw4r/src/snd/snd_SoundArchive.cpp:
 	.text       start:0x80376F8C end:0x8037757C
@@ -2615,11 +2594,8 @@ libs/nw4r/src/snd/snd_SoundArchiveLoader.cpp:
 	.text       start:0x80378350 end:0x803789A0
 
 libs/nw4r/src/snd/snd_SoundArchivePlayer.cpp:
-	.text       start:0x803789A0 end:0x8037A8AC
+	.text       start:0x803789A0 end:0x8037A924
 	.sdata2     start:0x80642D50 end:0x80642D60
-
-src/.unsorted/8037A8AC.cpp:
-	.text       start:0x8037A8AC end:0x8037A924
 
 libs/nw4r/src/snd/snd_SoundHandle.cpp:
 	.text       start:0x8037A924 end:0x8037AA3C
@@ -2629,11 +2605,8 @@ libs/nw4r/src/snd/snd_SoundHeap.cpp:
 	.data       start:0x8044CEC8 end:0x8044CF20
 
 libs/nw4r/src/snd/snd_SoundPlayer.cpp:
-	.text       start:0x8037ABDC end:0x8037B284
+	.text       start:0x8037ABDC end:0x8037C11C
 	.sdata2     start:0x80642D60 end:0x80642D68
-
-src/.unsorted/8037B284.cpp:
-	.text       start:0x8037B284 end:0x8037C11C
 
 libs/nw4r/src/snd/snd_SoundStartable.cpp:
 	.text       start:0x8037C11C end:0x8037C1A0
@@ -2643,19 +2616,13 @@ libs/nw4r/src/snd/snd_SoundSystem.cpp:
 	.ctors      start:0x803E2260 end:0x803E2264
 
 libs/nw4r/src/snd/snd_SoundThread.cpp:
-	.text       start:0x8037C450 end:0x8037C81C
-
-src/.unsorted/8037C81C.cpp:
-	.text       start:0x8037C81C end:0x8037CAC4
+	.text       start:0x8037C450 end:0x8037CAC4
 
 libs/nw4r/src/snd/snd_StrmChannel.cpp:
 	.text       start:0x8037CAC4 end:0x8037CCE4
 
-src/.unsorted/8037CCE4.cpp:
-	.text       start:0x8037CCE4 end:0x8037CCF4
-
 libs/nw4r/src/snd/snd_StrmFile.cpp:
-	.text       start:0x8037CCF4 end:0x8037D2B0
+	.text       start:0x8037CCE4 end:0x8037D2B0
 
 libs/nw4r/src/snd/snd_StrmPlayer.cpp:
 	.text       start:0x8037D2B0 end:0x8037F5B0
@@ -2679,11 +2646,8 @@ libs/nw4r/src/snd/snd_TaskThread.cpp:
 	.text       start:0x80380008 end:0x803801CC
 
 libs/nw4r/src/snd/snd_Voice.cpp:
-	.text       start:0x803801CC end:0x803828FC
+	.text       start:0x803801CC end:0x80382900
 	.sdata2     start:0x80642D70 end:0x80642DA8
-
-src/.unsorted/803828FC.cpp:
-	.text       start:0x803828FC end:0x80382900
 
 libs/nw4r/src/snd/snd_VoiceManager.cpp:
 	.text       start:0x80382900 end:0x80382FA8
@@ -2693,11 +2657,8 @@ libs/nw4r/src/snd/snd_Util.cpp:
 	.data       start:0x8044D040 end:0x8044D050
 	.sdata      start:0x8063E7F8 end:0x8063E800
 
-src/.unsorted/8038340C.cpp:
-	.text       start:0x8038340C end:0x80383414
-
 libs/nw4r/src/snd/snd_WaveFile.cpp:
-	.text       start:0x80383414 end:0x8038364C
+	.text       start:0x8038340C end:0x8038364C
 
 libs/nw4r/src/snd/snd_WaveSound.cpp:
 	.text       start:0x8038364C end:0x803839A4
@@ -2723,38 +2684,23 @@ libs/nw4r/src/math/math_triangular.cpp:
 	.text       start:0x80384CDC end:0x80384F4C
 
 libs/nw4r/src/lyt/lyt_pane.cpp:
-	.text       start:0x80384F4C end:0x80385E04
+	.text       start:0x80384F4C end:0x80385E20
+	.ctors      start:0x803E226C end:0x803E2270
 	.sdata2     start:0x80642E40 end:0x80642E64
 
-src/.unsorted/80385E04.cpp:
-	.text       start:0x80385E04 end:0x80385E20
-	.ctors      start:0x803E226C end:0x803E2270
-
 libs/nw4r/src/lyt/lyt_group.cpp:
-	.text       start:0x80385E20 end:0x803860C8
+	.text       start:0x80385E20 end:0x80386144
 	.data       start:0x8044E2A0 end:0x8044E2B0
 
-src/.unsorted/803860C8.cpp:
-	.text       start:0x803860C8 end:0x80386144
-
 libs/nw4r/src/lyt/lyt_layout.cpp:
-	.text       start:0x80386144 end:0x80386DB4
-
-src/.unsorted/80386DB4.cpp:
-	.text       start:0x80386DB4 end:0x80386DC0
+	.text       start:0x80386144 end:0x80386DC0
 
 libs/nw4r/src/lyt/lyt_picture.cpp:
-	.text       start:0x80386DC0 end:0x803872C8
-
-src/.unsorted/803872C8.cpp:
-	.text       start:0x803872C8 end:0x803872DC
+	.text       start:0x80386DC0 end:0x803872DC
 	.ctors      start:0x803E2270 end:0x803E2274
 
 libs/nw4r/src/lyt/lyt_textBox.cpp:
-	.text       start:0x803872DC end:0x80387EA0
-
-src/.unsorted/80387EA0.cpp:
-	.text       start:0x80387EA0 end:0x80387EB4
+	.text       start:0x803872DC end:0x80387EB4
 	.ctors      start:0x803E2274 end:0x803E2278
 
 libs/nw4r/src/lyt/lyt_window.cpp:
