@@ -7698,3 +7698,15 @@ u8 fn_801C5B50(u8 *p, u16 i) {
     return 1;
 }
 }
+
+extern "C" {
+
+extern void *__global_destructor_chain;
+
+void __register_global_object(s32 arg0, s32 arg1, void *arg2) {
+    (*(void **)((u8 *)(arg2) + (0))) = (void *) __global_destructor_chain;
+    (*(s32 *)((u8 *)(arg2) + (4))) = arg1;
+    (*(s32 *)((u8 *)(arg2) + (8))) = arg0;
+    __global_destructor_chain = arg2;
+}
+}
