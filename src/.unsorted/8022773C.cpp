@@ -99,3 +99,112 @@ s32 fn_8022809C(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80227804(s32);
+s32 fn_80227830(s32);
+s32 fn_8022AB38(s32, s32);
+
+s32 fn_80227830(s32 arg0) {
+    s32 var_r3;
+
+    var_r3 = fn_80227804(arg0);
+    if (var_r3 != 0) {
+        var_r3 = fn_8022AB38(var_r3, (*(s32 *)((u8 *)(arg0) + (4))));
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_8022786C(s32);
+s32 fn_8022AB74(s32, s32);
+
+s32 fn_8022786C(s32 arg0) {
+    s32 var_r3;
+
+    var_r3 = fn_80227804((s32)(arg0));
+    if (var_r3 != 0) {
+        var_r3 = fn_8022AB74(var_r3, (*(s32 *)((u8 *)(arg0) + (4))));
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_802278A8(s32);
+s32 fn_8022A8A8(s32, s32);
+
+s32 fn_802278A8(s32 arg0) {
+    s32 var_r3;
+
+    var_r3 = fn_80227804((s32)(arg0));
+    if (var_r3 != 0) {
+        var_r3 = fn_8022A8A8(var_r3, (*(s32 *)((u8 *)(arg0) + (4))));
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_802278E4(s32, s32, s32, s32);
+s32 fn_80227A04(s32, s32, s32, s32, s32);
+
+s32 fn_80227A04(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 var_r3;
+
+    var_r3 = ((s32 (*)(s32, s32))fn_802279C4)(arg0, arg1);
+    if (var_r3 != 0) {
+        var_r3 = fn_802278E4(var_r3, arg2, arg3, arg4);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80227A60(s32);
+
+s32 fn_80227A60(s32 arg0) {
+    fn_80227830((s32)(arg0));
+    fn_80227830((s32)(arg0 + 8));
+    return fn_80227830((s32)(arg0 + 0x10));
+}
+}
+
+extern "C" {
+
+s32 fn_80227A9C(s32);
+
+s32 fn_80227A9C(s32 arg0) {
+    fn_8022786C((s32)(arg0));
+    fn_8022786C((s32)(arg0 + 8));
+    return fn_8022786C((s32)(arg0 + 0x10));
+}
+}
+
+extern "C" {
+
+s32 fn_80227AD8(s32);
+
+s32 fn_80227AD8(s32 arg0) {
+    fn_802278A8((s32)(arg0));
+    fn_802278A8((s32)(arg0 + 8));
+    return fn_802278A8((s32)(arg0 + 0x10));
+}
+}
+
+extern "C" {
+
+s32 fn_80227B14(s32);
+
+s32 fn_80227B14(s32 arg0) {
+    fn_802278A8((s32)(arg0));
+    fn_802278A8((s32)(arg0 + 8));
+    return fn_802278A8((s32)(arg0 + 0x10));
+}
+}
