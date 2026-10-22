@@ -2577,10 +2577,10 @@ libs/nw4r/src/snd/snd_SeqFile.cpp:
 	.text       start:0x803783E0 end:0x8037845C
 
 libs/nw4r/src/snd/snd_SeqPlayer.cpp:
-	.text       start:0x8037845C end:0x80379754
+	.text       start:0x8037845C end:0x8037962C
 
 libs/nw4r/src/snd/snd_SeqSound.cpp:
-	.text       start:0x80379754 end:0x80379D3C
+	.text       start:0x8037962C end:0x80379D3C
 
 src/.unsorted/80375340.cpp:
 	.text       start:0x80379D3C end:0x80379EF8

@@ -1,5 +1,5 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_SeqPlayer.cpp
-// TODO Functions of the binary not in this source yet: fn_80374588, fn_803746A4 and fn_80374724.
+// This nw4r revision locks the player's own mutex and counts ticks in a fixed-point fraction.
 #include <nw4r/snd.h>
 #include <nw4r/ut.h>
 
@@ -10,14 +10,15 @@ namespace detail {
 volatile s16 SeqPlayer::mGlobalVariable[GLOBAL_VARIABLE_NUM];
 bool SeqPlayer::mGobalVariableInitialized = false;
 
-SeqPlayer::SeqPlayer() {
-    mActiveFlag = false;
+SeqPlayer::SeqPlayer() : mActiveFlag(false) {
+    OSInitMutex(&mMutex);
+
     mStartedFlag = false;
     mPauseFlag = false;
     mReleasePriorityFixFlag = false;
 
     mTempoRatio = 1.0f;
-    mTickFraction = 0.0f;
+    mTickFraction = 0;
     mSkipTickCounter = 0;
     mSkipTimeCounter = 0.0f;
     mPanRange = 1.0f;
@@ -39,7 +40,7 @@ SeqPlayer::SeqPlayer() {
 }
 
 SeqPlayer::~SeqPlayer() {
-    SeqPlayer::Stop();
+    FinishPlayer();
 }
 
 void SeqPlayer::InitParam(int voices, NoteOnCallback *pCallback) {
@@ -60,7 +61,7 @@ void SeqPlayer::InitParam(int voices, NoteOnCallback *pCallback) {
     mParserParam.priority = 64;
     mParserParam.callback = pCallback;
 
-    mTickFraction = 0.0f;
+    mTickFraction = GetTickPerFrame();
 
     for (int i = 0; i < LOCAL_VARIABLE_NUM; i++) {
         mLocalVariable[i] = DEFAULT_VARIABLE_VALUE;
@@ -72,9 +73,9 @@ void SeqPlayer::InitParam(int voices, NoteOnCallback *pCallback) {
 
 SeqPlayer::SetupResult
 SeqPlayer::Setup(SeqTrackAllocator *pAllocator, u32 allocTrackFlags, int voices, NoteOnCallback *pCallback) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
-    SeqPlayer::Stop();
+    FinishPlayer();
     InitParam(voices, pCallback);
     {
         ut::AutoInterruptLock lock;
@@ -114,7 +115,7 @@ SeqPlayer::Setup(SeqTrackAllocator *pAllocator, u32 allocTrackFlags, int voices,
 }
 
 void SeqPlayer::SetSeqData(const void *pBase, s32 offset) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     SeqTrack *pTrack = GetPlayerTrack(0);
 
@@ -125,7 +126,7 @@ void SeqPlayer::SetSeqData(const void *pBase, s32 offset) {
 }
 
 bool SeqPlayer::Start() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     SoundThread::GetInstance().RegisterPlayerCallback(this);
     mStartedFlag = true;
@@ -134,15 +135,15 @@ bool SeqPlayer::Start() {
 }
 
 void SeqPlayer::Stop() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     FinishPlayer();
 }
 
 void SeqPlayer::Pause(bool flag) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
-    mPauseFlag = flag;
+    mPauseFlag = static_cast<u8>(flag);
 
     for (int i = 0; i < TRACK_NUM; i++) {
         SeqTrack *pTrack = GetPlayerTrack(i);
@@ -154,11 +155,11 @@ void SeqPlayer::Pause(bool flag) {
 }
 
 void SeqPlayer::Skip(OffsetType type, int offset) {
-    SoundThread::AutoLock lock;
-
     if (!mActiveFlag) {
         return;
     }
+
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     switch (type) {
         case OFFSET_TYPE_TICK: {
@@ -174,14 +175,17 @@ void SeqPlayer::Skip(OffsetType type, int offset) {
 }
 
 void SeqPlayer::SetTempoRatio(f32 tempo) {
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
     mTempoRatio = tempo;
 }
 
 void SeqPlayer::SetChannelPriority(int priority) {
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
     mParserParam.priority = priority;
 }
 
 void SeqPlayer::SetReleasePriorityFix(bool flag) {
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
     mReleasePriorityFixFlag = flag;
 }
 
@@ -206,7 +210,7 @@ void SeqPlayer::SetTrackPitch(u32 trackFlags, f32 pitch) {
 }
 
 void SeqPlayer::InvalidateData(const void *pStart, const void *pEnd) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     if (mActiveFlag) {
         for (int i = 0; i < TRACK_NUM; i++) {
@@ -217,7 +221,7 @@ void SeqPlayer::InvalidateData(const void *pStart, const void *pEnd) {
 
             const u8 *pBase = pTrack->GetParserTrackParam().baseAddr;
             if (pStart <= pBase && pBase <= pEnd) {
-                SeqPlayer::Stop();
+                FinishPlayer();
                 break;
             }
         }
@@ -233,8 +237,6 @@ SeqTrack *SeqPlayer::GetPlayerTrack(int idx) {
 }
 
 void SeqPlayer::CloseTrack(int idx) {
-    SoundThread::AutoLock lock;
-
     SeqTrack *pTrack = GetPlayerTrack(idx);
     if (pTrack == NULL) {
         return;
@@ -247,8 +249,6 @@ void SeqPlayer::CloseTrack(int idx) {
 }
 
 void SeqPlayer::SetPlayerTrack(int idx, SeqTrack *pTrack) {
-    SoundThread::AutoLock lock;
-
     if (idx > TRACK_NUM - 1) {
         return;
     }
@@ -258,8 +258,6 @@ void SeqPlayer::SetPlayerTrack(int idx, SeqTrack *pTrack) {
 }
 
 void SeqPlayer::FinishPlayer() {
-    SoundThread::AutoLock lock;
-
     if (mStartedFlag) {
         SoundThread::GetInstance().UnregisterPlayerCallback(this);
         mStartedFlag = false;
@@ -276,8 +274,6 @@ void SeqPlayer::FinishPlayer() {
 }
 
 void SeqPlayer::UpdateChannelParam() {
-    SoundThread::AutoLock lock;
-
     for (int i = 0; i < TRACK_NUM; i++) {
         SeqTrack *pTrack = GetPlayerTrack(i);
 
@@ -288,8 +284,6 @@ void SeqPlayer::UpdateChannelParam() {
 }
 
 int SeqPlayer::ParseNextTick(bool doNoteOn) {
-    SoundThread::AutoLock lock;
-
     bool active = false;
 
     for (int i = 0; i < TRACK_NUM; i++) {
@@ -329,8 +323,19 @@ volatile s16 *SeqPlayer::GetVariablePtr(int idx) {
 }
 
 void SeqPlayer::Update() {
-    SoundThread::AutoLock lock;
+    if (!mActiveFlag) {
+        return;
+    }
 
+    if (!mStartedFlag) {
+        return;
+    }
+
+    UpdateTick();
+    UpdateChannelParam();
+}
+
+void SeqPlayer::UpdateTick() {
     if (!mActiveFlag) {
         return;
     }
@@ -340,69 +345,35 @@ void SeqPlayer::Update() {
     }
 
     if (mSkipTickCounter != 0 || mSkipTimeCounter > 0.0f) {
-        SkipTick();
+        for (int i = 0; i < TRACK_NUM; i++) {
+            SeqTrack *pTrack = GetPlayerTrack(i);
 
-    } else if (!mPauseFlag) {
-        UpdateTick(3);
-    }
-
-    UpdateChannelParam();
-}
-
-void SeqPlayer::UpdateTick(int msec) {
-    f32 tickPerMsec = GetBaseTempo();
-    if (tickPerMsec == 0.0f) {
-        return;
-    }
-
-    f32 restMsec = static_cast<f32>(msec);
-    f32 nextMsec = mTickFraction / tickPerMsec;
-
-    while (nextMsec < restMsec) {
-        restMsec -= nextMsec;
-
-        if (ParseNextTick(true) != 0) {
-            FinishPlayer();
-            return;
-        }
-
-        mTickCounter++;
-
-        tickPerMsec = GetBaseTempo();
-        if (tickPerMsec == 0.0f) {
-            return;
-        }
-
-        nextMsec = 1.0f / tickPerMsec;
-    }
-
-    nextMsec -= restMsec;
-    mTickFraction = nextMsec * tickPerMsec;
-}
-
-void SeqPlayer::SkipTick() {
-    for (int i = 0; i < TRACK_NUM; i++) {
-        SeqTrack *pTrack = GetPlayerTrack(i);
-
-        if (pTrack != NULL) {
-            pTrack->ReleaseAllChannel(127);
-            pTrack->FreeAllChannel();
+            if (pTrack != NULL) {
+                pTrack->ReleaseAllChannel(127);
+                pTrack->FreeAllChannel();
+            }
         }
     }
 
     int skipCount = 0;
-    while (mSkipTickCounter != 0 || mSkipTimeCounter * GetBaseTempo() >= 1.0f) {
-        if (skipCount >= MAX_SKIP_TICK_PER_FRAME) {
+
+    while (mSkipTickCounter != 0 && skipCount < MAX_SKIP_TICK_PER_FRAME) {
+        mSkipTickCounter--;
+
+        if (ParseNextTick(false) != 0) {
+            FinishPlayer();
             return;
         }
 
-        if (mSkipTickCounter != 0) {
-            mSkipTickCounter--;
-        } else {
-            f32 tickPerMsec = GetBaseTempo();
-            f32 msecPerTick = 1.0f / tickPerMsec;
+        skipCount++;
+        mTickCounter++;
+    }
 
-            mSkipTimeCounter -= msecPerTick;
+    while (mSkipTimeCounter > 0.0f && skipCount < MAX_SKIP_TICK_PER_FRAME) {
+        mSkipTimeCounter -= 60000.0f / (mParserParam.timebase * mParserParam.tempo);
+
+        if (mSkipTimeCounter < 0.0f) {
+            mSkipTimeCounter = 0.0f;
         }
 
         if (ParseNextTick(false) != 0) {
@@ -414,7 +385,31 @@ void SeqPlayer::SkipTick() {
         mTickCounter++;
     }
 
-    mSkipTimeCounter = 0.0f;
+    if (mPauseFlag) {
+        return;
+    }
+
+    if (mSkipTickCounter != 0) {
+        return;
+    }
+
+    if (mSkipTimeCounter != 0.0f) {
+        return;
+    }
+
+    int tickPerFrame = GetTickPerFrame();
+    while (mTickFraction >= tickPerFrame) {
+        if (ParseNextTick(true) != 0) {
+            FinishPlayer();
+            return;
+        }
+
+        mTickCounter++;
+        mTickFraction -= tickPerFrame;
+        tickPerFrame = GetTickPerFrame();
+    }
+
+    mTickFraction += static_cast<int>(mParserParam.tempo * mTempoRatio);
 }
 
 void SeqPlayer::InitGlobalVariable() {
@@ -428,6 +423,8 @@ void SeqPlayer::InitGlobalVariable() {
 Channel *SeqPlayer::NoteOn(int bankNo, const NoteOnInfo &rInfo) {
     return mParserParam.callback->NoteOn(this, bankNo, rInfo);
 }
+
+void SeqPlayer::ChannelCallback(Channel * /* pChannel */) {}
 
 } // namespace detail
 } // namespace snd

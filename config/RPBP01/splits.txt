@@ -2581,10 +2581,10 @@ libs/nw4r/src/snd/snd_SeqFile.cpp:
 	.text       start:0x803739E4 end:0x80373A60
 
 libs/nw4r/src/snd/snd_SeqPlayer.cpp:
-	.text       start:0x80373A60 end:0x80374D58
+	.text       start:0x80373A60 end:0x80374C30
 
 libs/nw4r/src/snd/snd_SeqSound.cpp:
-	.text       start:0x80374D58 end:0x80375340
+	.text       start:0x80374C30 end:0x80375340
 
 src/.unsorted/80375340.cpp:
 	.text       start:0x80375340 end:0x803754FC

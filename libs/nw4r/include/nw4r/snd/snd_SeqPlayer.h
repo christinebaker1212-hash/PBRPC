@@ -71,7 +71,7 @@ public:
 
     virtual void InvalidateWaveData(const void * /* pStart */, const void * /* pEnd */) {} // at 0x54
 
-    virtual void ChannelCallback(Channel * /* pChannel */) {} // at 0x58
+    virtual void ChannelCallback(Channel *pChannel); // at 0x58
 
     virtual void OnUpdateFrameSoundThread() {
         Update();
@@ -127,6 +127,10 @@ public:
         return mPanRange;
     }
 
+    int GetTickPerFrame() const {
+        return 60000 / mParserParam.timebase / 3;
+    }
+
     f32 GetBaseTempo() const {
         return mTempoRatio * (mParserParam.timebase * mParserParam.tempo) / 60000.0f;
     }
@@ -155,7 +159,7 @@ private:
     void UpdateChannelParam();
     int ParseNextTick(bool doNoteOn);
 
-    void UpdateTick(int msec);
+    void UpdateTick();
     void SkipTick();
 
     static void InitGlobalVariable();
@@ -168,7 +172,7 @@ private:
 
     f32 mPanRange;                                   // at 0x90
     f32 mTempoRatio;                                 // at 0x94
-    f32 mTickFraction;                               // at 0x98
+    u16 mTickFraction;                               // at 0x98
     u32 mSkipTickCounter;                            // at 0x9C
     f32 mSkipTimeCounter;                            // at 0xA0
     int mVoiceOutCount;                              // at 0xA4
@@ -177,6 +181,7 @@ private:
     SeqTrack *mTracks[TRACK_NUM];                    // at 0xB8
     volatile s16 mLocalVariable[LOCAL_VARIABLE_NUM]; // at 0xF8
     u32 mTickCounter;                                // at 0x118
+    OSMutex mMutex;                                  // at 0x11C
 
     static volatile s16 mGlobalVariable[LOCAL_VARIABLE_NUM];
     static bool mGobalVariableInitialized; // @typo
