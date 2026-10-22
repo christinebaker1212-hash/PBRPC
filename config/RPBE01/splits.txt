@@ -1693,20 +1693,38 @@ libs/RVL_SDK/src/axfx/AXFXReverbHi.c:
 libs/RVL_SDK/src/axfx/AXFXReverbHiDpl2.c:
 	.text       start:0x80296E44 end:0x80296F80
 
-src/.unsorted/8029259C.cpp:
-	.text       start:0x80296F80 end:0x80298EAC
+libs/RVL_SDK/src/axfx/AXFXReverbHiExp.c:
+	.text       start:0x80296F80 end:0x80297EB0
+	.data       start:0x80429740 end:0x804298E0
+	.sdata2     start:0x8062AAB0 end:0x8062AAF0
+
+libs/RVL_SDK/src/axfx/AXFXReverbHiExpDpl2.c:
+	.text       start:0x80297EB0 end:0x80298EAC
+	.data       start:0x804298E0 end:0x80429AA0
+	.sdata2     start:0x8062AAF0 end:0x8062AB30
 
 libs/RVL_SDK/src/axfx/AXFXDelay.c:
 	.text       start:0x80298EAC end:0x80299540
 
-src/.unsorted/80294B5C.cpp:
-	.text       start:0x80299540 end:0x8029A278
+libs/RVL_SDK/src/axfx/AXFXReverbStd.c:
+	.text       start:0x80299540 end:0x8029962C
+	.sdata2     start:0x8062AB40 end:0x8062AB48
+
+libs/RVL_SDK/src/axfx/AXFXReverbStdExp.c:
+	.text       start:0x8029962C end:0x8029A278
+	.data       start:0x80429AA0 end:0x80429B30
+	.sdata2     start:0x8062AB48 end:0x8062AB88
 
 libs/RVL_SDK/src/axfx/AXFXChorus.c:
 	.text       start:0x8029A278 end:0x8029A3DC
 
-src/.unsorted/802959F8.cpp:
-	.text       start:0x8029A3DC end:0x8029AE64
+libs/RVL_SDK/src/axfx/AXFXChorusExp.c:
+	.text       start:0x8029A3DC end:0x8029AE58
+	.sdata2     start:0x8062ABA0 end:0x8062ABD0
+
+libs/RVL_SDK/src/axfx/AXFXLfoTable.c:
+	.text       start:0x8029AE58 end:0x8029AE64
+	.data       start:0x80429B30 end:0x80429D30
 
 libs/RVL_SDK/src/axfx/AXFXSrcCoef.c:
 	.text       start:0x8029AE64 end:0x8029AE78
