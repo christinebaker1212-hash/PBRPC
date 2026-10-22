@@ -34,3 +34,25 @@ u32 *fn_80383990(void) {
     return &lbl_80640560;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_803836AC(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80383824(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
