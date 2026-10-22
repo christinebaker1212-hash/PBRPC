@@ -1869,3 +1869,27 @@ void fn_800D14A4(int a) {
     }
 }
 }
+
+extern "C" {
+
+void fn_800D90C8(u8 *arg0, s32 arg1, u8 *arg2) {
+    u8 *temp_r4;
+    u8 *temp_r6;
+
+    temp_r6 = (*(u8 **)((u8 *)(arg0) + (0x1638))) + ((arg1 * 4) & 0x3FC);
+    if (((u8 *) (*(u8 **)((u8 *)(temp_r6) + (0x153C))) != arg2) || ((s32) ((*(u8 *)((u8 *)(arg2) + (7))) & 1) == 1)) {
+        (*(u8 **)((u8 *)(temp_r6) + (0x153C))) = arg2;
+        temp_r4 = (*(u8 **)((u8 *)(arg0) + (0x1638)));
+        (*(s32 *)((u8 *)(temp_r4) + (0x1538))) = (s32) ((*(s32 *)((u8 *)(temp_r4) + (0x1538))) | (1 << arg1));
+    }
+}
+}
+
+extern "C" {
+
+void fn_800DA8F4(u8 *arg0, s8 arg1, s16 arg2, s8 arg3) {
+    (*(s8 *)((u8 *)(arg0) + (0))) = arg1;
+    (*(s16 *)((u8 *)(arg0) + (2))) = arg2;
+    (*(s8 *)((u8 *)(arg0) + (4))) = arg3;
+}
+}
