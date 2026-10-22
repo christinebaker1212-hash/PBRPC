@@ -1074,7 +1074,8 @@ static WUDInitState WUDiGetRegisteredDevice(void) {
         if (WUD_DEV_NAME_IS_CNT_01(pInfo->conf.devName)) {
             pInfo->subclass = 2;  // subclass 2 is marked as reserved
 
-            pInfo->hhAttrMask = BTA_HH_SEC_REQUIRED | BTA_HH_BATTERY_POWER | BTA_HH_REMOTE_WAKE | BTA_HH_SUP_TOUT_AVLBL | BTA_HH_RECONN_INIT;
+            // The security flag is bit 15 in this BTE revision (BTA_HH_SEC_REQUIRED is 0x800 later).
+            pInfo->hhAttrMask = 0x8000 | BTA_HH_BATTERY_POWER | BTA_HH_REMOTE_WAKE | BTA_HH_SUP_TOUT_AVLBL | BTA_HH_RECONN_INIT;
 
             pInfo->appID = 3;
         }
@@ -2647,7 +2648,7 @@ void WUDVendorSpecificCallback(UINT8 len, UINT8* pData) {
         DEBUGPrint("VSE:- WATCH_DOG_RESET  HW error = %d\n", pData[1]);
 
         // clang-format off
-        OSPanic(__FILE__, 3484, "MODULE FATAL ERROR\n");
+        OSPanic(__FILE__, 3792, "MODULE FATAL ERROR\n");
         // clang-format on
         break;
     }
