@@ -709,6 +709,7 @@ static u8 WUDiSyncDone(void) {
     }
 
     OSCancelAlarm(&p->alarm);
+    WUDSetVisibility(FALSE, TRUE);
 
     pSyncCallback = p->syncType == WUD_SYNC_TYPE_STANDARD ? p->syncStdCB : p->syncSmpCB;
 
@@ -1186,6 +1187,15 @@ BOOL WUDInit(void) {
         p->smpList[i].devInfo = &p->smpDevs[WUD_MAX_DEV_ENTRY_FOR_SMP - 1 - i];
         p->smpList[i].prev = i == 0 ? NULL : &p->smpList[i - 1];
         p->smpList[i].next = i == WUD_MAX_DEV_ENTRY_FOR_SMP - 1 ? NULL : &p->smpList[i + 1];
+    }
+
+    p->stdListTail = &p->stdList[WUD_MAX_DEV_ENTRY_FOR_STD - 1];
+    p->stdListHead = &p->stdList[0];
+
+    for (i = 0; i < WUD_MAX_DEV_ENTRY_FOR_STD; i++) {
+        p->stdList[i].devInfo = &p->stdDevs[i];
+        p->stdList[i].prev = i == 0 ? NULL : &p->stdList[i - 1];
+        p->stdList[i].next = i == WUD_MAX_DEV_ENTRY_FOR_STD - 1 ? NULL : &p->stdList[i + 1];
     }
 
     p->syncStdCB = NULL;
