@@ -2610,11 +2610,8 @@ libs/nw4r/src/snd/snd_SoundArchiveFile.cpp:
 libs/nw4r/src/snd/snd_SoundArchiveLoader.cpp:
 	.text       start:0x8037CD4C end:0x8037D39C
 
-src/.unsorted/803789A0.cpp:
-	.text       start:0x8037D39C end:0x8037D6B8
-
 libs/nw4r/src/snd/snd_SoundArchivePlayer.cpp:
-	.text       start:0x8037D6B8 end:0x8037F2A8
+	.text       start:0x8037D39C end:0x8037F2A8
 	.sdata2     start:0x8062AFB0 end:0x8062AFC0
 
 src/.unsorted/8037A8AC.cpp:

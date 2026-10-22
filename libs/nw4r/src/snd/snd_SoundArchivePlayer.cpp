@@ -1,6 +1,4 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_SoundArchivePlayer.cpp
-// TODO Functions of the binary not in this source yet: Setup, GetRequiredMemSize, fn_803790E4, fn_80379E9C and
-// fn_8037A1A0.
 #include <nw4r/snd.h>
 #include <nw4r/ut.h>
 
@@ -11,6 +9,7 @@ SoundArchivePlayer::SoundArchivePlayer()
     : mSoundArchive(NULL),
       mGroupTable(NULL),
       mFileManager(NULL),
+      mSeqTrackAllocator(&mMmlSeqTrackAllocator),
       mSeqCallback(*this),
       mWsdCallback(*this),
       mSoundPlayerCount(0),
@@ -43,7 +42,6 @@ bool SoundArchivePlayer::Setup(
         return false;
     }
 
-    mSeqTrackAllocator = &mMmlSeqTrackAllocator;
     return true;
 }
 
