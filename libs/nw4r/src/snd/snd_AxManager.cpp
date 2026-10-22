@@ -95,12 +95,12 @@ f32 AxManager::GetOutputVolume() const {
 void AxManager::Update() {
     s32 status = DVDGetDriveStatus();
 
-    if (status == DVD_STATE_IDLE || status == DVD_STATE_BUSY) {
+    if (status == DVD_STATE_IDLE) {
         if (mDiskError) {
             mDiskError = false;
             VoiceManager::GetInstance().UpdateAllVoicesSync(Voice::SYNC_AX_VOICE);
         }
-    } else {
+    } else if (status != DVD_STATE_BUSY) {
         if (!mDiskError) {
             mDiskError = true;
             VoiceManager::GetInstance().UpdateAllVoicesSync(Voice::SYNC_AX_VOICE);
