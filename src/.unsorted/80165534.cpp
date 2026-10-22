@@ -163,3 +163,88 @@ s32 fn_80166D20(u8 *arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_80165894(s32, s32);
+s32 fn_80165960(s32);
+s32 fn_8025DFC0(s32, s32);
+extern s32 lbl_8063F0C0;
+
+s32 fn_80165894(s32 arg0, s32 arg1) {
+    (*(s32 *)((u8 *)(arg0) + (0x188C))) = fn_8025DFC0(fn_8025DFD0(), 0x3E0);
+    (*(s32 *)((u8 *)(arg0) + (0x1894))) = fn_8025DFC0(fn_8025DFD0(), 0x774);
+    (*(s32 *)((u8 *)(arg0) + (0x189C))) = fn_8025DFC0(fn_8025DFD0(), 0x20);
+    (*(s32 *)((u8 *)(arg0) + (0x1880))) = fn_8025DFC0(fn_8025DFD0(), 0x6EC);
+    if ((s32) lbl_8063F0C0 == 0) {
+        lbl_8063F0C0 = fn_8025DFC0(fn_8025DFD0(), 0x121B0);
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x18A4))) = (s32) lbl_8063F0C0;
+    return fn_80165960(arg0);
+}
+}
+
+extern "C" {
+
+s32 fn_80165B24(s32);
+s32 fn_8025DFC8(s32, s32);
+s32 fn_802604F8(s32, s32);
+
+s32 fn_80165B24(s32 arg0) {
+    s32 temp_r30;
+    s32 temp_r31;
+    s32 var_r3;
+
+    var_r3 = arg0;
+    temp_r30 = var_r3;
+    if ((s32) (*(s32 *)((u8 *)(var_r3) + (0x874))) != 0) {
+        var_r3 = ((s32 (*)(s32))fn_8025E2B8)(fn_8025DFD0());
+        if (var_r3 != 0) {
+            var_r3 = fn_802604F8(var_r3, (s32) (u16) (*(s32 *)((u8 *)(temp_r30) + (0x874))));
+        }
+        (*(s32 *)((u8 *)(temp_r30) + (0x874))) = 0;
+    }
+    temp_r31 = (*(s32 *)((u8 *)(temp_r30) + (0x878)));
+    if (temp_r31 != 0) {
+        var_r3 = fn_8025DFC8(fn_8025DFD0(), temp_r31);
+    }
+    (*(s32 *)((u8 *)(temp_r30) + (0x878))) = 0;
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80166C3C(s32, s32);
+s32 memcpy(s32, s32, s32);
+
+s32 fn_80166C3C(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+
+    temp_r3 = memcpy(arg0 + 0x18C8, arg1, 0xC);
+    (*(s32 *)((u8 *)(arg0) + (0x18C4))) = 1;
+    return temp_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80166CAC(s32, s32);
+
+s32 fn_80166CAC(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+
+    temp_r3 = memcpy((s32)(arg0 + 0x18D8), (s32)(arg1), (s32)(0x80));
+    (*(s32 *)((u8 *)(arg0) + (0x18D4))) = 1;
+    return temp_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80166D14(s32, s32);
+
+s32 fn_80166D14(s32 arg0, s32 arg1) {
+    return memcpy((s32)(arg0 + 0x1958), (s32)(arg1), (s32)(0x10));
+}
+}
