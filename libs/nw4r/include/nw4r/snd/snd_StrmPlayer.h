@@ -211,6 +211,7 @@ private:
     u16 mAdpcmLoopPredScale[CHANNEL_MAX]; // at 0x83C
     u16 mAdpcmLoopYn1[CHANNEL_MAX];       // at 0x840
     u16 mAdpcmLoopYn2[CHANNEL_MAX];       // at 0x844
+    OSMutex mMutex;                       // at 0x848
 
     static u8 sLoadBuffer[LOAD_BUFFER_SIZE] ALIGN(32);
     static OSMutex sLoadBufferMutex;

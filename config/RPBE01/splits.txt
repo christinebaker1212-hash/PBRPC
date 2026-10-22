@@ -2653,11 +2653,8 @@ src/.unsorted/8037CCE4.cpp:
 libs/nw4r/src/snd/snd_StrmFile.cpp:
 	.text       start:0x803817F0 end:0x80381DAC
 
-src/.unsorted/8037D2B0.cpp:
-	.text       start:0x80381DAC end:0x803826D0
-
 libs/nw4r/src/snd/snd_StrmPlayer.cpp:
-	.text       start:0x803826D0 end:0x803840AC
+	.text       start:0x80381DAC end:0x803840AC
 	.data       start:0x8043C1C0 end:0x8043C2A8
 	.sdata2     start:0x8062AFC8 end:0x8062AFD0
 

@@ -1,6 +1,5 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_StrmPlayer.cpp
-// TODO Functions of the binary not in this source yet: fn_8037DC4C, fn_8037E948, fn_8037F29C, fn_8037F4D8, fn_8037F580
-// and fn_8037F584.
+// This nw4r revision locks the player's own mutex instead of the sound thread.
 #include <climits>
 #include <cstring>
 #include <nw4r/snd.h>
@@ -21,6 +20,7 @@ StrmPlayer::StrmPlayer() : mSetupFlag(false), mActiveFlag(false), mFileStream(NU
         sStaticInitFlag = true;
     }
 
+    OSInitMutex(&mMutex);
     mStrmDataLoadTaskPool.Create(mStrmDataLoadTaskArea, DATA_BLOCK_COUNT_MAX * sizeof(StrmDataLoadTask));
 }
 
@@ -29,8 +29,6 @@ StrmPlayer::~StrmPlayer() {
 }
 
 bool StrmPlayer::Setup(StrmBufferPool *pBufferPool) {
-    SoundThread::AutoLock lock;
-
     if (mSetupFlag) {
         Shutdown();
     }
@@ -43,8 +41,6 @@ bool StrmPlayer::Setup(StrmBufferPool *pBufferPool) {
 }
 
 void StrmPlayer::Shutdown() {
-    SoundThread::AutoLock lock;
-
     Stop();
 
     if (!mSetupFlag) {
@@ -58,7 +54,7 @@ void StrmPlayer::Shutdown() {
 }
 
 bool StrmPlayer::Prepare(ut::FileStream *pFileStream, int voices, StartOffsetType offsetType, int offset) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     mFileStream = pFileStream;
     mVoiceOutCount = voices;
@@ -82,7 +78,7 @@ bool StrmPlayer::Prepare(ut::FileStream *pFileStream, int voices, StartOffsetTyp
 }
 
 bool StrmPlayer::Start() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     if (!mPreparedFlag) {
         return false;
@@ -146,17 +142,13 @@ bool StrmPlayer::Start() {
 }
 
 void StrmPlayer::Stop() {
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
+
     {
-        SoundThread::AutoLock lock;
+        ut::AutoInterruptLock lock;
 
         if (mVoice != NULL) {
             mVoice->Stop();
-        }
-
-        FreeChannels();
-
-        if (mActiveFlag) {
-            SoundThread::GetInstance().UnregisterPlayerCallback(this);
         }
     }
 
@@ -175,13 +167,19 @@ void StrmPlayer::Stop() {
         mFileStream = NULL;
     }
 
+    FreeChannels();
+
+    if (mActiveFlag) {
+        SoundThread::GetInstance().UnregisterPlayerCallback(this);
+    }
+
     mStartedFlag = false;
     mPreparedFlag = false;
     mActiveFlag = false;
 }
 
 void StrmPlayer::Pause(bool flag) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     mPauseFlag = flag;
 
@@ -235,26 +233,6 @@ bool StrmPlayer::LoadHeader(ut::FileStream *pFileStream, StartOffsetType offsetT
         loader.ReadAdpcmInfo(&header.adpcmInfo[i], i);
     }
 
-    if (header.strmInfo.format == WaveFile::FORMAT_ADPCM) {
-        if (offset == 0) {
-            for (int i = 0; i < header.strmInfo.numChannels; i++) {
-                header.loopYn1[i] = header.adpcmInfo[i].param.yn1;
-                header.loopYn2[i] = header.adpcmInfo[i].param.yn2;
-            }
-        } else {
-            int startSample;
-            if (offsetType == START_OFFSET_TYPE_SAMPLE) {
-                startSample = offset;
-            } else if (offsetType == START_OFFSET_TYPE_MILLISEC) {
-                startSample = offset * header.strmInfo.sampleRate / 1000;
-            }
-
-            s32 block = startSample / static_cast<s32>(header.strmInfo.blockSamples);
-
-            loader.ReadAdpcBlockData(header.loopYn1, header.loopYn2, block, header.strmInfo.numChannels);
-        }
-    }
-
     if (!SetupPlayer(&header)) {
         return false;
     }
@@ -271,6 +249,19 @@ bool StrmPlayer::LoadHeader(ut::FileStream *pFileStream, StartOffsetType offsetT
 
     if (mStrmInfo.numBlocks <= 2 && !mStrmInfo.loopFlag) {
         SetLoopEndToZeroBuffer(mStrmInfo.numBlocks - 1);
+    }
+
+    if (offset != 0 && header.strmInfo.format == WaveFile::FORMAT_ADPCM) {
+        int startSample;
+        if (offsetType == START_OFFSET_TYPE_SAMPLE) {
+            startSample = offset;
+        } else if (offsetType == START_OFFSET_TYPE_MILLISEC) {
+            startSample = offset * header.strmInfo.sampleRate / 1000;
+        }
+
+        s32 block = startSample / static_cast<s32>(header.strmInfo.blockSamples);
+
+        loader.ReadAdpcBlockData(header.loopYn1, header.loopYn2, block, header.strmInfo.numChannels);
     }
 
     return true;
@@ -527,11 +518,6 @@ void StrmPlayer::Update() {
 
 void StrmPlayer::UpdateBuffer() {
     if (mStartedFlag && mVoice != NULL) {
-        if (AxManager::GetInstance().IsDiskError()) {
-            mLoadWaitFlag = true;
-            UpdatePauseStatus();
-        }
-
         if (!mPlayFinishFlag && !mNoRealtimeLoadFlag && !mLoadWaitFlag) {
             u32 sample = mVoice->GetCurrentPlayingSample();
             int block = sample / mStrmInfo.blockSamples;

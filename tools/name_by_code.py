@@ -23,6 +23,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from elf32 import ElfObject
 
 PLACEHOLDER = re.compile(r"^fn_[0-9A-F]{8}$")
+UNNAMED = re.compile(r"^(fn|lbl|jumptable)_[0-9A-F]{8}|^@")
 
 
 def function_words(o: ElfObject):
@@ -35,15 +36,24 @@ def function_words(o: ElfObject):
         for r in o.relocs.get(s.shndx, []):
             if s.value <= r.offset < s.value + s.size:
                 i = (r.offset - s.value) // 4
-                words[i] &= 0xFC000000
+                # Keep the referenced name when it is a real one, so calls to
+                # different named functions do not compare equal
+                name = r.symbol.name
+                words[i] = (words[i] & 0xFC000000, None if UNNAMED.match(name or "@") else name)
         out[s.name] = words
     return out
+
+
+def same(x, y) -> bool:
+    if isinstance(x, tuple) and isinstance(y, tuple):
+        return x[0] == y[0] and (x[1] is None or y[1] is None or x[1] == y[1])
+    return x == y
 
 
 def score(a, b) -> float:
     if len(a) != len(b) or not a:
         return 0.0
-    return sum(x == y for x, y in zip(a, b)) / len(a)
+    return sum(same(x, y) for x, y in zip(a, b)) / len(a)
 
 
 def main() -> None:
