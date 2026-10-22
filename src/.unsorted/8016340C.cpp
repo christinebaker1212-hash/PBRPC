@@ -22,3 +22,26 @@ void fn_801634C0(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80163580(s32);
+s32 memset(s32, s32, s32);
+
+s32 fn_80163580(s32 arg0) {
+    return memset(arg0, 0, 4);
+}
+}
+
+extern "C" {
+
+s32 fn_8016358C(s32, s32, s32, s32, s32);
+s32 fn_8016359C(s32, s32);
+
+s32 fn_8016358C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    (*(s32 *)((u8 *)(arg0) + (8))) = arg2;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = arg3;
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = arg4;
+    return fn_8016359C(arg0, arg1);
+}
+}
