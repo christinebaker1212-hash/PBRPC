@@ -13,3 +13,15 @@ void fn_8038E320(u8 *p) {
     *(u8 **)(p + 0x0) = lbl_8044E580;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_8038E2E0(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
