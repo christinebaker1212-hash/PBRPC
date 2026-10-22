@@ -7710,3 +7710,45 @@ void __register_global_object(s32 arg0, s32 arg1, void *arg2) {
     __global_destructor_chain = arg2;
 }
 }
+
+extern "C" {
+
+s32 fn_801A3288(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg_sp0) {
+    s32 var_r0;
+    s32 var_r0_2;
+    u8 temp_r29;
+    u8 temp_r30;
+    u8 temp_r31;
+
+    temp_r29 = ((u8 (*)(s32, s32))fn_801817D0)(arg0, arg3);
+    temp_r30 = ((u8 (*)(s32, s32))fn_801817F0)(arg0, arg3);
+    temp_r31 = ((u8 (*)(s32, s32))fn_80181850)(arg0, arg3);
+    if (fn_801807FC((s32)(arg0), (s32)(arg1), (u8)(7)) == 1U) {
+        if (arg3 == 0) {
+            var_r0 = 0;
+        } else {
+            var_r0 = (*(s32 *)((u8 *)arg3 + (0x790)));
+        }
+        if (var_r0 & 0x01000000) {
+            return 0;
+        }
+        if (arg3 == 0) {
+            var_r0_2 = 0;
+        } else {
+            var_r0_2 = (*(s32 *)((u8 *)arg3 + (0x790)));
+        }
+        if ((var_r0_2 & 0x10000000) || (fn_80180BD8((s32)(arg0), (u8 *)(arg3)) == 1U)) {
+            return 0;
+        }
+        goto block_20;
+    }
+    if ((temp_r31 == 0) && (temp_r29 >= 0xCU) && (temp_r30 >= 0xCU)) {
+        return 0;
+    }
+    if ((fn_80185D28((s32)(arg0), (s32)(arg1), (s32)(arg3), (s32)(arg2), (s32)(0x90), (s32)(3), (s32)(0x41)) == 0) && (fn_80185D28((s32)(arg0), (s32)(arg1), (s32)(arg3), (s32)(arg2), (s32)(0x10), (s32)(1), (s32)(0x41)) == 0) && (fn_80185D28((s32)(arg0), (s32)(arg1), (s32)(arg3), (s32)(arg2), (s32)(0x10), (s32)(2), (s32)(0x41)) == 0)) {
+        return 0;
+    }
+block_20:
+    return 1;
+}
+}

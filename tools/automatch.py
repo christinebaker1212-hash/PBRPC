@@ -307,7 +307,31 @@ def m2c(m2c_path: Path, asm: Path, fn: str) -> List[str]:
         v = expand_macros(out.stdout, known)
         if v is not None and v not in variants:
             variants.append(v)
+    # m2c types byte and halfword stores as signed, so constants like 0xFF
+    # compile to li -1; try the stores as unsigned too.
+    for v in list(variants):
+        u = re.sub(r"\(\*\((s8|s16) \*\)(\([^;=]*\)\)) = (0x[0-9A-F]+|\d+);", lambda m: f"(*(u{m.group(1)[1:]} *){m.group(2)} = {m.group(3)};", v)
+        u = s64_stores(u)
+        if u not in variants:
+            variants.append(u)
     return variants
+
+
+def s64_stores(src: str) -> str:
+    """Two word stores of zero, low word first, are one s64 store."""
+
+    def repl(m):
+        lo, hi = int(m.group(3), 0), int(m.group(5), 0)
+        if m.group(2) != m.group(4) or lo != hi + 4:
+            return m.group(0)
+        return f"{m.group(1)}(*(s64 *)({m.group(2)} + ({m.group(5)}))) = 0;"
+
+    return re.sub(
+        r"^(\s*)\(\*\(s32 \*\)\((\(u8 \*\)[^;]*?) \+ \((0x[0-9A-F]+|\d+)\)\)\) = 0;\n\s*\(\*\(s32 \*\)\(((?:\(u8 \*\))[^;]*?) \+ \((0x[0-9A-F]+|\d+)\)\)\) = 0;",
+        repl,
+        src,
+        flags=re.M,
+    )
 
 
 PREAMBLE = """typedef signed char s8;
