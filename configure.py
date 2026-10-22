@@ -438,8 +438,14 @@ config.libs = [
     RuntimeLib(
         "Runtime.PPCEABI.H",
         [
-            Object(NonMatching, "global_destructor_chain.c"),
-            Object(NonMatching, "__init_cpp_exceptions.cpp"),
+            Object(MatchingFor("RPBE01"), "__mem.c"),
+            Object(MatchingFor("RPBE01"), "__va_arg.c"),
+            Object(MatchingFor("RPBE01"), "global_destructor_chain.c"),
+            Object(MatchingFor("RPBE01"), "NMWException.cpp"),
+            Object(MatchingFor("RPBE01"), "ptmf.c"),
+            Object(MatchingFor("RPBE01"), "runtime.c"),
+            Object(MatchingFor("RPBE01"), "__init_cpp_exceptions.cpp"),
+            Object(MatchingFor("RPBE01"), "Gecko_ExceptionPPC.c"),
         ],
     ),
     MSLLib(

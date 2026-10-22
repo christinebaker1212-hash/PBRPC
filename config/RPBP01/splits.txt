@@ -493,9 +493,30 @@ src/.unsorted/8018777C.cpp:
 	.ctors      start:0x803E2038 end:0x803E203C
 
 src/.unsorted/8019BEC4.cpp:
+	.text       start:0x8019BEC4 end:0x801C6B64
+
+libs/Runtime/src/__mem.c:
+	.init       start:0x80004000 end:0x80004134
+	.text       start:0x801C6B64 end:0x801C6B80
+
+libs/Runtime/src/__va_arg.c:
+	.text       start:0x801C6B80 end:0x801C6C48
+
+libs/Runtime/src/global_destructor_chain.c:
+	.text       start:0x801C6C48 end:0x801C6CA8
+	.sbss       start:0x8063F280 end:0x8063F284
+
+libs/Runtime/src/NMWException.cpp:
 	extab       start:0x800064E0 end:0x80006520
 	extabindex  start:0x800066C0 end:0x800066F0
-	.text       start:0x8019BEC4 end:0x801C77C0
+	.text       start:0x801C6CA8 end:0x801C6FD8
+
+libs/Runtime/src/ptmf.c:
+	.text       start:0x801C6FD8 end:0x801C7000
+
+libs/Runtime/src/runtime.c:
+	.text       start:0x801C7000 end:0x801C77C0
+	.rodata     start:0x803FC6C0 end:0x803FC6D8
 
 libs/Runtime/src/__init_cpp_exceptions.cpp:
 	.text       start:0x801C77C0 end:0x801C7830
@@ -504,8 +525,9 @@ libs/Runtime/src/__init_cpp_exceptions.cpp:
 	.dtors      start:0x803E22A4 end:0x803E22A8 rename:.dtors$15
 	.sdata      start:0x8063D698 end:0x8063D6A0
 
-src/.unsorted/801C7830.cpp:
+libs/Runtime/src/Gecko_ExceptionPPC.c:
 	.text       start:0x801C7830 end:0x801C7894
+	.bss        start:0x8048EAE0 end:0x8048EAEC
 
 libs/MSL_C/src/ansi_files.c:
 	extab       start:0x80006520 end:0x80006538

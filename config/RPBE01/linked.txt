@@ -1,4 +1,11 @@
 # Units verified to match RPBE01; written by tools/verify_linked.py.
+__mem.c
+__va_arg.c
+global_destructor_chain.c
+NMWException.cpp
+ptmf.c
+__init_cpp_exceptions.cpp
+Gecko_ExceptionPPC.c
 os/OSReset.c
 os/OSRtc.c
 os/OSSemaphore.c
