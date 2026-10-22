@@ -162,3 +162,12 @@ void fn_80371704(u8 *arg0) {
     RestoreAlloc__Q44nw4r3snd6detail8AxfxImplFPFUl_PvPFPv_v(arg0 + 0xC, spC, sp8);
 }
 }
+
+extern "C" {
+
+s32 AXFXReverbStdGetMemSize(s32);
+
+s32 GetRequiredMemSize__Q34nw4r3snd11FxReverbStdFv(s32 arg0) {
+    return (AXFXReverbStdGetMemSize(arg0 + 0x2C) + 0x87) & 0xFFFFFFE0;
+}
+}
