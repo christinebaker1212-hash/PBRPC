@@ -87,3 +87,34 @@ void fn_8000A790(void) {
     }
 }
 }
+
+extern "C" {
+
+s32 GXClearVtxDesc(void);
+s32 GXSetBlendMode(s32, s32, s32, s32);
+s32 GXSetCurrentMtx(s32);
+s32 GXSetNumChans(s32);
+s32 GXSetNumTevStages(s32);
+s32 GXSetNumTexGens(s32);
+s32 GXSetTevOp(s32, s32);
+s32 GXSetTevOrder(s32, s32, s32, s32);
+s32 GXSetVtxAttrFmt(s32, s32, s32, s32, s32);
+s32 GXSetVtxDesc(s32, s32);
+s32 GXSetZMode(s32, s32, s32);
+
+void fn_80009A78(void) {
+    GXClearVtxDesc();
+    GXSetVtxAttrFmt(4, 9, 0, 4, 0);
+    GXSetVtxAttrFmt(4, 0xB, 0, 1, 0);
+    GXSetVtxDesc(9, 1);
+    GXSetVtxDesc(0xB, 1);
+    GXSetNumChans(1);
+    GXSetNumTexGens(0);
+    GXSetNumTevStages(1);
+    GXSetTevOrder(0, 0xFF, 0xFF, 4);
+    GXSetTevOp(0, 4);
+    GXSetBlendMode(0, 0, 0, 0);
+    GXSetZMode(1, 3, 1);
+    GXSetCurrentMtx(3);
+}
+}
