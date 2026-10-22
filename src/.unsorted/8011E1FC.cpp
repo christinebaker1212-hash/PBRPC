@@ -7,3 +7,96 @@ extern "C" {
 void fn_8012A414(void) {}
 void fn_8012B0D0(void) {}
 }
+
+extern "C" {
+
+s32 fn_80253E4C(s16, s32, s32 *);
+extern u8 *lbl_8063D558;
+
+void fn_80126BF8(s16 arg0) {
+    s32 sp8;
+
+    fn_80253E4C(arg0, 8, &sp8);
+    if (sp8 != 0) {
+        (*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) = 0;
+        if ((*(s32 *)((u8 *)(lbl_8063D558) + (0x23C))) & 1) {
+            (*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) = (s32) ((*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) + 1);
+        }
+        if ((*(s32 *)((u8 *)(lbl_8063D558) + (0x23C))) & 2) {
+            (*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) = (s32) ((*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) + 1);
+        }
+        if ((*(s32 *)((u8 *)(lbl_8063D558) + (0x23C))) & 4) {
+            (*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) = (s32) ((*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) + 1);
+        }
+        if ((*(s32 *)((u8 *)(lbl_8063D558) + (0x23C))) & 8) {
+            (*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) = (s32) ((*(s32 *)((u8 *)(lbl_8063D558) + (0x240))) + 1);
+        }
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80253E10(s16, s32, f32);
+extern f32 lbl_80641380;
+
+void fn_80129CB8(s16 arg0) {
+    fn_80253E10(arg0, 4, lbl_80641380);
+}
+}
+
+extern "C" {
+
+s32 fn_801679F8(u8, s32);
+
+void fn_8012D118(void) {
+    s32 var_r31;
+    u8 temp_r0;
+
+    var_r31 = 0;
+    do {
+        temp_r0 = (*(u8 *)((u8 *)((lbl_8063D558 + var_r31)) + (0x250)));
+        switch ((s32) temp_r0) {                    /* irregular */
+        case 1:
+            fn_801679F8((u8) ((*(u8 *)((u8 *)(lbl_8063D558) + (0x258))) - 1), var_r31);
+            break;
+        case 2:
+            fn_801679F8((u8) ((*(u8 *)((u8 *)(lbl_8063D558) + (0x259))) - 1), var_r31);
+            break;
+        case 3:
+            fn_801679F8((u8) ((*(u8 *)((u8 *)(lbl_8063D558) + (0x25A))) - 1), var_r31);
+            break;
+        case 4:
+            fn_801679F8((u8) ((*(u8 *)((u8 *)(lbl_8063D558) + (0x25B))) - 1), var_r31);
+            break;
+        }
+        var_r31 += 1;
+    } while (var_r31 < 8);
+}
+}
+
+extern "C" {
+
+s32 fn_8012D500(s32 arg0) {
+    switch (arg0) {                                 /* irregular */
+    case 0:
+        return 0xE8D;
+    case 1:
+        return 0xE90;
+    default:
+        return 0;
+    }
+}
+}
+
+extern "C" {
+
+u32 fn_80162A90(s32);
+
+s32 fn_8012EFC8(void) {
+    if ((fn_80162A90(0x261) == 3U) && (((u32) (*(u32 *)((u8 *)(lbl_8063D558) + (0x974))) >> 0xDU) & 1)) {
+        return 1;
+    }
+    return 0;
+}
+}

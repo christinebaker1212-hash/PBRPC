@@ -39,3 +39,56 @@ void fn_8007C80C(void) {
     fn_80058E34();
 }
 }
+
+extern "C" {
+
+s32 fn_80253CBC(u16);
+extern u16 lbl_8063D4D4;
+
+void fn_8006F134(void) {
+    fn_80253CBC(lbl_8063D4D4);
+}
+}
+
+extern "C" {
+
+s32 fn_8007247C(s32 arg0) {
+    switch (arg0) {                                 /* irregular */
+    case 0:
+        return 0x2ECF;
+    case 1:
+        return 0x2ED0;
+    default:
+        return 0;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_800724AC(s32 arg0) {
+    switch (arg0) {                                 /* irregular */
+    case 0:
+        return 0xE8D;
+    case 1:
+        return 0xE90;
+    default:
+        return 0;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80162A90(s32);
+
+s32 fn_8007C6D4(void) {
+    if ((fn_80162A90(9) == 0) && (fn_80162A90(0x19B) == 0)) {
+        return 0;
+    }
+    if (fn_80162A90(0x19B) == 1U) {
+        return 1;
+    }
+    return 2;
+}
+}

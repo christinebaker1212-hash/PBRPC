@@ -42,3 +42,52 @@ void fn_80052060(u8 *p) {
     *(u8 **)(p + 0x0) = lbl_8040AEA4;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_80051468(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80051FB4(s32 arg0, u32 arg1) {
+    if (arg1 >= 0x64U) {
+        return 0;
+    }
+    return arg0 + (arg1 * 0x28) + 0x248;
+}
+}
+
+extern "C" {
+
+s32 fn_80052070(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80253E10(s16, s32, f32);
+extern f32 lbl_80640B10;
+
+void fn_80054200(s16 arg0) {
+    fn_80253E10(arg0, 4, lbl_80640B10);
+}
+}
+
+extern "C" {
+
+void fn_800574B0(void) {
+
+}
+}

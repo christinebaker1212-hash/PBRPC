@@ -418,3 +418,12 @@ void fn_800B77F8(s32 a, u8 *b) {
     }
 }
 }
+
+extern "C" {
+
+extern u8 *lbl_8063D500;
+
+s32 fn_800ADAB4(void) {
+    return (*(s32 *)((u8 *)(lbl_8063D500) + (0xD0))) != 0;
+}
+}

@@ -3425,3 +3425,89 @@ int fn_800248A0(u32 n) {
 
 #pragma optimize_for_size off
 #pragma dont_inline off
+
+extern "C" {
+
+u8 *fn_8000C7E8__Fv();
+s32 fn_8000CAC8();
+s32 fn_8000CF18();
+s32 sleepCurrentThread__15GSthreadManagerFv(s32);
+extern s32 sInstance__15GSthreadManager;
+
+void fn_8000B9D8(void) {
+loop_1:
+    if (((u8) *fn_8000C7E8__Fv() == 1) && ((s32) (*(s32 *)((u8 *)(fn_8000C7E8__Fv()) + (4))) != 0)) {
+        fn_8000C7E8__Fv();
+        fn_8000CF18();
+        fn_8000C7E8__Fv();
+        fn_8000CAC8();
+    }
+    sleepCurrentThread__15GSthreadManagerFv(sInstance__15GSthreadManager);
+    goto loop_1;
+}
+}
+
+extern "C" {
+
+void fn_8000D4B0(s8 *arg0, s8 arg1) {
+    *arg0 = arg1;
+}
+}
+
+extern "C" {
+
+s32 fn_80015234__FP11Unk8063E970i(u8 *, s32);
+s32 fn_800233B4(u8 *);
+
+void fn_8000DB00(u8 *arg0) {
+    if (((s32) (*(s32 *)((u8 *)(arg0) + (0x1070))) != 0) || ((s32) (*(s32 *)((u8 *)(arg0) + (0x1170))) != 0)) {
+        fn_80015234__FP11Unk8063E970i(arg0, 0);
+        fn_800233B4(arg0);
+    }
+}
+}
+
+extern "C" {
+
+void fn_8000E894(u8 *arg0, s32 arg1) {
+    s32 temp_r6;
+
+    temp_r6 = (*(s32 *)((u8 *)(arg0) + (0x28B0)));
+    if (((u32) (temp_r6 & 0x80FF) != (u32) (arg1 & 0x80FF)) && ((s32) (*(s32 *)((u8 *)(arg0) + (0x50))) >= 2)) {
+        if ((temp_r6 & 3) && !(arg1 & 3)) {
+            (*(u8 *)((u8 *)(arg0) + (0x3C))) = (u8) ((*(u8 *)((u8 *)(arg0) + (0x3C))) | 4);
+        } else if ((temp_r6 & 0xC0) && !(arg1 & 0xC0)) {
+            (*(u8 *)((u8 *)(arg0) + (0x3C))) = (u8) ((*(u8 *)((u8 *)(arg0) + (0x3C))) | 0x20);
+        } else if ((temp_r6 & 0xC) && !(arg1 & 0xC)) {
+            (*(u8 *)((u8 *)(arg0) + (0x3C))) = (u8) ((*(u8 *)((u8 *)(arg0) + (0x3C))) | 8);
+        } else if ((temp_r6 & 0x30) && !(arg1 & 0x30)) {
+            (*(u8 *)((u8 *)(arg0) + (0x3C))) = (u8) ((*(u8 *)((u8 *)(arg0) + (0x3C))) | 0x10);
+        }
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x28B4))) = (s32) (*(s32 *)((u8 *)(arg0) + (0x28B0)));
+    (*(s32 *)((u8 *)(arg0) + (0x28B0))) = arg1;
+}
+}
+
+extern "C" {
+
+void fn_8000E940(u8 *arg0, s32 arg1) {
+    (*(s32 *)((u8 *)(arg0) + (0x28AC))) = arg1;
+}
+}
+
+extern "C" {
+
+s32 fn_80014DD4(s32, s32, s32);
+s32 fn_80023E28__FP11Unk8063E970iPv();
+
+s32 fn_80014D4C(s32 arg0, s32 arg1, s32 arg2) {
+    if ((arg1 <= 0) || (arg1 >= 0x24B)) {
+        return 0;
+    }
+    if (fn_80023E28__FP11Unk8063E970iPv() == 0) {
+        return 0;
+    }
+    return fn_80014DD4(arg0, arg1, arg2) != 0;
+}
+}
