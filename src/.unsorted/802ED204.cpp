@@ -554,3 +554,16 @@ s32 fn_802EE464(s32 arg0, s32 arg1) {
     return temp_r31;
 }
 }
+
+extern "C" {
+
+s32 fn_802F1D98(void);
+extern s32 lbl_806401F8;
+
+s32 fn_802F1D98(void) {
+    if ((s32) lbl_806401F8 != 0) {
+        return (*(s32 *)((u8 *)(lbl_80643030) + (0x5764)));
+    }
+    return 0;
+}
+}
