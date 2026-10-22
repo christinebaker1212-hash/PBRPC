@@ -162,6 +162,62 @@ def expand_macros(src: str) -> Optional[str]:
     expand("M2C_BITWISE", lambda t, e: f"(({t})({e}))")
     if "M2C_" in src:
         return None
+    # C++ has no arithmetic on void pointers; m2c means byte offsets.
+    src = re.sub(r"\bvoid \*", "u8 *", src)
+    # Mangled names ending in "e" are variadic.
+    src = re.sub(r"^(.*\b\w+__F\w*e)\(\);", r"\1(...);", src, flags=re.M)
+    return prototype_unknown_calls(src)
+
+
+def split_args(text: str, start: int) -> Tuple[List[str], int]:
+    """Arguments of the call whose '(' is at text[start]; returns (args, end)."""
+    depth, args, cur, i = 0, [], start + 1, start
+    while True:
+        c = text[i]
+        if c in "([":
+            depth += 1
+        elif c in ")]":
+            depth -= 1
+            if depth == 0:
+                a = text[cur:i].strip()
+                if a:
+                    args.append(a)
+                return args, i
+        elif c == "," and depth == 1:
+            args.append(text[cur:i].strip())
+            cur = i + 1
+        i += 1
+
+
+def prototype_unknown_calls(src: str) -> str:
+    """m2c declares callees it knows nothing about as 'T f();', which C++ reads
+    as taking no arguments. Give them one s32 (or float) parameter per argument
+    and cast integer and pointer arguments to s32, which costs no code."""
+    decl = r"^(?![ \t])(?!.*=)(?!.*\.\.\.)(.*?\b{})\(\);[ \t]*(?:/\*.*\*/)?[ \t]*$"
+    float_vars = {v: t for t, v in re.findall(r"\b(f32|f64)\s+(\w+)\s*[;,=)]", src)}
+    names = [m.group(1).split()[-1].lstrip("*") for m in re.finditer(decl.format(r"\w+"), src, re.M)]
+    for name in names:
+        dm = re.search(decl.format(re.escape(name)), src, re.M)
+        if dm is None:
+            continue
+        calls = [c for c in re.finditer(r"\b" + re.escape(name) + r"\(", src) if not (dm.start() <= c.start() < dm.end())]
+        sigs = set()
+        parsed = []
+        for c in calls:
+            args, end = split_args(src, c.end() - 1)
+            kinds = tuple(
+                float_vars.get(a) or ("f32" if re.fullmatch(r"-?\d+\.\d*f", a) else "s32") for a in args
+            )
+            sigs.add(kinds)
+            parsed.append((c.end() - 1, end, args, kinds))
+        if len(sigs) > 1:
+            continue
+        kinds = next(iter(sigs)) if sigs else ()
+        for open_, close, args, k in sorted(parsed, reverse=True):
+            new_args = ", ".join(x if t != "s32" else f"(s32)({x})" for x, t in zip(args, k))
+            src = src[: open_ + 1] + new_args + src[close:]
+        dm = re.search(decl.format(re.escape(name)), src, re.M)
+        src = src[: dm.start()] + dm.group(1) + "(" + (", ".join(kinds) or "void") + ");" + src[dm.end() :]
     return src
 
 
