@@ -181,7 +181,7 @@ void Pane::SetVtxColorElement(u32 idx, u8 value) {
 }
 
 Pane *Pane::FindPaneByName(const char *pName, bool recursive) {
-    if (detail::EqualsResName(mName, pName)) {
+    if (std::strcmp(mName, pName) == 0) {
         return this;
     }
 
@@ -199,7 +199,7 @@ Pane *Pane::FindPaneByName(const char *pName, bool recursive) {
 }
 
 Material *Pane::FindMaterialByName(const char *pName, bool recursive) {
-    if (mpMaterial != NULL && detail::EqualsMaterialName(mpMaterial->GetName(), pName)) {
+    if (mpMaterial != NULL && std::strcmp(mpMaterial->GetName(), pName) == 0) {
         return mpMaterial;
     }
 

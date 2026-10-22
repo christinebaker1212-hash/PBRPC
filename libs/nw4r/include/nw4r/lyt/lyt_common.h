@@ -3,6 +3,9 @@
 #define NW4R_LYT_COMMON_H
 #include <nw4r/types_nw4r.h>
 
+#include <cstring>
+#include <nw4r/lyt/lyt_types.h>
+
 #include <nw4r/math.h>
 #include <nw4r/ut.h>
 #include <revolution/gx.h>
@@ -152,8 +155,13 @@ inline const char *GetStrTableStr(const void *pTable, int index) {
 bool TestFileHeader(const res::BinaryFileHeader &rHeader);
 bool TestFileHeader(const res::BinaryFileHeader &rHeader, u32 signature);
 
-bool EqualsResName(const char *pLhs, const char *pRhs);
-bool EqualsMaterialName(const char *pLhs, const char *pRhs);
+inline bool EqualsResName(const char *pLhs, const char *pRhs) {
+    return std::strncmp(pLhs, pRhs, NW4R_LYT_RES_NAME_LEN) == 0;
+}
+
+inline bool EqualsMaterialName(const char *pLhs, const char *pRhs) {
+    return std::strncmp(pLhs, pRhs, NW4R_LYT_MATERIAL_NAME_LEN) == 0;
+}
 
 bool IsModulateVertexColor(ut::Color *pColors, u8 glbAlpha);
 

@@ -1,5 +1,6 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/lyt/lyt_window.cpp
 // TODO Functions of the binary not in this source yet: fn_80388204.
+#include <cstring>
 #include <nw4r/lyt.h>
 
 /******************************************************************************
@@ -299,12 +300,12 @@ Window::~Window() {
 }
 
 Material *Window::FindMaterialByName(const char *pName, bool recursive) {
-    if (mpMaterial != NULL && detail::EqualsMaterialName(mpMaterial->GetName(), pName)) {
+    if (mpMaterial != NULL && std::strcmp(mpMaterial->GetName(), pName) == 0) {
         return mpMaterial;
     }
 
     for (int i = 0; i < mFrameNum; i++) {
-        if (detail::EqualsMaterialName(mFrames[i].pMaterial->GetName(), pName)) {
+        if (std::strcmp(mFrames[i].pMaterial->GetName(), pName) == 0) {
             return mFrames[i].pMaterial;
         }
     }

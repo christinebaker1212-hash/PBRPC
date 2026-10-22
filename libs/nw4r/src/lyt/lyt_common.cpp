@@ -14,14 +14,6 @@ namespace detail {
  * Utility functions
  *
  ******************************************************************************/
-bool EqualsResName(const char *pLhs, const char *pRhs) {
-    return std::strncmp(pLhs, pRhs, NW4R_LYT_RES_NAME_LEN) == 0;
-}
-
-bool EqualsMaterialName(const char *pLhs, const char *pRhs) {
-    return std::strncmp(pLhs, pRhs, NW4R_LYT_MATERIAL_NAME_LEN) == 0;
-}
-
 bool TestFileHeader(const res::BinaryFileHeader &rHeader) {
     return rHeader.byteOrder == NW4R_BYTEORDER_BIG && rHeader.version == NW4R_LYT_LIBRARY_VERSION;
 }
