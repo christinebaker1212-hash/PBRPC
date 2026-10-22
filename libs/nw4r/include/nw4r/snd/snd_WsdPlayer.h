@@ -10,6 +10,7 @@
 #include <nw4r/types_nw4r.h>
 
 #include <revolution/os.h>
+#include <decomp.h>
 
 #include <nw4r/ut.h>
 
@@ -110,7 +111,7 @@ private:
 
 private:
     void FinishPlayer();
-    void Update();
+    void Update() NO_INLINE;
 
     bool StartChannel(const WsdCallback *pCallback, u32 callbackArg);
     void CloseChannel();

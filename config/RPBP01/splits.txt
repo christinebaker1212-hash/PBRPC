@@ -2711,8 +2711,13 @@ libs/nw4r/src/snd/snd_WaveSoundHandle.cpp:
 libs/nw4r/src/snd/snd_WsdFile.cpp:
 	.text       start:0x803839DC end:0x80383D24
 
-src/.unsorted/80383D24.cpp:
-	.text       start:0x80383D24 end:0x80384CDC
+libs/nw4r/src/snd/snd_WsdPlayer.cpp:
+	.text       start:0x80383D24 end:0x80384C50
+	.data       start:0x8044D0C0 end:0x8044E130
+	.sdata2     start:0x80642DF8 end:0x80642E20
+
+libs/nw4r/src/snd/snd_adpcm.cpp:
+	.text       start:0x80384C50 end:0x80384CDC
 
 libs/nw4r/src/math/math_triangular.cpp:
 	.text       start:0x80384CDC end:0x80384F4C
