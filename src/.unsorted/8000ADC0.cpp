@@ -3538,3 +3538,44 @@ void fn_80016580__FP11Unk8063E970(u8 *arg0) {
     fn_8001A0B4(arg0);
 }
 }
+
+extern "C" {
+
+s32 fn_8000AEB0__FUc(void);
+
+s32 fn_8000AEB0__FUc(void) {
+    return fn_80254A30((void *)(fn_802544D0()), (int)(0), (int)(0), (int)(0));
+}
+}
+
+extern "C" {
+
+s32 fn_8000B030__Fiiif(s32, s32, s32, f32);
+s32 fn_8000B3B4__Fii(s32, s32);
+
+s32 fn_8000B3B4__Fii(s32 arg0, s32 arg1) {
+    s16 temp_r31;
+    s32 temp_r3;
+
+    temp_r31 = fn_80392FE8((void *)(lbl_8063E954), (int)(arg0));
+    temp_r3 = fn_802552AC((void *)(fn_802544D0()), (int)((s32) temp_r31), (int)(arg1));
+    if (temp_r3 < 0) {
+        return 0;
+    }
+    fn_8000B030__Fiiif(temp_r3, arg0, arg1, lbl_80640678);
+    return 1;
+}
+}
+
+extern "C" {
+
+s32 fn_803944F4(s32, s32);
+s32 resetGX__Q23EGG7StateGXFv(s32, s32);
+
+s32 resetGX__Q23EGG7StateGXFv(s32 arg0, s32 arg1) {
+    s16 temp_r3;
+
+    temp_r3 = fn_803944F4(lbl_8063E980, arg1);
+    return ((s32) (-temp_r3 & ~temp_r3) >> 0x1F) & 0x72;
+}
+}
