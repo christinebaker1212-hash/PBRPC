@@ -455,6 +455,11 @@ static int WUDiSetPinCode(BD_ADDR addr) {
 
     pAddr = _wcb.syncType == WUD_SYNC_TYPE_STANDARD ? _wcb.hostAddr : addr;
 
+    if (_work.UNK_0x5B == 4) {
+        WUDiRemoveDevice(_work.devAddr);
+        btm_remove_acl(_work.devAddr);
+    }
+
     _work.UNK_0x5A = 1;
 
     ReverseAddr(pin, pAddr);
