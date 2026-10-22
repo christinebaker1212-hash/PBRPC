@@ -18,7 +18,10 @@ public:
     static const int WORK_SIZE_MAX = VOICE_MAX * sizeof(Channel);
 
 public:
-    static ChannelManager &GetInstance();
+    static ChannelManager &GetInstance() {
+        static ChannelManager instance;
+        return instance;
+    }
 
     u32 GetRequiredMemSize();
 
@@ -27,10 +30,22 @@ public:
     void UpdateAllChannel();
 
 private:
-    ChannelManager();
+    ChannelManager() : mInitialized(false), mChannelCount(0) {
+        OSInitMutex(&mMutex);
+    }
 
-    Channel *Alloc();
-    void Free(Channel *pChannel);
+    Channel *Alloc() {
+        ut::detail::AutoLock<OSMutex> lock(mMutex);
+        Channel *pChannel = mPool.Alloc();
+        mChannelList.PushBack(pChannel);
+        return pChannel;
+    }
+
+    void Free(Channel *pChannel) {
+        ut::detail::AutoLock<OSMutex> lock(mMutex);
+        mChannelList.Erase(pChannel);
+        mPool.Free(pChannel);
+    }
 
 private:
     InstancePool<Channel> mPool; // at 0x0
@@ -39,6 +54,7 @@ private:
     u32 mChannelCount;           // at 0x14
     void *mMem;                  // at 0x18
     u32 mMemSize;                // at 0x1C
+    OSMutex mMutex;              // at 0x20
 };
 
 } // namespace detail

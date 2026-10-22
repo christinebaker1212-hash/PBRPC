@@ -1,19 +1,11 @@
 // Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_Channel.cpp
-// TODO Functions of the binary not in this source yet: fn_8036E344, fn_8036E4CC, fn_8036ED48, fn_8036EEB0 and
-// fn_8036F004.
+// This nw4r revision guards the channel list with the manager's own mutex.
 #include <nw4r/snd.h>
 #include <revolution/AX.h>
 
 namespace nw4r {
 namespace snd {
 namespace detail {
-
-ChannelManager &ChannelManager::GetInstance() {
-    static ChannelManager instance;
-    return instance;
-}
-
-ChannelManager::ChannelManager() : mInitialized(false), mChannelCount(0) {}
 
 u32 ChannelManager::GetRequiredMemSize() {
     return (AXGetMaxVoices() + VOICE_MARGIN) * sizeof(Channel);
@@ -45,18 +37,8 @@ void ChannelManager::Shutdown() {
     mInitialized = false;
 }
 
-Channel *ChannelManager::Alloc() {
-    Channel *pChannel = mPool.Alloc();
-    mChannelList.PushBack(pChannel);
-    return pChannel;
-}
-
-void ChannelManager::Free(Channel *pChannel) {
-    mChannelList.Erase(pChannel);
-    mPool.Free(pChannel);
-}
-
 void ChannelManager::UpdateAllChannel() {
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
     NW4R_UT_LINKLIST_FOREACH_SAFE (it, mChannelList, { it->Update(true); }); //
 }
 
