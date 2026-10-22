@@ -73,3 +73,10 @@ void GSrenderModule::update(f32 deltaTime) {}
 void GSrenderModule::fn_80236AE0() {}
 
 void GSrenderModule::fn_80236AE4() {}
+
+extern "C" {
+
+void update__14GSrenderModuleFv(void) {
+
+}
+}
