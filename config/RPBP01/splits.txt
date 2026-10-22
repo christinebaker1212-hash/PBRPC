@@ -791,8 +791,13 @@ libs/MetroTRK/src/gamedev/cust_connection/utils/common/CircleBuffer.c:
 libs/MetroTRK/src/gamedev/cust_connection/utils/gc/MWCriticalSection_gc.c:
 	.text       start:0x801D9F18 end:0x801D9F70
 
-src/.unsorted/801D9F70.cpp:
-	.text       start:0x801D9F70 end:0x801DAA30
+libs/RVL_SDK/src/NdevExi2A/DebuggerDriver.c:
+	.text       start:0x801D9F70 end:0x801DA2A4
+	.sdata      start:0x8063D6C8 end:0x8063D6D0
+	.sbss       start:0x8063F2B0 end:0x8063F2C8
+
+libs/RVL_SDK/src/NdevExi2A/exi2.c:
+	.text       start:0x801DA2A4 end:0x801DAA30
 
 src/gs/operators.cpp:
 	.text       start:0x801DAA30 end:0x801DAAE0

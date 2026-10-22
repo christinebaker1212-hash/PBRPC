@@ -990,6 +990,13 @@ config.libs = [
         ],
     ),
     RVLSDKLib(
+        "NdevExi2A",
+        [
+            Object(MatchingFor("RPBE01"), "NdevExi2A/DebuggerDriver.c", mw_version="GC/3.0a5"),
+            Object(MatchingFor("RPBE01"), "NdevExi2A/exi2.c"),
+        ],
+    ),
+    RVLSDKLib(
         "euart",
         [
             Object(NonMatching, "euart/euart.c"),

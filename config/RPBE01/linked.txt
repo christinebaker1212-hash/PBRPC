@@ -14,6 +14,8 @@ homebuttonLib/HBMFrameController.cpp
 homebuttonLib/HBMGUIManager.cpp
 homebuttonLib/HBMController.cpp
 homebuttonLib/HBMRemoteSpk.cpp
+NdevExi2A/DebuggerDriver.c
+NdevExi2A/exi2.c
 ds/battle/battle_io_command.cpp
 ds/battle/battle_display.cpp
 ds/battle/battle_main.cpp
