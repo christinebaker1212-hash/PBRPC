@@ -152,7 +152,7 @@ void Sound3DManager::Update(SoundParam *pParam, u32 id, SoundHandle *pHandle, co
             if (angle < angleRearLeft) {
                 panLR = SolveLinerFunction(angle, -NW4R_MATH_PI, angleRearLeft, -1.0f, 0.0f);
                 panFR = 1.0f;
-            } else if (angle < -NW4R_MATH_PI / 2) {
+            } else if (angle < static_cast<f32>(-NW4R_MATH_PI / 2)) {
                 panLR = -1.0f;
                 panFR = SolveLinerFunction(angle, angleRearLeft, -NW4R_MATH_PI / 2, 0.0f, 1.0f);
             } else if (angle < angleFrontLeft) {
@@ -161,7 +161,7 @@ void Sound3DManager::Update(SoundParam *pParam, u32 id, SoundHandle *pHandle, co
             } else if (angle < angleFrontRight) {
                 panLR = SolveLinerFunction(angle, angleFrontLeft, angleFrontRight, 1.0f, -1.0f);
                 panFR = -1.0f;
-            } else if (angle < NW4R_MATH_PI / 2) {
+            } else if (angle < static_cast<f32>(NW4R_MATH_PI / 2)) {
                 panLR = 1.0f;
                 panFR = SolveLinerFunction(angle, angleFrontRight, NW4R_MATH_PI / 2, 0.0f, -1.0f);
             } else if (angle < angleRearRight) {
@@ -187,10 +187,10 @@ void Sound3DManager::Update(SoundParam *pParam, u32 id, SoundHandle *pHandle, co
             }
 
             case OUTPUT_MODE_STEREO: {
-                static f32 angleRearLeft = -NW4R_MATH_PI + mSpeakerAngleStereo;
+                static f32 angleRearLeft = static_cast<f32>(-NW4R_MATH_PI) + mSpeakerAngleStereo;
                 static f32 angleFrontLeft = -mSpeakerAngleStereo;
                 static f32 angleFrontRight = mSpeakerAngleStereo;
-                static f32 angleRearRight = NW4R_MATH_PI - mSpeakerAngleStereo;
+                static f32 angleRearRight = static_cast<f32>(NW4R_MATH_PI) - mSpeakerAngleStereo;
 
                 // clang-format off
             if (angle < angleRearLeft) {
