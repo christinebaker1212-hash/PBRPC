@@ -705,7 +705,6 @@ extern u16 lbl_80473AB4[];
 void fn_80395B40(u8 **h, s32 i, u16 v);
 void fn_80396754(u8 **h, s32 i, u32 v);
 u32 fn_803C06DC(u32 v);
-s32 fn_803D3DA8(u8 *a, u8 *b);
 void fn_803D8004(u8 *a, u8 *b);
 void fn_803A6BA4(u8 *a, u8 *b);
 void fn_803A6D7C(u8 *a, u8 *b);
@@ -766,7 +765,6 @@ void fn_803B2784(u8 *a, u32 b, void *c, u32 d, u8 *e);
 void fn_803D8444(u8 *b, void *c);
 void fn_803D8520(u8 *a, u8 *b, void *c, u8 *d);
 void fn_803A6BE0(u8 *a, u8 *b);
-s32 fn_803D3018(u8 *a, u8 *b);
 s32 fn_803D3D00(u8 *a, u8 *b);
 s32 fn_803D583C(u8 *a, u8 *b);
 u8 *fn_803A60D8(u8 *a, u8 *b);
@@ -879,7 +877,6 @@ static inline s32 SelIdx(u8 *p, s32 i) {
 s32 fn_803D5924(u8 *a, u8 *b);
 s32 fn_803D52EC(u8 *a, u8 *b);
 s32 fn_803D4494(u8 *a, u8 *b);
-s32 fn_803CED18(u8 *a, u8 *b);
 s32 fn_803CAF68(u8 *a, u8 *b);
 s32 fn_803D59F0(u8 *a, u8 *b);
 s32 fn_803D28DC(u8 *a, u8 *b);
@@ -889,10 +886,8 @@ struct BF_2DC8 {
     u32 lo : 11;
 };
 
-s32 fn_803D1788(u8 *a, u8 *b);
 s32 fn_803CA838(u8 *a, u8 *b);
 s32 fn_803D3F98(u8 *a, u8 *b);
-s32 fn_803D1F84(u8 *a, u8 *b);
 s32 fn_803CBB14(u8 *a, u8 *b);
 s32 fn_803CDC28(u8 *a, u8 *b);
 s32 fn_803D6894(u8 *a, u8 *b);
@@ -913,16 +908,12 @@ struct BF_1C4 {
     u32 rest : 17;
 };
 
-s32 fn_803CEFFC(u8 *a, u8 *b);
 u32 fn_803DA0C0(TrainerInfo *trInfo);                        // TrainerInfo_ID
 u32 fn_803DA0C8(TrainerInfo *trInfo);                        // TrainerInfo_Gender
 const u16 *fn_803DA0BC(TrainerInfo *trInfo);                 // TrainerInfo_Name
 BOOL fn_803DECAC(const u16 *str1, const u16 *str2, u32 len); // CharCode_CompareNumChars
-s32 fn_803D180C(u8 *a, u8 *b);
-s32 fn_803D2C80(u8 *a, u8 *b);
 s32 fn_803CBA04(u8 *a, u8 *b);
 s32 fn_803D1B7C(u8 *a, u8 *b);
-s32 fn_803D48F8(u8 *a, u8 *b);
 s32 fn_803D514C(u8 *a, u8 *b);
 s32 fn_803D2AB4(u8 *a, u8 *b);
 s32 fn_803D333C(u8 *a, u8 *b);
@@ -933,10 +924,6 @@ struct BF_1C8 {
     u32 rest : 28;
 };
 
-s32 fn_803D0EC8(u8 *a, u8 *b);
-s32 fn_803D4528(u8 *a, u8 *b);
-s32 fn_803D0F94(u8 *a, u8 *b);
-s32 fn_803D4008(u8 *a, u8 *b);
 s32 fn_803CDE80(u8 *a, u8 *b, u32 c);
 s32 fn_803D5660(u8 *a, u8 *b);
 s32 fn_803D62F0(u8 *a, u8 *b);
@@ -947,12 +934,10 @@ struct BF_1C4b {
     u32 rest : 12;
 };
 
-s32 fn_803D18CC(u8 *a, u8 *b);
 s32 fn_803CE014(u8 *a, u8 *b);
 s32 fn_803D1DFC(u8 *a, u8 *b);
 s32 fn_803D2168(u8 *a, u8 *b);
 s32 fn_803D4F08(u8 *a, u8 *b);
-s32 fn_803D1064(u8 *a, u8 *b);
 struct BF_1C4c {
     u32 a : 2;
     u32 x : 3;
@@ -967,22 +952,17 @@ s32 fn_803D5E64(u8 *a, u8 *b);
 s32 fn_803D5F64(u8 *a, u8 *b);
 s32 fn_803D5738(u8 *a, u8 *b);
 s32 fn_803D66F0(u8 *a, u8 *b);
-s32 fn_803D2634(u8 *a, u8 *b);
 s32 fn_803CC4B0(u8 *a, u8 *b);
 s32 fn_803D65D0(u8 *a, u8 *b);
-s32 fn_803D45F4(u8 *a, u8 *b);
-s32 fn_803CB5B4(u8 *a, u8 *b);
 s32 fn_803CBF18(u8 *a, u8 *b);
 struct BF_2DC8b {
     u32 t : 3;
     u32 rest : 29;
 };
 
-s32 fn_803CF758(u8 *a, u8 *b);
 s32 fn_803C9528(u8 *a, u8 *b);
 s32 fn_803D1A58(u8 *a, u8 *b);
 s32 fn_803CB438(u8 *a, u8 *b);
-s32 fn_803D02D8(u8 *a, u8 *b);
 struct BF_2DCC {
     u32 hi : 23;
     u32 k : 4;

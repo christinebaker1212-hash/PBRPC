@@ -12,6 +12,33 @@
 #define BTLSCR_ERR_INVALID "\x95\x73\x90\xb3\x82\xc8\x92\xe8\x8b\x60\x82\xc5\x82\xb7\n"
 #define BTLSCR_ERR_VAL_GET "VAL_GET\x82\xcd\x8e\x77\x92\xe8\x82\xc5\x82\xab\x82\xdc\x82\xb9\x82\xf1"
 
+#define XtOffset(pointer_type, field) ((unsigned int)&(((pointer_type)NULL)->field))
+
+// pokeplatinum sProtectSuccessRate
+extern const u16 lbl_80642FF8[4];
+// pokeplatinum sWeightToPower
+extern const u16 lbl_80405A5C[][2];
+
+#define BattleAI_SetAbility(battleCtx, battler, ability) \
+    ((battleCtx)->aiContext.battlerAbilities[(u8)(battler)] = (u8)(ability))
+#define BattleAI_SetHeldItem(battleCtx, battler, item) \
+    ((battleCtx)->aiContext.battlerHeldItems[(u8)(battler)] = (u16)(item))
+
+#define AbilityBlocksSpecificStatReduction(battleCtx, statOffset, ability, stat) (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ability) == TRUE && BATTLE_STAT_ATTACK + statOffset == stat)
+
+#define SetupNicknameStatMsg(battleCtx, msgID, statOffset) do { battleCtx->msgBuffer.id = msgID; battleCtx->msgBuffer.tags = TAG_NICKNAME_STAT; battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon); battleCtx->msgBuffer.params[1] = BATTLE_STAT_ATTACK + statOffset; } while (0)
+
+#define SetupNicknameAbilityStatMsg(battleCtx, msgID, statOffset) do { battleCtx->msgBuffer.id = msgID; battleCtx->msgBuffer.tags = TAG_NICKNAME_ABILITY_STAT; battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon); battleCtx->msgBuffer.params[1] = battleCtx->battleMons[battleCtx->sideEffectMon].ability; battleCtx->msgBuffer.params[2] = BATTLE_STAT_ATTACK + statOffset; } while (0)
+
+#define SetupNicknameAbilityNicknameAbilityMsg(battleCtx, msgID) do { battleCtx->msgBuffer.id = msgID; battleCtx->msgBuffer.tags = TAG_NICKNAME_ABILITY_NICKNAME_ABILITY; battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon); battleCtx->msgBuffer.params[1] = battleCtx->battleMons[battleCtx->sideEffectMon].ability; battleCtx->msgBuffer.params[2] = BattleSystem_NicknameTag(battleCtx, battleCtx->attacker); battleCtx->msgBuffer.params[3] = battleCtx->battleMons[battleCtx->attacker].ability; } while (0)
+
+#define BeatUpEligibleMon(battleCtx, mon)                                                  \
+    ((battleCtx)->beatUpCounter == (battleCtx)->selectedPartySlot[(battleCtx)->attacker]    \
+     || (Pokemon_GetValue(mon, MON_DATA_HP, NULL) != 0                                      \
+         && Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_NONE            \
+         && Pokemon_GetValue(mon, MON_DATA_SPECIES_OR_EGG, NULL) != SPECIES_EGG             \
+         && Pokemon_GetValue(mon, MON_DATA_STATUS, NULL) == MON_CONDITION_NONE))
+
 extern "C" {
 
 s32 fn_803C94CC(u8 *a, u8 *b) {
@@ -1102,36 +1129,52 @@ s32 fn_803CB548(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 extern "C" {
 
-s32 fn_803CB5B4(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 r = fn_803D803C(a, b, fn_803D6E6C(b));
-    u8 *q = b + r * 0xc0;
-    s32 d = *(s32 *)(b + 0x215c);
-    s32 hp = *(s32 *)(q + 0x2d8c);
-    if (d + hp <= 0) {
-        *(s32 *)(b + 0x2148) = -hp;
-    } else {
-        *(s32 *)(b + 0x2148) = d;
-    }
-    if (*(s32 *)(b + 0x2148) < 0) {
-        *(s32 *)(b + r * 4 + 0x164) -= *(s32 *)(b + 0x2148);
-    }
-    s32 nh = *(s32 *)(q + 0x2d8c) + *(s32 *)(b + 0x215c);
-    *(s32 *)(q + 0x2d8c) = nh;
-    if (nh < 0) {
-        *(s32 *)(q + 0x2d8c) = 0;
-    } else if ((u32)nh > *(u32 *)(b + r * 0xc0 + 0x2d90)) {
-        *(u32 *)(q + 0x2d8c) = *(u32 *)(b + r * 0xc0 + 0x2d90);
-    }
-    BattleMon_CopyToParty((BattleSystem *)a, (BattleContext *)b, r);
-    return 0;
-}
 
 }
 
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_UpdateHealthBarValue
+s32 fn_803CB5B4(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int inBattler = fn_803D6E6C((u8 *)battleCtx);
+
+    // Cap the hit damage to the battler's current HP
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
+    if (battleCtx->battleMons[battler].curHP + battleCtx->hpCalcTemp <= 0) {
+        battleCtx->hitDamage = battleCtx->battleMons[battler].curHP * -1;
+    } else {
+        battleCtx->hitDamage = battleCtx->hpCalcTemp;
+    }
+
+    // Accumulate the hit damage into this battler's total taken damage
+    if (battleCtx->hitDamage < 0) {
+        battleCtx->totalDamage[battler] += (battleCtx->hitDamage * -1);
+    }
+
+    // Cap the battler's new HP value to their max HP (in case the temp value is positive).
+    battleCtx->battleMons[battler].curHP += battleCtx->hpCalcTemp;
+    if (battleCtx->battleMons[battler].curHP < 0) {
+        battleCtx->battleMons[battler].curHP = 0;
+    } else if (battleCtx->battleMons[battler].curHP > battleCtx->battleMons[battler].maxHP) {
+        battleCtx->battleMons[battler].curHP = battleCtx->battleMons[battler].maxHP;
+    }
+
+    BattleMon_CopyToParty(battleSys, battleCtx, battler);
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -1142,6 +1185,31 @@ s32 fn_803CB69C(BattleSystem *battleSys, BattleContext *battleCtx) {
     int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
 
     BattleController_EmitUpdateHPGauge(battleSys, battleCtx, battler);
+
+    return 0;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryFaintMon
+s32 fn_803CB854(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int inBattler = fn_803D6E6C((u8 *)battleCtx);
+
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
+    if (battleCtx->battleMons[battler].curHP == 0) {
+        battleCtx->faintedMon = battler;
+        battleCtx->battleStatusMask |= (FlagIndex(battler) << SYSCTL_MON_FAINTED_SHIFT);
+        battleCtx->totalFainted[battler]++;
+
+    }
 
     return 0;
 }
@@ -1503,6 +1571,48 @@ s32 fn_803CC21C(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_WaitMonSelection
+s32 fn_803CC384(BattleSystem *battleSys, BattleContext *battleCtx) {
+    int maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+    int totalSwitching = 0;
+
+    int battler;
+    for (battler = 0; battler < maxBattlers; battler++) {
+        if (battleCtx->battlerStatusFlags[battler] & BATTLER_STATUS_SWITCHING) {
+            totalSwitching++;
+        }
+    }
+
+    for (battler = 0; battler < maxBattlers; battler++) {
+        if ((battleCtx->battlerStatusFlags[battler] & BATTLER_STATUS_SWITCHING)
+            && BattleContext_IOBufferVal(battleCtx, battler)) {
+            battleCtx->switchedPartySlot[battler] = battleCtx->ioBuffer[battler][0] - 1;
+            totalSwitching--;
+
+            if ((battleCtx->battleStatusMask2 & (FlagIndex(battler) << SYSCTL_LINK_WAITING_SHIFT)) == FALSE) {
+                battleCtx->battleStatusMask2 |= (FlagIndex(battler) << SYSCTL_LINK_WAITING_SHIFT);
+                BattleController_EmitPrintLinkWaitMessage(battleSys, battler);
+            }
+        }
+    }
+
+    if (totalSwitching == 0) {
+        battleCtx->battleStatusMask2 &= ~(0xF << SYSCTL_LINK_WAITING_SHIFT);
+        battleCtx->scriptCursor++;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
 extern "C" {
 
 s32 fn_803CC4B0(u8 *a, u8 *b) {
@@ -1702,6 +1812,292 @@ s32 fn_803CC7C4(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_ChangeStatStage
+s32 fn_803CC96C(BattleSystem *battleSys, BattleContext *battleCtx) {
+    int jumpNoChange;
+    int jumpBlocked;
+    int jumpBlockedBySubstitute;
+    int statOffset;
+    int stageChange;
+    int result;
+    BattleMon *mon = &battleCtx->battleMons[battleCtx->sideEffectMon];
+
+    battleCtx->scriptCursor++;
+
+    jumpNoChange = fn_803D6E6C((u8 *)battleCtx);
+    jumpBlocked = fn_803D6E6C((u8 *)battleCtx);
+    jumpBlockedBySubstitute = fn_803D6E6C((u8 *)battleCtx);
+    result = 0;
+
+    battleCtx->battleStatusMask &= ~SYSCTL_FAIL_STAT_STAGE_CHANGE;
+
+    if (battleCtx->sideEffectParam >= MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_2_STAGES) {
+        statOffset = battleCtx->sideEffectParam - MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_2_STAGES;
+        stageChange = -2;
+        battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_DROP;
+    } else if (battleCtx->sideEffectParam >= MOVE_SUBSCRIPT_PTR_ATTACK_UP_2_STAGES) {
+        statOffset = battleCtx->sideEffectParam - MOVE_SUBSCRIPT_PTR_ATTACK_UP_2_STAGES;
+        stageChange = 2;
+        battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_BOOST;
+    } else if (battleCtx->sideEffectParam >= MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_1_STAGE) {
+        statOffset = battleCtx->sideEffectParam - MOVE_SUBSCRIPT_PTR_ATTACK_DOWN_1_STAGE;
+        stageChange = -1;
+        battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_DROP;
+    } else {
+        statOffset = battleCtx->sideEffectParam - MOVE_SUBSCRIPT_PTR_ATTACK_UP_1_STAGE;
+        stageChange = 1;
+        battleCtx->scriptTemp = BATTLE_ANIMATION_STAT_BOOST;
+    }
+
+    lbl_8048CE28._10 = statOffset + 1;
+
+    if (stageChange > 0) {
+        if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] == MAX_STAT_STAGE) {
+            battleCtx->battleStatusMask |= SYSCTL_FAIL_STAT_STAGE_CHANGE;
+            lbl_8048CE28._0C = battleCtx->sideEffectMon;
+
+            if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_INDIRECT
+                || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+                battleCtx->scriptCursor += jumpBlocked;
+            } else {
+                SetupNicknameStatMsg(battleCtx, BattleStrings_Text_PokemonsStatWontGoHigher_Ally, statOffset); // "{0}'s {1} won't go higher!"
+                battleCtx->scriptCursor += jumpNoChange;
+            }
+        } else {
+            if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+                SetupNicknameAbilityStatMsg(battleCtx, BattleStrings_Text_PokemonsAbilityRaisedItsStat_Ally, statOffset); // "{0}'s {1} raised its {2}!"
+                lbl_8048CE28._18 = battleCtx->sideEffectMon;
+            } else if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_HELD_ITEM) {
+                battleCtx->msgBuffer.id = BattleStrings_Text_TheItemRaisedPokemonsStat_Ally; // "The {0} raised {1}'s {2}!"
+                battleCtx->msgBuffer.tags = TAG_NICKNAME_ITEM_STAT;
+                battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
+                battleCtx->msgBuffer.params[1] = battleCtx->msgItemTemp;
+                battleCtx->msgBuffer.params[2] = BATTLE_STAT_ATTACK + statOffset;
+            } else {
+                SetupNicknameStatMsg(battleCtx,
+                    stageChange == 1 ? BattleStrings_Text_PokemonsStatRose_Ally : // "{0}'s {1} rose!"
+                        BattleStrings_Text_PokemonsStatSharplyRose_Ally, // "{0}'s {1} sharply rose!"
+                    statOffset);
+            }
+
+            mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] += stageChange;
+
+            if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] > MAX_STAT_STAGE) {
+                mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] = MAX_STAT_STAGE;
+            }
+        }
+    } else {
+        if ((battleCtx->sideEffectFlags & MOVE_SIDE_EFFECT_CANNOT_PREVENT) == FALSE) {
+            if (battleCtx->attacker != battleCtx->sideEffectMon) {
+                if (battleCtx->sideConditions[BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)].mistTurns) {
+                    battleCtx->msgBuffer.id = BattleStrings_Text_PokemonIsProtectedByMist_Ally; // "{0} is protected by Mist!"
+                    battleCtx->msgBuffer.tags = TAG_NICKNAME;
+                    battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
+
+                    result = 1;
+                } else if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ABILITY_CLEAR_BODY) == TRUE
+                    || Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ABILITY_WHITE_SMOKE) == TRUE) {
+                    if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+                        SetupNicknameAbilityNicknameAbilityMsg(battleCtx, BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_AllyAlly); // "{0}'s {1} suppressed {2}'s {3}!"
+                    } else {
+                        battleCtx->msgBuffer.id = BattleStrings_Text_PokemonsAbilityPreventsStatLoss_Ally; // "{0}'s {1} prevents stat loss!"
+                        battleCtx->msgBuffer.tags = TAG_NICKNAME_ABILITY;
+                        battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
+                        battleCtx->msgBuffer.params[1] = battleCtx->battleMons[battleCtx->sideEffectMon].ability;
+                    }
+
+                    result = 1;
+                } else if (AbilityBlocksSpecificStatReduction(battleCtx, statOffset, ABILITY_KEEN_EYE, BATTLE_STAT_ACCURACY)
+                    || AbilityBlocksSpecificStatReduction(battleCtx, statOffset, ABILITY_HYPER_CUTTER, BATTLE_STAT_ATTACK)) {
+                    if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+                        SetupNicknameAbilityNicknameAbilityMsg(battleCtx, BattleStrings_Text_PokemonsAbilitySuppressedPokemonsAbility_AllyAlly); // "{0}'s {1} suppressed {2}'s {3}!"
+                    } else {
+                        SetupNicknameAbilityStatMsg(battleCtx, BattleStrings_Text_PokemonsAbilityPreventsBufferStatLoss, statOffset); // "{0}'s {1} prevents {2} loss!"
+                        lbl_8048CE28._18 = battleCtx->sideEffectMon;
+                    }
+
+                    result = 1;
+                } else if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] == MIN_STAT_STAGE) {
+                    battleCtx->battleStatusMask |= SYSCTL_FAIL_STAT_STAGE_CHANGE;
+                    lbl_8048CE28._0C = battleCtx->sideEffectMon;
+
+                    if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_INDIRECT
+                        || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+                        battleCtx->scriptCursor += jumpBlocked;
+
+                        return 0;
+                    } else {
+                        SetupNicknameStatMsg(battleCtx, BattleStrings_Text_PokemonsStatWontGoLower_Ally, statOffset); // "{0}'s {1} won't go lower!"
+                        battleCtx->scriptCursor += jumpNoChange;
+
+                        return 0;
+                    }
+                } else if (Battler_IgnorableAbility(battleCtx, battleCtx->attacker, battleCtx->sideEffectMon, ABILITY_SHIELD_DUST) == TRUE
+                    && battleCtx->sideEffectType == SIDE_EFFECT_TYPE_INDIRECT) {
+                    result = 1;
+                } else if (battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile & VOLATILE_CONDITION_SUBSTITUTE) {
+                    result = 2;
+                }
+            } else if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] == MIN_STAT_STAGE) {
+                battleCtx->battleStatusMask |= SYSCTL_FAIL_STAT_STAGE_CHANGE;
+                lbl_8048CE28._0C = battleCtx->sideEffectMon;
+
+                if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_INDIRECT
+                    || battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+                    battleCtx->scriptCursor += jumpBlocked;
+
+                    return 0;
+                } else {
+                    SetupNicknameStatMsg(battleCtx, BattleStrings_Text_PokemonsStatWontGoLower_Ally, statOffset); // "{0}'s {1} won't go lower!"
+                    battleCtx->scriptCursor += jumpNoChange;
+
+                    return 0;
+                }
+            }
+
+            if (result == 2 && battleCtx->sideEffectType == SIDE_EFFECT_TYPE_DIRECT) {
+                battleCtx->scriptCursor += jumpBlockedBySubstitute;
+
+                return 0;
+            } else if (result && battleCtx->sideEffectType == SIDE_EFFECT_TYPE_INDIRECT) {
+                battleCtx->scriptCursor += jumpBlocked;
+
+                return 0;
+            } else if (result) {
+                battleCtx->scriptCursor += jumpNoChange;
+
+                return 0;
+            }
+        }
+
+        if (battleCtx->sideEffectType == SIDE_EFFECT_TYPE_ABILITY) {
+            battleCtx->msgBuffer.id = BattleStrings_Text_PokemonsAbilityCutsPokemonsStat_AllyAlly; // "{0}'s {1} cuts {2}'s {3}!"
+            battleCtx->msgBuffer.tags = TAG_NICKNAME_ABILITY_NICKNAME_STAT;
+            battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->attacker);
+            battleCtx->msgBuffer.params[1] = battleCtx->battleMons[battleCtx->attacker].ability;
+            battleCtx->msgBuffer.params[2] = BattleSystem_NicknameTag(battleCtx, battleCtx->sideEffectMon);
+            battleCtx->msgBuffer.params[3] = BATTLE_STAT_ATTACK + statOffset;
+        } else {
+            SetupNicknameStatMsg(battleCtx,
+                stageChange == -1 ? BattleStrings_Text_PokemonsStatFell_Ally : // "{0}'s {1} fell!"
+                    BattleStrings_Text_PokemonsStatHarshlyFell_Ally, // "{0}'s {1} harshly fell!"
+                statOffset);
+        }
+
+        mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] += stageChange;
+
+        if (mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] < MIN_STAT_STAGE) {
+            mon->statBoosts[BATTLE_STAT_ATTACK + statOffset] = MIN_STAT_STAGE;
+        }
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+extern "C" {
+
+// pokeplatinum BtlCmd_UpdateMonData
+s32 fn_803CD094(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int op = fn_803D6E6C((u8 *)battleCtx);
+    int inBattler = fn_803D6E6C((u8 *)battleCtx);
+    int paramID = fn_803D6E6C((u8 *)battleCtx);
+    int srcVal = fn_803D6E6C((u8 *)battleCtx);
+
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
+    int monData = BattleMon_Get(battleCtx, battler, (enum BattleMonParam)paramID, NULL);
+
+    switch (op) {
+    case OPCODE_SET:
+        monData = srcVal;
+        break;
+
+    case OPCODE_ADD:
+        monData += srcVal;
+        break;
+
+    case OPCODE_SUB:
+        monData -= srcVal;
+        break;
+
+    case OPCODE_FLAG_ON:
+        monData |= srcVal;
+        break;
+
+    case OPCODE_FLAG_OFF:
+        monData &= FLAG_NEGATE(srcVal);
+        break;
+
+    case OPCODE_MUL:
+        monData *= srcVal;
+        break;
+
+    case OPCODE_DIV:
+        monData /= srcVal;
+        break;
+
+    case OPCODE_LEFT_SHIFT:
+        monData = monData << srcVal;
+        break;
+
+    case OPCODE_RIGHT_SHIFT:
+        monData = monData >> srcVal;
+        break;
+
+    case OPCODE_FLAG_INDEX:
+        monData = FlagIndex(srcVal);
+        break;
+
+    case OPCODE_GET:
+        fn_803D989C(FALSE, BTLSCR_ERR_INVALID);
+        break;
+
+    case OPCODE_SUB_TO_ZERO:
+        monData -= srcVal;
+
+        if (monData < 0) {
+            monData = 0;
+        }
+        break;
+
+    case OPCODE_BITWISE_XOR:
+        monData ^= srcVal;
+        break;
+
+    case OPCODE_BITWISE_AND:
+        monData &= srcVal;
+        break;
+
+    default:
+        fn_803D989C(FALSE, BTLSCR_ERR_INVALID);
+        break;
+    }
+
+    if (paramID == BATTLEMON_ABILITY) {
+        BattleAI_SetAbility(battleCtx, battler, monData);
+    }
+
+    BattleMon_Set(battleCtx, battler, (enum BattleMonParam)paramID, &monData);
+    BattleMon_CopyToParty(battleSys, battleCtx, battler);
+
+    return 0;
+}
+}
+
+#pragma pop
+
 extern "C" {
 
 s32 fn_803CD270(u8 *a, u8 *b) {
@@ -1868,6 +2264,105 @@ s32 fn_803CD558(BattleSystem *battleSys, BattleContext *battleCtx) {
     default:
         fn_803D989C(FALSE, BTLSCR_ERR_INVALID);
         break;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_UpdateMonDataFromVar
+s32 fn_803CD734(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int op = fn_803D6E6C((u8 *)battleCtx);
+    int inBattler = fn_803D6E6C((u8 *)battleCtx);
+    int paramID = fn_803D6E6C((u8 *)battleCtx);
+    int var = fn_803D6E6C((u8 *)battleCtx);
+
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
+    int monData = BattleMon_Get(battleCtx, battler, (enum BattleMonParam)paramID, NULL);
+    int *varData = (int *)fn_803D6E8C((u8 *)battleSys, (u8 *)battleCtx, var);
+
+    switch (op) {
+    case OPCODE_SET:
+        monData = *varData;
+        break;
+
+    case OPCODE_ADD:
+        monData += *varData;
+        break;
+
+    case OPCODE_SUB:
+        monData -= *varData;
+        break;
+
+    case OPCODE_FLAG_ON:
+        monData |= *varData;
+        break;
+
+    case OPCODE_FLAG_OFF:
+        monData &= FLAG_NEGATE(*varData);
+        break;
+
+    case OPCODE_MUL:
+        monData *= *varData;
+        break;
+
+    case OPCODE_DIV:
+        monData /= *varData;
+        break;
+
+    case OPCODE_LEFT_SHIFT:
+        monData = monData << *varData;
+        break;
+
+    case OPCODE_RIGHT_SHIFT:
+        monData = monData >> *varData;
+        break;
+
+    case OPCODE_FLAG_INDEX:
+        monData = FlagIndex(*varData);
+        break;
+
+    case OPCODE_GET:
+        *varData = monData;
+        break;
+
+    case OPCODE_SUB_TO_ZERO:
+        monData -= *varData;
+
+        if (monData < 0) {
+            monData = 0;
+        }
+        break;
+
+    case OPCODE_BITWISE_XOR:
+        monData ^= *varData;
+        break;
+
+    case OPCODE_BITWISE_AND:
+        monData &= *varData;
+        break;
+
+    default:
+        fn_803D989C(FALSE, BTLSCR_ERR_INVALID);
+        break;
+    }
+
+    if (op != OPCODE_GET) {
+        if (paramID == BATTLEMON_ABILITY) {
+            BattleAI_SetAbility(battleCtx, battler, monData);
+        }
+
+        BattleMon_Set(battleCtx, battler, (enum BattleMonParam)paramID, &monData);
+        BattleMon_CopyToParty(battleSys, battleCtx, battler);
     }
 
     return 0;
@@ -2152,21 +2647,161 @@ s32 fn_803CE78C(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
 extern "C" {
 
-s32 fn_803CED18(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    s32 v = *(s32 *)(b + 0x14c) * *(s32 *)(b + 0x2168);
-    *(s32 *)(b + 0x130) = v;
-    if (v > 0xffff) {
-        *(s32 *)(b + 0x130) = 0xffff;
+// pokeplatinum BtlCmd_CompareVarToVar
+s32 fn_803CE9FC(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int op = fn_803D6E6C((u8 *)battleCtx);
+    int lhsVar = fn_803D6E6C((u8 *)battleCtx);
+    int rhsVar = fn_803D6E6C((u8 *)battleCtx);
+    int jump = fn_803D6E6C((u8 *)battleCtx);
+
+    u32 *lhs = fn_803D6E8C((u8 *)battleSys, (u8 *)battleCtx, lhsVar);
+    u32 *rhs = fn_803D6E8C((u8 *)battleSys, (u8 *)battleCtx, rhsVar);
+
+    switch (op) {
+    case OPCODE_EQU:
+        if (*lhs != *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_NEQ:
+        if (*lhs == *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_GT:
+        if (*lhs <= *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_LTE:
+        if (*lhs > *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_FLAG_SET:
+        if ((*lhs & *rhs) == FALSE) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_FLAG_NOT:
+        if (*lhs & *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_AND:
+        if ((*lhs & *rhs) != *rhs) {
+            jump = 0;
+        }
+        break;
+
+    default:
+        fn_803D989C(TRUE, BTLSCR_ERR_INVALID);
+        break;
     }
-    TrainerInfo_GiveMoney((TrainerInfo *)((u8 *)BattleSystem_GetTrainerInfo((BattleSystem *)a, 0)),
-                          *(u32 *)(b + 0x130));
+
+    if (jump) {
+        battleCtx->scriptCursor += jump;
+    }
+
     return 0;
 }
 }
 
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CompareMonDataToVar
+s32 fn_803CEB88(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int op = fn_803D6E6C((u8 *)battleCtx);
+    int battler = fn_803D6E6C((u8 *)battleCtx);
+    int paramID = fn_803D6E6C((u8 *)battleCtx);
+    int rhsVar = fn_803D6E6C((u8 *)battleCtx);
+    int jump = fn_803D6E6C((u8 *)battleCtx);
+
+    u32 lhs = BattleMon_Get(battleCtx, fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, battler), (enum BattleMonParam)paramID, NULL);
+    u32 *rhs = fn_803D6E8C((u8 *)battleSys, (u8 *)battleCtx, rhsVar);
+
+    switch (op) {
+    case OPCODE_EQU:
+        if (lhs != *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_NEQ:
+        if (lhs == *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_GT:
+        if (lhs <= *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_LTE:
+        if (lhs > *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_FLAG_SET:
+        if ((lhs & *rhs) == FALSE) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_FLAG_NOT:
+        if (lhs & *rhs) {
+            jump = 0;
+        }
+        break;
+
+    case OPCODE_AND:
+        if ((lhs & *rhs) != *rhs) {
+            jump = 0;
+        }
+        break;
+
+    default:
+        fn_803D989C(TRUE, BTLSCR_ERR_INVALID);
+        break;
+    }
+
+    if (jump) {
+        battleCtx->scriptCursor += jump;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+extern "C" {
+
+}
+
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
@@ -2174,6 +2809,29 @@ s32 fn_803CED18(u8 *a, u8 *b) {
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_AddPayDayMoney
+s32 fn_803CED18(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    battleCtx->msgTemp = battleCtx->payDayCount * battleCtx->prizeMoneyMul;
+    if (battleCtx->msgTemp > PAYDAY_MAX) {
+        battleCtx->msgTemp = PAYDAY_MAX;
+    }
+
+    TrainerInfo_GiveMoney(BattleSystem_GetTrainerInfo(battleSys, BATTLER_US), battleCtx->msgTemp);
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -2257,28 +2915,40 @@ s32 fn_803CEEC0(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 extern "C" {
 
-s32 fn_803CEFFC(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    u32 k = (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, *(u32 *)(b + 0x64));
-    u32 *q = (u32 *)(b + k * 4 + 0x1bc);
-    if (*q & 0x40) {
-        *(u32 *)(b + 0xb4) += n;
-        *(u32 *)(b + 0x216c) |= 0x40;
-    } else {
-        *q |= 0x40;
-        BF_1C4 *f = (BF_1C4 *)(b + k * 8 + 0x1c4);
-        f->x = 5;
-        f->y = *(u32 *)(b + 0x64);
-    }
-    return 0;
-}
 
 }
 
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryMist
+s32 fn_803CEFFC(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jump = fn_803D6E6C((u8 *)battleCtx);
+
+    int side = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
+
+    if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_MIST) {
+        battleCtx->scriptCursor += jump;
+        battleCtx->moveStatusFlags |= MOVE_STATUS_FAILED;
+    } else {
+        battleCtx->sideConditionsMask[side] |= SIDE_CONDITION_MIST;
+        battleCtx->sideConditions[side].mistTurns = NUM_SCREEN_TURNS;
+        battleCtx->sideConditions[side].mistUser = battleCtx->attacker;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -2455,36 +3125,49 @@ s32 fn_803CF6A4(u8 *a, u8 *b) {
 
 extern "C" {
 
-s32 fn_803CF758(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    s32 j = Battler_SlotForMove((BattleMon *)(b + *(u32 *)(b + 0x6c) * 0xc0 + 0x2d40),
-                                *(u16 *)(b + *(u32 *)(b + 0x6c) * 2 + 0x307c));
-    u8 *q = b + *(u32 *)(b + 0x6c) * 0xc0;
-    u16 m;
-    if (*(u16 *)(q + 0x2de8) == 0 && j != 4 && q[j + 0x2d6c] != 0 &&
-        (m = *(u16 *)(b + *(u32 *)(b + 0x6c) * 2 + 0x307c)) != 0) {
-        *(u32 *)(b + 0x124) = m;
-        *(u16 *)(q + 0x2de8) = m;
-        ((BF_2DC8b *)(b + *(u32 *)(b + 0x6c) * 0xc0 + 0x2dc8))->t = (s32)LCRNG_Next() % 4 + 3;
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryDisable
+s32 fn_803CF758(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    int moveSlot = Battler_SlotForMove(&DEFENDING_MON, DEFENDER_LAST_MOVE);
+
+    if (DEFENDING_MON.moveEffectsData.disabledMove == MOVE_NONE
+        && moveSlot != LEARNED_MOVES_MAX
+        && DEFENDING_MON.ppCur[moveSlot]
+        && DEFENDER_LAST_MOVE) {
+        battleCtx->msgMoveTemp = DEFENDER_LAST_MOVE;
+        DEFENDING_MON.moveEffectsData.disabledMove = battleCtx->msgMoveTemp;
+        DEFENDING_MON.moveEffectsData.disabledTurns = LCRNG_Next() % 4 + 3; // range: [3-6]
     } else {
-        *(u32 *)(b + 0xb4) += n;
+        battleCtx->scriptCursor += jumpOnFail;
     }
+
     return 0;
 }
 }
 
-#pragma push
-#pragma optimize_for_size on
-#pragma dont_inline on
-
-#pragma push
-#pragma optimize_for_size on
-#pragma dont_inline on
-
-#pragma push
-#pragma optimize_for_size on
-#pragma dont_inline on
+#pragma pop
 
 extern "C" {
 
@@ -2615,6 +3298,72 @@ s32 fn_803CFB44(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryConversion2
+s32 fn_803CFC84(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_MULTITYPE) {
+        battleCtx->scriptCursor += jumpOnFail;
+        return 0;
+    }
+
+    if (battleCtx->conversion2Move[battleCtx->attacker]
+        && battleCtx->conversion2Battler[battleCtx->attacker] != BATTLER_NONE) {
+        // Fail to execute if the source move's owner is locked into the first turn of a multi-turn move
+        if (Move_IsMultiTurn(battleCtx, battleCtx->conversion2Move[battleCtx->attacker])
+            && (battleCtx->battleMons[battleCtx->conversion2Battler[battleCtx->attacker]].statusVolatile & VOLATILE_CONDITION_MOVE_LOCKED)) {
+            battleCtx->scriptCursor += jumpOnFail;
+            return 0;
+        }
+
+        u8 atkType, defType, typeMulti;
+        int i, moveType = battleCtx->conversion2Type[battleCtx->attacker];
+        for (i = 0; i < 1000; i++) {
+            // Get a random entry from the type matchup table
+            BattleSystem_TypeMatchup(0xFFFF, &atkType, &defType, &typeMulti);
+
+            // Check if the accessed entry has an attacking type which matches the source move
+            // and a defending type which results in a favorable matchup
+            if (atkType == moveType
+                && typeMulti <= TYPE_MULTI_NOT_VERY_EFF
+                && MON_IS_NOT_TYPE(battleCtx->attacker, defType)) {
+                ATTACKING_MON.type1 = defType;
+                ATTACKING_MON.type2 = defType;
+                battleCtx->msgTemp = defType;
+                return 0;
+            }
+        }
+
+        // Fallback to a linear search through the table for the first entry which matches the criteria
+        i = 0;
+        while (BattleSystem_TypeMatchup(i, &atkType, &defType, &typeMulti) == TRUE) {
+            if (atkType == moveType
+                && typeMulti <= TYPE_MULTI_NOT_VERY_EFF
+                && MON_IS_NOT_TYPE(battleCtx->attacker, defType)) {
+                ATTACKING_MON.type1 = defType;
+                ATTACKING_MON.type2 = defType;
+                battleCtx->msgTemp = defType;
+                return 0;
+            }
+
+            i++;
+        }
+    }
+
+    battleCtx->scriptCursor += jumpOnFail;
+    return 0;
+}
+}
+
+#pragma pop
+
 extern "C" {
 
 // pokeplatinum BtlCmd_TrySketch
@@ -2724,31 +3473,35 @@ u8 fn_803D01BC(s32 a, s32 b) {
     return lbl_80405A50[i].b;
 }
 
-s32 fn_803D02D8(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    u32 i6c = *(u32 *)(b + 0x6c);
-    u16 mv = *(u16 *)(b + i6c * 2 + 0x307c);
-    if (mv) {
-        s32 j = Battler_SlotForMove((BattleMon *)(b + i6c * 0xc0 + 0x2d40), mv);
-        u8 pp;
-        if (j == 4 || (pp = b[*(u32 *)(b + 0x6c) * 0xc0 + j + 0x2d6c]) == 0) {
-            *(u32 *)(b + 0xb4) += n;
-        } else {
-            s32 d = 4;
-            if (pp < 4) {
-                d = pp;
-            }
-            *(u32 *)(b + 0x124) = *(u16 *)(b + *(u32 *)(b + 0x6c) * 2 + 0x307c);
-            *(s32 *)(b + 0x130) = d;
-            b[*(u32 *)(b + 0x6c) * 0xc0 + j + 0x2d6c] -= d;
-            BattleMon_CopyToParty((BattleSystem *)a, (BattleContext *)b, *(u32 *)(b + 0x6c));
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CalcFlailPower
+s32 fn_803D0230(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    int i, curHPPixels = App_PixelCount(ATTACKING_MON.curHP, ATTACKING_MON.maxHP, 64);
+    for (i = 0; i < 6; i++) {
+        if (curHPPixels <= lbl_80405A50[i].a) {
+            break;
         }
-    } else {
-        *(u32 *)(b + 0xb4) += n;
     }
+
+    battleCtx->movePower = lbl_80405A50[i].b;
+
     return 0;
 }
+}
+
+#pragma pop
+
+extern "C" {
+
 }
 
 #pragma pop
@@ -2756,6 +3509,43 @@ s32 fn_803D02D8(u8 *a, u8 *b) {
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TrySpite
+s32 fn_803D02D8(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    if (DEFENDER_LAST_MOVE) {
+        int moveSlot = Battler_SlotForMove(&DEFENDING_MON, DEFENDER_LAST_MOVE);
+        if (moveSlot == LEARNED_MOVES_MAX || DEFENDING_MON.ppCur[moveSlot] == 0) {
+            battleCtx->scriptCursor += jumpOnFail;
+        } else {
+            int dec = 4;
+            if (DEFENDING_MON.ppCur[moveSlot] < dec) {
+                dec = DEFENDING_MON.ppCur[moveSlot];
+            }
+
+            battleCtx->msgMoveTemp = DEFENDER_LAST_MOVE;
+            battleCtx->msgTemp = dec;
+            DEFENDING_MON.ppCur[moveSlot] -= dec;
+
+            BattleMon_CopyToParty(battleSys, battleCtx, battleCtx->defender);
+        }
+    } else {
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -2857,6 +3647,66 @@ s32 fn_803D05B4(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryProtection
+s32 fn_803D074C(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    if (battleCtx->moveProtect[battleCtx->attacker] != MOVE_PROTECT
+        && battleCtx->moveProtect[battleCtx->attacker] != MOVE_DETECT
+        && battleCtx->moveProtect[battleCtx->attacker] != MOVE_ENDURE) {
+        battleCtx->battleMons[battleCtx->attacker].moveEffectsData.protectSuccessTurns = 0;
+    }
+
+    int waitingBattlers = 0;
+    for (int i = 0; i < BattleSystem_GetMaxBattlers(battleSys); i++) {
+        if (battleCtx->battlerActions[i][BATTLE_ACTION_PICK_COMMAND] != BATTLE_CONTROL_MOVE_END) {
+            waitingBattlers++;
+        }
+    }
+
+    BOOL moreBattlersThisTurn;
+    if (waitingBattlers == 1) {
+        moreBattlersThisTurn = FALSE;
+    } else {
+        moreBattlersThisTurn = TRUE;
+    }
+
+    if (lbl_80642FF8[ATTACKING_MON.moveEffectsData.protectSuccessTurns] >= LCRNG_Next()
+        && moreBattlersThisTurn) {
+        if (CURRENT_MOVE_DATA.effect == BATTLE_EFFECT_PROTECT) {
+            ATTACKER_TURN_FLAGS.protecting = TRUE;
+            battleCtx->msgBuffer.id = BattleStrings_Text_PokemonProtectedItself2_Ally; // "{0} protected itself!"
+        }
+
+        if (CURRENT_MOVE_DATA.effect == BATTLE_EFFECT_SURVIVE_WITH_1_HP) {
+            ATTACKER_TURN_FLAGS.enduring = TRUE;
+            battleCtx->msgBuffer.id = BattleStrings_Text_PokemonBracedItself_Ally; // "{0} braced itself!"
+        }
+
+        battleCtx->msgBuffer.tags = TAG_NICKNAME;
+        battleCtx->msgBuffer.params[0] = BattleSystem_NicknameTag(battleCtx, battleCtx->attacker);
+
+        if (ATTACKING_MON.moveEffectsData.protectSuccessTurns < 4 - 1) {
+            ATTACKING_MON.moveEffectsData.protectSuccessTurns++;
+        }
+    } else {
+        ATTACKING_MON.moveEffectsData.protectSuccessTurns = 0;
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
 extern "C" {
 
 s32 fn_803D091C(u8 *a, u8 *b) {
@@ -2879,62 +3729,243 @@ s32 fn_803D091C(u8 *a, u8 *b) {
 #pragma optimize_for_size on
 #pragma dont_inline on
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
 extern "C" {
 
-s32 fn_803D0EC8(u8 *a, u8 *b) {
-    u32 k;
-    BF_1C8 *f;
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    k = (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, *(u32 *)(b + 0x64)) ^ 1;
-    f = (BF_1C8 *)(b + k * 8 + 0x1c8);
-    if (f->t == 3) {
-        *(u32 *)(b + *(u32 *)(b + 0x64) * 0x1c + 0x2d4) |= 0x80000000;
-        *(u32 *)(b + 0xb4) += n;
-    } else {
-        *(u32 *)(b + k * 4 + 0x1bc) |= 4;
-        f->t++;
-    }
-    return 0;
-}
+// pokeplatinum BtlCmd_TryWhirlwind
+s32 fn_803D09CC(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+    u32 battleType = BattleSystem_GetBattleType(battleSys);
 
-s32 fn_803D0F94(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 x = fn_803D6E6C(b);
-    u32 y = fn_803D6E6C(b);
-    u32 r = fn_803D803C(a, b, x);
-    u32 t = *(u32 *)(b + (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, r) * 8 + 0x1c8) >> 30;
-    u8 *q;
-    if (t && *(u32 *)((q = b + r * 0xc0) + 0x2d8c)) {
-        *(s32 *)(b + 0x215c) = (5 - t) * 2;
-        s32 m = *(s32 *)(q + 0x2d90);
-        m *= -1;
-        *(s32 *)(b + 0x215c) = BattleSystem_Divide(m, *(s32 *)(b + 0x215c));
-    } else {
-        *(u32 *)(b + 0xb4) += y;
-    }
-    return 0;
-}
+    if (battleType & BATTLE_TYPE_TRAINER) {
+        Party *defenderParty;
+        Pokemon *mon;
+        int defenderPartyCount;
+        int eligibleMons = 0, maxActiveMons, i, partyStart, partyEnd, max;
+        int selectedSlot1, selectedSlot2;
 
-s32 fn_803D1064(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    s32 cnt = BattleSystem_GetMaxBattlers((BattleSystem *)a);
-    *(s32 *)(b + 0x134) = cnt;
-    s32 k = 0;
-    for (s32 i = 0; i < cnt; i++) {
-        u8 *q = b + i * 0xc0;
-        if ((*(u32 *)(q + 0x2dc0) & 0x20) || *(u32 *)(q + 0x2d8c) == 0 ||
-            Battler_IgnorableAbility((BattleContext *)b, *(u32 *)(b + 0x64), i, 0x2b) == 1) {
-            k++;
+        defenderParty = BattleSystem_GetParty(battleSys, battleCtx->defender);
+        defenderPartyCount = BattleSystem_GetPartyCount(battleSys, battleCtx->defender);
+
+        if ((battleType & BATTLE_TYPE_2vs2)
+            || ((battleType & BATTLE_TYPE_TAG) && BattleSystem_GetBattlerSide(battleSys, battleCtx->defender))) {
+            // There are two battlers out at one time, but only one of these belongs to each trainer.
+            partyStart = 0;
+            partyEnd = defenderPartyCount;
+            max = defenderPartyCount;
+            maxActiveMons = 1;
+            selectedSlot1 = battleCtx->selectedPartySlot[battleCtx->defender];
+            selectedSlot2 = battleCtx->selectedPartySlot[battleCtx->defender];
+        } else if (battleType & BATTLE_TYPE_DOUBLES) {
+            // There are two battlers out at one time, and both belong to the same trainer.
+            partyStart = 0;
+            partyEnd = defenderPartyCount;
+            max = defenderPartyCount;
+            maxActiveMons = 2;
+            selectedSlot1 = battleCtx->selectedPartySlot[battleCtx->defender];
+            selectedSlot2 = battleCtx->selectedPartySlot[BattleSystem_GetPartner(battleSys, battleCtx->defender)];
         } else {
-            *(u32 *)(q + 0x2dc0) |= 0x20;
-            *(u32 *)(q + 0x2dc8) |= 0x60000;
+            // There is only one active battler (singles).
+            partyStart = 0;
+            partyEnd = defenderPartyCount;
+            max = defenderPartyCount;
+            maxActiveMons = 1;
+            selectedSlot1 = battleCtx->selectedPartySlot[battleCtx->defender];
+            selectedSlot2 = battleCtx->selectedPartySlot[battleCtx->defender];
+        }
+
+        // Count the number of eligible mons in the party.
+        for (i = partyStart; i < partyEnd; i++) {
+            mon = Party_GetPokemonBySlotIndex(defenderParty, i);
+
+            if (Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL)
+                && Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) == FALSE
+                && Pokemon_GetValue(mon, MON_DATA_HP, NULL)) {
+                eligibleMons++;
+            }
+        }
+
+        // Check if there are more eligible mons in the back of the party.
+        if (eligibleMons <= maxActiveMons) {
+            battleCtx->scriptCursor += jumpOnFail;
+        } else if (BattleSystem_CanWhirlwind(battleCtx)) {
+            // Pick a random eligible mon from the back of the party.
+            do {
+                do {
+                    i = LCRNG_Next() % max;
+                    i += partyStart;
+                } while (i == selectedSlot1 || i == selectedSlot2);
+
+                mon = Party_GetPokemonBySlotIndex(defenderParty, i);
+            } while (Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL) == SPECIES_NONE
+                || Pokemon_GetValue(mon, MON_DATA_IS_EGG, NULL) == TRUE
+                || Pokemon_GetValue(mon, MON_DATA_HP, NULL) == 0);
+
+            battleCtx->switchedPartySlot[battleCtx->defender] = i;
+        } else {
+            // We failed the random Whirlwind check.
+            battleCtx->scriptCursor += jumpOnFail;
+        }
+    } else if (BattleSystem_CanWhirlwind(battleCtx) == FALSE) {
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_Transform
+s32 fn_803D0C28(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    ATTACKING_MON.statusVolatile |= VOLATILE_CONDITION_TRANSFORM;
+    ATTACKING_MON.moveEffectsData.disabledMove = MOVE_NONE;
+    ATTACKING_MON.moveEffectsData.disabledTurns = 0;
+    ATTACKING_MON.moveEffectsData.transformedPID = DEFENDING_MON.personality;
+    ATTACKING_MON.moveEffectsData.transformedGender = DEFENDING_MON.gender;
+    ATTACKING_MON.moveEffectsData.mimickedMoveSlot = 0;
+    ATTACKING_MON.moveEffectsData.lastResortCount = 0;
+
+    u8 *attackerData = (u8 *)&ATTACKING_MON;
+    u8 *defenderData = (u8 *)&DEFENDING_MON;
+
+    int i; // does not match if this is declared outside the individual loops' scopes
+    for (i = 0; i < XtOffset(BattleMon *, ability) + 1; i++) {
+        attackerData[i] = defenderData[i];
+    }
+
+    ATTACKING_MON.weatherAbilityAnnounced = FALSE;
+    ATTACKING_MON.intimidateAnnounced = FALSE;
+    ATTACKING_MON.traceAnnounced = FALSE;
+    ATTACKING_MON.downloadAnnounced = FALSE;
+    ATTACKING_MON.anticipationAnnounced = FALSE;
+    ATTACKING_MON.forewarnAnnounced = FALSE;
+    ATTACKING_MON.friskAnnounced = FALSE;
+    ATTACKING_MON.moldBreakerAnnounced = FALSE;
+    ATTACKING_MON.pressureAnnounced = FALSE;
+    ATTACKING_MON.moveEffectsData.truant = battleCtx->totalTurns & 1;
+    ATTACKING_MON.moveEffectsData.slowStartTurnNumber = battleCtx->totalTurns + 1;
+    ATTACKING_MON.slowStartAnnounced = FALSE;
+    ATTACKING_MON.slowStartFinished = FALSE;
+
+    for (i = 0; i < LEARNED_MOVES_MAX; i++) {
+        if (MOVE_DATA(ATTACKING_MON.moves[i]).pp < 5) {
+            ATTACKING_MON.ppCur[i] = MOVE_DATA(ATTACKING_MON.moves[i]).pp;
+        } else {
+            ATTACKING_MON.ppCur[i] = 5;
         }
     }
-    if (k == cnt) {
-        *(u32 *)(b + 0xb4) += n;
+
+    return 0;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TrySpikes
+s32 fn_803D0EC8(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+    int defendingSide = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) ^ 1;
+
+    if (battleCtx->sideConditions[defendingSide].spikesLayers == 3) {
+        battleCtx->selfTurnFlags[battleCtx->attacker].skipPressureCheck = TRUE;
+        battleCtx->scriptCursor += jumpOnFail;
+    } else {
+        battleCtx->sideConditionsMask[defendingSide] |= SIDE_CONDITION_SPIKES;
+        battleCtx->sideConditions[defendingSide].spikesLayers++;
     }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CheckSpikes
+s32 fn_803D0F94(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int inBattler = fn_803D6E6C((u8 *)battleCtx);
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
+    int side = BattleSystem_GetBattlerSide(battleSys, battler);
+
+    if (battleCtx->sideConditions[side].spikesLayers && battleCtx->battleMons[battler].curHP) {
+        battleCtx->hpCalcTemp = (5 - battleCtx->sideConditions[side].spikesLayers) * 2;
+        battleCtx->hpCalcTemp = BattleSystem_Divide(battleCtx->battleMons[battler].maxHP * -1, battleCtx->hpCalcTemp);
+    } else {
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+extern "C" {
+
+
+
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryPerishSong
+s32 fn_803D1064(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+    int maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+
+    battleCtx->calcTemp = maxBattlers;
+
+    int ineligibleBattlers = 0;
+    for (int i = 0; i < maxBattlers; i++) {
+        if ((battleCtx->battleMons[i].moveEffectsMask & MOVE_EFFECT_PERISH_SONG)
+            || battleCtx->battleMons[i].curHP == 0
+            || Battler_IgnorableAbility(battleCtx, battleCtx->attacker, i, ABILITY_SOUNDPROOF) == TRUE) {
+            ineligibleBattlers++;
+        } else {
+            battleCtx->battleMons[i].moveEffectsMask |= MOVE_EFFECT_PERISH_SONG;
+            battleCtx->battleMons[i].moveEffectsData.perishSongTurns = 3;
+        }
+    }
+
+    if (ineligibleBattlers == maxBattlers) {
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
     return 0;
 }
 }
@@ -3108,36 +4139,40 @@ s32 fn_803D1640(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
 extern "C" {
 
-s32 fn_803D1788(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    BF_2DC8 *f = (BF_2DC8 *)(b + *(u32 *)(b + 0x64) * 0xc0 + 0x2dc8);
-    if (f->k < 5) {
-        f->k++;
+// pokeplatinum BtlCmd_CalcFuryCutterPower
+s32 fn_803D1788(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    if (ATTACKING_MON.moveEffectsData.furyCutterCount < 5) {
+        ATTACKING_MON.moveEffectsData.furyCutterCount++;
     }
-    *(u32 *)(b + 0x2154) = b[*(u32 *)(b + 0x3044) * 16 + 0x3e1];
-    for (u32 i = 1; i < ((BF_2DC8 *)(b + *(u32 *)(b + 0x64) * 0xc0 + 0x2dc8))->k; i++) {
-        *(u32 *)(b + 0x2154) *= 2;
+
+    battleCtx->movePower = CURRENT_MOVE_DATA.power;
+
+    for (int i = 1; i < ATTACKING_MON.moveEffectsData.furyCutterCount; i++) {
+        battleCtx->movePower *= 2;
     }
+
     return 0;
+}
 }
 
-s32 fn_803D180C(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    u32 y = *(u32 *)(b + 0x118);
-    u8 *px = b + *(u32 *)(b + 0x94) * 0xc0;
-    u32 kx = (px[0x2dbe] >> 4) & 0xf;
-    u32 ky = (b[y * 0xc0 + 0x2dbe] >> 4) & 0xf;
-    if (ky == kx || (*(u32 *)(px + 0x2db0) & 0xf0000) || ky == 2 || kx == 2) {
-        *(u32 *)(b + 0xb4) += n;
-    } else {
-        *(u32 *)(b + *(u32 *)(b + 0x94) * 0xc0 + 0x2db0) |= FlagIndex(y) << 16;
-    }
-    return 0;
+#pragma pop
+
+extern "C" {
+
+
 }
-}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
 
 #pragma push
 #pragma optimize_for_size on
@@ -3145,23 +4180,56 @@ s32 fn_803D180C(u8 *a, u8 *b) {
 
 extern "C" {
 
-s32 fn_803D18CC(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    u32 k = (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, *(u32 *)(b + 0x64));
-    u32 *q = (u32 *)(b + k * 4 + 0x1bc);
-    if (*q & 8) {
-        *(u32 *)(b + 0xb4) += n;
-        *(u32 *)(b + 0x216c) |= 0x40;
+// pokeplatinum BtlCmd_TryAttract
+s32 fn_803D180C(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    if (battleCtx->battleMons[battleCtx->msgBattlerTemp].gender == battleCtx->battleMons[battleCtx->sideEffectMon].gender
+        || battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile & VOLATILE_CONDITION_ATTRACT
+        || battleCtx->battleMons[battleCtx->msgBattlerTemp].gender == GENDER_NONE
+        || battleCtx->battleMons[battleCtx->sideEffectMon].gender == GENDER_NONE) {
+        battleCtx->scriptCursor += jumpOnFail;
     } else {
-        *q |= 8;
-        BF_1C4b *f = (BF_1C4b *)(b + k * 8 + 0x1c4);
-        f->x = 5;
-        f->y = *(u32 *)(b + 0x64);
-        b[0xf5] = 1;
-        *(u32 *)(b + 0xf8) = *(u32 *)(b + 0x64);
-        *(u16 *)(b + 0xf6) = 0xc6;
+        battleCtx->battleMons[battleCtx->sideEffectMon].statusVolatile |= FlagIndex(battleCtx->msgBattlerTemp) << VOLATILE_CONDITION_ATTRACT_SHIFT;
     }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+extern "C" {
+
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TrySafeguard
+s32 fn_803D18CC(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+    int side = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
+
+    if (battleCtx->sideConditionsMask[side] & SIDE_CONDITION_SAFEGUARD) {
+        battleCtx->scriptCursor += jumpOnFail;
+        battleCtx->moveStatusFlags |= MOVE_STATUS_FAILED;
+    } else {
+        battleCtx->sideConditionsMask[side] |= SIDE_CONDITION_SAFEGUARD;
+        battleCtx->sideConditions[side].safeguardTurns = 5;
+        battleCtx->sideConditions[side].safeguardUser = battleCtx->attacker;
+        battleCtx->msgBuffer.tags = TAG_NONE_SIDE_CONSCIOUS;
+        battleCtx->msgBuffer.params[0] = battleCtx->attacker;
+        battleCtx->msgBuffer.id = BattleStrings_Text_YourTeamBecameCloakedInAMysticalVeil; // "[Your/The foe's] team became cloaked in a mystical veil!"
+    }
+
     return 0;
 }
 }
@@ -3366,14 +4434,80 @@ s32 fn_803D1EEC(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 extern "C" {
 
-s32 fn_803D1F84(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    for (s32 i = 0; i < 8; i++) {
-        b[*(u32 *)(b + 0x64) * 0xc0 + i + 0x2d58] = b[*(u32 *)(b + 0x6c) * 0xc0 + i + 0x2d58];
+
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CopyStatStages
+s32 fn_803D1F84(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    for (int i = BATTLE_STAT_HP; i < BATTLE_STAT_MAX; i++) {
+        ATTACKING_MON.statBoosts[i] = DEFENDING_MON.statBoosts[i];
     }
-    *(u32 *)(b + *(u32 *)(b + 0x64) * 0xc0 + 0x2db0) |= *(u32 *)(b + *(u32 *)(b + 0x6c) * 0xc0 + 0x2db0) & 0x100000;
+
+    ATTACKING_MON.statusVolatile |= (DEFENDING_MON.statusVolatile & VOLATILE_CONDITION_FOCUS_ENERGY);
+
     return 0;
 }
+}
+
+#pragma pop
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryFutureSight
+s32 fn_803D1FFC(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    if (battleCtx->fieldConditions.futureSightTurns[battleCtx->defender] == 0) {
+        int side = BattleSystem_GetBattlerSide(battleSys, battleCtx->defender);
+        battleCtx->sideConditionsMask[side] |= SIDE_CONDITION_FUTURE_SIGHT;
+        battleCtx->fieldConditions.futureSightTurns[battleCtx->defender] = 3;
+        battleCtx->fieldConditions.futureSightMove[battleCtx->defender] = battleCtx->moveCur;
+        battleCtx->fieldConditions.futureSightAttacker[battleCtx->defender] = battleCtx->attacker;
+
+        // Calculate the damage at the time of Future Sight setup.
+        // Do not check for type effectiveness nor crits.
+        int damage = BattleSystem_CalcMoveDamage(battleSys,
+                         battleCtx,
+                         battleCtx->moveCur,
+                         battleCtx->sideConditionsMask[side],
+                         battleCtx->fieldConditionsMask,
+                         0,
+                         0,
+                         battleCtx->attacker,
+                         battleCtx->defender,
+                         1)
+            * -1;
+        battleCtx->fieldConditions.futureSightDamage[battleCtx->defender] = BattleSystem_CalcDamageVariance(battleCtx, damage);
+
+        if (ATTACKER_TURN_FLAGS.helpingHand) {
+            battleCtx->fieldConditions.futureSightDamage[battleCtx->defender] = battleCtx->fieldConditions.futureSightDamage[battleCtx->defender] * 15 / 10;
+        }
+    } else {
+        lbl_8048CDE8.args[0] = battleCtx->defender;
+        fn_8016FA4C(0x14, &lbl_8048CDE8);
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+extern "C" {
 
 s32 fn_803D2168(u8 *a, u8 *b) {
     (*(u32 *)(b + 0xb4))++;
@@ -3404,6 +4538,91 @@ s32 fn_803D225C(u8 *a, u8 *b) {
 
 #pragma pop
 
+#pragma push
+#pragma optimize_for_size on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_BeatUp
+s32 fn_803D22D4(BattleSystem *battleSys, BattleContext *battleCtx) {
+    int partyCount;
+    int species;
+    int form;
+    int level;
+    Pokemon *mon;
+
+    battleCtx->scriptCursor++;
+
+    partyCount = BattleSystem_GetPartyCount(battleSys, battleCtx->attacker);
+
+    if (battleCtx->multiHitNumHits == 0) {
+        battleCtx->multiHitNumHits = 2; // not actually used, just set to make multi-hit stuff work
+        battleCtx->multiHitAccuracyCheck = SYSCTL_MULTI_HIT_MOVE;
+        battleCtx->beatUpCounter = 0;
+
+        while (TRUE) {
+            // Find the next mon to deal Beat Up damage
+            mon = BattleSystem_GetPartyPokemon(battleSys, battleCtx->attacker, battleCtx->beatUpCounter);
+            if (BeatUpEligibleMon(battleCtx, mon)) {
+                break;
+            }
+
+            battleCtx->beatUpCounter++;
+        }
+    }
+
+    mon = BattleSystem_GetPartyPokemon(battleSys, battleCtx->attacker, battleCtx->beatUpCounter);
+    species = Pokemon_GetValue(mon, MON_DATA_SPECIES, NULL);
+    form = Pokemon_GetValue(mon, MON_DATA_FORM, NULL);
+    level = Pokemon_GetValue(mon, MON_DATA_LEVEL, NULL);
+
+    battleCtx->damage = SpeciesData_GetFormValue(species, form, SPECIES_DATA_BASE_ATK);
+    battleCtx->damage *= CURRENT_MOVE_DATA.power;
+    battleCtx->damage *= (level * 2 / 5) + 2;
+    battleCtx->damage /= SpeciesData_GetFormValue(DEFENDING_MON.species, DEFENDING_MON.formNum, SPECIES_DATA_BASE_DEF);
+    battleCtx->damage /= 50;
+    battleCtx->damage += 2;
+    battleCtx->damage *= battleCtx->criticalMul;
+
+    if (battleCtx->turnFlags[battleCtx->attacker].helpingHand) {
+        battleCtx->damage = battleCtx->damage * 15 / 10;
+    }
+
+    battleCtx->damage = BattleSystem_CalcDamageVariance(battleCtx, battleCtx->damage);
+    battleCtx->damage *= -1;
+
+    battleCtx->msgBuffer.id = BattleStrings_Text_PokemonsBeatUpAttack_Ally; // "{0}'s attack!"
+    battleCtx->msgBuffer.tags = TAG_NICKNAME;
+    battleCtx->msgBuffer.params[0] = (battleCtx->attacker | (battleCtx->beatUpCounter << 8));
+
+    battleCtx->beatUpCounter++;
+    battleCtx->multiHitCounter = 2;
+
+    // Check if there are more eligible mons in the back to attack
+    if (battleCtx->beatUpCounter < partyCount) {
+        while (TRUE) {
+            mon = BattleSystem_GetPartyPokemon(battleSys, battleCtx->attacker, battleCtx->beatUpCounter);
+            if (BeatUpEligibleMon(battleCtx, mon)) {
+                break;
+            }
+
+            battleCtx->beatUpCounter++;
+
+            if (battleCtx->beatUpCounter >= partyCount) {
+                battleCtx->multiHitCounter = 1;
+                break;
+            }
+        }
+    } else {
+        battleCtx->multiHitCounter = 1;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
 extern "C" {
 
 s32 fn_803D25D4(u8 *a, u8 *b) {
@@ -3421,24 +4640,6 @@ s32 fn_803D25D4(u8 *a, u8 *b) {
 
 extern "C" {
 
-s32 fn_803D2634(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    if (BattleSystem_GetBattleType((BattleSystem *)a) & 2) {
-        u32 r = fn_803D803C(a, b, 0x10);
-        if (!(b[0x3108] & FlagIndex(r)) && *(u32 *)(b + r * 16 + 0x21a8) != 0x27 && *(u32 *)(b + r * 0xc0 + 0x2d8c) &&
-            !((*(u32 *)(b + *(u32 *)(b + 0x64) * 64 + 0x1d4) >> 28) & 1) &&
-            !((*(u32 *)(b + r * 64 + 0x1d4) >> 28) & 1)) {
-            *(u32 *)(b + 0x118) = r;
-            *(u32 *)(b + r * 64 + 0x1d4) |= 0x10000000;
-        } else {
-            *(u32 *)(b + 0xb4) += n;
-        }
-    } else {
-        *(u32 *)(b + 0xb4) += n;
-    }
-    return 0;
-}
 }
 
 #pragma pop
@@ -3446,6 +4647,40 @@ s32 fn_803D2634(u8 *a, u8 *b) {
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryHelpingHand
+s32 fn_803D2634(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+    int battleType = BattleSystem_GetBattleType(battleSys);
+
+    if (battleType & BATTLE_TYPE_DOUBLES) {
+        int partner = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, BTLSCR_ATTACKER_PARTNER);
+        if ((battleCtx->battlersSwitchingMask & FlagIndex(partner)) == FALSE
+            && battleCtx->battlerActions[partner][BATTLE_ACTION_PICK_COMMAND] != BATTLE_CONTROL_MOVE_END
+            && battleCtx->battleMons[partner].curHP
+            && ATTACKER_TURN_FLAGS.helpingHand == FALSE
+            && battleCtx->turnFlags[partner].helpingHand == FALSE) {
+            battleCtx->msgBattlerTemp = partner;
+            battleCtx->turnFlags[partner].helpingHand = TRUE;
+        } else {
+            battleCtx->scriptCursor += jumpOnFail;
+        }
+    } else {
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -3561,24 +4796,34 @@ s32 fn_803D2B78(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 extern "C" {
 
-s32 fn_803D2C80(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 o = *(u32 *)(b + 0x64) * 64;
-    if ((*(u32 *)(b + o + *(u32 *)(b + 0x6c) * 4 + 0x1d8) != 0 &&
-         (*(u32 *)(b + o + 0x1ec) & FlagIndex(*(u32 *)(b + 0x6c)))) ||
-        (*(u32 *)(b + o + *(u32 *)(b + 0x6c) * 4 + 0x1f0) != 0 &&
-         (*(u32 *)(b + *(u32 *)(b + 0x64) * 64 + 0x204) & FlagIndex(*(u32 *)(b + 0x6c))))) {
-        *(u32 *)(b + 0x2158) = 20;
-    } else {
-        *(u32 *)(b + 0x2158) = 10;
-    }
-    return 0;
-}
 }
 
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CalcRevengePowerMul
+s32 fn_803D2C80(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    if ((ATTACKER_TURN_FLAGS.physicalDamageTakenFrom[battleCtx->defender] && (ATTACKER_TURN_FLAGS.physicalDamageAttackerMask & FlagIndex(battleCtx->defender)))
+        || (ATTACKER_TURN_FLAGS.specialDamageTakenFrom[battleCtx->defender]) && (ATTACKER_TURN_FLAGS.specialDamageAttackerMask & FlagIndex(battleCtx->defender))) {
+        battleCtx->powerMul = 20;
+    } else {
+        battleCtx->powerMul = 10;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -3663,26 +4908,39 @@ s32 fn_803D2EA8(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 extern "C" {
 
-s32 fn_803D3018(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    if (*(u32 *)(b + 0x2154) == 0) {
-        u8 *q = b + *(u32 *)(b + 0x64) * 0xc0;
-        *(u32 *)(b + 0x2154) = b[*(u32 *)(b + 0x3044) * 16 + 0x3e1] * *(u32 *)(q + 0x2d8c) / *(u32 *)(q + 0x2d90);
-        if (*(u32 *)(b + 0x2154) == 0) {
-            *(u32 *)(b + 0x2154) = 1;
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CalcHPFalloffPower
+s32 fn_803D3018(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    if (battleCtx->movePower == 0) {
+        battleCtx->movePower = CURRENT_MOVE_DATA.power * ATTACKING_MON.curHP / ATTACKING_MON.maxHP;
+
+        if (battleCtx->movePower == 0) {
+            battleCtx->movePower = 1;
         }
     }
+
     return 0;
 }
 }
 
-#pragma push
-#pragma optimize_for_size on
-#pragma dont_inline on
-
-#pragma push
-#pragma optimize_for_size on
-#pragma dont_inline on
+#pragma pop
 
 extern "C" {
 
@@ -3762,9 +5020,9 @@ s32 fn_803D3230(BattleSystem *battleSys, BattleContext *battleCtx) {
         && BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) != BattleSystem_GetBattlerSide(battleSys, battleCtx->faintedMon)
         && ATTACKING_MON.curHP
         && battleCtx->moveTemp != MOVE_STRUGGLE) {
-        int moveSlot = ATTACKER_MOVE_SLOT;
+        battleCtx->msgMoveTemp = battleCtx->moveTemp;
+        int moveSlot = Battler_SlotForMove(&ATTACKING_MON, battleCtx->msgMoveTemp);
         ATTACKING_MON.ppCur[moveSlot] = 0;
-        battleCtx->msgMoveTemp = ATTACKING_MON.moves[moveSlot];
 
         BattleMon_CopyToParty(battleSys, battleCtx, battleCtx->attacker);
     } else {
@@ -3794,6 +5052,37 @@ s32 fn_803D333C(u8 *a, u8 *b) {
     } else {
         *(u32 *)(b + *(u32 *)(b + 0x64) * 64 + 0x1d4) |= 0x4000000;
     }
+    return 0;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CalcWeightBasedPower
+s32 fn_803D3450(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    int i = 0;
+    int monWeight = DEFENDING_MON.weight;
+
+    for (; lbl_80405A5C[i][0] != 0xFFFF; i++) {
+        if (lbl_80405A5C[i][0] >= monWeight) {
+            break;
+        }
+    }
+
+    if (lbl_80405A5C[i][0] != 0xFFFF) {
+        battleCtx->movePower = lbl_80405A5C[i][1];
+    } else {
+        battleCtx->movePower = 120;
+    }
+
     return 0;
 }
 }
@@ -4131,20 +5420,30 @@ s32 fn_803D3D5C(u8 *a, u8 *b) {
     return 0;
 }
 
-s32 fn_803D3DA8(u8 *a, u8 *b) {
-    u32 idx = *(u32 *)(b + 0x6c);
-    u8 *q;
-    (*(u32 *)(b + 0xb4))++;
-    q = b + idx * 0xc0;
-    *(u32 *)(b + 0x2154) = *(u32 *)(q + 0x2d8c) * 0x78 / *(u32 *)(q + 0x2d90) + 1;
-    return 0;
-}
 
 }
 
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CalcWringOutPower
+s32 fn_803D3DA8(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+
+    battleCtx->movePower = 1 + (120 * DEFENDING_MON.curHP) / DEFENDING_MON.maxHP;
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -4222,27 +5521,42 @@ s32 fn_803D3F98(u8 *a, u8 *b) {
 
 extern "C" {
 
-s32 fn_803D4008(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    u8 *q = b + *(u32 *)(b + 0x6c) * 0xc0;
-    u32 m = *(u16 *)(q + 0x2dec);
-    if (m != 0 && m == *(u16 *)(q + *(u16 *)(q + 0x2dee) * 2 + 0x2d4c)) {
-    } else {
-        m = (u16)Battler_SelectedMove((BattleContext *)b, *(u32 *)(b + 0x6c));
-    }
-    if (*(u32 *)(b + *(u32 *)(b + 0x6c) * 16 + 0x21a8) == 0x27 ||
-        (b[m * 16 + 0x3e1] == 0 && !(*(u32 *)(b + *(u32 *)(b + 0x6c) * 64 + 0x1d4) >> 31))) {
-        *(u32 *)(b + 0xb4) += n;
-    }
-    return 0;
-}
 
 }
 
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TrySuckerPunch
+s32 fn_803D4008(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+
+    int move;
+    if (DEFENDING_MON.moveEffectsData.encoredMove
+        && DEFENDING_MON.moveEffectsData.encoredMove == DEFENDING_MON.moves[DEFENDING_MON.moveEffectsData.encoredMoveSlot]) {
+        move = DEFENDING_MON.moveEffectsData.encoredMove;
+    } else {
+        move = Battler_SelectedMove(battleCtx, battleCtx->defender);
+    }
+
+    if (DEFENDER_ACTION[BATTLE_ACTION_PICK_COMMAND] == BATTLE_CONTROL_MOVE_END
+        || (MOVE_DATA(move).power == 0 && DEFENDER_TURN_FLAGS.struggling == FALSE)) {
+        battleCtx->scriptCursor += jumpOnFail;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -4376,52 +5690,78 @@ s32 fn_803D4494(u8 *a, u8 *b) {
     return 0;
 }
 
-s32 fn_803D4528(u8 *a, u8 *b) {
-    u32 k;
-    BF_1C8 *f;
-    (*(u32 *)(b + 0xb4))++;
-    u32 n = fn_803D6E6C(b);
-    k = (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, *(u32 *)(b + 0x64)) ^ 1;
-    f = (BF_1C8 *)(b + k * 8 + 0x1c8);
-    if (f->u == 2) {
-        *(u32 *)(b + *(u32 *)(b + 0x64) * 0x1c + 0x2d4) |= 0x80000000;
-        *(u32 *)(b + 0xb4) += n;
-    } else {
-        *(u32 *)(b + k * 4 + 0x1bc) |= 0x400;
-        f->u++;
-    }
-    return 0;
-}
-
-s32 fn_803D45F4(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 x = fn_803D6E6C(b);
-    u32 y = fn_803D6E6C(b);
-    u32 r = fn_803D803C(a, b, x);
-    u32 k = (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, r);
-    BF_1C8 *f = (BF_1C8 *)(b + k * 8 + 0x1c8);
-    u32 t = f->u;
-    if (t) {
-        *(u32 *)(b + 0x134) = t;
-        *(u32 *)(b + 0x88) = 6;
-        *(u32 *)(b + 0x94) = r;
-        if (BattleMon_Get((BattleContext *)b, *(u32 *)(b + 0x78), (enum BattleMonParam)0x1b, (void *)0) == 3 ||
-            BattleMon_Get((BattleContext *)b, *(u32 *)(b + 0x78), (enum BattleMonParam)0x1c, (void *)0) == 3) {
-            *(u32 *)(b + k * 4 + 0x1bc) &= ~0x400;
-            f->u = 0;
-            *(u32 *)(b + 0x134) = 0;
-        }
-    } else {
-        *(u32 *)(b + 0xb4) += y;
-    }
-    return 0;
-}
 
 }
 
 #pragma push
 #pragma optimize_for_size on
 #pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_TryToxicSpikes
+s32 fn_803D4528(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int jumpOnFail = fn_803D6E6C((u8 *)battleCtx);
+    int defending = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker) ^ 1;
+
+    if (battleCtx->sideConditions[defending].toxicSpikesLayers == 2) {
+        ATTACKER_SELF_TURN_FLAGS.skipPressureCheck = TRUE;
+        battleCtx->scriptCursor += jumpOnFail;
+    } else {
+        battleCtx->sideConditionsMask[defending] |= SIDE_CONDITION_TOXIC_SPIKES;
+        battleCtx->sideConditions[defending].toxicSpikesLayers++;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
+
+extern "C" {
+
+
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_CheckToxicSpikes
+s32 fn_803D45F4(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int inBattler = fn_803D6E6C((u8 *)battleCtx);
+    int jumpIfNoToxicSpikes = fn_803D6E6C((u8 *)battleCtx);
+
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler);
+    int side = BattleSystem_GetBattlerSide(battleSys, battler);
+
+    if (battleCtx->sideConditions[side].toxicSpikesLayers) {
+        battleCtx->calcTemp = battleCtx->sideConditions[side].toxicSpikesLayers;
+        battleCtx->sideEffectType = SIDE_EFFECT_TYPE_TOXIC_SPIKES;
+        battleCtx->sideEffectMon = battler;
+
+        if (MON_HAS_TYPE(battleCtx->switchedMon, TYPE_POISON)) {
+            battleCtx->sideConditionsMask[side] &= ~SIDE_CONDITION_TOXIC_SPIKES;
+            battleCtx->sideConditions[side].toxicSpikesLayers = 0;
+            battleCtx->calcTemp = 0;
+        }
+    } else {
+        battleCtx->scriptCursor += jumpIfNoToxicSpikes;
+    }
+
+    return 0;
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -4480,16 +5820,30 @@ s32 fn_803D4708(BattleSystem *battleSys, BattleContext *battleCtx) {
 
 extern "C" {
 
-s32 fn_803D48F8(u8 *a, u8 *b) {
-    (*(u32 *)(b + 0xb4))++;
-    u32 x = fn_803D6E6C(b);
-    u32 y = fn_803D6E6C(b);
-    u32 z = fn_803D6E6C(b);
-    u32 r1 = fn_803D803C(a, b, x);
-    u32 k = (u8)BattleSystem_GetBattlerSide((BattleSystem *)a, fn_803D803C(a, b, y));
-    if ((u8)BattleSystem_GetBattlerSide((BattleSystem *)a, r1) == k) {
-        *(u32 *)(b + 0xb4) += z;
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BtlCmd_IfSameSide
+s32 fn_803D48F8(BattleSystem *battleSys, BattleContext *battleCtx) {
+    battleCtx->scriptCursor++;
+    int inBattler1 = fn_803D6E6C((u8 *)battleCtx);
+    int inBattler2 = fn_803D6E6C((u8 *)battleCtx);
+    int jumpIfSameSide = fn_803D6E6C((u8 *)battleCtx);
+
+    int battler1 = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler1);
+    int battler2 = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, inBattler2);
+
+    if (BattleSystem_GetBattlerSide(battleSys, battler1) == BattleSystem_GetBattlerSide(battleSys, battler2)) {
+        battleCtx->scriptCursor += jumpIfSameSide;
     }
+
     return 0;
 }
 }

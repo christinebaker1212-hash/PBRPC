@@ -205,11 +205,11 @@ struct Unk806405F4 {
 // TODO The message window owned by the Wii battle code.
 // size: 0x40
 struct Unk8048CE28 {
-    /* 0x0 */ u8 unk0[0x4];
+    /* 0x0 */ u32 _00;
     /* 0x4 */ u32 pendingCommand;
-    /* 0x8 */ u8 unk8[0x4];
+    /* 0x8 */ u32 _08;
     /* 0xC */ u32 _0C;
-    /* 0x10 */ u8 unk10[0x4];
+    /* 0x10 */ u32 _10;
     /* 0x14 */ u32 _14;
     /* 0x18 */ u32 _18;
     /* 0x1C */ u32 _1C;

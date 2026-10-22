@@ -2698,6 +2698,7 @@ src/ds/battle/battle_main.cpp:
 
 src/ds/battle/battle_system.cpp:
 	.text       start:0x803AC820 end:0x803AF444
+	.data       start:0x80473100 end:0x804732E8
 
 src/ds/battle/battle_controller.cpp:
 	.text       start:0x803AF444 end:0x803B2AF8
@@ -2709,6 +2710,7 @@ src/ds/battle/battle_controller_player.cpp:
 
 src/ds/battle/battle_lib.cpp:
 	.text       start:0x803BA360 end:0x803C94CC
+	.data       start:0x8047354C end:0x80473E40
 
 src/ds/battle/battle_script.cpp:
 	.text       start:0x803C94CC end:0x803D9208
