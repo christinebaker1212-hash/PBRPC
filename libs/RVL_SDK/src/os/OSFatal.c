@@ -170,17 +170,18 @@ static void ConfigureVideo(u16 width, u16 height) {
 
 // Intel IPP RGBToYCbCr algorithm (+0.5f?)
 static GXColor RGB2YUV(GXColor rgb) {
+    f32 Y;
+    f32 Cb;
+    f32 Cr;
     GXColor yuv;
 
-    // clang-format off
-    f32 y =  ( 0.257f * rgb.r + 0.504f * rgb.g + 0.098f * rgb.b + 16.0f)  + 0.5f;
-    f32 cb = (-0.148f * rgb.r - 0.291f * rgb.g + 0.439f * rgb.b + 128.0f) + 0.5f;
-    f32 cr = ( 0.439f * rgb.r - 0.368f * rgb.g - 0.071f * rgb.b + 128.0f) + 0.5f;
-    // clang-format on
+    Y  = 0.5f + (16.0f + ((0.098f * (f32) rgb.b) + ((0.257f * (f32) rgb.r) + (0.504f * (f32) rgb.g))));
+    Cb = 0.5f + (128.0f + ((0.439f * (f32) rgb.b) + ((-0.148f * (f32) rgb.r) - (0.291f * (f32) rgb.g))));
+    Cr = 0.5f + (128.0f + (((0.439f * (f32) rgb.r) - (0.368f * (f32) rgb.g)) - (0.071f * (f32) rgb.b)));
 
-    yuv.r = CLAMP(16.0f, 235.0f, y);
-    yuv.g = CLAMP(16.0f, 240.0f, cb);
-    yuv.b = CLAMP(16.0f, 240.0f, cr);
+    yuv.r = (Y > 235.0f) ? 235.0f : (Y < 16.0f) ? 16.0f : Y;
+    yuv.g = (Cb > 240.0f) ? 240.0f : (Cb < 16.0f) ? 16.0f : Cb;
+    yuv.b = (Cr > 240.0f) ? 240.0f : (Cr < 16.0f) ? 16.0f : Cr;
     yuv.a = 0;
 
     return yuv;
@@ -250,50 +251,41 @@ void OSFatal(GXColor textColor, GXColor bgColor, const char *msg) {
     OSSwitchFiber((u32)Halt, (u32)OSGetArenaHi());
 }
 
-// TODO Does not match yet (0x5F8 vs 0x600)
 static void Halt(void) {
-    OSFontHeader *msgFont;
-    const char *msg;
-    s32 retraceCount;
-    size_t msgLen;
-    void *msgBuf;
-    void *fb;
-    OSFatalParam *params;
+    u32 count;
+    OSFontHeader* fontData;
+    void* xfb;
+    u32 len;
+    OSFatalParam* fp;
 
     OSEnableInterrupts();
+    fp = &FatalParam;
+    len = strlen(fp->msg) + 1;
+    fp->msg = memmove(OSAllocFromMEM1ArenaLo(len, 32), fp->msg, len);
 
-    params = &FatalParam;
-    msg = params->msg;
+    fontData = OSAllocFromMEM1ArenaLo(0xA1004, 32);
+    OSLoadFont(fontData, OSGetArenaLo());
 
-    msgLen = strlen(msg) + 1;
-    msgBuf = OSAllocFromMEM1ArenaLo(msgLen, 32);
-    params->msg = memmove(msgBuf, msg, msgLen);
-
-    msgFont = (OSFontHeader *)OSAllocFromMEM1ArenaLo(0xA1004, 32);
-    OSLoadFont(msgFont, OSGetArenaLo());
-
-    fb = OSAllocFromMEM1ArenaLo(FATAL_FB_SIZE, 32);
-    ScreenClear(fb, FATAL_FB_W, FATAL_FB_H, RGB2YUV(params->bgColor));
-    VISetNextFrameBuffer(fb);
+    xfb = OSAllocFromMEM1ArenaLo(FATAL_FB_SIZE, 32);
+    ScreenClear(xfb, FATAL_FB_W, FATAL_FB_H, RGB2YUV(fp->bgColor));
+    VISetNextFrameBuffer(xfb);
     ConfigureVideo(FATAL_FB_W, FATAL_FB_H);
     VIFlush();
 
-    retraceCount = VIGetRetraceCount();
-    while (VIGetRetraceCount() - retraceCount < 2) {
-        ;
-    }
+    count = VIGetRetraceCount();
+    do {
+    } while ((s32)(VIGetRetraceCount() - count) < 2);
 
-    ScreenReport(fb, FATAL_FB_W, FATAL_FB_H, RGB2YUV(params->textColor), 48, 100, msgFont->leading, params->msg);
-    DCFlushRange(fb, FATAL_FB_SIZE);
+    ScreenReport(xfb, FATAL_FB_W, FATAL_FB_H, RGB2YUV(fp->textColor), 48, 100, fontData->leading, fp->msg);
+    DCFlushRange(xfb, FATAL_FB_SIZE);
     VISetBlack(FALSE);
     VIFlush();
 
-    retraceCount = VIGetRetraceCount();
-    while (VIGetRetraceCount() - retraceCount < 1) {
-        ;
-    }
+    count = VIGetRetraceCount();
+    do {
+    } while ((s32)(VIGetRetraceCount() - count) < 1);
 
     OSDisableInterrupts();
-    OSReport("%s\n", params->msg);
+    OSReport("%s\n", fp->msg);
     PPCHalt();
 }

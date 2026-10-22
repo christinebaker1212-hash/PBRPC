@@ -1,5 +1,6 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/gx/GXAttr.c
 #include <private/gx.h>
+#include <private/tp_gxregs/fields.h>
 #include <revolution/gx.h>
 
 static void __GXXfVtxSpecs() {
@@ -531,4 +532,72 @@ void GXSetTexCoordGen2(GXTexCoordID dst_coord, GXTexGenType func, GXTexGenSrc sr
 void GXSetNumTexGens(u8 nTexGens) {
     GX_SET_REG_FIELD(__GXData->genMode, 4, 0, nTexGens);
     __GXData->dirtyState |= 0x2000004;
+}
+
+void GXGetVtxDesc(GXAttr attr, GXAttrType* type) {
+    u32 cpType;
+
+    CHECK_GXBEGIN(465, "GXGetVtxDesc");
+    CHECK_ATTRNAME3(467, attr);
+
+    switch (attr) {
+    case GX_VA_PNMTXIDX:   cpType = CP_VCD_REG_LO_GET_PMIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX0MTXIDX: cpType = CP_VCD_REG_LO_GET_T0MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX1MTXIDX: cpType = CP_VCD_REG_LO_GET_T1MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX2MTXIDX: cpType = CP_VCD_REG_LO_GET_T2MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX3MTXIDX: cpType = CP_VCD_REG_LO_GET_T3MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX4MTXIDX: cpType = CP_VCD_REG_LO_GET_T4MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX5MTXIDX: cpType = CP_VCD_REG_LO_GET_T5MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX6MTXIDX: cpType = CP_VCD_REG_LO_GET_T6MIDX(__GXData->vcdLo); break;
+    case GX_VA_TEX7MTXIDX: cpType = CP_VCD_REG_LO_GET_T7MIDX(__GXData->vcdLo); break;
+    case GX_VA_POS:        cpType = CP_VCD_REG_LO_GET_POS(__GXData->vcdLo); break;
+    case GX_VA_NRM:        cpType = __GXData->hasNrms ? CP_VCD_REG_LO_GET_NRM(__GXData->vcdLo) : 0; break;
+    case GX_VA_NBT:        cpType = __GXData->hasBiNrms ? CP_VCD_REG_LO_GET_NRM(__GXData->vcdLo) : 0; break;
+    case GX_VA_CLR0:       cpType = CP_VCD_REG_LO_GET_COL0(__GXData->vcdLo); break;
+    case GX_VA_CLR1:       cpType = CP_VCD_REG_LO_GET_COL1(__GXData->vcdLo); break;
+    case GX_VA_TEX0:       cpType = CP_VCD_REG_HI_GET_TEX0(__GXData->vcdHi);  break;
+    case GX_VA_TEX1:       cpType = CP_VCD_REG_HI_GET_TEX1(__GXData->vcdHi);  break;
+    case GX_VA_TEX2:       cpType = CP_VCD_REG_HI_GET_TEX2(__GXData->vcdHi);  break;
+    case GX_VA_TEX3:       cpType = CP_VCD_REG_HI_GET_TEX3(__GXData->vcdHi);  break;
+    case GX_VA_TEX4:       cpType = CP_VCD_REG_HI_GET_TEX4(__GXData->vcdHi);  break;
+    case GX_VA_TEX5:       cpType = CP_VCD_REG_HI_GET_TEX5(__GXData->vcdHi); break;
+    case GX_VA_TEX6:       cpType = CP_VCD_REG_HI_GET_TEX6(__GXData->vcdHi); break;
+    case GX_VA_TEX7:       cpType = CP_VCD_REG_HI_GET_TEX7(__GXData->vcdHi); break;
+    default: cpType = 0; break;
+    }
+    *type = cpType;
+}
+
+void GXGetVtxAttrFmtv(GXVtxFmt fmt, GXVtxAttrFmtList* vat) {
+    GXAttr attr;
+
+    CHECK_GXBEGIN(941, "GXGetVtxAttrFmtv");
+    CHECK_LISTPTR(942, vat);
+    CHECK_VTXFMT(943, fmt);
+
+    for (attr = GX_VA_POS; attr <= GX_VA_TEX7; attr++) {
+        vat->attr = attr;
+        GXGetVtxAttrFmt(fmt, attr, &vat->cnt, &vat->type, &vat->frac);
+        vat++;
+    }
+
+    vat->attr = GX_VA_NULL;
+}
+
+void GXGetVtxDescv(GXVtxDescList* vcd) {
+    GXAttr attr;
+
+    CHECK_GXBEGIN(518, "GXGetVtxDescv");
+    CHECK_ATTRPTR(520, vcd);
+
+    for (attr = GX_VA_PNMTXIDX; attr <= GX_VA_TEX7; attr++) {
+        vcd[attr].attr = attr;
+        GXGetVtxDesc(attr, &vcd[attr].type);
+    }
+
+    vcd[attr].attr = GX_VA_NBT;
+    GXGetVtxDesc(GX_VA_NBT, &vcd[attr].type);
+
+    attr++;
+    vcd[attr].attr = GX_VA_NULL;
 }

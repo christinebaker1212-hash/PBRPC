@@ -40,3 +40,28 @@ asm void PSMTXMultVec(const register Mtx m, const register Vec* src, register Ve
 }
 
 // clang-format on
+
+asm void PSMTXMultVecSR(const __REGISTER Mtx m, const __REGISTER Vec* src, __REGISTER Vec* dst) {
+    nofralloc
+    psq_l f0, 0x0(m), 0, 0
+    psq_l f6, 0x0(src), 0, 0
+    psq_l f2, 0x10(m), 0, 0
+    ps_mul f8, f0, f6
+    psq_l f4, 0x20(m), 0, 0
+    ps_mul f10, f2, f6
+    psq_l f7, 0x8(src), 1, 0
+    ps_mul f12, f4, f6
+    psq_l f3, 0x18(m), 0, 0
+    ps_sum0 f8, f8, f8, f8
+    psq_l f5, 0x28(m), 0, 0
+    ps_sum0 f10, f10, f10, f10
+    psq_l f1, 0x8(m), 0, 0
+    ps_sum0 f12, f12, f12, f12
+    ps_madd f9, f1, f7, f8
+    psq_st f9, 0x0(dst), 1, 0
+    ps_madd f11, f3, f7, f10
+    psq_st f11, 0x4(dst), 1, 0
+    ps_madd f13, f5, f7, f12
+    psq_st f13, 0x8(dst), 1, 0
+    blr
+}

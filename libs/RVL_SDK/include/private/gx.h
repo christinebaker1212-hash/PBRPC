@@ -318,6 +318,20 @@ void __GetImageTileCount(GXTexFmt fmt, u16 wd, u16 ht, u32* rowTiles, u32* colTi
 #define SET_REG_FIELD(reg, size, shift, val)                                                                                                         \
     { (reg) = ((u32)__rlwimi((u32)(reg), (val), (shift), 32 - (shift) - (size), 31 - (shift))); }
 
+// Debug checks used by the GX sources from zeldaret/tp; release builds drop them.
+#define CHECK_GXBEGIN(line, name) ((void)0)
+#define CHECK_ATTRPTR(line, attrPtr) ((void)0)
+#define CHECK_ATTRNAME(line, attr) ((void)0)
+#define CHECK_ATTRNAME2(line, attr) ((void)0)
+#define CHECK_ATTRNAME3(line, attr) ((void)0)
+#define CHECK_ATTRNAME4(line, attr) ((void)0)
+#define CHECK_ATTRNAME5(line, attr) ((void)0)
+#define CHECK_ATTRTYPE(line, type) ((void)0)
+#define CHECK_VTXFMT(line, vtxfmt) ((void)0)
+#define CHECK_FRAC(line, frac) ((void)0)
+#define CHECK_LISTPTR(line, list) ((void)0)
+#define CHECK_MTXIDX(line, idx, type) ((void)0)
+
 // Names used by the sources imported from wii-ipl.
 #define GX_GET_REG_FIELD GET_REG_FIELD
 #define OLD_GX_SET_REG_FIELD OLD_SET_REG_FIELD

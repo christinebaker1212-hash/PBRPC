@@ -74,3 +74,47 @@ asm void PSVECCrossProduct(const register Vec* a, const register Vec* b, registe
 }
 
 // clang-format on
+
+asm f32 PSVECDotProduct(const __REGISTER Vec* a, const __REGISTER Vec* b) {
+    psq_l f2, Vec.y(a), 0, 0
+    psq_l f3, Vec.y(b), 0, 0
+    ps_mul f2, f2, f3
+    psq_l f5, Vec.x(a), 0, 0
+    psq_l f4, Vec.x(b), 0, 0
+    ps_madd f3, f5, f4, f2
+    ps_sum0 f1, f3, f2, f2
+}
+
+f32 PSVECMag(const __REGISTER Vec* v) {
+    __REGISTER f32 vxy, vzz;
+    __REGISTER f32 sqmag, rmag;
+    __REGISTER f32 nwork0, nwork1;
+    __REGISTER f32 c_three, c_half, c_zero;
+
+    c_half = 0.5f;
+
+    asm {
+        psq_l vxy, 0x0(v), 0, 0
+        ps_mul vxy, vxy, vxy
+        lfs vzz, 0x8(v)
+        fsubs c_zero, c_half, c_half
+        ps_madd sqmag, vzz, vzz, vxy
+        ps_sum0 sqmag, sqmag, vxy, vxy
+        fcmpu cr0, sqmag, c_zero
+        beq L_000005F0
+        frsqrte rmag, sqmag
+    }
+
+    c_three = 3.0f;
+
+    asm {
+        fmuls nwork0, rmag, rmag
+        fmuls nwork1, rmag, c_half
+        fnmsubs nwork0, nwork0, sqmag, c_three
+        fmuls rmag, nwork0, nwork1
+        fmuls sqmag, sqmag, rmag
+    L_000005F0:
+    }
+
+    return sqmag;
+}

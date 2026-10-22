@@ -3,6 +3,7 @@
 #include <revolution/os.h>
 
 #include <private/gx.h>
+#include <private/tp_gxregs/fields.h>
 #include <revolution/gx.h>
 
 

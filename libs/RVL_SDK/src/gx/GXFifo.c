@@ -1,5 +1,6 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/gx/GXFifo.c
 #include <private/gx.h>
+#include <private/tp_gxregs/fields.h>
 #include <revolution/gx.h>
 
 #include <private/os.h>

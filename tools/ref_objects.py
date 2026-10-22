@@ -7,6 +7,8 @@
 # functions in this game.
 #
 # Usage: python tools/ref_objects.py <project dir> <out dir> [path filter regex]
+# Extra arguments for the reference's configure.py (e.g. --version) go in
+# REF_CONFIGURE_ARGS.
 ###
 
 import os
@@ -30,7 +32,7 @@ def main() -> None:
 
     project.generate_build = lambda config: None
     project.calculate_progress = lambda config: None
-    sys.argv = ["configure.py", "configure"]
+    sys.argv = ["configure.py", "configure", *os.environ.get("REF_CONFIGURE_ARGS", "").split()]
     g = runpy.run_path(str(proj / "configure.py"), run_name="__main__")
     config = g["config"]
     compilers = ROOT / "build" / "compilers"
@@ -40,6 +42,9 @@ def main() -> None:
         lib = dict(lib)
         for obj in lib["objects"]:
             name = obj.name
+            strip = lib.get("strip_prefix")
+            if strip and name.startswith(strip):
+                name = name[len(strip) :]
             src = Path(lib.get("src_dir", "src")) / name
             opts = obj.options
             if flt and not flt.search(str(src)):

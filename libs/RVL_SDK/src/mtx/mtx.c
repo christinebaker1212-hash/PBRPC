@@ -682,3 +682,39 @@ void C_MTXLookAt(Mtx m, const Point3d* camPos, const Vec* camUp, const Point3d* 
 }
 
 // clang-format on
+
+void PSMTXTranspose(const __REGISTER Mtx src, __REGISTER Mtx xPose) {
+    __REGISTER f32 c_zero = 0;
+    __REGISTER f32 row0a;
+    __REGISTER f32 row1a;
+    __REGISTER f32 row0b;
+    __REGISTER f32 row1b;
+    __REGISTER f32 trns0;
+    __REGISTER f32 trns1;
+    __REGISTER f32 trns2;
+
+    asm {
+        psq_l row0a, 0(src), 0, 0
+    }
+    xPose[2][3] = c_zero;
+    asm {
+        psq_l row1a, 16(src), 0, 0
+        ps_merge00 trns0, row0a, row1a
+        psq_l row0b, 8(src), 1, 0
+        ps_merge11 trns1, row0a, row1a
+        psq_l row1b, 24(src), 1, 0
+        psq_st trns0, 0(xPose), 0, 0
+        psq_l row0a, 32(src), 0, 0
+        ps_merge00 trns2, row0b, row1b
+        psq_st trns1, 16(xPose), 0, 0
+        ps_merge00 trns0, row0a, c_zero
+        psq_st trns2, 32(xPose), 0, 0
+        ps_merge10 trns1, row0a, c_zero
+        psq_st trns0, 8(xPose), 0, 0
+    }
+    row0b = src[2][2];
+    asm {
+        psq_st trns1, 24(xPose), 0, 0
+    }
+    xPose[2][2] = row0b;
+}

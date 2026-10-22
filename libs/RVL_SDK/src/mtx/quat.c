@@ -179,3 +179,48 @@ void C_QUATSlerp(const Quaternion *a, const Quaternion *b, Quaternion *out, f32 
     out->z = coeffa * a->z + coeffb * b->z;
     out->w = coeffa * a->w + coeffb * b->w;
 }
+
+void PSQUATDivide(const Quaternion* p, const Quaternion* q, Quaternion* r) {
+    Quaternion qtmp;
+
+    PSQUATInverse(q, &qtmp);
+    PSQUATMultiply(&qtmp, p, r);
+}
+
+void PSQUATInverse(const __REGISTER Quaternion* src, __REGISTER Quaternion* inv) {
+    __REGISTER f32 sxy, szw;
+    __REGISTER f32 izz, iww;
+    __REGISTER f32 mag, nmag;
+    __REGISTER f32 norminv, nninv;
+    __REGISTER f32 nwork0;
+    __REGISTER f32 c_two;
+    __REGISTER f32 c_zero;
+    __REGISTER f32 c_one = 1.0f;
+
+    asm {
+        psq_l sxy, 0x0(src), 0, 0
+        ps_mul mag, sxy, sxy
+        ps_sub c_zero, c_one, c_one
+        psq_l szw, 0x8(src), 0, 0
+        ps_madd mag, szw, szw, mag
+        ps_add c_two, c_one, c_one
+        ps_sum0 mag, mag, mag, mag
+        fcmpu cr0, mag, c_zero
+        beq L_00000948
+        fres norminv, mag
+        ps_neg nmag, mag
+        ps_nmsub nwork0, mag, norminv, c_two
+        ps_mul norminv, norminv, nwork0
+        b L_0000094C
+    L_00000948:
+        fmr norminv, c_one
+    L_0000094C:
+        ps_neg nninv, norminv
+        ps_muls1 iww, norminv, szw
+        ps_muls0 sxy, sxy, nninv
+        psq_st iww, 0xc(inv), 1, 0
+        ps_muls0 izz, szw, nninv
+        psq_st sxy, 0x0(inv), 0, 0
+        psq_st izz, 0x8(inv), 1, 0
+    }
+}
