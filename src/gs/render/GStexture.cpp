@@ -156,3 +156,48 @@ GStextureFormat GStexture::getPaletteFormat() const {
 s32 GStexture::getGXTextureFormat(bool isDirect) const {
     return ::getGXTextureFormat(mTextureFormat, isDirect);
 }
+
+extern "C" {
+
+s32 fn_8023D530(u8 *);
+
+void fn_8023E3C8__FP9GStexture12_GXTexFilter12_GXTexFilterUl(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    if (((s32) (*(s32 *)((u8 *)(arg0) + (0x18))) != arg1) || ((s32) (*(s32 *)((u8 *)(arg0) + (0x1C))) != arg2) || ((s32) (*(s32 *)((u8 *)(arg0) + (0x20))) != arg3)) {
+        (*(s32 *)((u8 *)(arg0) + (0x18))) = arg1;
+        (*(s32 *)((u8 *)(arg0) + (0x1C))) = arg2;
+        (*(s32 *)((u8 *)(arg0) + (0x20))) = arg3;
+        fn_8023D530(arg0);
+        (*(u8 *)((u8 *)(arg0) + (7))) = (u8) ((*(u8 *)((u8 *)(arg0) + (7))) | 1);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8023D258(s32 arg0) {
+    switch (arg0) {                                 /* irregular */
+    case 0:
+        return 8;
+    case 1:
+        return 9;
+    case 48:
+        return 0xA;
+    default:
+        return -1;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8023D420(u8 *);
+
+void fn_8023E36C(u8 *arg0, s32 arg1, s32 arg2) {
+    if (((s32) (*(s32 *)((u8 *)(arg0) + (0x10))) != arg1) || ((s32) (*(s32 *)((u8 *)(arg0) + (0x14))) != arg2)) {
+        (*(s32 *)((u8 *)(arg0) + (0x10))) = arg1;
+        (*(s32 *)((u8 *)(arg0) + (0x14))) = arg2;
+        fn_8023D420(arg0);
+        (*(u8 *)((u8 *)(arg0) + (7))) = (u8) ((*(u8 *)((u8 *)(arg0) + (7))) | 1);
+    }
+}
+}

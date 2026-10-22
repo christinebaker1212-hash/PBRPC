@@ -45,3 +45,23 @@ void fn_8025DFC8(u32, void *block) {
     fn_8025E4D0(block);
 }
 }
+
+extern "C" {
+
+s32 fn_8025E2B8(u8 *arg0) {
+    s32 temp_r0;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (4)));
+    switch (temp_r0) {                              /* irregular */
+    case 1:
+        return (*(s32 *)((u8 *)(arg0) + (8)));
+    case 2:
+        return (*(s32 *)((u8 *)(arg0) + (0xC)));
+    case 3:
+        return (*(s32 *)((u8 *)(arg0) + (0x10)));
+    default:
+    case 0:
+        return 0;
+    }
+}
+}

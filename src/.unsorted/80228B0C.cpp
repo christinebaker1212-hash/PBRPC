@@ -85,3 +85,26 @@ void fn_80228FEC(Unk80226364_04 *inner, u32 x, u32 y) {
     fn_80228C50(&inner->_00[inner->_04], x, y);
 }
 }
+
+extern "C" {
+
+s32 fn_80228B8C(void);
+
+u8 *fn_80228B0C(u8 *arg0) {
+    fn_80228B8C();
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x1C))) = 0;
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80024DBC(void);
+
+void fn_80228B48(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0x14))) == 0) {
+        (*(s32 *)((u8 *)(arg0) + (0x14))) = fn_80024DBC();
+    }
+}
+}

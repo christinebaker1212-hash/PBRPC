@@ -73,3 +73,74 @@ void fn_80168B60(void) {
     fn_801691D8();
 }
 }
+
+extern "C" {
+
+s32 fn_80164C6C(s32);
+s32 fn_80166AB4(void);
+
+s32 fn_801687E0(void) {
+    if (fn_80164C6C(0) == 0) {
+        return 0;
+    }
+    return fn_80166AB4();
+}
+}
+
+extern "C" {
+
+s32 fn_80166D44(void);
+
+s32 fn_80168820(void) {
+    if (fn_80164C6C(0) == 0) {
+        return -1;
+    }
+    return fn_80166D44();
+}
+}
+
+extern "C" {
+
+s32 fn_80166D20(void);
+s32 fn_80168858(void);
+
+s32 fn_80168900(void) {
+    if (fn_80168858() == 0) {
+        return 0;
+    }
+    if (fn_80164C6C(0) == 0) {
+        return 0;
+    }
+    return fn_80166D20();
+}
+}
+
+extern "C" {
+
+s32 fn_80166AC4(void);
+
+s32 fn_80168A5C(void) {
+    if (fn_80168858() == 0) {
+        return 0;
+    }
+    if (fn_80164C6C(0) == 0) {
+        return 0;
+    }
+    return fn_80166AC4();
+}
+}
+
+extern "C" {
+
+s32 fn_80166ACC(void);
+
+s32 fn_80168AA8(void) {
+    if (fn_80168858() == 0) {
+        return 0;
+    }
+    if (fn_80164C6C(0) == 0) {
+        return 0;
+    }
+    return fn_80166ACC();
+}
+}

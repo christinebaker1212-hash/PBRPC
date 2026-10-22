@@ -22,3 +22,21 @@ void fn_8037F5C8(u32 a0, u32 a1, u32 a2, u32 a3, u32 a4, u32 a5, u32 a6, u32 a7)
     fn_8037D464(a0 - 0x74, a1, a2, a3, a4, a5, a6, a7);
 }
 }
+
+extern "C" {
+
+s32 fn_8037F584(s32);
+
+void fn_8037F5B8(s32 arg0) {
+    fn_8037F584(arg0 - 0x74);
+}
+}
+
+extern "C" {
+
+s32 fn_8037F580(s32);
+
+void fn_8037F5C0(s32 arg0) {
+    fn_8037F580(arg0 - 0x74);
+}
+}

@@ -249,3 +249,64 @@ int main(void) {
         GStask::runMainTasks();
     }
 }
+
+extern "C" {
+
+s32 fn_800559D4__Fv(void);
+s32 fn_80157854(void);
+
+void fn_80006FB0(void) {
+    fn_800559D4__Fv();
+    fn_80157854();
+}
+}
+
+extern "C" {
+
+extern s8 lbl_8063E8FD;
+extern u8 *sInstance__8GSrender;
+
+void fn_8000705C(void) {
+    (*(s8 *)((u8 *)(sInstance__8GSrender) + (0x83))) = 1;
+    lbl_8063E8FD = 1;
+}
+}
+
+extern "C" {
+
+void fn_80007070(void) {
+    (*(s8 *)((u8 *)(sInstance__8GSrender) + (0x83))) = 0;
+    lbl_8063E8FD = 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8000B2C8__Fv(void);
+
+void fn_8000708C(void) {
+    fn_8000B2C8__Fv();
+}
+}
+
+extern "C" {
+
+s32 fn_80009838(void);
+s32 fn_800098FC(s32);
+extern u8 lbl_8063E8FE;
+extern u8 lbl_8063E900;
+
+void fn_80007338(void) {
+    if (fn_80009838() != 0) {
+        fn_800098FC(1);
+        return;
+    }
+    if ((s32) lbl_8063E8FE != 0) {
+        lbl_8063E8FE = 0;
+    }
+    if ((s32) lbl_8063E900 == 0) {
+        lbl_8063E8FD = 0;
+    }
+    lbl_8063E900 = 1;
+}
+}

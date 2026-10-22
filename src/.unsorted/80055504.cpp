@@ -17,3 +17,15 @@ void fn_80055560(void) {
 }
 void fn_800557E0(void) {}
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_8005551C(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}

@@ -1036,3 +1036,61 @@ GSrender::setTevAlphaIn(u8 stage, GXTevAlphaArg argA, GXTevAlphaArg argB, GXTevA
     mState->mTevAlphaInFlags |= (1 << stage);
     mState->_0 |= (1 << 3);
 }
+
+extern "C" {
+
+void fn_801ED284(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u8 *temp_r10;
+    u8 *temp_r3;
+    u8 *temp_r5;
+
+    temp_r10 = (*(u8 **)((u8 *)(arg0) + (0x1638))) + (arg1 * 0x18);
+    (*(s32 *)((u8 *)(temp_r10) + (0x6C))) = 2;
+    (*(s32 *)((u8 *)(temp_r10) + (0x70))) = (s32) (arg2 + 0xC);
+    (*(s32 *)((u8 *)(temp_r10) + (0x74))) = 0x3C;
+    (*(s8 *)((u8 *)(temp_r10) + (0x78))) = 0;
+    (*(s32 *)((u8 *)(temp_r10) + (0x7C))) = 0x7D;
+    (*(s32 *)((u8 *)(temp_r10) + (0x80))) = arg3;
+    temp_r5 = (*(u8 **)((u8 *)(arg0) + (0x1638)));
+    (*(s32 *)((u8 *)(temp_r5) + (8))) = (s32) ((*(s32 *)((u8 *)(temp_r5) + (8))) | (1 << arg1));
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x1638)));
+    (*(s32 *)((u8 *)(temp_r3) + (0))) = (s32) ((*(s32 *)((u8 *)(temp_r3) + (0))) | 1);
+}
+}
+
+extern "C" {
+
+extern u8 *sInstance__17GShierarchyModule;
+
+s32 fn_801ED330(void) {
+    return (*(s32 *)((u8 *)(sInstance__17GShierarchyModule) + (0x11C)));
+}
+}
+
+extern "C" {
+
+s32 fn_801ED33C(void) {
+    return (*(s32 *)((u8 *)(sInstance__17GShierarchyModule) + (0x120)));
+}
+}
+
+extern "C" {
+
+s32 fn_801ED348(u8 *arg0) {
+    return (*(s32 *)((u8 *)(arg0) + (0x104))) & 1;
+}
+}
+
+extern "C" {
+
+s32 fn_801ED354(u8 *arg0) {
+    return (*(s32 *)((u8 *)(arg0) + (0x130)));
+}
+}
+
+extern "C" {
+
+s32 fn_801ED35C(s32 arg0) {
+    return arg0 + 0x1D4;
+}
+}

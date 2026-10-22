@@ -38,3 +38,20 @@ u32 fn_8016E478(u8 i) {
     return lbl_8063F1C8->_00[i];
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(u8 *);
+s32 freeToHeap__5GSmemFP12MEMiHeapHeadPv(s32, s32);
+extern s32 gUnkHeap2;
+
+u8 *fn_8016E5C0(u8 *arg0, s32 arg1) {
+    if (arg0 != NULL) {
+        freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, (*(s32 *)((u8 *)(arg0) + (0x60))));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}

@@ -155,3 +155,15 @@ void fn_80253F9C(u32 x, u32 y) {
     fn_80253BFC(&lbl_804FDAB0, x, y);
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_80250F18(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}

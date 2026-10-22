@@ -632,3 +632,15 @@ void GSrender::fn_802321DC() {
 
     OSPanic(__FILE__, 1072, "Fatal Error occurred");
 }
+
+extern "C" {
+
+s32 fn_8023F778__7GSvideoFv(u8 *);
+extern u8 *sInstance__8GSrender;
+
+void fn_80231374__8GSrenderFPv(void) {
+    fn_8023F778__7GSvideoFv(sInstance__8GSrender);
+    (*(s8 *)((u8 *)(sInstance__8GSrender) + (0x16F8))) = 1;
+    (*(s32 *)((u8 *)(sInstance__8GSrender) + (0x16F4))) = 0;
+}
+}

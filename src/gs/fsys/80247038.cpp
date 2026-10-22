@@ -82,3 +82,20 @@ void UnkClass1::fn_802471F4(u32 fsysId) {
         GScache::decrementRefCount(fsysId, mFileIds[i]);
     }
 }
+
+extern "C" {
+
+s32 *__nwa__FUl(s32);
+
+u8 *fn_80247038(u8 *arg0, s32 arg1) {
+    s32 *temp_r3;
+
+    (*(s32 *)((u8 *)(arg0) + (0))) = arg1;
+    temp_r3 = __nwa__FUl((arg1 + 1) * 4);
+    (*(s32 **)((u8 *)(arg0) + (4))) = temp_r3;
+    if (temp_r3 != NULL) {
+        *temp_r3 = 0;
+    }
+    return arg0;
+}
+}
