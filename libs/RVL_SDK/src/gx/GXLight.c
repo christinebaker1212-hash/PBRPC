@@ -11,6 +11,17 @@
 
 #include <revolution/base/PPCArch.h>
 
+// GXLightObj private data, from zeldaret/tp (CC0)
+typedef struct {
+    u32 reserved[3];
+    u32 Color;
+    f32 a[3];
+    f32 k[3];
+    f32 lpos[3];
+    f32 ldir[3];
+} __GXLightObjInt_struct;
+
+
 #pragma optimizewithasm off
 
 inline void PushLight(const register GXLightObj* lt_obj, register void* dest) {
@@ -215,4 +226,86 @@ void GXSetChanCtrl(GXChannelID chan, GXBool enable, GXColorSrc amb_src, GXColorS
         __GXData->dirtyState |= (1 << 13);
         __GXData->dirtyState |= (1 << 15);
     }
+}
+
+void GXInitLightAttn(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2, f32 k0, f32 k1, f32 k2) {
+    __GXLightObjInt_struct* obj;
+
+    ASSERTMSGLINE(135, lt_obj != NULL, "Light Object Pointer is null");
+    obj = (__GXLightObjInt_struct*)lt_obj;
+    CHECK_GXBEGIN(136, "GXInitLightAttn");
+    obj->a[0] = a0;
+    obj->a[1] = a1;
+    obj->a[2] = a2;
+    obj->k[0] = k0;
+    obj->k[1] = k1;
+    obj->k[2] = k2;
+}
+
+void GXInitLightDistAttn(GXLightObj* lt_obj, f32 ref_dist, f32 ref_br, GXDistAttnFn dist_func) {
+    f32 k0, k1, k2;
+    __GXLightObjInt_struct* obj;
+
+    ASSERTMSGLINE(279, lt_obj != NULL, "Light Object Pointer is null");
+    obj = (__GXLightObjInt_struct*)lt_obj;
+    CHECK_GXBEGIN(281, "GXInitLightDistAttn");
+
+    if (ref_dist < 0.0f)
+        dist_func = GX_DA_OFF;
+    if (ref_br <= 0.0f || ref_br >= 1.0f)
+        dist_func = GX_DA_OFF;
+
+    switch (dist_func) {
+    case GX_DA_GENTLE:
+        k0 = 1.0f;
+        k1 = (1.0f - ref_br) / (ref_br * ref_dist);
+        k2 = 0.0f;
+        break;
+    case GX_DA_MEDIUM:
+        k0 = 1.0f;
+        k1 = (0.5f * (1.0f - ref_br)) / (ref_br * ref_dist);
+        k2 = (0.5f * (1.0f - ref_br)) / (ref_br * ref_dist * ref_dist);
+        break;
+    case GX_DA_STEEP:
+        k0 = 1.0f;
+        k1 = 0.0f;
+        k2 = (1.0f - ref_br) / (ref_br * ref_dist * ref_dist);
+        break;
+    case GX_DA_OFF:
+    default:
+        k0 = 1.0f;
+        k1 = 0.0f;
+        k2 = 0.0f;
+        break;
+    }
+
+    obj->k[0] = k0;
+    obj->k[1] = k1;
+    obj->k[2] = k2;
+}
+
+void GXInitLightDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz) {
+    __GXLightObjInt_struct* obj;
+
+    ASSERTMSGLINE(366, lt_obj != NULL, "Light Object Pointer is null");
+    obj = (__GXLightObjInt_struct*)lt_obj;
+
+    obj->ldir[0] = -nx;
+    obj->ldir[1] = -ny;
+    obj->ldir[2] = -nz;
+}
+
+void GXInitSpecularDirHA(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz, f32 hx, f32 hy, f32 hz) {
+    __GXLightObjInt_struct* obj;
+
+    ASSERTMSGLINE(436, lt_obj != NULL, "Light Object Pointer is null");
+    obj = (__GXLightObjInt_struct*)lt_obj;
+    CHECK_GXBEGIN(437, "GXInitSpecularHA");
+
+    obj->ldir[0] = hx;
+    obj->ldir[1] = hy;
+    obj->ldir[2] = hz;
+    obj->lpos[0] = nx * -1000000000000000000.0f;
+    obj->lpos[1] = ny * -1000000000000000000.0f;
+    obj->lpos[2] = nz * -1000000000000000000.0f;
 }

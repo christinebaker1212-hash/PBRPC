@@ -1461,11 +1461,10 @@ libs/RVL_SDK/src/os/OSContext.c:
 libs/RVL_SDK/src/os/OSError.c:
 	.text       start:0x8026B49C end:0x8026BB40
 
-src/.unsorted/8026BB40.cpp:
-	.text       start:0x8026BB40 end:0x8026BD08
-
 libs/RVL_SDK/src/os/OSExec.c:
-	.text       start:0x8026BD08 end:0x8026CE70
+	.text       start:0x8026BB40 end:0x8026CE70
+	.sdata      start:0x8063DA80 end:0x8063DA88
+	.sdata2     start:0x8064261C end:0x80642620
 
 libs/RVL_SDK/src/os/OSFatal.c:
 	.text       start:0x8026CE70 end:0x8026DA94
@@ -1515,10 +1514,8 @@ libs/RVL_SDK/src/os/OSThread.c:
 	.sbss       start:0x8063FAE8 end:0x8063FAF8
 
 libs/RVL_SDK/src/os/OSTime.c:
-	.text       start:0x802727B8 end:0x80272BCC
-
-src/.unsorted/80272BCC.cpp:
-	.text       start:0x80272BCC end:0x80272E6C
+	.text       start:0x802727B8 end:0x80272E6C
+	.data       start:0x80427DC8 end:0x80427E28
 
 libs/RVL_SDK/src/os/OSUtf.c:
 	.text       start:0x80272E6C end:0x802730A4
@@ -1548,13 +1545,11 @@ libs/RVL_SDK/src/exi/EXIBios.c:
 	.text       start:0x80274558 end:0x80275DEC
 	.bss        start:0x805154C0 end:0x80515580
 	.sdata      start:0x8063DAB8 end:0x8063DAC0
-	.sbss       start:0x8063FB48 end:0x8063FB4C
-
-src/.unsorted/80275DEC.cpp:
-	.text       start:0x80275DEC end:0x80275F64
+	.sbss       start:0x8063FB48 end:0x8063FB50
 
 libs/RVL_SDK/src/exi/EXIUart.c:
-	.text       start:0x80275F64 end:0x80276120
+	.text       start:0x80275DEC end:0x80276120
+	.sbss       start:0x8063FB50 end:0x8063FB60
 
 libs/RVL_SDK/src/exi/EXICommon.c:
 	.text       start:0x80276120 end:0x802762AC
@@ -1564,7 +1559,7 @@ libs/RVL_SDK/src/si/SIBios.c:
 	.text       start:0x802762AC end:0x802772B4
 	.data       start:0x80433F70 end:0x80433FE0
 	.bss        start:0x80515580 end:0x805157A0
-	.sdata      start:0x8063DAC0 end:0x8063DAC4
+	.sdata      start:0x8063DAC0 end:0x8063DAC8
 	.sbss       start:0x8063FB60 end:0x8063FB70
 
 libs/RVL_SDK/src/si/SISamplingRate.c:
@@ -1576,11 +1571,11 @@ src/.unsorted/8027738C.cpp:
 libs/RVL_SDK/src/db/db.c:
 	.text       start:0x80277394 end:0x80277498
 
-src/.unsorted/80277498.cpp:
-	.text       start:0x80277498 end:0x8027762C
-
 libs/RVL_SDK/src/vi/vi.c:
-	.text       start:0x8027762C end:0x80279E6C
+	.text       start:0x80277498 end:0x80279E6C
+	.bss        start:0x805157A0 end:0x80515910
+	.sdata      start:0x8063DAC8 end:0x8063DAE8
+	.sbss       start:0x8063FB80 end:0x8063FC30
 
 libs/RVL_SDK/src/vi/i2c.c:
 	.text       start:0x80279E6C end:0x8027A888
@@ -1589,10 +1584,9 @@ libs/RVL_SDK/src/vi/vi3in1.c:
 	.text       start:0x8027A888 end:0x8027BF2C
 
 libs/RVL_SDK/src/mtx/mtx.c:
-	.text       start:0x8027BF2C end:0x8027C5C0
-
-src/.unsorted/8027C5C0.cpp:
-	.text       start:0x8027C5C0 end:0x8027C9FC
+	.text       start:0x8027BF2C end:0x8027C9FC
+	.sdata      start:0x8063DB08 end:0x8063DB10
+	.sdata2     start:0x80642670 end:0x80642688
 
 libs/RVL_SDK/src/mtx/mtxvec.c:
 	.text       start:0x8027C9FC end:0x8027CAA4
@@ -1604,11 +1598,8 @@ src/.unsorted/8027CCC4.cpp:
 	.text       start:0x8027CCC4 end:0x8027CD28
 
 libs/RVL_SDK/src/mtx/vec.c:
-	.text       start:0x8027CD28 end:0x8027CE24
-	.sdata2     start:0x806426A4 end:0x806426B0
-
-src/.unsorted/8027CE24.cpp:
-	.text       start:0x8027CE24 end:0x8027D024
+	.text       start:0x8027CD28 end:0x8027D024
+	.sdata2     start:0x806426A4 end:0x806426B8
 
 libs/RVL_SDK/src/mtx/quat.c:
 	.text       start:0x8027D024 end:0x8027D5D8
@@ -1634,11 +1625,9 @@ libs/RVL_SDK/src/gx/GXGeometry.c:
 libs/RVL_SDK/src/gx/GXFrameBuf.c:
 	.text       start:0x8028146C end:0x80281F38
 
-src/.unsorted/80281F38.cpp:
-	.text       start:0x80281F38 end:0x802821AC
-
 libs/RVL_SDK/src/gx/GXLight.c:
-	.text       start:0x802821AC end:0x80282610
+	.text       start:0x80281F38 end:0x80282610
+	.sdata2     start:0x80642708 end:0x80642718
 
 libs/RVL_SDK/src/gx/GXTexture.c:
 	.text       start:0x80282610 end:0x80283364
@@ -1659,11 +1648,8 @@ libs/RVL_SDK/src/gx/GXDraw.c:
 libs/RVL_SDK/src/gx/GXDisplayList.c:
 	.text       start:0x8028663C end:0x8028680C
 
-src/.unsorted/8028680C.cpp:
-	.text       start:0x8028680C end:0x80286994
-
 libs/RVL_SDK/src/gx/GXTransform.c:
-	.text       start:0x80286994 end:0x80286E50
+	.text       start:0x8028680C end:0x80286E50
 
 libs/RVL_SDK/src/gx/GXPerf.c:
 	.text       start:0x80286E50 end:0x8028768C

@@ -39,10 +39,10 @@ extern void GXSetChanCtrl(GXChannelID channel, GXBool doEnable, GXColorSrc ambSr
 extern void GXGetLightPos(const GXLightObj* obj, f32* x, f32* y, f32* z);
 extern void GXGetLightDir(const GXLightObj* obj, f32* nX, f32* nY, f32* nZ);
 
-extern void GXGetLightAttnA(GXLightObj* obj, f32* a0, f32* a1, f32* a2);
-extern void GXGetLightAttnK(GXLightObj* obj, f32* k0, f32* k1, f32* k2);
+extern void GXGetLightAttnA(const GXLightObj* obj, f32* a0, f32* a1, f32* a2);
+extern void GXGetLightAttnK(const GXLightObj* obj, f32* k0, f32* k1, f32* k2);
 
-extern void GXGetLightColor(GXLightObj* obj, GXColor* color);
+extern void GXGetLightColor(const GXLightObj* obj, GXColor* color);
 
 ////////////////////////////////////////////
 

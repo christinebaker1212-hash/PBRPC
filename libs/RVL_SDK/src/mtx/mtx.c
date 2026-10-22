@@ -1,5 +1,6 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/mtx/mtx.c
 #include <revolution/mtx.h>
+#include <revolution/os.h>
 
 #include <math.h>
 
@@ -717,4 +718,132 @@ void PSMTXTranspose(const __REGISTER Mtx src, __REGISTER Mtx xPose) {
         psq_st trns1, 24(xPose), 0, 0
     }
     xPose[2][2] = row0b;
+}
+
+void PSMTXRotAxisRad(Mtx m, const Vec* axis, f32 rad) {
+    f32 sinT, cosT;
+
+    sinT = sinf(rad);
+    cosT = cosf(rad);
+
+    __PSMTXRotAxisRadInternal(m, axis, sinT, cosT);
+}
+
+void PSMTXQuat(__REGISTER Mtx m, const __REGISTER Quaternion* q) {
+    __REGISTER f32 c_zero, c_one, c_two, scale;
+    __REGISTER f32 tmp0, tmp1, tmp2, tmp3, tmp4;
+    __REGISTER f32 tmp5, tmp6, tmp7, tmp8, tmp9;
+    c_one = 1.0f;
+
+	asm {
+        psq_l tmp0, 0(q), 0, 0
+        psq_l tmp1, 8(q), 0, 0
+        fsubs c_zero, c_one, c_one
+        fadds c_two, c_one, c_one
+        ps_mul tmp2, tmp0, tmp0
+        ps_merge10 tmp5, tmp0, tmp0
+        ps_madd tmp4, tmp1, tmp1, tmp2
+        ps_mul tmp3, tmp1, tmp1
+        ps_sum0 scale, tmp4, tmp4, tmp4
+        ps_muls1 tmp7, tmp5, tmp1
+        fres tmp9, scale
+        ps_sum1 tmp4, tmp3, tmp4, tmp2
+        ps_nmsub scale, scale, tmp9, c_two
+        ps_muls1 tmp6, tmp1, tmp1
+        ps_mul scale, tmp9, scale
+        ps_sum0 tmp2, tmp2, tmp2, tmp2
+        fmuls scale, scale, c_two
+        ps_madd tmp8, tmp0, tmp5, tmp6
+        ps_msub tmp6, tmp0, tmp5, tmp6
+        psq_st c_zero, 12(m), 1, 0
+        ps_nmsub tmp2, tmp2, scale, c_one
+        ps_nmsub tmp4, tmp4, scale, c_one
+        psq_st c_zero, 44(m), 1, 0
+        ps_mul tmp8, tmp8, scale
+        ps_mul tmp6, tmp6, scale
+        psq_st tmp2, 40(m), 1, 0
+        ps_madds0 tmp5, tmp0, tmp1, tmp7
+        ps_merge00 tmp1, tmp8, tmp4
+        ps_nmsub tmp7, tmp7, c_two, tmp5
+        ps_merge10 tmp0, tmp4, tmp6
+        psq_st tmp1, 16(m), 0, 0
+        ps_mul tmp5, tmp5, scale
+        ps_mul tmp7, tmp7, scale
+        psq_st tmp0, 0(m), 0, 0
+        psq_st tmp5, 8(m), 1, 0
+        ps_merge10 tmp3, tmp7, c_zero
+        ps_merge01 tmp9, tmp7, tmp5
+        psq_st tmp3, 24(m), 0, 0
+        psq_st tmp9, 32(m), 0, 0
+	}
+}
+
+void C_MTXLightFrustum(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 n, f32 scaleS, f32 scaleT, f32 transS, f32 transT) {
+    f32 tmp;
+
+    ASSERTMSGLINE(2541, m, "MTXLightFrustum():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2542, (t != b), "MTXLightFrustum():  't' and 'b' clipping planes are equal ");
+    ASSERTMSGLINE(2543, (l != r), "MTXLightFrustum():  'l' and 'r' clipping planes are equal ");
+
+    tmp = 1 / (r - l);
+    m[0][0] = (scaleS * (2 * n * tmp));
+    m[0][1] = 0;
+    m[0][2] = (scaleS * (tmp * (r + l))) - transS;
+    m[0][3] = 0;
+    tmp = 1 / (t - b);
+    m[1][0] = 0;
+    m[1][1] = (scaleT * (2 * n * tmp));
+    m[1][2] = (scaleT * (tmp * (t + b))) - transT;
+    m[1][3] = 0;
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = -1;
+    m[2][3] = 0;
+}
+
+void C_MTXLightPerspective(Mtx m, f32 fovY, f32 aspect, f32 scaleS, f32 scaleT, f32 transS, f32 transT) {
+    f32 angle;
+    f32 cot;
+
+    ASSERTMSGLINE(2604, m, "MTXLightPerspective():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2605, (fovY > 0.0) && (fovY < 180.0), "MTXLightPerspective():  'fovY' out of range ");
+    ASSERTMSGLINE(2606, 0 != aspect, "MTXLightPerspective():  'aspect' is 0 ");
+
+    angle = (0.5f * fovY);
+    angle = MTXDegToRad(angle);
+    cot = 1 / tanf(angle);
+    m[0][0] = (scaleS * (cot / aspect));
+    m[0][1] = 0;
+    m[0][2] = -transS;
+    m[0][3] = 0;
+    m[1][0] = 0;
+    m[1][1] = (cot * scaleT);
+    m[1][2] = -transT;
+    m[1][3] = 0;
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = -1;
+    m[2][3] = 0;
+}
+
+void C_MTXLightOrtho(Mtx m, f32 t, f32 b, f32 l, f32 r, f32 scaleS, f32 scaleT, f32 transS, f32 transT) {
+    f32 tmp;
+
+    ASSERTMSGLINE(2672, m, "MTXLightOrtho():  NULL MtxPtr 'm' ");
+    ASSERTMSGLINE(2673, (t != b), "MTXLightOrtho():  't' and 'b' clipping planes are equal ");
+    ASSERTMSGLINE(2674, (l != r), "MTXLightOrtho():  'l' and 'r' clipping planes are equal ");
+    tmp = 1 / (r - l);
+    m[0][0] = (2 * tmp * scaleS);
+    m[0][1] = 0;
+    m[0][2] = 0;
+    m[0][3] = (transS + (scaleS * (tmp * -(r + l))));
+    tmp = 1/ (t - b);
+    m[1][0] = 0;
+    m[1][1] = (2 * tmp * scaleT);
+    m[1][2] = 0;
+    m[1][3] = (transT + (scaleT * (tmp * -(t + b))));
+    m[2][0] = 0;
+    m[2][1] = 0;
+    m[2][2] = 0;
+    m[2][3] = 1;
 }

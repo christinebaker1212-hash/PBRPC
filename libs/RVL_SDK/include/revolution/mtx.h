@@ -63,10 +63,15 @@ void C_MTXQuat(Mtx, const Quaternion *);
 #define MTXQuat PSMTXQuat
 #endif // DEBUG
 
-void MTXLookAt(Mtx m, const Point3d *camPos, const Vec *camUp, const Point3d *target);
-void MTXLightFrustum(Mtx, f32, f32, f32, f32, f32, f32, f32, f32, f32);
-void MTXLightOrtho(Mtx, f32, f32, f32, f32, f32, f32, f32, f32);
-void MTXLightPerspective(Mtx, f32, f32, f32, f32, f32, f32);
+void C_MTXLookAt(Mtx m, const Point3d *camPos, const Vec *camUp, const Point3d *target);
+void C_MTXLightFrustum(Mtx, f32, f32, f32, f32, f32, f32, f32, f32, f32);
+void C_MTXLightOrtho(Mtx, f32, f32, f32, f32, f32, f32, f32, f32);
+void C_MTXLightPerspective(Mtx, f32, f32, f32, f32, f32, f32);
+
+#define MTXLookAt C_MTXLookAt
+#define MTXLightFrustum C_MTXLightFrustum
+#define MTXLightOrtho C_MTXLightOrtho
+#define MTXLightPerspective C_MTXLightPerspective
 
 // MtxVec
 
@@ -100,7 +105,7 @@ void PSVECAdd(const Vec *a, const Vec *b, Vec *ab);
 void PSVECCrossProduct(const Vec *a, const Vec *b, Vec *axb);
 void PSVECNormalize(const Vec *src, Vec *dst);
 void PSVECScale(const Vec *src, Vec *dst, f32 scale);
-f32 PSVECSquareMag(Vec *vec);
+f32 PSVECSquareMag(const Vec *vec);
 void PSVECSubtract(const Vec *a, const Vec *b, Vec *ab);
 
 void C_VECAdd(const Vec *a, const Vec *b, Vec *ab);
@@ -143,6 +148,13 @@ f32 PSVECMag(const Vec* v);
 f32 PSVECDotProduct(const Vec* a, const Vec* b);
 f32 PSVECSquareDistance(const Vec* a, const Vec* b);
 void C_VECHalfAngle(const Vec* a, const Vec* b, Vec* half);
+void C_VECReflect(const Vec* src, const Vec* normal, Vec* dst);
+
+#ifndef DEBUG
+#define VECMag PSVECMag
+#define VECDotProduct PSVECDotProduct
+#define VECSquareDistance PSVECSquareDistance
+#endif
 
 #ifdef __cplusplus
 }

@@ -1,6 +1,7 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/mtx/vec.c
 #include <math.h>
 #include <revolution/mtx.h>
+#include <revolution/os.h>
 
 // clang-format off
 
@@ -114,6 +115,111 @@ f32 PSVECMag(const __REGISTER Vec* v) {
         fmuls rmag, nwork0, nwork1
         fmuls sqmag, sqmag, rmag
     L_000005F0:
+    }
+
+    return sqmag;
+}
+
+f32 PSVECDistance(const __REGISTER Vec* a, const __REGISTER Vec* b) {
+    __REGISTER f32 v0yz, v1yz, v0xy, v1xy, dyz, dxy;
+    __REGISTER f32 sqdist, rdist;
+    __REGISTER f32 nwork0, nwork1;
+    __REGISTER f32 c_half, c_three, c_zero;
+
+    asm {
+        psq_l v0yz, 0x4(a), 0, 0
+        psq_l v1yz, 0x4(b), 0, 0
+        ps_sub dyz, v0yz, v1yz
+        psq_l v0xy, 0x0(a), 0, 0
+        psq_l v1xy, 0x0(b), 0, 0
+        ps_mul dyz, dyz, dyz
+        ps_sub dxy, v0xy, v1xy
+    }
+
+    c_half  = 0.5f;
+
+    asm {
+        ps_madd sqdist, dxy, dxy, dyz
+        fsubs c_zero, c_half, c_half
+        ps_sum0 sqdist, sqdist, dyz, dyz
+        fcmpu cr0, c_zero, sqdist
+        beq L_00000CBC
+    }
+
+    c_three = 3.0f;
+
+    asm {
+        frsqrte rdist, sqdist
+        fmuls nwork0, rdist, rdist
+        fmuls nwork1, rdist, c_half
+        fnmsubs nwork0, nwork0, sqdist, c_three
+        fmuls rdist, nwork0, nwork1
+        fmuls sqdist, sqdist, rdist
+    L_00000CBC:
+    }
+
+    return sqdist;
+}
+
+void C_VECHalfAngle(const Vec* a, const Vec* b, Vec* half) {
+    Vec aTmp;
+    Vec bTmp;
+    Vec hTmp;
+
+    ASSERTMSGLINE(713, a, "VECHalfAngle():  NULL VecPtr 'a' ");
+    ASSERTMSGLINE(714, b, "VECHalfAngle():  NULL VecPtr 'b' ");
+    ASSERTMSGLINE(715, half, "VECHalfAngle():  NULL VecPtr 'half' ");
+
+    aTmp.x = -a->x;
+    aTmp.y = -a->y;
+    aTmp.z = -a->z;
+    bTmp.x = -b->x;
+    bTmp.y = -b->y;
+    bTmp.z = -b->z;
+
+    VECNormalize(&aTmp, &aTmp);
+    VECNormalize(&bTmp, &bTmp);
+    VECAdd(&aTmp, &bTmp, &hTmp);
+
+    if (VECDotProduct(&hTmp, &hTmp) > 0.0f) {
+        VECNormalize(&hTmp, half);
+        return;
+    }
+    *half = hTmp;
+}
+
+void C_VECReflect(const Vec* src, const Vec* normal, Vec* dst) {
+    f32 cosA;
+    Vec uI;
+    Vec uN;
+
+    ASSERTMSGLINE(769, src, "VECReflect():  NULL VecPtr 'src' ");
+    ASSERTMSGLINE(770, normal, "VECReflect():  NULL VecPtr 'normal' ");
+    ASSERTMSGLINE(771, dst, "VECReflect():  NULL VecPtr 'dst' ");
+
+    uI.x = -src->x;
+    uI.y = -src->y;
+    uI.z = -src->z;
+
+    VECNormalize(&uI, &uI);
+    VECNormalize(normal, &uN);
+
+    cosA = VECDotProduct(&uI, &uN);
+    dst->x = (2.0f * uN.x * cosA) - uI.x;
+    dst->y = (2.0f * uN.y * cosA) - uI.y;
+    dst->z = (2.0f * uN.z * cosA) - uI.z;
+    VECNormalize(dst, dst);
+}
+
+f32 PSVECSquareMag(const __REGISTER Vec* v) {
+    __REGISTER f32 vxy, vzz, sqmag;
+
+    asm {
+        psq_l vxy, 0x0(v), 0, 0
+        ps_mul vxy, vxy, vxy
+        lfs vzz, 0x8(v)
+        ps_madd sqmag, vzz, vzz, vxy
+        ps_sum0 sqmag, sqmag, vxy, vxy
     }
 
     return sqmag;
