@@ -747,3 +747,78 @@ s32 fn_801E3380(s32 arg0, s32 arg1, s32 arg2) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_801E0A54(s32, s32);
+s32 fn_801E0A60__FP13GSchannelDataP11GSsceneDataUl(s32, s32, s32);
+
+s32 fn_801E0A54(s32 arg0, s32 arg1) {
+    return fn_801E0A60__FP13GSchannelDataP11GSsceneDataUl(arg0, (s32) &lbl_8063F378, arg1);
+}
+}
+
+extern "C" {
+
+s32 findTarget__14GSrenderTargetFl(s32);
+s32 fn_801E2444(s32);
+s32 fn_801E2810(s32);
+s32 fn_8023B420__14GSrenderTargetFUl(s32, s32);
+extern u8 *sInstance__17GShierarchyModule;
+
+s32 fn_801E2810(s32 arg0) {
+    s32 temp_r0;
+    s32 temp_r31;
+    s32 var_r3;
+    u32 temp_r31_2;
+
+    var_r3 = arg0;
+    temp_r31 = var_r3;
+    temp_r0 = (*(s32 *)((u8 *)(var_r3) + (0x18)));
+    if (temp_r0 != 0) {
+        var_r3 = fn_801E2444(temp_r0);
+    }
+    if ((*(u16 *)((u8 *)(temp_r31) + (0))) & 0x200) {
+        temp_r31_2 = (*(u32 *)((u8 *)(sInstance__17GShierarchyModule) + (0x134)));
+        var_r3 = findTarget__14GSrenderTargetFl((s32) (u8) (temp_r31_2 >> 0x10U));
+        if (var_r3 != 0) {
+            var_r3 = fn_8023B420__14GSrenderTargetFUl(var_r3, (s32) temp_r31_2);
+        }
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_801E24F8(s32, s32, s32);
+
+s32 fn_801E2878(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r6;
+    s32 var_r3;
+
+    if (arg2 != 0) {
+        temp_r6 = (*(s32 *)((u8 *)(arg0) + (0x30)));
+        if ((temp_r6 != 0) && ((u32) temp_r6 < 0x80000000U)) {
+            (*(s32 *)((u8 *)(arg0) + (0x30))) = (s32) (temp_r6 + arg2);
+        }
+    }
+    var_r3 = (*(s32 *)((u8 *)(arg0) + (0x30)));
+    if (var_r3 != 0) {
+        var_r3 = fn_801E24F8(var_r3, arg1, arg2);
+    }
+    if (arg2 != 0) {
+        var_r3 = (*(s32 *)((u8 *)(arg0) + (0x34)));
+        if ((var_r3 != 0) && ((u32) var_r3 < 0x80000000U)) {
+            (*(s32 *)((u8 *)(arg0) + (0x34))) = (s32) (var_r3 + arg2);
+        }
+    }
+    if (arg2 != 0) {
+        var_r3 = (*(s32 *)((u8 *)(arg0) + (0x38)));
+        if ((var_r3 != 0) && ((u32) var_r3 < 0x80000000U)) {
+            (*(s32 *)((u8 *)(arg0) + (0x38))) = (s32) (var_r3 + arg2);
+        }
+    }
+    return var_r3;
+}
+}
