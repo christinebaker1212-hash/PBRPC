@@ -503,3 +503,28 @@ void GSmodel::fn_801F1554(GSanimationObject *animObj, GSchannelData *channel, f3
         } break;
     }
 }
+
+extern "C" {
+
+s32 fn_801EF448(u8 *);
+s32 fn_801EF4E8(u8 *);
+s32 fn_801EF58C(u8 *);
+s32 fn_801EF644(u8 *);
+s32 memset(u8 *, s32, s32);
+
+u8 *__ct__17_UnkModelStruct_1FP11GSmodelData(u8 *arg0, u16 *arg1) {
+    (*(u16 **)((u8 *)(arg0) + (0))) = arg1;
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x1A))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x1B))) = 0;
+    memset(arg0 + 4, 0, 0x10);
+    if (*(*(u16 **)((u8 *)(arg0) + (0))) & 0x20) {
+        fn_801EF4E8(arg0);
+    } else {
+        fn_801EF448(arg0);
+    }
+    fn_801EF58C(arg0);
+    fn_801EF644(arg0);
+    return arg0;
+}
+}
