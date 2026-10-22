@@ -67,3 +67,17 @@ struct Fraction {
                                  battleCtx->attacker,                                                                  \
                                  battleCtx->attacker,                                                                  \
                                  1))
+
+#define FAINTED_MON (battleCtx->battleMons[battleCtx->faintedMon])
+#define ATTACKER_MOVE_SLOT (battleCtx->moveSlot[battleCtx->attacker])
+#define ATTACKER_ACTION (battleCtx->battlerActions[battleCtx->attacker])
+#define DEFENDER_ACTION (battleCtx->battlerActions[battleCtx->defender])
+#define ATTACKER_LAST_MOVE (battleCtx->movePrevByBattler[battleCtx->attacker])
+#define DEFENDER_LAST_MOVE (battleCtx->movePrevByBattler[battleCtx->defender])
+#define FOLLOW_ME_USER(side) (battleCtx->sideConditions[side].followMeUser)
+#define BATTLER_OPP(battler) (battler ^ 1)
+
+// Assertions are compiled out of the retail game.
+#ifndef GF_ASSERT
+#define GF_ASSERT(cond) ((void)0)
+#endif

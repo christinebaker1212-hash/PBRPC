@@ -25,3 +25,6 @@ enum PokemonType {
 #define TYPE_MULTI_IMMUNE 0
 #define TYPE_MULTI_NOT_VERY_EFF 5
 #define TYPE_MULTI_SUPER_EFF 20
+
+// Remaining names from pret/pokeplatinum generated/pokemon_types.txt
+#define NUM_POKEMON_TYPES 18
