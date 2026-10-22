@@ -18,3 +18,31 @@ s32 fn_80226334(void) {
 void fn_8022633C(void) {}
 void fn_80226340(void) {}
 }
+
+extern "C" {
+
+s32 fn_80225F70(void);
+
+u8 *fn_80225E94(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    (*(s32 *)((u8 *)(arg0) + (4))) = arg1;
+    (*(s32 *)((u8 *)(arg0) + (8))) = arg2;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = arg3;
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = arg4;
+    (*(s32 *)((u8 *)(arg0) + (0x18))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    fn_80225F70();
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_80226150(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
