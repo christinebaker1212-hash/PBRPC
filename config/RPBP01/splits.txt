@@ -1521,8 +1521,11 @@ src/.unsorted/80275DEC.cpp:
 libs/RVL_SDK/src/exi/EXIUart.c:
 	.text       start:0x80275F64 end:0x80276120
 
-src/.unsorted/80276120.cpp:
-	.text       start:0x80276120 end:0x802772B4
+libs/RVL_SDK/src/exi/EXICommon.c:
+	.text       start:0x80276120 end:0x802762AC
+
+libs/RVL_SDK/src/si/SIBios.c:
+	.text       start:0x802762AC end:0x802772B4
 
 libs/RVL_SDK/src/si/SISamplingRate.c:
 	.text       start:0x802772B4 end:0x8027738C

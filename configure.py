@@ -573,11 +573,13 @@ config.libs = [
         [
             Object(NonMatching, "exi/EXIBios.c"),
             Object(NonMatching, "exi/EXIUart.c"),
+            Object(NonMatching, "exi/EXICommon.c"),
         ],
     ),
     RVLSDKLib(
         "si",
         [
+            Object(NonMatching, "si/SIBios.c"),
             Object(NonMatching, "si/SISamplingRate.c"),
         ],
     ),
@@ -1311,7 +1313,6 @@ config.libs = [
             Object(NonMatching, ".unsorted/8026FC14.cpp"),
             Object(NonMatching, ".unsorted/80272BCC.cpp"),
             Object(NonMatching, ".unsorted/80275DEC.cpp"),
-            Object(NonMatching, ".unsorted/80276120.cpp"),
             Object(NonMatching, ".unsorted/8027738C.cpp"),
             Object(NonMatching, ".unsorted/80277498.cpp"),
             Object(NonMatching, ".unsorted/8028680C.cpp"),

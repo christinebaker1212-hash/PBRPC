@@ -54,6 +54,10 @@ s32 __EXIProbeStartTime[2] ADDRESS(OS_BASE_CACHED | OS_ADDR_EXI_LAST_PROBES);
 
 extern const u32 __EXIFreq;
 
+static inline u32 __EXISwap32(u32 val) {
+    return val >> 24 & 0x000000FF | val >> 8 & 0x0000FF00 | val << 8 & 0x00FF0000 | val << 24 & 0xFF000000;
+}
+
 typedef void (*EXICallback)(s32 chan, OSContext* context);
 
 void EXIInit();
