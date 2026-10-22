@@ -58,3 +58,23 @@ s32 fn_800075D0(u8 *arg0) {
     return 1;
 }
 }
+
+extern "C" {
+
+s32 fn_80007524(s32, s32);
+
+s32 fn_80007524(s32 arg0, s32 arg1) {
+    u16 temp_r0;
+
+    if ((u8 *) lbl_8063E918 != NULL) {
+        temp_r0 = 1 << arg0;
+        if (arg1 != 0) {
+            (*(u16 *)((u8 *)(lbl_8063E918) + (0xC))) = (u16) ((*(u16 *)((u8 *)(lbl_8063E918) + (0xC))) | temp_r0);
+            return (s32) temp_r0;
+        }
+        (*(u16 *)((u8 *)(lbl_8063E918) + (0xC))) = (u16) ((*(u16 *)((u8 *)(lbl_8063E918) + (0xC))) & ~temp_r0);
+        return (s32) temp_r0;
+    }
+    return arg0;
+}
+}
