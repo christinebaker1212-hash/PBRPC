@@ -26,14 +26,14 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "bta_api.h"
-#include "bta_hh_api.h"
-#include "bta_sys.h"
-#include "hiddefs.h"
-#include "sdp_api.h"
+#include <private/bte/bta_api.h>
+#include <private/bte/bta_hh_api.h>
+#include <private/bte/bta_sys.h>
+#include <private/bte/hiddefs.h>
+#include <private/bte/sdp_api.h>
 
 #define BTA_HH_MAX_RPT_CHARS		8
 

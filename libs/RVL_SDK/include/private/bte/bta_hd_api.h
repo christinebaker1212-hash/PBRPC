@@ -6,8 +6,8 @@
  * [1] components/bt/host/bluedroid/bta/hd/include/bta_hd_api.h
  */
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
 #ifdef __cplusplus
 	extern "C" {

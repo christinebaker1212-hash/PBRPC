@@ -3,7 +3,7 @@
 
 // Declarations that I haven't figured out where to put yet
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
 #ifdef __cplusplus
 	extern "C" {

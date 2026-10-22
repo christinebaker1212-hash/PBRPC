@@ -1,7 +1,7 @@
 #ifndef BTE_BTA_SS_INT_H
 #define BTE_BTA_SS_INT_H
 
-#include "bta_ss_api.h"
+#include <private/bte/bta_ss_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

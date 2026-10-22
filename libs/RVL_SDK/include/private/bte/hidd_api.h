@@ -1,10 +1,10 @@
 #ifndef BTE_HID_DEVICE_API_H
 #define BTE_HID_DEVICE_API_H
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "hiddefs.h"
+#include <private/bte/hiddefs.h>
 
 #ifdef __cplusplus
 	extern "C" {

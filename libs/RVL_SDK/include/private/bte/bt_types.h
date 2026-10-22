@@ -330,6 +330,8 @@ typedef struct
 	UINT16	layer_specific;	// 0x06
 } BT_HDR; // size 0x08
 
+#define BT_HDR_SIZE	(sizeof(BT_HDR))
+
 #define LEN_UUID_16			2
 #define LEN_UUID_32			4
 #define LEN_UUID_128		16

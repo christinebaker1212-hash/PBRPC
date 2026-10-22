@@ -1,7 +1,7 @@
 #ifndef BTE_GOEP_INT_H
 #define BTE_GOEP_INT_H
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
 #ifdef __cplusplus
 	extern "C" {

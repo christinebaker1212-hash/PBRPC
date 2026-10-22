@@ -1,11 +1,11 @@
 #ifndef BTE_BTA_PRM_INT_H
 #define BTE_BTA_PRM_INT_H
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "bta_prm_api.h"
-#include "bta_sys.h"
+#include <private/bte/bta_prm_api.h>
+#include <private/bte/bta_sys.h>
 
 #define BTA_PRM_MAX_PATCH_SIZE	250
 

@@ -26,9 +26,9 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
-#include "gki.h"
+#include <private/bte/gki.h>
 
 #ifdef __cplusplus
 	extern "C" {

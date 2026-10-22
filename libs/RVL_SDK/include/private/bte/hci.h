@@ -26,7 +26,8 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
+#include <private/bte/bt_types.h>
 
 #ifdef __cplusplus
 	extern "C" {
@@ -48,14 +49,7 @@ enum
 	MSG_STACK_TO_HC_HCI_SCO			= 0x2200,
 };
 
-// separate anonymous struct to keep layers separate, i guess
-typedef struct
-{
-	UINT16	event;			// 0x00
-	UINT16	len;			// 0x02
-	UINT16	offset;			// 0x04
-	UINT16	layer_specific;	// 0x06
-} HC_BT_HDR; // size 0x08
+typedef BT_HDR HC_BT_HDR;
 
 
 typedef struct

@@ -1,14 +1,14 @@
 #ifndef BTE_HID_DEVICE_INT_H
 #define BTE_HID_DEVICE_INT_H
 
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "gki.h"
-#include "hiddefs.h"
-#include "hidd_api.h"
-#include "hid_conn.h"
-#include "l2c_api.h"
+#include <private/bte/gki.h>
+#include <private/bte/hiddefs.h>
+#include <private/bte/hidd_api.h>
+#include <private/bte/hid_conn.h>
+#include <private/bte/l2c_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

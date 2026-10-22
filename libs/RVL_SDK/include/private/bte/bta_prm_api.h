@@ -1,7 +1,7 @@
 #ifndef BTE_BTA_PRM_API_H
 #define BTE_BTA_PRM_API_H
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
 #ifdef __cplusplus
 	extern "C" {

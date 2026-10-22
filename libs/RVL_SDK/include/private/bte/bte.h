@@ -26,9 +26,10 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
+#include <private/bte/bt_types.h>
 
-#include "hci.h"
+#include <private/bte/hci.h>
 
 #ifdef __cplusplus
 	extern "C" {
@@ -51,7 +52,7 @@ void BTE_InitStack(void);
 
 // ---
 
-void bte_hcisu_send(HC_BT_HDR *p_msg, UINT16 event);
+void bte_hcisu_send(BT_HDR *p_msg, UINT16 event);
 void bte_hcisu_task(int);
 void bte_hcisu_close(void);
 void bta_ci_hci_msg_handler(void *p_data);

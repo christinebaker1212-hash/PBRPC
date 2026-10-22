@@ -26,7 +26,7 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
 #define BRCM_EXT_VERSION	1
 

@@ -26,7 +26,7 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bta_ag_api.h"
+#include <private/bte/bta_ag_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

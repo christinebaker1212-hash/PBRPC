@@ -26,9 +26,9 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "data_types.h"
+#include <private/bte/data_types.h>
 
-#include "bta_hh_api.h"
+#include <private/bte/bta_hh_api.h>
 
 #ifdef __cplusplus
 	extern "C" {

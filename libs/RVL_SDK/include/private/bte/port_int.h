@@ -26,13 +26,13 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_target.h"
-#include "bt_types.h"
-#include "data_types.h"
+#include <private/bte/bt_target.h>
+#include <private/bte/bt_types.h>
+#include <private/bte/data_types.h>
 
-#include "gki.h"
-#include "port_api.h"
-#include "rfcdefs.h"
+#include <private/bte/gki.h>
+#include <private/bte/port_api.h>
+#include <private/bte/rfcdefs.h>
 
 #ifdef __cplusplus
 	extern "C" {

@@ -26,7 +26,7 @@
 
 /* Includes changes by muff1n1634 and for this repository (KoopTheKoopa) */
 
-#include "bt_types.h"
+#include <private/bte/bt_types.h>
 
 #ifdef __cplusplus
 	extern "C" {
