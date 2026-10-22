@@ -2580,14 +2580,14 @@ libs/nw4r/src/snd/snd_SeqPlayer.cpp:
 	.text       start:0x8037845C end:0x8037962C
 
 libs/nw4r/src/snd/snd_SeqSound.cpp:
-	.text       start:0x8037962C end:0x80379D3C
-
-src/.unsorted/80375340.cpp:
-	.text       start:0x80379D3C end:0x80379EF8
+	.text       start:0x8037962C end:0x80379D68
 	.ctors      start:0x803E589C end:0x803E58A0
 
+libs/nw4r/src/snd/snd_SeqSoundHandle.cpp:
+	.text       start:0x80379D68 end:0x80379DA0
+
 libs/nw4r/src/snd/snd_SeqTrack.cpp:
-	.text       start:0x80379EF8 end:0x8037AF64
+	.text       start:0x80379DA0 end:0x8037AF64
 	.rodata     start:0x803F3878 end:0x803F38A0
 	.sdata2     start:0x8062AF28 end:0x8062AF58
 

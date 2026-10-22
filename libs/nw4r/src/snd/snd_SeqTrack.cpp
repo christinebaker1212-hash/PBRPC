@@ -12,6 +12,7 @@ void SeqTrack::SetPlayerTrackNo(int no) {
 }
 
 SeqTrack::SeqTrack() : mOpenFlag(false), mPlayer(NULL), mChannelList(NULL) {
+    OSInitMutex(&mMutex);
     InitParam();
 }
 
