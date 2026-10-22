@@ -143,16 +143,17 @@ void Pane::SetVtxColor(u32 idx, ut::Color color) {
 #pragma unused(color)
 }
 
+// This revision converts the rotation with a float constant
+#define DEG_TO_RAD_F(x) (static_cast<f32>(NW4R_MATH_PI / 180.0f) * (x))
+
 u8 Pane::GetColorElement(u32 idx) const {
     switch (idx) {
         case ANIMTARGET_PANE_COLOR_ALPHA: {
             return mAlpha;
         }
-
-        default: {
-            return GetVtxColorElement(idx);
-        }
     }
+
+    return GetVtxColorElement(idx);
 }
 
 void Pane::SetColorElement(u32 idx, u8 value) {
@@ -232,13 +233,13 @@ void Pane::CalculateMtx(const DrawInfo &rInfo) {
 
     PSMTXScale(mtx2, scale.x, scale.y, 1.0f);
 
-    PSMTXRotRad(rotateMtx, 'x', NW4R_MATH_DEG_TO_RAD(mRotate.x));
+    PSMTXRotRad(rotateMtx, 'x', DEG_TO_RAD_F(mRotate.x));
     PSMTXConcat(rotateMtx, mtx2, mtx1);
 
-    PSMTXRotRad(rotateMtx, 'y', NW4R_MATH_DEG_TO_RAD(mRotate.y));
+    PSMTXRotRad(rotateMtx, 'y', DEG_TO_RAD_F(mRotate.y));
     PSMTXConcat(rotateMtx, mtx1, mtx2);
 
-    PSMTXRotRad(rotateMtx, 'z', NW4R_MATH_DEG_TO_RAD(mRotate.z));
+    PSMTXRotRad(rotateMtx, 'z', DEG_TO_RAD_F(mRotate.z));
     PSMTXConcat(rotateMtx, mtx2, mtx1);
 
     PSMTXTransApply(mtx1, mMtx, mTranslate.x, mTranslate.y, mTranslate.z);

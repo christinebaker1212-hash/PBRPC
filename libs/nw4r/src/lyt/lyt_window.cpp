@@ -430,10 +430,6 @@ void Window::DrawContent(const math::VEC2 &rBase, const WindowFrameSize &rFrameS
 }
 
 void Window::DrawFrame(const math::VEC2 &rBase, const Frame &rFrame, const WindowFrameSize &rFrameSize, u8 alpha) {
-    if (rFrame.pMaterial->GetTextureNum() == 0) {
-        return;
-    }
-
     bool useVtxColor = rFrame.pMaterial->SetupGX(detail::IsModulateVertexColor(NULL, alpha), alpha);
 
     detail::SetVertexFormat(useVtxColor, 1);
@@ -469,7 +465,7 @@ void Window::DrawFrame4(const math::VEC2 &rBase, const Frame *pFrames, const Win
     bool modVtxColor = detail::IsModulateVertexColor(NULL, alpha);
 
 #define DRAW_FRAME(FRAME)                                                                                              \
-    if (pFrames[WINDOWFRAME_##FRAME].pMaterial->GetTextureNum() > 0) {                                                 \
+    {                                                                                                                  \
         bool useVtxColor = pFrames[WINDOWFRAME_##FRAME].pMaterial->SetupGX(modVtxColor, alpha);                        \
                                                                                                                        \
         Get##FRAME##FrameSize(&point, &size, rBase, mSize, rFrameSize);                                                \
@@ -500,7 +496,7 @@ void Window::DrawFrame8(const math::VEC2 &rBase, const Frame *pFrames, const Win
     bool modVtxColor = detail::IsModulateVertexColor(NULL, alpha);
 
 #define DRAW_FRAME_EX(FRAME, TEXCOORD, SIZE, POINT)                                                                    \
-    if (pFrames[WINDOWFRAME_##FRAME].pMaterial->GetTextureNum() > 0) {                                                 \
+    {                                                                                                                  \
         bool useVtxColor = pFrames[WINDOWFRAME_##FRAME].pMaterial->SetupGX(modVtxColor, alpha);                        \
                                                                                                                        \
         size = SIZE;                                                                                                   \
