@@ -35,3 +35,20 @@ s32 GetFrameMaterial__Q34nw4r3lyt6WindowCFUl(u8 *arg0, u32 arg1) {
     return (*(s32 *)((u8 *)(((*(s32 *)((u8 *)(arg0) + (0xFC))) + (arg1 * 8))) + (4)));
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 __dt__Q34nw4r3lyt4PaneFv(s32, s32);
+s32 fn_8038A368(s32, s32);
+
+s32 fn_8038A368(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        __dt__Q34nw4r3lyt4PaneFv(arg0, 0);
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
