@@ -129,3 +129,12 @@ void fn_800C21DC(s32 arg0) {
     fn_80253E10(arg0, 6, lbl_80640FC4);
 }
 }
+
+extern "C" {
+
+extern u8 lbl_8063D518;
+
+u8 fn_800BB9A0(s32 arg0) {
+    return *(&lbl_8063D518 + (arg0 % 6));
+}
+}
