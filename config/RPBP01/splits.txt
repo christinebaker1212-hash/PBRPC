@@ -2713,7 +2713,7 @@ libs/nw4r/src/snd/snd_WsdFile.cpp:
 
 libs/nw4r/src/snd/snd_WsdPlayer.cpp:
 	.text       start:0x80383D24 end:0x80384C50
-	.data       start:0x8044D0C0 end:0x8044E130
+	.data       start:0x8044D0C0 end:0x8044D14C
 	.sdata2     start:0x80642DF8 end:0x80642E20
 
 libs/nw4r/src/snd/snd_adpcm.cpp:
