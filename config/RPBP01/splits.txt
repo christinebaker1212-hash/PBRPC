@@ -1609,6 +1609,11 @@ src/.unsorted/8027D5D8.cpp:
 
 libs/RVL_SDK/src/gx/GXInit.c:
 	.text       start:0x8027D624 end:0x8027E7EC
+	.data       start:0x80434AA0 end:0x80434CE0
+	.bss        start:0x80515930 end:0x80515FB0
+	.sdata      start:0x8063DB10 end:0x8063DB14
+	.sbss       start:0x8063FC50 end:0x8063FC78
+	.sdata2     start:0x806426D0 end:0x806426F8
 
 libs/RVL_SDK/src/gx/GXFifo.c:
 	.text       start:0x8027E7EC end:0x8027F3F4
@@ -1624,6 +1629,7 @@ libs/RVL_SDK/src/gx/GXGeometry.c:
 
 libs/RVL_SDK/src/gx/GXFrameBuf.c:
 	.text       start:0x8028146C end:0x80281F38
+	.sdata2     start:0x806426F8 end:0x80642708
 
 libs/RVL_SDK/src/gx/GXLight.c:
 	.text       start:0x80281F38 end:0x80282610
