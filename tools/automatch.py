@@ -17,6 +17,7 @@
 #   <unit> as in report.json, e.g. src/.unsorted/8031C124
 #
 # Requires m2c (https://github.com/matt-kempster/m2c); pass --m2c <path to m2c.py>.
+# Run tools/arity.py first to give m2c the prototypes of all functions.
 ###
 
 import argparse
@@ -289,11 +290,32 @@ def prototype_unknown_calls(src: str) -> str:
     return src
 
 
+CONTEXT: Dict[str, str] = {}
+CONTEXT_FILE = Path()
+
+
+def load_context(path: Path) -> None:
+    """Prototypes from tools/arity.py, given to m2c and declared in its output."""
+    for line in path.read_text().splitlines():
+        m = re.match(r"^\w[\w \*]*?\b(\w+)\(.*\);$", line)
+        if m:
+            CONTEXT[m.group(1)] = line
+
+
+def declare_context(src: str) -> str:
+    """m2c leaves out declarations of functions the context has."""
+    have = set(re.findall(r"\b(\w+)\s*\([^;{]*\)\s*;", src))
+    used = set(re.findall(r"\b(\w+)\(", src))
+    extra = [CONTEXT[n] for n in sorted(used) if n in CONTEXT and n not in have]
+    return "".join(e + "\n" for e in extra) + src
+
+
 def m2c(m2c_path: Path, asm: Path, fn: str) -> List[str]:
     """m2c's output as plain C, as is and with known library prototypes."""
+    ctx = ["--context", str(CONTEXT_FILE)] if CONTEXT else []
     try:
         out = subprocess.run(
-            [sys.executable, str(m2c_path), "-t", "ppc-mwcc-c", "--valid-syntax", "-f", fn, str(asm)],
+            [sys.executable, str(m2c_path), "-t", "ppc-mwcc-c", "--valid-syntax", *ctx, "-f", fn, str(asm)],
             capture_output=True,
             text=True,
             timeout=60,
@@ -303,8 +325,9 @@ def m2c(m2c_path: Path, asm: Path, fn: str) -> List[str]:
     if out.returncode != 0 or "M2C_ERROR" in out.stdout or "/* unknown instruction" in out.stdout:
         return []
     variants = []
+    text = declare_context(out.stdout) if CONTEXT else out.stdout
     for known in (False, True):
-        v = expand_macros(out.stdout, known)
+        v = expand_macros(text, known)
         if v is not None and v not in variants:
             variants.append(v)
     # m2c types byte and halfword stores as signed, so constants like 0xFF
@@ -406,6 +429,54 @@ def build_unit(edge_inputs: List[str], obj: str) -> bool:
     return r.returncode == 0
 
 
+def merge_into(text: str, src: str) -> str:
+    """Appends an m2c function (with its declarations) to a unit's source:
+    declarations the unit already has are dropped, call arguments are cast to
+    the unit's parameter types, and calls whose argument count disagrees with
+    the unit go through a cast to the m2c prototype."""
+    protos = {}
+    for m in re.finditer(r"^(?:extern\s+)?[\w\s\*]+?\b(\w+)\(([^;(){}]*)\)\s*(?:;|\{)", text, re.M):
+        p = m.group(2).strip()
+        protos[m.group(1)] = [x.strip() for x in p.split(",")] if p not in ("", "void") else []
+    have = set(re.findall(r"^(?:extern )?[^\n(;]*?\b(\w+)\s*[\[(;]", text, re.M))
+    own = {}
+    for m in re.finditer(r"^([\w\s\*]+?)\b(\w+)\(([^;()]*)\);", src, re.M):
+        own[m.group(2)] = (m.group(1).strip(), m.group(3).strip() or "void")
+    decls, body = split_output(src)
+    decls = [d for d in decls if decl_name(d) not in have]
+    for name, params in protos.items():
+        if "..." in params:
+            continue
+        pos = body.find("{")
+        while True:
+            m = re.compile(r"\b" + re.escape(name) + r"\(").search(body, pos)
+            if m is None:
+                break
+            args, end = split_args(body, m.end() - 1)
+            if len(args) == len(params):
+                new = name + "(" + ", ".join(f"({t})({a})" if t else a for t, a in zip(params, args)) + ")"
+            elif name in own:
+                ret, ps = own[name]
+                new = f"(({ret} (*)({ps})){name})(" + ", ".join(args) + ")"
+            else:
+                pos = m.end()
+                continue
+            body = body[: m.start()] + new + body[end + 1 :]
+            pos = m.start() + len(new)
+    block = 'extern "C" {\n\n' + "".join(d + "\n" for d in decls)
+    block += ("\n" if decls else "") + body.strip() + "\n}\n"
+    return text.rstrip("\n") + "\n\n" + block
+
+
+def remove_definition(text: str, name: str) -> str:
+    """Removes the definition of name (one that does not match) from a source."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    from graft import find_def
+
+    r = find_def(text, name)
+    return text if r is None else text[: r[0]] + text[r[1] :]
+
+
 def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj") -> List[str]:
     src_path = next(
         ROOT / p
@@ -416,40 +487,19 @@ def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj
     original = src_path.read_text(encoding="latin-1")
     obj = f"build/{version}/{unit}.o"
     text = original
-    declared: Dict[str, str] = {}
     applied: List[str] = []
     # Address order; names that are not fn_<addr> go first.
     def key(n: str) -> int:
         m = re.match(r"fn_([0-9A-F]{8})$", n)
         return int(m.group(1), 16) if m else 0
     for name in sorted(names, key=key):
-        decls, body = split_output((out_dir / f"{name}.cpp").read_text())
-        if re.search(r"\b" + re.escape(name) + r"\s*\([^;{]*\)\s*\{", text):
-            continue  # already defined by hand
-        new_decls = []
-        ok = True
-        for d in decls:
-            n = decl_name(d)
-            if n is None:
-                ok = False
-                break
-            if n in declared:
-                if declared[n] != d:
-                    ok = False
-                    break
-                continue
-            new_decls.append((n, d))
-        if not ok or name in declared:
-            continue
-        block = 'extern "C" {\n\n' + "".join(d + "\n" for _, d in new_decls)
-        block += ("\n" if new_decls else "") + body.strip() + "\n}\n"
-        candidate = text.rstrip("\n") + "\n\n" + block
+        src = (out_dir / f"{name}.cpp").read_text()
+        # A definition already here does not match (or the function would not
+        # have been tried), so the matching one replaces it.
+        candidate = merge_into(remove_definition(text, name), src)
         src_path.write_text(candidate, encoding="latin-1")
         if build_unit([], obj):
             text = candidate
-            for n, d in new_decls:
-                declared[n] = d
-            declared[name] = body.split("{", 1)[0].strip() + ";"
             applied.append(name)
         else:
             src_path.write_text(text, encoding="latin-1")
@@ -471,8 +521,13 @@ def main() -> None:
     ap.add_argument("--m2c", type=Path, default=Path("/home/user/ref/m2c/m2c.py"))
     ap.add_argument("--out", type=Path, default=None)
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--no-context", action="store_true", help="don't use build/<version>/m2c_context.c")
     args = ap.parse_args()
     os.chdir(ROOT)
+    global CONTEXT_FILE
+    CONTEXT_FILE = ROOT / "build" / args.version / "m2c_context.c"
+    if not args.no_context and CONTEXT_FILE.exists():
+        load_context(CONTEXT_FILE)
 
     unit = args.unit
     report = json.loads((ROOT / "build" / args.version / "report.json").read_text())
