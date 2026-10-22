@@ -202,3 +202,27 @@ s32 fn_8019A8B0(s32 arg0, s32 arg1) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_8019AD6C(s32, s32, s32);
+s32 fn_8019B130(s32, s32, s32, s32);
+s32 fn_8019BE08(s32, s32, s32);
+s32 fn_801BF694(s32, s32);
+s32 fn_801C3B64(s32, s32);
+
+s32 fn_8019BE08(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r3;
+
+    fn_801BF694(0, arg1);
+    if (fn_8019AD6C(arg0, arg1, arg2) <= 0) {
+        return 0;
+    }
+    temp_r3 = fn_8019B130(arg0, arg2, 1, arg1);
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    fn_801C3B64(arg1, temp_r3);
+    return 1;
+}
+}
