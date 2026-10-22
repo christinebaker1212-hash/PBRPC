@@ -2625,19 +2625,19 @@ libs/nw4r/src/snd/snd_StrmFile.cpp:
 	.text       start:0x803817E0 end:0x80381DAC
 
 libs/nw4r/src/snd/snd_StrmPlayer.cpp:
-	.text       start:0x80381DAC end:0x803840AC
+	.text       start:0x80381DAC end:0x803840CC
 	.data       start:0x8043C1C0 end:0x8043C2A8
 	.sdata2     start:0x8062AFC8 end:0x8062AFD0
 
-src/.unsorted/8037F5B0.cpp:
-	.text       start:0x803840AC end:0x80384128
-
 libs/nw4r/src/snd/snd_StrmSound.cpp:
-	.text       start:0x80384128 end:0x803843F0
-
-src/.unsorted/8037F8F4.cpp:
-	.text       start:0x803843F0 end:0x8038447C
+	.text       start:0x803840CC end:0x80384404
 	.ctors      start:0x803E58A4 end:0x803E58A8
+
+libs/nw4r/src/snd/snd_StrmSoundHandle.cpp:
+	.text       start:0x80384404 end:0x8038443C
+
+libs/nw4r/src/snd/snd_Task.cpp:
+	.text       start:0x8038443C end:0x8038447C
 
 libs/nw4r/src/snd/snd_TaskManager.cpp:
 	.text       start:0x8038447C end:0x80384BE8
@@ -2716,13 +2716,13 @@ libs/nw4r/src/lyt/lyt_material.cpp:
 libs/nw4r/src/lyt/lyt_texMap.cpp:
 	.text       start:0x803920A0 end:0x803923A0
 
-src/.unsorted/8038D688.cpp:
+libs/nw4r/src/lyt/lyt_drawInfo.cpp:
 	.text       start:0x803923A0 end:0x80392454
 
 libs/nw4r/src/lyt/lyt_animation.cpp:
 	.text       start:0x80392454 end:0x80392FF8
 
-src/.unsorted/8038E2E0.cpp:
+libs/nw4r/src/lyt/lyt_resourceAccessor.cpp:
 	.text       start:0x80392FF8 end:0x80393050
 
 libs/nw4r/src/lyt/lyt_arcResourceAccessor.cpp:
