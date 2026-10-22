@@ -18,3 +18,13 @@ u8 fn_80187570(u8 *arg0) {
     return (*(u8 *)((u8 *)(arg0) + (0xC)));
 }
 }
+
+extern "C" {
+
+s32 fn_801864F8(s32, s32, s32, s32, s32, s32);
+s32 fn_801868AC(s32, s32, s32, s32, s32);
+
+s32 fn_801864F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    return fn_801868AC(arg2, arg4, arg0, arg1, (s32) (s8) arg5);
+}
+}

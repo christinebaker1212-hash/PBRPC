@@ -61,3 +61,24 @@ void WPADiClearQueue(u8 *arg0) {
     OSRestoreInterrupts(temp_r31);
 }
 }
+
+extern "C" {
+
+s32 __CanPushCmdQueue(s32, s32);
+
+s32 __CanPushCmdQueue(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s8 var_r31;
+
+    temp_r3 = OSDisableInterrupts();
+    var_r31 = (*(u8 *)((u8 *)(arg0) + (1))) - (*(u8 *)((u8 *)(arg0) + (0)));
+    if (var_r31 < 0) {
+        var_r31 += (*(s32 *)((u8 *)(arg0) + (8)));
+    }
+    OSRestoreInterrupts(temp_r3);
+    if ((u32) (var_r31 + (s8) arg1) <= (u32) ((*(s32 *)((u8 *)(arg0) + (8))) - 1)) {
+        return 1;
+    }
+    return 0;
+}
+}

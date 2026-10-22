@@ -528,3 +528,21 @@ u8 *__ct__17_UnkModelStruct_1FP11GSmodelData(u8 *arg0, u16 *arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_801F0B50__7GSmodelFUl(s32, s32);
+s32 fn_801F0B7C__7GSmodelFUlb(s32, s32, s32);
+extern s32 *sActiveRenderPass__12GSrenderPass;
+
+s32 fn_801F0B50__7GSmodelFUl(s32 arg0, s32 arg1) {
+    s32 var_r6;
+
+    if ((s32 *) sActiveRenderPass__12GSrenderPass != NULL) {
+        var_r6 = *sActiveRenderPass__12GSrenderPass;
+    } else {
+        var_r6 = 0;
+    }
+    return fn_801F0B7C__7GSmodelFUlb(arg0, arg1, (s32) ((u32) ((8 - var_r6) | (var_r6 - 8)) >> 0x1FU));
+}
+}

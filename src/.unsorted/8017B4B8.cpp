@@ -85,3 +85,41 @@ void fn_8017BDE4(u8 *arg0) {
     memcpy(temp_r31 + 0x28, fn_803D9AEC__FP13BattleMessagePUl(temp_r31 + 4, &sp8), sp8);
 }
 }
+
+extern "C" {
+
+s32 fn_8016F3FC(s32);
+s32 fn_8016F40C(s32);
+s32 fn_8016F73C(s32);
+s32 fn_8017B538(s32);
+
+s32 fn_8017B538(s32 arg0) {
+    s32 temp_r3;
+
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = fn_8016F3FC(arg0 + 8);
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = fn_8016F40C(arg0 + 0x10);
+    temp_r3 = fn_8016F73C(arg0 + 0x18);
+    (*(s32 *)((u8 *)(arg0) + (0x1C))) = temp_r3;
+    return temp_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80168B68(void);
+s32 fn_8017B848(s32, s32);
+s32 fn_8017C514(void);
+
+s32 fn_8017C514(void) {
+    s32 temp_r3;
+
+    temp_r3 = fn_80168B68();
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    if ((s32) (*(s32 *)((u8 *)(temp_r3) + (0xC))) != 0) {
+        fn_8017B848(temp_r3, 1);
+    }
+    return (s32) (*(u8 *)((u8 *)(temp_r3) + (4)));
+}
+}

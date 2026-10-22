@@ -71,3 +71,26 @@ void fn_80177EA4(u8 *arg0) {
     (*(s32 *)((u8 *)(arg0) + (8))) = 0;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 __dla__FPv(s32);
+s32 fn_80177EB8(s32, s32);
+
+s32 fn_80177EB8(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+
+    if (arg0 != 0) {
+        temp_r3 = (*(s32 *)((u8 *)(arg0) + (8)));
+        if (temp_r3 != 0) {
+            __dla__FPv(temp_r3);
+        }
+        (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}

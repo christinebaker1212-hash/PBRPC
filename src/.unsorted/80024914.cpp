@@ -116,3 +116,50 @@ u8 *fn_80024EA8(u8 *arg0) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80024FC0(s32, f32);
+s32 fn_80030070(f32);
+s32 fn_8022ABA8(s32, f32);
+
+s32 fn_80024FC0(s32 arg0, f32 farg0) {
+    s32 temp_r0;
+    s32 temp_r3;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (0)));
+    if (temp_r0 != 0) {
+        fn_8022ABA8(temp_r0, farg0);
+    }
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (4)));
+    if (temp_r3 != 0) {
+        fn_8022ABA8(temp_r3, farg0);
+    }
+    return fn_80030070(farg0);
+}
+}
+
+extern "C" {
+
+s32 fn_80025048(s32, s32, s32, s32);
+s32 fn_800254EC(s32, s32, s32);
+s32 getCachedFile__7GScacheFUlUl(s32, s32);
+s32 memcmp(s32, s32, s32);
+extern u8 lbl_8063D340;
+
+s32 fn_80025048(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_r3;
+    s32 var_r3;
+
+    temp_r3 = getCachedFile__7GScacheFUlUl(arg2, arg3);
+    if ((temp_r3 == 0) || (var_r3 = memcmp(temp_r3, (s32) &lbl_8063D340, 4), ((var_r3 == 0) != 0))) {
+        if (arg1 == 0) {
+            return fn_800254EC((*(s32 *)((u8 *)(arg0) + (4))), arg2, arg3);
+        }
+        var_r3 = fn_800254EC((*(s32 *)((u8 *)(arg0) + (0))), arg2, arg3);
+        /* Duplicate return node #5. Try simplifying control flow for better match */
+        return var_r3;
+    }
+    return var_r3;
+}
+}

@@ -654,3 +654,33 @@ void GSfile::disableAsyncCallbacks() {
 bool GSfile::getAsyncCallbacksDisabled() {
     return sAsyncCallbacksDisabled;
 }
+
+extern "C" {
+
+s32 errorTaskCallback__6GSfileFUlPv(s32, s32);
+s32 isCurrentThreadManaged__15GSthreadManagerFv(s32);
+s32 sleepCurrentThread__15GSthreadManagerFv(s32);
+s32 waitForDvdErrorClear__6GSfileFv(void);
+extern s32 lbl_8063F328;
+extern s32 lbl_8063F32C;
+extern s32 sInstance__15GSthreadManager;
+
+s32 waitForDvdErrorClear__6GSfileFv(void) {
+    s32 temp_r3;
+    s32 var_r3;
+
+    temp_r3 = OSDisableInterrupts();
+    var_r3 = OSRestoreInterrupts(temp_r3);
+    if (temp_r3 != 0) {
+loop_1:
+        var_r3 = errorTaskCallback__6GSfileFUlPv(lbl_8063F32C, 0);
+        if ((s32) lbl_8063F328 != 0) {
+            if (isCurrentThreadManaged__15GSthreadManagerFv(sInstance__15GSthreadManager) != 0) {
+                sleepCurrentThread__15GSthreadManagerFv(sInstance__15GSthreadManager);
+            }
+            goto loop_1;
+        }
+    }
+    return var_r3;
+}
+}

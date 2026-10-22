@@ -95,9 +95,7 @@ void fn_80006980(void) {
 }
 
 // "main"
-void fn_80006A84(void) {
-    fn_80055D94();
-}
+
 
 void *fn_80006A88(void *param1) {
     OSInitFastCast();
@@ -314,6 +312,20 @@ void fn_80007338(void) {
 extern "C" {
 
 s32 fn_80007084(void);
+
+
+}
+
+extern "C" {
+
+s32 fn_80055D94__Fv(void);
+
+s32 fn_80006A84(void) {
+    return fn_80055D94__Fv();
+}
+}
+
+extern "C" {
 
 s32 fn_80007084(void) {
     return (s32) lbl_8063E8FD;

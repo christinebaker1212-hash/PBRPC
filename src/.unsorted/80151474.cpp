@@ -22,3 +22,15 @@ void fn_80154CD8(s32 arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80154D48(s32, s32);
+s32 fn_80253E8C(s32, s32, s32, s32);
+
+s32 fn_80154D48(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    return fn_80253E8C((s32) (s16) arg0, arg1, 3, (s32) &sp8);
+}
+}
