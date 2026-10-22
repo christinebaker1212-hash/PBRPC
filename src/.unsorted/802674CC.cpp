@@ -86,3 +86,93 @@ s32 fn_80267854(void) {
     return fn_8031F37C() == 0;
 }
 }
+
+extern "C" {
+
+s32 fn_80267BDC(s32, s32);
+s32 fn_80267F6C(s32, s32);
+s32 fn_8031F3AC(s32);
+s32 fn_803331D0(s32);
+s32 memmove(s32, s32, s32);
+s32 memset(s32, s32, s32);
+
+s32 fn_80267BDC(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+    s32 temp_r3;
+
+    if (arg1 >= 0x1E) {
+        return -1;
+    }
+    if (fn_803331D0(fn_802674E4((s32)(arg0), (s32)(arg1))) == 0) {
+        return -1;
+    }
+    if (((s32 (*)(s32))fn_80267854)(arg0) != 0) {
+        return -1;
+    }
+    temp_r3 = fn_80267F6C(arg0, arg1);
+    if (temp_r3 != 0) {
+        memset(temp_r3, 0, 0x40);
+    }
+    fn_8031F3AC(fn_802674E4((s32)(arg0), (s32)(arg1)));
+    if (arg1 < 0x1D) {
+        temp_r31 = fn_802674E4((s32)(arg0), (s32)(arg1 + 1));
+        memmove(fn_802674E4((s32)(arg0), (s32)(arg1)), temp_r31, (0x1D - arg1) * 0xC);
+        memset(fn_802674E4((s32)(arg0), (s32)(0x1D)), 0, 0xC);
+    }
+    fn_80267690((u8 *)(arg0));
+    (*(s32 *)((u8 *)(arg0) + (0x3398))) = 1;
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_802680F4(s32, s32, s32);
+s32 memcpy(s32, s32, s32);
+
+s32 fn_802680F4(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = fn_80267F6C((s32)(arg0), (s32)(arg1));
+    if (temp_r3 == 0) {
+        return -1;
+    }
+    memcpy(temp_r3 + 0x10, arg2, 0x20);
+    fn_80267690((u8 *)(arg0));
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_80268158(s32, s32, s32);
+
+s32 fn_80268158(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = fn_80267F6C((s32)(arg0), (s32)(arg1));
+    if (temp_r3 == 0) {
+        return -1;
+    }
+    (*(s32 *)((u8 *)(temp_r3) + (0x38))) = arg2;
+    fn_80267690((u8 *)(arg0));
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_802681B0(s32, s32, s32);
+
+s32 fn_802681B0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = fn_80267F6C((s32)(arg0), (s32)(arg1));
+    if (temp_r3 == 0) {
+        return -1;
+    }
+    (*(s32 *)((u8 *)(temp_r3) + (0x3C))) = arg2;
+    fn_80267690((u8 *)(arg0));
+    return 0;
+}
+}
