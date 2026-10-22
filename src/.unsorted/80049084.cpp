@@ -33,3 +33,18 @@ void fn_8004AC4C(void) {}
 void fn_8004ACCC(void) {}
 void fn_8004ACD0(void) {}
 }
+
+extern "C" {
+
+extern f32 lbl_806409D0;
+
+f32 fn_800491FC(u8 *arg0) {
+    u8 *temp_r3;
+
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x14)));
+    if (temp_r3 == NULL) {
+        return lbl_806409D0;
+    }
+    return (*(f32 *)((u8 *)(temp_r3) + (4)));
+}
+}

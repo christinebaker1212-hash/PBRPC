@@ -86,3 +86,46 @@ u8 fn_800BB9D4(s32 v) {
 void fn_800C5940(void) {}
 void fn_800C5944(void) {}
 }
+
+extern "C" {
+
+s32 fn_800B9E40(void);
+
+s32 fn_800B9E10(s32 arg0) {
+    fn_800B9E40();
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_800BB9C8(s32 arg0, s32 arg1) {
+    return arg0 + (arg1 * 6);
+}
+}
+
+extern "C" {
+
+u8 fn_800BB9F0(s32 arg0) {
+    return (u8) (arg0 % 6);
+}
+}
+
+extern "C" {
+
+u16 fn_800BA578(void);
+s32 fn_80253E10(s32, s32, f32);
+extern f32 lbl_80640F78;
+extern f32 lbl_80640FC0;
+extern f32 lbl_80640FC4;
+
+void fn_800C21DC(s32 arg0) {
+    if (fn_800BA578() != 4) {
+        fn_80253E10(arg0, 4, lbl_80640FC0);
+    } else {
+        fn_80253E10(arg0, 4, lbl_80640F78);
+    }
+    fn_80253E10(arg0, 5, lbl_80640FC4);
+    fn_80253E10(arg0, 6, lbl_80640FC4);
+}
+}

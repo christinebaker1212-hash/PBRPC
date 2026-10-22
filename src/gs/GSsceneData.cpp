@@ -528,3 +528,106 @@ void fn_801E34DC(GSsceneData *sceneData, u32 baseAddr) {
     initSceneMaterials(sceneData, baseAddr);
     initSceneObjects(sceneData, baseAddr);
 }
+
+extern "C" {
+
+s8 animSampleU8__6GSmathFfP15GSanimTrackDataUl(s32, u8, u8 *);
+
+void fn_801E1504__FP13GSchannelDataPUc(u8 *arg0, s8 *arg1) {
+    *arg1 = animSampleU8__6GSmathFfP15GSanimTrackDataUl((*(s32 *)((u8 *)(arg0) + (8))), (*(u8 *)((u8 *)(arg0) + (7))), arg0);
+}
+}
+
+extern "C" {
+
+void fn_801E10BC(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E1740(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E2A8C(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E2AE4(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E2B3C(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E2D84(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E2F28(void) {
+
+}
+}
+
+extern "C" {
+
+void fn_801E3488(void) {
+
+}
+}
+
+extern "C" {
+
+extern s32 lbl_8063F378;
+
+void fn_801E348C(u8 *arg0) {
+    (*(u8 *)((u8 *)(arg0) + (0))) = (u8) (*(u8 *)((u8 *)(&lbl_8063F378) + (0)));
+    (*(u16 *)((u8 *)(arg0) + (2))) = (u16) (*(u16 *)((u8 *)(&lbl_8063F378) + (2)));
+    (*(u8 *)((u8 *)(arg0) + (4))) = (u8) (*(u8 *)((u8 *)(&lbl_8063F378) + (4)));
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0x18))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0x1A))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0x1C))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0x1E))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x20))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x24))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x28))) = 0;
+}
+}
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 fn_8023CA6C(void);
+
+s32 fn_801E42B4(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8023CA6C();
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}

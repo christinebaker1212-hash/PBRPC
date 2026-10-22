@@ -699,3 +699,15 @@ bool _UnkObjectStruct_2::fn_801F8368(const GSmatrix *arg0, f32 deltaTime) {
 
     return true;
 }
+
+extern "C" {
+
+void fn_801F8BA0(u8 *arg0, u32 arg1, s8 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x2C)));
+    if ((temp_r3 != 0) && (arg1 < 8U)) {
+        (*(s8 *)((u8 *)((temp_r3 + (arg1 * 0x70))) + (0x3C))) = arg2;
+    }
+}
+}

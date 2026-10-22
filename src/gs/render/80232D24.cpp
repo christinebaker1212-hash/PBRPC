@@ -203,3 +203,83 @@ void GSrender::configureTexCoordGen(u8 texCoord, u8 type, u8 src, Mtx texMtx, GX
     mState->mTexGenFlags |= (1 << texCoord);
     mState->_0 |= (1 << 0);
 }
+
+extern "C" {
+
+void fn_80233580(u8 *arg0) {
+    (*(s8 *)((u8 *)(arg0) + (0x16FA))) = 0;
+}
+}
+
+extern "C" {
+
+s32 GXDrawCube(void);
+s32 sync__8GSrenderFv(void);
+
+void fn_802335FC(void) {
+    sync__8GSrenderFv();
+    GXDrawCube();
+}
+}
+
+extern "C" {
+
+s32 GXDrawDodeca(void);
+
+void fn_80233654(void) {
+    sync__8GSrenderFv();
+    GXDrawDodeca();
+}
+}
+
+extern "C" {
+
+s32 GXDrawIcosahedron(void);
+
+void fn_80233678(void) {
+    sync__8GSrenderFv();
+    GXDrawIcosahedron();
+}
+}
+
+extern "C" {
+
+s32 GXDrawOctahedron(void);
+
+void fn_8023369C(void) {
+    sync__8GSrenderFv();
+    GXDrawOctahedron();
+}
+}
+
+extern "C" {
+
+s32 setViewport__7GSvideoFffffff(u8 *, f32, f32, f32, f32, f32, f32);
+extern f32 lbl_80642340;
+extern f32 lbl_80642370;
+
+u8 *fn_802352BC(u8 *arg0) {
+    u8 *temp_r31;
+    u8 *temp_r3;
+    u8 *temp_r3_2;
+    u8 *temp_r3_3;
+
+    temp_r31 = (*(u8 **)((u8 *)(arg0) + (0x1638)));
+    if (((s32) (*(u8 *)((u8 *)(arg0) + (0x16F9))) != 0) && ((*(s32 *)((u8 *)(temp_r31) + (0))) & 2) && ((*(s32 *)((u8 *)(temp_r31) + (0x10))) & 0x10) && (((*(f32 *)((u8 *)(temp_r31) + (0xB90))) != (*(f32 *)((u8 *)(temp_r31) + (0x170)))) || ((*(f32 *)((u8 *)(temp_r31) + (0xB94))) != (*(f32 *)((u8 *)(temp_r31) + (0x174)))) || ((*(f32 *)((u8 *)(temp_r31) + (0xB98))) != (*(f32 *)((u8 *)(temp_r31) + (0x178)))) || ((*(f32 *)((u8 *)(temp_r31) + (0xB9C))) != (*(f32 *)((u8 *)(temp_r31) + (0x17C)))))) {
+        setViewport__7GSvideoFffffff(arg0, (*(f32 *)((u8 *)(temp_r31) + (0x170))), (*(f32 *)((u8 *)(temp_r31) + (0x174))), (*(f32 *)((u8 *)(temp_r31) + (0x178))), (*(f32 *)((u8 *)(temp_r31) + (0x17C))), lbl_80642340, lbl_80642370);
+        (*(f32 *)((u8 *)(temp_r31) + (0xB90))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x170)));
+        (*(f32 *)((u8 *)(temp_r31) + (0xB94))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x174)));
+        (*(f32 *)((u8 *)(temp_r31) + (0xB98))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x178)));
+        (*(f32 *)((u8 *)(temp_r31) + (0xB9C))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x17C)));
+        temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x1638)));
+        temp_r3_2 = temp_r3 + ((*(u16 *)((u8 *)(temp_r3) + (0x14A8))) * 0x10);
+        (*(f32 *)((u8 *)(temp_r3_2) + (0x14AC))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x170)));
+        (*(f32 *)((u8 *)(temp_r3_2) + (0x14B0))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x174)));
+        (*(f32 *)((u8 *)(temp_r3_2) + (0x14B4))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x178)));
+        (*(f32 *)((u8 *)(temp_r3_2) + (0x14B8))) = (f32) (*(f32 *)((u8 *)(temp_r31) + (0x17C)));
+        temp_r3_3 = (*(u8 **)((u8 *)(arg0) + (0x1638)));
+        (*(s32 *)((u8 *)(temp_r3_3) + (0x10))) = (s32) ((*(s32 *)((u8 *)(temp_r3_3) + (0x10))) & 0xFFFFFFEF);
+    }
+    return arg0 + 0xA8;
+}
+}

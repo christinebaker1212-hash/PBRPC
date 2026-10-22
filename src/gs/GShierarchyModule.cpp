@@ -274,3 +274,21 @@ void GShierarchyModule::setCurrentScene(GSscene *scene) {
 
     GShierarchyModule::sInstance->fn_802010E0();
 }
+
+extern "C" {
+
+s32 fn_802010E0__17GShierarchyModuleFv(void);
+
+void fn_802011D0(u8 *arg0) {
+    fn_802010E0__17GShierarchyModuleFv();
+    (*(s16 *)((u8 *)(arg0) + (0x108))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x150))) = 0;
+}
+}
+
+extern "C" {
+
+void fn_80202DA4(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
+}
+}

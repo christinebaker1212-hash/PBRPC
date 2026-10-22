@@ -14,3 +14,41 @@ u8 *fn_8003E908(u8 *p) {
     return p + 0x8;
 }
 }
+
+extern "C" {
+
+void fn_8003E854(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xD4))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8003E9A0(void);
+
+u8 *fn_8003E910(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (1))) = 0;
+    fn_8003E9A0();
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 fn_8003EAB0(void);
+
+s32 fn_8003E94C(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8003EAB0();
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}

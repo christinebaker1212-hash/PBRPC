@@ -127,3 +127,113 @@ BOOL fn_80036F50(Unk80035CB0 *p, u32 mask) {
     return (p->mFlags & mask) != 0;
 }
 }
+
+extern "C" {
+
+void fn_80035CB0(u8 *arg0) {
+    (*(s8 *)((u8 *)(arg0) + (7))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (2))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (5))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (6))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0x12))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0xA))) = 0;
+}
+}
+
+extern "C" {
+
+s32 fn_800360D0(u8 *arg0) {
+    s32 var_r3;
+    u8 *temp_r4;
+
+    temp_r4 = (*(u8 **)((u8 *)(arg0) + (0x970)));
+    var_r3 = 0;
+    if ((u8) (*(u8 *)((u8 *)(temp_r4) + (0x2C))) != 0xFF) {
+        var_r3 = 1;
+        if ((u8) (*(u8 *)((u8 *)(temp_r4) + (0x64))) != 0xFF) {
+            var_r3 = 2;
+            if ((u8) (*(u8 *)((u8 *)(temp_r4) + (0x9C))) != 0xFF) {
+                var_r3 = 3;
+                if ((u8) (*(u8 *)((u8 *)(temp_r4) + (0xD4))) != 0xFF) {
+                    return 4;
+                }
+            }
+        }
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_8003698C(s32 arg0, s32 arg1) {
+    if (((arg1 >= 0x80) && (arg1 <= 0x84)) || ((arg1 >= 0) && (arg1 <= 4))) {
+        return (*(s32 *)((u8 *)((arg0 + ((arg1 * 4) & 0xC))) + (0x18)));
+    }
+    return 0;
+}
+}
+
+extern "C" {
+
+void fn_800369C4(s32 arg0, s32 arg1, s32 arg2) {
+    if (((arg1 >= 0x80) && (arg1 <= 0x84)) || ((arg1 >= 0) && (arg1 <= 4))) {
+        (*(s32 *)((u8 *)((arg0 + ((arg1 * 4) & 0xC))) + (0x18))) = arg2;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80036D14(s32 arg0, s32 arg1) {
+    if ((arg1 < 0) || (arg1 > 3)) {
+        return 0;
+    }
+    return arg0 + (arg1 * 0x34) + 0x340;
+}
+}
+
+extern "C" {
+
+s32 fn_80036D78(s32 arg0, s32 arg1) {
+    if ((arg1 < 0) || (arg1 > 3)) {
+        return 0;
+    }
+    return arg0 + (arg1 * 0x34) + 0x410;
+}
+}
+
+extern "C" {
+
+u8 fn_80036E6C(s32 arg0, s32 arg1, u32 arg2) {
+    if (arg2 == 1U) {
+        return (*(u8 *)((u8 *)((arg0 + (arg1 * 0x34))) + (0x420)));
+    }
+    return (*(u8 *)((u8 *)((arg0 + (arg1 * 0x34))) + (0x350)));
+}
+}
+
+extern "C" {
+
+u8 fn_80036E94(s32 arg0, s32 arg1, u32 arg2) {
+    if (arg2 == 1U) {
+        return (*(u8 *)((u8 *)((arg0 + (arg1 * 0x34))) + (0x421)));
+    }
+    return (*(u8 *)((u8 *)((arg0 + (arg1 * 0x34))) + (0x351)));
+}
+}
+
+extern "C" {
+
+void fn_80036F28(u8 *arg0, s32 arg1, s32 arg2) {
+    if (arg2 != 0) {
+        (*(s32 *)((u8 *)(arg0) + (0x334))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0x334))) | arg1);
+        return;
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x334))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0x334))) & ~arg1);
+}
+}

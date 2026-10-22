@@ -22,3 +22,70 @@ void fn_8022D6C0(void) {}
 void fn_8022D704(void) {}
 void fn_8022D708(void) {}
 }
+
+extern "C" {
+
+s32 fn_80229238(void);
+
+s32 fn_802291C8(s32 arg0) {
+    fn_80229238();
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_802291F8(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80229514(u8 *, s32, s32);
+s32 memset(u8 *, s32, s32);
+
+u8 *fn_802293BC(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x154))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x15C))) = 0;
+    memset(arg0 + 0xC, 0, 0x144);
+    (*(s32 *)((u8 *)(arg0) + (0x180))) = 0;
+    fn_80229514(arg0, 0x100, 0x80);
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80229B08(void);
+s32 fn_8022A85C(void);
+extern u8 *lbl_80627960;
+
+void fn_8022A8A8(u8 *arg0) {
+    u8 *temp_r31;
+
+    temp_r31 = lbl_80627960;
+    lbl_80627960 = arg0;
+    if (fn_8022A85C() != 0) {
+        fn_80229B08();
+        (*(s32 *)((u8 *)(arg0) + (0x8DC))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0x8DC))) - 1);
+    }
+    lbl_80627960 = temp_r31;
+}
+}
+
+extern "C" {
+
+s32 fn_8022D6C4(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}

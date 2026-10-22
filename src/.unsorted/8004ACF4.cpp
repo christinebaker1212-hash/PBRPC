@@ -159,3 +159,41 @@ f32 fn_8004B220(EffBase *self) {
     return lbl_806409F8;
 }
 }
+
+extern "C" {
+
+s32 fn_8004B2F0(void);
+
+void fn_8004B2E4(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0x88))) = 0;
+    fn_8004B2F0();
+}
+}
+
+extern "C" {
+
+s32 fn_8004BC8C(void);
+
+void fn_8004BC80(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0x44))) = 0;
+    fn_8004BC8C();
+}
+}
+
+extern "C" {
+
+s32 fn_80033088__Fv(void);
+s32 fn_80034E68__FP11Unk80033090Uc(s32, s32);
+s32 fn_80050388(u8 *);
+
+void fn_8004BD24(u8 *arg0) {
+    s32 temp_r31;
+
+    temp_r31 = fn_80033088__Fv();
+    (*(s8 *)((u8 *)(arg0) + (0))) = 0;
+    fn_80050388(arg0 + 0x1C);
+    if (*(*(s32 **)((u8 *)(arg0) + (0x14))) & 1) {
+        fn_80034E68__FP11Unk80033090Uc(temp_r31, 0);
+    }
+}
+}
