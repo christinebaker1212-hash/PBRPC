@@ -2388,8 +2388,29 @@ libs/RVL_SDK/src/vf/sd_drv.c:
 	.text       start:0x80320814 end:0x80320818
 
 src/.unsorted/8031C124.cpp:
-	.text       start:0x80320818 end:0x80367C04
+	.text       start:0x80320818 end:0x803670CC
+
+libs/nw4r/src/ut/ut_list.cpp:
+	.text       start:0x803670CC end:0x8036722C
+
+libs/nw4r/src/ut/ut_LinkList.cpp:
+	.text       start:0x8036722C end:0x80367398
+
+libs/nw4r/src/ut/ut_binaryFileFormat.cpp:
+	.text       start:0x80367398 end:0x8036740C
+
+libs/nw4r/src/ut/ut_CharStrmReader.cpp:
+	.text       start:0x8036740C end:0x8036751C
+
+libs/nw4r/src/ut/ut_TagProcessorBase.cpp:
+	.text       start:0x8036751C end:0x80367BEC
+	.data       start:0x8043B968 end:0x8043B990
+	.sdata2     start:0x8062AD68 end:0x8062AD70
+
+libs/nw4r/src/ut/ut_IOStream.cpp:
+	.text       start:0x80367BEC end:0x80367C04
 	.ctors      start:0x803E5884 end:0x803E5888
+	.sbss       start:0x80628730 end:0x80628738
 
 libs/nw4r/src/ut/ut_FileStream.cpp:
 	.text       start:0x80367C04 end:0x80367D00
@@ -2400,6 +2421,7 @@ src/.unsorted/8036360C.cpp:
 
 libs/nw4r/src/ut/ut_DvdFileStream.cpp:
 	.text       start:0x80367D0C end:0x80368310
+	.data       start:0x8043B990 end:0x8043B9F8
 
 src/.unsorted/80363C1C.cpp:
 	.text       start:0x80368310 end:0x80368660

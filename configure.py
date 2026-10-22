@@ -687,6 +687,12 @@ config.libs = [
     Nw4rLib(
         "nw4r",
         [
+            Object(NonMatching, "ut/ut_list.cpp"),
+            Object(NonMatching, "ut/ut_LinkList.cpp"),
+            Object(NonMatching, "ut/ut_binaryFileFormat.cpp"),
+            Object(NonMatching, "ut/ut_CharStrmReader.cpp"),
+            Object(NonMatching, "ut/ut_TagProcessorBase.cpp"),
+            Object(NonMatching, "ut/ut_IOStream.cpp"),
             Object(NonMatching, "ut/ut_FileStream.cpp"),
             Object(NonMatching, "ut/ut_DvdFileStream.cpp"),
             Object(NonMatching, "ut/ut_ResFontBase.cpp"),
