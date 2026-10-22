@@ -234,3 +234,40 @@ void fn_802627D4(s32 arg0) {
     fn_8025EE18(arg0);
 }
 }
+
+extern "C" {
+
+s32 fn_802624CC(s32, s32);
+
+s32 fn_802624CC(s32 arg0, s32 arg1) {
+    if (fn_802624B0((u8 *)(arg0)) != 0) {
+        if (arg1 == 0) {
+            if ((s32) (*(u16 *)((u8 *)(arg0) + (0xF0A))) != 0) {
+                return 1;
+            }
+            goto block_6;
+        }
+        if ((*(u16 *)((u8 *)(arg0) + (0xF0A))) & (1 << arg1)) {
+            return 1;
+        }
+        goto block_6;
+    }
+block_6:
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8026284C(s32);
+
+s32 fn_8026284C(s32 arg0) {
+    s32 temp_r3;
+
+    if (fn_802624B0((u8 *)(arg0)) != 0) {
+        return 0x90;
+    }
+    temp_r3 = ((s32 (*)(s32))fn_802624C4)(arg0);
+    return ((s32) (-temp_r3 | temp_r3) >> 0x1F) & 0x50;
+}
+}
