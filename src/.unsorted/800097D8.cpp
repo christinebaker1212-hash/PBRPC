@@ -118,3 +118,22 @@ void fn_80009A78(void) {
     GXSetCurrentMtx(3);
 }
 }
+
+extern "C" {
+
+s32 fn_80009854(void);
+s32 fn_80162A90(s32);
+s32 fn_80162B70(void);
+extern s32 lbl_8063E904;
+extern u8 *lbl_8063F640;
+
+s32 fn_80009854(void) {
+    if ((u8 *) lbl_8063E930 == NULL) {
+        return 0;
+    }
+    if ((fn_80162B70() != 0) || (fn_80162A90(0x261) == 3U) || (fn_80162A90(0x261) == 4U) || ((s32) (*(u8 *)((u8 *)(lbl_8063E930) + (3))) != 0) || ((s32) (*(u8 *)((u8 *)(lbl_8063E930) + (4))) != 0) || (((u8 *) lbl_8063F640 != NULL) && ((s32) (*(u8 *)((u8 *)(lbl_8063F640) + (0x14))) != 0)) || ((s32) lbl_8063E904 != 0)) {
+        return 0;
+    }
+    return 1;
+}
+}
