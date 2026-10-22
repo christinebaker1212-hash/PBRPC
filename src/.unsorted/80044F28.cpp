@@ -151,3 +151,42 @@ u8 fn_80045838(s32 arg0, s32 arg1) {
     return (*(u8 *)((u8 *)((arg0 + ((arg1 & 3) * 0x44))) + (0x1C)));
 }
 }
+
+extern "C" {
+
+s32 fn_80045598(s32);
+s32 fn_800455F8(s32);
+
+s32 fn_80045598(s32 arg0) {
+    s32 var_r30;
+
+    var_r30 = arg0 + 0xC;
+    do {
+        fn_80044F28((u8 *)(var_r30));
+        var_r30 += 0x44;
+    } while ((u32) var_r30 < (u32) (arg0 + 0x11C));
+    fn_800455F8(arg0);
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80047474(s32, s32, s32, s32);
+s32 fn_801E4B8C(s32, s32);
+s32 fn_801E4BCC(s32, s32);
+s32 getCachedFile__7GScacheFUlUl(s32, s32);
+
+s32 fn_80047474(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_r3;
+
+    temp_r3 = getCachedFile__7GScacheFUlUl(arg1, (arg2 & 0x7FFF0000) | 0x2C00);
+    if (temp_r3 != 0) {
+        fn_801E4B8C(temp_r3, arg3);
+        fn_801E4BCC(temp_r3, 1);
+        (*(s32 *)((u8 *)(arg0) + (0x168))) = temp_r3;
+        return 1;
+    }
+    return 0;
+}
+}
