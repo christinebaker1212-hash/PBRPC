@@ -518,3 +518,39 @@ void fn_80300C0C(void) {
     OSUnlockMutex();
 }
 }
+
+extern "C" {
+
+s32 WDi_Ioctlv(s32, s32, s32, u8 *);
+u8 *fn_802EDD5C(void);
+u8 *iosAllocAligned(s32, s32, s32);
+s32 iosFree(s32, u8 *);
+
+s32 fn_802EDE50(s32 arg0) {
+    s32 temp_r31;
+    u8 *temp_r3;
+
+    temp_r3 = iosAllocAligned((*(s32 *)((u8 *)(fn_802EDD5C()) + (8))), 0xC, 0x20);
+    (*(s32 *)((u8 *)(temp_r3) + (0))) = (s32) (temp_r3 + 8);
+    (*(s32 *)((u8 *)(temp_r3) + (8))) = arg0;
+    (*(s32 *)((u8 *)(temp_r3) + (4))) = 4;
+    temp_r31 = WDi_Ioctlv(0x1002, 1, 0, temp_r3);
+    iosFree((*(s32 *)((u8 *)(fn_802EDD5C()) + (8))), temp_r3);
+    return temp_r31;
+}
+}
+
+extern "C" {
+
+s32 fn_802EE464(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+    u8 *temp_r3;
+
+    temp_r3 = iosAllocAligned((*(s32 *)((u8 *)(fn_802EDD5C()) + (8))), 8, 0x20);
+    (*(s32 *)((u8 *)(temp_r3) + (0))) = arg0;
+    (*(s32 *)((u8 *)(temp_r3) + (4))) = arg1;
+    temp_r31 = WDi_Ioctlv(0x8000, 0, 1, temp_r3);
+    iosFree((*(s32 *)((u8 *)(fn_802EDD5C()) + (8))), temp_r3);
+    return temp_r31;
+}
+}
