@@ -233,83 +233,67 @@ static u8 rol(u8 x, u8 shift) {
     return result;
 }
 
+// From zeldaret/tp (CC0), libs/revolution/src/wpad/WPADEncrypt.c: this revision has no debug output.
 void WPADiCreateKey(s32 chan) {
-    BOOL intrStatus;
-    WPADCB* p = _wpdcb[chan];
+    BOOL enable;
+    WPADCB* p_wpd = _wpdcb[chan];
 
-    u8 numRand;
-    u8 num;
-
-    u8 addTable[8], xorTable[8];
-    u8 key1[10], key2[6];
-
+    u8 idx;
+    u8 baseIdx;
+    u8 tblRnd[10];
+    u8 ft[8];
+    u8 sb[8];
+    u8 key[6];
     u8 i;
 
-    SEED = OSGetTick() >> 8 & 0xff;
-    NUM_A = OSGetTick() >> 16 & 0x3f;
-    NUM_B = OSGetTick() >> 24 & 0x4c;
+    SEED = (u8)((OSGetTick() >> 8) & 0xff);
+    NUM_A = (u8)((OSGetTick() >> 16) & 0x3f);
+    NUM_B = (u8)((OSGetTick() >> 24) & 0x4c);
     NUM_C = 0xff;
 
-    numRand = random() % 7;
-    num = numRand * 6;
+    idx = (u8)(random() % 7);
+    baseIdx = (u8)(idx * 6);
 
-    for (i = 0; i < (int)ARRAY_LENGTH(key1); i++) {
-        key1[i] = tb[random()];
+    for (i = 0; i < 10; i++) {
+        tblRnd[i] = tb[random()];
     }
 
-    DEBUGPrint("ans : %d %d %d %d %d %d\n", base[num], base[num + 1], base[num + 2], base[num + 3], base[num + 4], base[num + 5]);
-    DEBUGPrint("rand: %d %d %d %d %d %d %d %d %d %d\n", key1[0], key1[1], key1[2], key1[3], key1[4], key1[5], key1[6], key1[7], key1[8], key1[9]);
-    DEBUGPrint("t0  : %d %d %d %d %d %d %d %d %d %d\n", tb[key1[0]], tb[key1[1]], tb[key1[2]], tb[key1[3]], tb[key1[4]], tb[key1[5]], tb[key1[6]],
-               tb[key1[7]], tb[key1[8]], tb[key1[9]]);
+    enable = OSDisableInterrupts();
+    key[0] = (u8)((ror((u8)(base[baseIdx] ^ tb[tblRnd[5]]), tb[tblRnd[2]]) - tb[tblRnd[9]]) ^ tb[tblRnd[4]]);
+    key[1] = (u8)((ror((u8)(base[baseIdx + 1] ^ tb[tblRnd[1]]), tb[tblRnd[0]]) - tb[tblRnd[5]]) ^ tb[tblRnd[7]]);
+    key[2] = (u8)((ror((u8)(base[baseIdx + 2] ^ tb[tblRnd[6]]), tb[tblRnd[8]]) - tb[tblRnd[2]]) ^ tb[tblRnd[0]]);
+    key[3] = (u8)((ror((u8)(base[baseIdx + 3] ^ tb[tblRnd[4]]), tb[tblRnd[7]]) - tb[tblRnd[3]]) ^ tb[tblRnd[2]]);
+    key[4] = (u8)((ror((u8)(base[baseIdx + 4] ^ tb[tblRnd[1]]), tb[tblRnd[6]]) - tb[tblRnd[3]]) ^ tb[tblRnd[4]]);
+    key[5] = (u8)((ror((u8)(base[baseIdx + 5] ^ tb[tblRnd[7]]), tb[tblRnd[8]]) - tb[tblRnd[5]]) ^ tb[tblRnd[9]]);
 
-    intrStatus = OSDisableInterrupts();
+    ft[0] = (u8)(tb[(idx + 1) * 256 + key[4]] ^ tb[(idx + 2) * 256 + tblRnd[3]]);
+    ft[1] = (u8)(tb[(idx + 1) * 256 + key[2]] ^ tb[(idx + 2) * 256 + tblRnd[5]]);
+    ft[2] = (u8)(tb[(idx + 1) * 256 + key[5]] ^ tb[(idx + 2) * 256 + tblRnd[7]]);
+    ft[3] = (u8)(tb[(idx + 1) * 256 + key[0]] ^ tb[(idx + 2) * 256 + tblRnd[2]]);
+    ft[4] = (u8)(tb[(idx + 1) * 256 + key[1]] ^ tb[(idx + 2) * 256 + tblRnd[4]]);
+    ft[5] = (u8)(tb[(idx + 1) * 256 + key[3]] ^ tb[(idx + 2) * 256 + tblRnd[9]]);
+    ft[6] = (u8)(tb[(idx + 1) * 256 + tblRnd[0]] ^ tb[(idx + 2) * 256 + tblRnd[6]]);
+    ft[7] = (u8)(tb[(idx + 1) * 256 + tblRnd[1]] ^ tb[(idx + 2) * 256 + tblRnd[8]]);
+    sb[0] = (u8)(tb[(idx + 1) * 256 + key[0]] ^ tb[(idx + 2) * 256 + tblRnd[1]]);
+    sb[1] = (u8)(tb[(idx + 1) * 256 + key[5]] ^ tb[(idx + 2) * 256 + tblRnd[4]]);
+    sb[2] = (u8)(tb[(idx + 1) * 256 + key[3]] ^ tb[(idx + 2) * 256 + tblRnd[0]]);
+    sb[3] = (u8)(tb[(idx + 1) * 256 + key[2]] ^ tb[(idx + 2) * 256 + tblRnd[9]]);
+    sb[4] = (u8)(tb[(idx + 1) * 256 + key[4]] ^ tb[(idx + 2) * 256 + tblRnd[7]]);
+    sb[5] = (u8)(tb[(idx + 1) * 256 + key[1]] ^ tb[(idx + 2) * 256 + tblRnd[8]]);
+    sb[6] = (u8)(tb[(idx + 1) * 256 + tblRnd[3]] ^ tb[(idx + 2) * 256 + tblRnd[5]]);
+    sb[7] = (u8)(tb[(idx + 1) * 256 + tblRnd[2]] ^ tb[(idx + 2) * 256 + tblRnd[6]]);
 
-    key2[0] = ror(base[num] ^ tb[key1[5]], tb[key1[2]]) - tb[key1[9]] ^ tb[key1[4]];
-    key2[1] = ror(base[num + 1] ^ tb[key1[1]], tb[key1[0]]) - tb[key1[5]] ^ tb[key1[7]];
-    key2[2] = ror(base[num + 2] ^ tb[key1[6]], tb[key1[8]]) - tb[key1[2]] ^ tb[key1[0]];
-    key2[3] = ror(base[num + 3] ^ tb[key1[4]], tb[key1[7]]) - tb[key1[3]] ^ tb[key1[2]];
-    key2[4] = ror(base[num + 4] ^ tb[key1[1]], tb[key1[6]]) - tb[key1[3]] ^ tb[key1[4]];
-    key2[5] = ror(base[num + 5] ^ tb[key1[7]], tb[key1[8]]) - tb[key1[5]] ^ tb[key1[9]];
-
-    DEBUGPrint("key : %d %d %d %d %d %d \n", key2[0], key2[1], key2[2], key2[3], key2[4], key2[5]);
-
-    addTable[0] = tb[key2[4] + ((numRand + 1) << 8)] ^ tb[key1[3] + ((numRand + 2) << 8)];
-    addTable[1] = tb[key2[2] + ((numRand + 1) << 8)] ^ tb[key1[5] + ((numRand + 2) << 8)];
-    addTable[2] = tb[key2[5] + ((numRand + 1) << 8)] ^ tb[key1[7] + ((numRand + 2) << 8)];
-    addTable[3] = tb[key2[0] + ((numRand + 1) << 8)] ^ tb[key1[2] + ((numRand + 2) << 8)];
-    addTable[4] = tb[key2[1] + ((numRand + 1) << 8)] ^ tb[key1[4] + ((numRand + 2) << 8)];
-    addTable[5] = tb[key2[3] + ((numRand + 1) << 8)] ^ tb[key1[9] + ((numRand + 2) << 8)];
-    // NOTE: switch from key2 to key1 for these last two
-    addTable[6] = tb[key1[0] + ((numRand + 1) << 8)] ^ tb[key1[6] + ((numRand + 2) << 8)];
-    addTable[7] = tb[key1[1] + ((numRand + 1) << 8)] ^ tb[key1[8] + ((numRand + 2) << 8)];
-
-    xorTable[0] = tb[key2[0] + ((numRand + 1) << 8)] ^ tb[key1[1] + ((numRand + 2) << 8)];
-    xorTable[1] = tb[key2[5] + ((numRand + 1) << 8)] ^ tb[key1[4] + ((numRand + 2) << 8)];
-    xorTable[2] = tb[key2[3] + ((numRand + 1) << 8)] ^ tb[key1[0] + ((numRand + 2) << 8)];
-    xorTable[3] = tb[key2[2] + ((numRand + 1) << 8)] ^ tb[key1[9] + ((numRand + 2) << 8)];
-    xorTable[4] = tb[key2[4] + ((numRand + 1) << 8)] ^ tb[key1[7] + ((numRand + 2) << 8)];
-    xorTable[5] = tb[key2[1] + ((numRand + 1) << 8)] ^ tb[key1[8] + ((numRand + 2) << 8)];
-    // NOTE: switch from key2 to key1 for these last two
-    xorTable[6] = tb[key1[3] + ((numRand + 1) << 8)] ^ tb[key1[5] + ((numRand + 2) << 8)];
-    xorTable[7] = tb[key1[2] + ((numRand + 1) << 8)] ^ tb[key1[6] + ((numRand + 2) << 8)];
-
-    DEBUGPrint("ft  : %d %d %d %d %d %d %d %d\n", addTable[0], addTable[1], addTable[2], addTable[3], addTable[4], addTable[5], addTable[6],
-               addTable[7]);
-    DEBUGPrint("sb  : %d %d %d %d %d %d %d %d\n", xorTable[0], xorTable[1], xorTable[2], xorTable[3], xorTable[4], xorTable[5], xorTable[6],
-               xorTable[7]);
-
-    for (i = 0; i < (int)ARRAY_LENGTH(key1); i++) {
-        p->encryptionKey[i] = key1[(ARRAY_LENGTH(key1) - 1) - i];
+    for (i = 0; i < 10; i++) {
+        p_wpd->encryptionKey[i] = tblRnd[9 - i];
     }
 
-    for (i = 0; i < (int)ARRAY_LENGTH(key2); i++) {
-        p->encryptionKey[ARRAY_LENGTH(key1) + i] = key2[(ARRAY_LENGTH(key2) - 1) - i];
+    for (i = 0; i < 6; i++) {
+        p_wpd->encryptionKey[i + 10] = key[5 - i];
     }
 
-    memcpy(p->decryptAddTable, addTable, sizeof(p->decryptAddTable));
-    memcpy(p->decryptXorTable, xorTable, sizeof(p->decryptXorTable));
-
-    OSRestoreInterrupts(intrStatus);
+    memcpy(p_wpd->decryptAddTable, ft, 8);
+    memcpy(p_wpd->decryptXorTable, sb, 8);
+    OSRestoreInterrupts(enable);
 }
 
 void WPADiCreateKeyFor3rd(s32 chan) {

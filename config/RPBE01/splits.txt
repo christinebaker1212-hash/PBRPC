@@ -1851,6 +1851,8 @@ src/.unsorted/802AD0D4.cpp:
 
 libs/RVL_SDK/src/wpad/WPADEncrypt.c:
 	.text       start:0x802B61F4 end:0x802B7184
+	.data       start:0x8042BA30 end:0x8042CD58
+	.sbss       start:0x80628410 end:0x80628418
 
 src/.unsorted/802B2D18.cpp:
 	.text       start:0x802B7184 end:0x802B7F98
