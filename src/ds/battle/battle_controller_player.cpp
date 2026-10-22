@@ -4246,3 +4246,52 @@ static BOOL BattleControllerPlayer_CheckExtraFlinch(BattleSystem *battleSys, Bat
 
     return result;
 }
+
+#include "common.hpp"
+
+extern "C" {
+
+s32 BattleControllerPlayer_UpdateFlagsWhenHit__FP12BattleSystemP13BattleContext(s32, s32);
+s32 BattleControllerPlayer_UpdateMoveBuffers__FP12BattleSystemP13BattleContext(s32, s32);
+s32 BattleSystem_VerifyMetronomeCount__FP12BattleSystemP13BattleContext(s32, s32);
+s32 Battler_HeldItemEffect__FP13BattleContexti(s32, s32);
+
+s32 BattleControllerPlayer_UpdateMoveBuffers__FP12BattleSystemP13BattleContext(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    u32 temp_r4;
+    u8 temp_r3_2;
+
+    temp_r3_2 = Battler_HeldItemEffect__FP13BattleContexti(arg1, (*(s32 *)((u8 *)(arg1) + (0x64))));
+    if (((*(s32 *)((u8 *)(arg1) + (0x213C))) & 0x20) || ((*(s32 *)((u8 *)(arg1) + (0x2140))) & 4)) {
+        if ((temp_r3_2 == 0x36) || (temp_r3_2 == 0x72) || (temp_r3_2 == 0x7C)) {
+            temp_r4 = (*(u32 *)((u8 *)(arg1) + (0x3040)));
+            if ((temp_r4 != 0xA5U) && ((temp_r4 != 0xE2U) || !((*(s32 *)((u8 *)(arg1) + (0x2140))) & 0x40))) {
+                (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 0xC0))) + (0x2DF8))) = (s16) temp_r4;
+            }
+        } else {
+            (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 0xC0))) + (0x2DF8))) = 0;
+        }
+    }
+    if (!((*(s32 *)((u8 *)(arg1) + (0x213C))) & 0x100000)) {
+        if ((*(s32 *)((u8 *)(arg1) + (0x2140))) & 4) {
+            (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 2))) + (0x305C))) = (s16) (*(s32 *)((u8 *)(arg1) + (0x3044)));
+            (*(u32 *)((u8 *)(arg1) + (0x3048))) = (u32) (*(u32 *)((u8 *)(arg1) + (0x3040)));
+        } else {
+            (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 2))) + (0x305C))) = 0;
+            (*(u32 *)((u8 *)(arg1) + (0x3048))) = 0U;
+        }
+        if ((*(s32 *)((u8 *)(arg1) + (0x2140))) & 0x40) {
+            (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 2))) + (0x307C))) = (s16) (*(u32 *)((u8 *)(arg1) + (0x3040)));
+        } else {
+            (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 2))) + (0x307C))) = 0;
+        }
+    }
+    if ((*(s32 *)((u8 *)(arg1) + (0x2140))) & 4) {
+        (*(s16 *)((u8 *)((arg1 + ((*(s32 *)((u8 *)(arg1) + (0x64))) * 2))) + (0x30AC))) = (s16) (*(u32 *)((u8 *)(arg1) + (0x3040)));
+    }
+    BattleControllerPlayer_UpdateFlagsWhenHit__FP12BattleSystemP13BattleContext(arg0, arg1);
+    temp_r3 = BattleSystem_VerifyMetronomeCount__FP12BattleSystemP13BattleContext(arg0, arg1);
+    (*(s32 *)((u8 *)(arg1) + (8))) = 0x27;
+    return temp_r3;
+}
+}
