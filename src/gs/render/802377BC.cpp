@@ -1161,3 +1161,13 @@ void GSrender::sync() {
 
     GXFlush();
 }
+
+extern "C" {
+
+s32 fn_8023801C(void);
+
+void fn_802380BC(u8 *arg0, s32 arg1) {
+    fn_8023801C();
+    (*(s32 *)((u8 *)(arg0) + (0x173C))) = arg1;
+}
+}
