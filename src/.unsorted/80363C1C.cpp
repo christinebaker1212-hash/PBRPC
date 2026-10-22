@@ -23,3 +23,15 @@ u32 *fn_80363E70(void) {
     return &lbl_80640478;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_80363F2C(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
