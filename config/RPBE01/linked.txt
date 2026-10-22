@@ -5,6 +5,7 @@ os/OSSemaphore.c
 os/OSSync.c
 tpl/TPL.c
 cx/CXCompression.c
+ipc/ipcclt.c
 homebuttonLib/HBMBase.cpp
 homebuttonLib/HBMAnmController.cpp
 homebuttonLib/HBMFrameController.cpp

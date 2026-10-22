@@ -1776,8 +1776,11 @@ libs/RVL_SDK/src/cx/CXUncompression.c:
 libs/RVL_SDK/src/ipc/ipcMain.c:
 	.text       start:0x802A2880 end:0x802A2904
 
-src/.unsorted/802A2904.cpp:
+libs/RVL_SDK/src/ipc/ipcclt.c:
 	.text       start:0x802A2904 end:0x802A4004
+	.bss        start:0x80536B60 end:0x80536BB0
+	.sdata      start:0x8063DC48 end:0x8063DC50
+	.sbss       start:0x806400C0 end:0x806400D0
 
 libs/RVL_SDK/src/ipc/memory.c:
 	.text       start:0x802A4004 end:0x802A4528

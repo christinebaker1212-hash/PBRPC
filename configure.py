@@ -875,6 +875,7 @@ config.libs = [
         "ipc",
         [
             Object(NonMatching, "ipc/ipcMain.c"),
+            Object(MatchingFor("RPBE01"), "ipc/ipcclt.c"),
             Object(NonMatching, "ipc/memory.c"),
             Object(NonMatching, "ipc/ipcProfile.c"),
             Object(NonMatching, "ipc/fs.c"),
@@ -1323,7 +1324,6 @@ config.libs = [
             Object(NonMatching, ".unsorted/802959F8.cpp"),
             Object(NonMatching, ".unsorted/802973F8.cpp"),
             Object(NonMatching, ".unsorted/80297890.cpp"),
-            Object(NonMatching, ".unsorted/802A2904.cpp"),
             Object(NonMatching, ".unsorted/802A5B28.cpp"),
             Object(NonMatching, ".unsorted/802AD0D4.cpp"),
             Object(NonMatching, ".unsorted/802B2D18.cpp"),
