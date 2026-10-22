@@ -428,14 +428,24 @@ extern "C" {
 
 s32 fn_800ADAB4(void);
 
+
+}
+
+extern "C" {
+
+s32 fn_800B8E3C(void);
+
+
+}
+
+extern "C" {
+
 s32 fn_800ADAB4(void) {
     return (*(s32 *)((u8 *)(lbl_8063D500) + (0xD0))) != 0;
 }
 }
 
 extern "C" {
-
-s32 fn_800B8E3C(void);
 
 s32 fn_800B8E3C(void) {
     return (*(s32 *)((u8 *)(lbl_8063D500) + (0xC8))) != 0;
