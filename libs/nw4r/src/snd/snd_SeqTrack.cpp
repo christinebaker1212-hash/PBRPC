@@ -1,4 +1,5 @@
-// Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_SeqTrack.cpp
+// Imported from doldecomp/ogws (CC0), src/nw4r/snd/snd_SeqTrack.cpp.
+// This nw4r revision locks the track's own mutex instead of the sound thread.
 #include <nw4r/snd.h>
 #include <nw4r/ut.h>
 
@@ -96,8 +97,6 @@ void SeqTrack::Open() {
 }
 
 void SeqTrack::Close() {
-    SoundThread::AutoLock lock;
-
     ReleaseAllChannel(-1);
     FreeAllChannel();
 
@@ -105,7 +104,7 @@ void SeqTrack::Close() {
 }
 
 void SeqTrack::UpdateChannelLength() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     if (!mOpenFlag) {
         return;
@@ -125,15 +124,13 @@ void SeqTrack::UpdateChannelLength() {
 }
 
 void SeqTrack::UpdateChannelRelease(Channel *pChannel) {
-    SoundThread::AutoLock lock;
-
     if (pChannel->GetLength() == 0 && !pChannel->IsRelease() && !mParserTrackParam.damperFlag) {
         pChannel->Release();
     }
 }
 
 int SeqTrack::ParseNextTick(bool doNoteOn) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     if (!mOpenFlag) {
         return 0;
@@ -163,7 +160,7 @@ int SeqTrack::ParseNextTick(bool doNoteOn) {
 }
 
 void SeqTrack::StopAllChannel() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     for (Channel *pIt = mChannelList; pIt != NULL; pIt = pIt->GetNextTrackChannel()) {
         Channel::FreeChannel(pIt);
@@ -174,9 +171,9 @@ void SeqTrack::StopAllChannel() {
 }
 
 void SeqTrack::ReleaseAllChannel(int release) {
-    SoundThread::AutoLock lock;
-
     UpdateChannelParam();
+
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     for (Channel *pIt = mChannelList; pIt != NULL; pIt = pIt->GetNextTrackChannel()) {
         if (pIt->IsActive()) {
@@ -190,7 +187,7 @@ void SeqTrack::ReleaseAllChannel(int release) {
 }
 
 void SeqTrack::PauseAllChannel(bool flag) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     for (Channel *pIt = mChannelList; pIt != NULL; pIt = pIt->GetNextTrackChannel()) {
         if (pIt->IsActive() && flag != pIt->IsPause()) {
@@ -200,14 +197,14 @@ void SeqTrack::PauseAllChannel(bool flag) {
 }
 
 void SeqTrack::AddChannel(Channel *pChannel) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     pChannel->SetNextTrackChannel(mChannelList);
     mChannelList = pChannel;
 }
 
 void SeqTrack::UpdateChannelParam() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     if (!mOpenFlag) {
         return;
@@ -305,7 +302,7 @@ void SeqTrack::UpdateChannelParam() {
 }
 
 void SeqTrack::FreeAllChannel() {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     for (Channel *pIt = mChannelList; pIt != NULL; pIt = pIt->GetNextTrackChannel()) {
         Channel::FreeChannel(pIt);
@@ -315,7 +312,6 @@ void SeqTrack::FreeAllChannel() {
 }
 
 void SeqTrack::ChannelCallbackFunc(Channel *pDropChannel, Channel::ChannelCallbackStatus status, u32 callbackArg) {
-    SoundThread::AutoLock lock;
     SeqTrack *p = reinterpret_cast<SeqTrack *>(callbackArg);
 
     switch (status) {
@@ -334,6 +330,8 @@ void SeqTrack::ChannelCallbackFunc(Channel *pDropChannel, Channel::ChannelCallba
         p->mPlayer->ChannelCallback(pDropChannel);
     }
 
+    ut::detail::AutoLock<OSMutex> lock(p->mMutex);
+
     if (p->mChannelList == pDropChannel) {
         p->mChannelList = pDropChannel->GetNextTrackChannel();
         return;
@@ -348,7 +346,7 @@ void SeqTrack::ChannelCallbackFunc(Channel *pDropChannel, Channel::ChannelCallba
 }
 
 void SeqTrack::SetMute(SeqMute mute) {
-    SoundThread::AutoLock lock;
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
 
     switch (mute) {
         case MUTE_OFF: {
@@ -385,6 +383,8 @@ void SeqTrack::SetPitch(f32 pitch) {
 }
 
 volatile s16 *SeqTrack::GetVariablePtr(int idx) {
+    ut::detail::AutoLock<OSMutex> lock(mMutex);
+
     if (idx < VARIABLE_NUM) {
         return &mTrackVariable[idx];
     }
@@ -393,8 +393,6 @@ volatile s16 *SeqTrack::GetVariablePtr(int idx) {
 }
 
 Channel *SeqTrack::NoteOn(int key, int velocity, s32 length, bool tie) {
-    SoundThread::AutoLock lock;
-
     SeqPlayer *pPlayer = GetSeqPlayer();
     Channel *pChannel = NULL;
 

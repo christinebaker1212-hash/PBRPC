@@ -2588,6 +2588,8 @@ src/.unsorted/80375340.cpp:
 
 libs/nw4r/src/snd/snd_SeqTrack.cpp:
 	.text       start:0x80379EF8 end:0x8037AF64
+	.rodata     start:0x803F3878 end:0x803F38A0
+	.sdata2     start:0x8062AF28 end:0x8062AF58
 
 libs/nw4r/src/snd/snd_Sound3DListener.cpp:
 	.text       start:0x8037AF64 end:0x8037AF78
