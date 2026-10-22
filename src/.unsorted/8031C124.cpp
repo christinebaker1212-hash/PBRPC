@@ -1286,6 +1286,11 @@ s32 fn_8035157C(u8 *arg0, s32 arg1, s32 arg2) {
         (*(s32 *)((u8 *)(arg0) + (0x16C))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0x16C))) + temp_r3);
     }
     return temp_r3;
+}
+}
+
+extern "C" {
+
 void fn_8035D364(u8 *arg0, s8 arg1) {
     s32 temp_r6;
 
