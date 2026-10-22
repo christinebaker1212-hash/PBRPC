@@ -900,7 +900,7 @@ static void WUDiCleanUp(void) {
     WUDCB* p = &_wcb;
     BOOL success = FALSE;
 
-    if (SCCheckStatus() != SC_STATUS_OK) {
+    if (SCCheckStatus() == SC_STATUS_BUSY) {
         return;
     }
 
@@ -1050,8 +1050,7 @@ static void EnableStackHandler0(OSAlarm* pAlarm, OSContext* pContext) {
 }
 
 static WUDInitState WUDiWaitSCSetup(void) {
-    //TODO: probably a fakematch
-    return (SCCheckStatus() == SC_STATUS_OK) + 1;
+    return SCCheckStatus() == SC_STATUS_BUSY ? 1 : 2;
 }
 
 static WUDInitState WUDiGetRegisteredDevice(void) {
@@ -1128,7 +1127,7 @@ static void WUDiContMapTableFlush(void) {
     WUDCB* p = &_wcb;
     u8 nextState;
 
-    if (SCCheckStatus() == SC_STATUS_OK && SCSetBtDeviceInfoArray(&_scArray)) {
+    if (SCCheckStatus() != SC_STATUS_BUSY && SCSetBtDeviceInfoArray(&_scArray)) {
         SCFlushAsync(ShutFlushCallback);
         nextState = WUD_STATE_SHUTDOWN_FLUSH_SETTINGS;
     } else {
