@@ -426,7 +426,21 @@ def decl_name(decl: str) -> Optional[str]:
 
 def build_unit(edge_inputs: List[str], obj: str) -> bool:
     r = subprocess.run(["ninja", obj], capture_output=True, text=True, cwd=ROOT)
+    if r.returncode != 0 and os.environ.get("AUTOMATCH_DEBUG"):
+        err = [l for l in r.stdout.splitlines() if l.startswith("#")]
+        print("    apply failed:", " | ".join(l.strip("# ") for l in err[2:7]), flush=True)
     return r.returncode == 0
+
+
+def param_type(param: str) -> str:
+    """The type of a parameter declaration ("" if it has none to cast to)."""
+    param = param.strip()
+    m = re.match(r"^(.*[\s\*&])\s*(\w+)$", param)
+    if m and m.group(1).strip() and m.group(1).strip() not in ("const", "unsigned", "signed"):
+        return m.group(1).strip()
+    if re.fullmatch(r"[\w\s\*&]+", param) and re.search(r"\b(s8|u8|s16|u16|s32|u32|s64|u64|f32|f64|int|char|short|long|float|double|void|bool|BOOL)\b|\*", param):
+        return param
+    return ""
 
 
 def merge_into(text: str, src: str) -> str:
@@ -437,7 +451,7 @@ def merge_into(text: str, src: str) -> str:
     protos = {}
     for m in re.finditer(r"^(?:extern\s+)?[\w\s\*]+?\b(\w+)\(([^;(){}]*)\)\s*(?:;|\{)", text, re.M):
         p = m.group(2).strip()
-        protos[m.group(1)] = [x.strip() for x in p.split(",")] if p not in ("", "void") else []
+        protos[m.group(1)] = [param_type(x) for x in p.split(",")] if p not in ("", "void") else []
     have = set(re.findall(r"^(?:extern )?[^\n(;]*?\b(\w+)\s*[\[(;]", text, re.M))
     own = {}
     for m in re.finditer(r"^([\w\s\*]+?)\b(\w+)\(([^;()]*)\);", src, re.M):
@@ -463,6 +477,9 @@ def merge_into(text: str, src: str) -> str:
                 continue
             body = body[: m.start()] + new + body[end + 1 :]
             pos = m.start() + len(new)
+    if '"common.hpp"' not in text:
+        # The basic types; a unit with no code yet has only its own header.
+        text = text.rstrip("\n") + '\n\n#include "common.hpp"\n'
     block = 'extern "C" {\n\n' + "".join(d + "\n" for d in decls)
     block += ("\n" if decls else "") + body.strip() + "\n}\n"
     return text.rstrip("\n") + "\n\n" + block
