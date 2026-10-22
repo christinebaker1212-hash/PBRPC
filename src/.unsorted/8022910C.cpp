@@ -89,3 +89,26 @@ s32 fn_8022D6C4(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_8022A2B4(s32, s32, s32, s32, s32);
+s32 fn_8022A35C(s32, s32, s32, s32, s32);
+s32 fn_8022CF90(s32, s32);
+
+s32 fn_8022A2B4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 temp_r8;
+
+    temp_r8 = (*(s32 *)((u8 *)(arg0) + (0x940)));
+    if (temp_r8 == 0) {
+        return 0;
+    }
+    if ((arg1 >> 0x10) == 0) {
+        return 0;
+    }
+    if (((s32) (u16) arg1 >= temp_r8) || ((s32) (u16) arg1 < 0)) {
+        return 0;
+    }
+    return fn_8022A35C(arg0, fn_8022CF90(arg0, (s32) (u16) arg1), arg2, arg3, arg4);
+}
+}
