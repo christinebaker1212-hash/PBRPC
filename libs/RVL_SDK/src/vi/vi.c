@@ -1,7 +1,7 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/vi/vi.c
 #include <revolution/verdefs.h>
 
-SDKDefineVersion(VI, "Apr 20 2010", "11:20:54");
+SDKDefineVersion(VI, "Nov 30 2006", "03:31:49");
 
 #include <private/vi.h>
 #include <revolution/vi.h>

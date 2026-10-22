@@ -1520,7 +1520,7 @@ libs/RVL_SDK/src/os/__ppc_eabi_init.cpp:
 libs/RVL_SDK/src/exi/EXIBios.c:
 	.text       start:0x80274558 end:0x80275DEC
 	.bss        start:0x805154C0 end:0x80515580
-	.sdata      start:0x8063DAB8 end:0x8063DABC
+	.sdata      start:0x8063DAB8 end:0x8063DAC0
 	.sbss       start:0x8063FB48 end:0x8063FB4C
 
 src/.unsorted/80275DEC.cpp:
@@ -1529,8 +1529,16 @@ src/.unsorted/80275DEC.cpp:
 libs/RVL_SDK/src/exi/EXIUart.c:
 	.text       start:0x80275F64 end:0x80276120
 
-src/.unsorted/80276120.cpp:
-	.text       start:0x80276120 end:0x802772B4
+libs/RVL_SDK/src/exi/EXICommon.c:
+	.text       start:0x80276120 end:0x802762AC
+	.sdata2     start:0x80642668 end:0x80642670
+
+libs/RVL_SDK/src/si/SIBios.c:
+	.text       start:0x802762AC end:0x802772B4
+	.data       start:0x80433F70 end:0x80433FE0
+	.bss        start:0x80515580 end:0x805157A0
+	.sdata      start:0x8063DAC0 end:0x8063DAC4
+	.sbss       start:0x8063FB60 end:0x8063FB70
 
 libs/RVL_SDK/src/si/SISamplingRate.c:
 	.text       start:0x802772B4 end:0x8027738C

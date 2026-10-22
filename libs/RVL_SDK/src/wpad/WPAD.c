@@ -29,7 +29,7 @@
 #define DPD_CONFIG2_SIZE 2
 #define SPK_CONFIG_SIZE 7
 
-SDKDefineVersion(WPAD, "Apr 20 2010", "11:20:55");
+SDKDefineVersion(WPAD, "Jan  9 2007", "01:54:36");
 
 WPADCB _wpd[WPAD_MAX_CONTROLLERS];
 WPADCB* _wpdcb[WPAD_MAX_CONTROLLERS];

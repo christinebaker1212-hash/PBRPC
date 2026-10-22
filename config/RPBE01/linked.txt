@@ -3,6 +3,8 @@ os/OSReset.c
 os/OSRtc.c
 os/OSSemaphore.c
 os/OSSync.c
+exi/EXICommon.c
+si/SIBios.c
 tpl/TPL.c
 cx/CXCompression.c
 ipc/ipcclt.c

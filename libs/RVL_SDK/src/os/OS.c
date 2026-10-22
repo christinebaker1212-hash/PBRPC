@@ -29,7 +29,7 @@
 
 #include <string.h>
 
-SDKDefineVersion(OS, "Apr 20 2010", "11:20:43");
+SDKDefineVersion(OS, "Jan  9 2007", "01:54:01");
 
 /* Linker generated */
 extern u8 __ArenaHi[];
