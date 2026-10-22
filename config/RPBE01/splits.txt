@@ -1753,7 +1753,7 @@ libs/RVL_SDK/src/cx/CXUncompression.c:
 libs/RVL_SDK/src/ipc/ipcMain.c:
 	.text       start:0x802A7148 end:0x802A71CC
 
-src/.unsorted/802A2904.cpp:
+libs/RVL_SDK/src/ipc/ipcclt.c:
 	.text       start:0x802A71CC end:0x802A88CC
 
 libs/RVL_SDK/src/ipc/memory.c:

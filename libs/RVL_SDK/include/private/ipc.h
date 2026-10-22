@@ -37,7 +37,6 @@ void IPCiProfReply(void* req, s32 fd);
 /* Clt */
 
 IOSError IPCCltInit();
-IOSError IPCCltReInit();
 
 #ifdef __cplusplus
 }
