@@ -15,3 +15,13 @@ u32 *fn_8038A3C4(void) {
     return &typeInfo__Q34nw4r3lyt8Bounding;
 }
 }
+
+extern "C" {
+
+s32 fn_8038A2E0(u8 *arg0, u32 arg1) {
+    if (arg1 >= (u8) (*(u8 *)((u8 *)(arg0) + (0x100)))) {
+        return 0;
+    }
+    return (*(s32 *)((u8 *)(((*(s32 *)((u8 *)(arg0) + (0xFC))) + (arg1 * 8))) + (4)));
+}
+}
