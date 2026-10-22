@@ -2704,14 +2704,15 @@ libs/nw4r/src/lyt/lyt_textBox.cpp:
 	.ctors      start:0x803E58B4 end:0x803E58B8
 
 libs/nw4r/src/lyt/lyt_window.cpp:
-	.text       start:0x8038CBCC end:0x8038D548
+	.text       start:0x8038CBCC end:0x8038F044
+	.ctors      start:0x803E58B8 end:0x803E58BC
 
-src/.unsorted/80388830.cpp:
-	.text       start:0x8038D548 end:0x80390430
-	.ctors      start:0x803E58B8 end:0x803E58C0
+libs/nw4r/src/lyt/lyt_bounding.cpp:
+	.text       start:0x8038F044 end:0x8038F0F0
+	.ctors      start:0x803E58BC end:0x803E58C0
 
 libs/nw4r/src/lyt/lyt_material.cpp:
-	.text       start:0x80390430 end:0x803920A0
+	.text       start:0x8038F0F0 end:0x803920A0
 
 libs/nw4r/src/lyt/lyt_texMap.cpp:
 	.text       start:0x803920A0 end:0x803923A0

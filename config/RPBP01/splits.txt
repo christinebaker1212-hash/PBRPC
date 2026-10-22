@@ -2708,14 +2708,15 @@ libs/nw4r/src/lyt/lyt_textBox.cpp:
 	.ctors      start:0x803E2274 end:0x803E2278
 
 libs/nw4r/src/lyt/lyt_window.cpp:
-	.text       start:0x80387EB4 end:0x80388830
+	.text       start:0x80387EB4 end:0x8038A32C
+	.ctors      start:0x803E2278 end:0x803E227C
 
-src/.unsorted/80388830.cpp:
-	.text       start:0x80388830 end:0x8038B718
-	.ctors      start:0x803E2278 end:0x803E2280
+libs/nw4r/src/lyt/lyt_bounding.cpp:
+	.text       start:0x8038A32C end:0x8038A3D8
+	.ctors      start:0x803E227C end:0x803E2280
 
 libs/nw4r/src/lyt/lyt_material.cpp:
-	.text       start:0x8038B718 end:0x8038D388
+	.text       start:0x8038A3D8 end:0x8038D388
 
 libs/nw4r/src/lyt/lyt_texMap.cpp:
 	.text       start:0x8038D388 end:0x8038D688
