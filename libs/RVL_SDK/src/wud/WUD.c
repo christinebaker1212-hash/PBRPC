@@ -1231,7 +1231,7 @@ BOOL WUDInit(void) {
     SCInit();
 
     OSCreateAlarm(&p->alarm);
-    OSSetPeriodicAlarm(&p->alarm, __OSGetSystemTime(), OSMillisecondsToTicks(10), InitHandler0);
+    OSSetPeriodicAlarm(&p->alarm, OSGetTime(), OSMillisecondsToTicks(10), InitHandler0);
 
     _initialized = TRUE;
     return TRUE;
@@ -1274,7 +1274,7 @@ void WUDShutdown(void) {
     p->shutdownState = WUD_STATE_SHUTDOWN_STORE_SETTINGS;
 
     OSCreateAlarm(&p->alarm);
-    OSSetPeriodicAlarm(&p->alarm, __OSGetSystemTime(), OSMillisecondsToTicks(10), ShutdownHandler0);
+    OSSetPeriodicAlarm(&p->alarm, OSGetTime(), OSMillisecondsToTicks(10), ShutdownHandler0);
 
     p->libStatus = WUD_LIB_STATUS_4;
 
@@ -1372,7 +1372,7 @@ static BOOL StartSyncDevice(u8 syncType, s8 syncLoopNum, BOOL syncSkipChecks) {
         p->syncedNum = 0;
 
         OSCreateAlarm(&p->alarm);
-        OSSetPeriodicAlarm(&p->alarm, __OSGetSystemTime(), OSMillisecondsToTicks(20), SyncHandler0);
+        OSSetPeriodicAlarm(&p->alarm, OSGetTime(), OSMillisecondsToTicks(20), SyncHandler0);
 
         OSRestoreInterrupts(enabled);
 
@@ -1503,7 +1503,7 @@ BOOL WUDStartClearDevice(void) {
         p->deleteState = WUD_STATE_DELETE_DISALLOW_INCOMING;
 
         OSCreateAlarm(&p->alarm);
-        OSSetPeriodicAlarm(&p->alarm, __OSGetSystemTime(), OSMillisecondsToTicks(20), DeleteAllHandler0);
+        OSSetPeriodicAlarm(&p->alarm, OSGetTime(), OSMillisecondsToTicks(20), DeleteAllHandler0);
 
         OSRestoreInterrupts(enabled);
 
@@ -1825,7 +1825,7 @@ void WUDiEnableStack(void) {
     p->stackState = WUD_STATE_STACK_GET_STORED_LINK_KEY;
 
     OSCreateAlarm(&p->alarm);
-    OSSetPeriodicAlarm(&p->alarm, __OSGetSystemTime(), OSMillisecondsToTicks(10), EnableStackHandler0);
+    OSSetPeriodicAlarm(&p->alarm, OSGetTime(), OSMillisecondsToTicks(10), EnableStackHandler0);
 }
 
 void WUDiAutoSync(void) {
@@ -2775,7 +2775,7 @@ void WUDStoredLinkKeyCallback(void* p1) {
 
     default: {
         // clang-format off
-        OSPanic(__FILE__, 3636, "Unknown event\n");
+        OSPanic(__FILE__, 3944, "Unknown event\n");
         // clang-format on
     }
     }
