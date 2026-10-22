@@ -1657,3 +1657,26 @@ void fn_80059884(int i) {
     GScache::freeFsysCacheEntries(row[fn_80058BA4()]);
     GSfsys::fn_80249890(row[fn_80058BA4()]);
 }
+
+extern "C" {
+
+s32 fn_8000B170__Fiif(s32, s32, f32);
+s32 fn_8000B4C0__Fi(s32);
+s32 fn_800563EC__FPvi(s32, s32);
+
+s32 fn_800563EC__FPvi(s32 arg0, s32 arg1) {
+    s32 var_r3;
+
+    if (arg1 != 0) {
+        return fn_8000B170__Fiif(arg0, 0, lbl_80640B68);
+    }
+    var_r3 = fn_8000708C();
+    if (var_r3 != 0) {
+        var_r3 = fn_8000B4C0__Fi(arg0);
+        if (var_r3 == 0) {
+            var_r3 = fn_8000B170__Fiif(arg0, 0, lbl_80640B68);
+        }
+    }
+    return var_r3;
+}
+}
