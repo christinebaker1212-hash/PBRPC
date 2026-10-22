@@ -318,6 +318,11 @@ void __GetImageTileCount(GXTexFmt fmt, u16 wd, u16 ht, u32* rowTiles, u32* colTi
 #define SET_REG_FIELD(reg, size, shift, val)                                                                                                         \
     { (reg) = ((u32)__rlwimi((u32)(reg), (val), (shift), 32 - (shift) - (size), 31 - (shift))); }
 
+// Names used by the sources imported from wii-ipl.
+#define GX_GET_REG_FIELD GET_REG_FIELD
+#define OLD_GX_SET_REG_FIELD OLD_SET_REG_FIELD
+#define GX_SET_REG_FIELD SET_REG_FIELD
+
 #define GX_GET_MEM_REG(offset) (*(vu16*)((vu16*)(__memReg) + (offset)))
 #define GX_GET_CP_REG(offset) (*(vu16*)((vu16*)(__cpReg) + (offset)))
 #define GX_GET_PE_REG(offset) (*(vu16*)((vu16*)(__peReg) + (offset)))

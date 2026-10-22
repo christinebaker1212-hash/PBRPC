@@ -128,6 +128,7 @@ static SomeVIStruct HorVer;
 static volatile u16 shdwRegs[59];
 
 // Same as OLD_SET_REG_FIELD in gx.h; reg_fields.h redefines that name, and a separate macro keeps the field update inlined.
+#undef OLD_GX_SET_REG_FIELD
 #define OLD_GX_SET_REG_FIELD(reg, size, shift, val) \
     { (reg) = ((u32)(reg) & ~(((1 << (size)) - 1) << (shift))) | ((u32)(val) << (shift)); }
 
