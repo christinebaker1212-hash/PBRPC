@@ -156,3 +156,31 @@ void fn_80176B1C(u8 *arg0) {
     (*(s8 *)((u8 *)(arg0) + (6))) = 0;
 }
 }
+
+extern "C" {
+
+s32 MoveTable_LoadParam__FUlUl(s32, s32);
+s32 fn_80170DF8(s32, s32, s32, s32);
+
+s32 fn_80170DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    u16 temp_r0;
+    u16 temp_r7;
+
+    temp_r7 = (*(u16 *)((u8 *)(arg0) + (2)));
+    (*(u16 *)((u8 *)(arg1) + (2))) = temp_r7;
+    (*(u16 *)((u8 *)(arg1) + (6))) = (u16) (*(u16 *)((u8 *)(arg0) + (4)));
+    temp_r0 = (*(u16 *)((u8 *)(arg0) + (6)));
+    if (temp_r7 < temp_r0) {
+        (*(s16 *)((u8 *)(arg1) + (4))) = 0;
+    } else {
+        (*(s16 *)((u8 *)(arg1) + (4))) = (s16) (temp_r7 - temp_r0);
+    }
+    if (arg3 != 0) {
+        (*(s8 *)((u8 *)(arg1) + (1))) = (s8) arg3;
+    } else {
+        (*(s8 *)((u8 *)(arg1) + (1))) = MoveTable_LoadParam__FUlUl((s32) (*(u16 *)((u8 *)(arg2) + (0x18))), 3);
+    }
+    (*(s32 *)((u8 *)(arg2) + (0xC))) = (s32) ((*(s32 *)((u8 *)(arg2) + (0xC))) + 8);
+    return arg0 + 8;
+}
+}

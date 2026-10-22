@@ -114,3 +114,28 @@ void fn_8004FEF4(u8 *arg0, u8 *arg1) {
     (*(f32 *)((u8 *)(arg0) + (0x10))) = (f32) (*(u8 *)((u8 *)(arg1) + (3)));
 }
 }
+
+extern "C" {
+
+s32 fn_8004FA38(s32, s32);
+
+s32 fn_8004FA38(s32 arg0, s32 arg1) {
+    u8 *temp_r3;
+    u8 *temp_r4;
+
+    (*(s8 *)((u8 *)(arg0) + (0x170))) = (s8) arg1;
+    if (arg1 != 0) {
+        temp_r4 = (*(u8 **)((u8 *)(arg0) + (0)));
+        if (temp_r4 != NULL) {
+            (*(s32 *)((u8 *)(temp_r4) + (0x104))) = (s32) ((*(s32 *)((u8 *)(temp_r4) + (0x104))) | 1);
+            return arg0;
+        }
+    }
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0)));
+    if (temp_r3 != NULL) {
+        (*(s32 *)((u8 *)(temp_r3) + (0x104))) = (s32) ((*(s32 *)((u8 *)(temp_r3) + (0x104))) & 0xFFFFFFFE);
+        return (s32) temp_r3;
+    }
+    return (s32) temp_r3;
+}
+}

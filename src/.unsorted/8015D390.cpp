@@ -80,3 +80,51 @@ void fn_80161308(void) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_801610A4(s32, s32);
+extern s32 lbl_8063F014;
+
+s32 fn_801610A4(s32 arg0, s32 arg1) {
+    switch (arg1) {                                 /* irregular */
+    case 0:
+        lbl_8063F014 = 4;
+        return arg0;
+    case -1:
+        lbl_8063F014 = 0xB;
+        return arg0;
+    case -3:
+        lbl_8063F014 = 0xB;
+        return arg0;
+    default:
+        lbl_8063F014 = 0xD;
+        return arg0;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_801610F4(s32, s32);
+
+s32 fn_801610F4(s32 arg0, s32 arg1) {
+    switch (arg1) {                                 /* irregular */
+    case 0:
+        lbl_8063F014 = 8;
+        return arg0;
+    case -1:
+        lbl_8063F014 = 0xB;
+        return arg0;
+    case -3:
+        lbl_8063F014 = 0xB;
+        return arg0;
+    case -5:
+        lbl_8063F014 = 0xD;
+        return arg0;
+    default:
+        lbl_8063F014 = 0xD;
+        return arg0;
+    }
+}
+}

@@ -68,3 +68,13 @@ s32 __dt__Q34nw4r3snd11SoundHandleFv(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_8003F51C(s32, s32);
+
+s32 fn_8003F51C(s32 arg0, s32 arg1) {
+    (*(s8 *)((u8 *)(arg1) + (2))) = 0;
+    return arg0;
+}
+}

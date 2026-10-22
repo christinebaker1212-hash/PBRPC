@@ -33,15 +33,7 @@ UnkClass1::~UnkClass1() {
 }
 
 // isEmpty
-bool UnkClass1::fn_802470E8() {
-    // Does not match as a single `if`
-    if (mFileIds != NULL) {
-        if (mFileIds[0] != 0) {
-            return false;
-        }
-    }
-    return true;
-}
+
 
 // push_back
 bool UnkClass1::fn_80247110(u32 fileId) {
@@ -59,9 +51,7 @@ bool UnkClass1::fn_80247110(u32 fileId) {
     return false;
 }
 
-u32 *UnkClass1::fn_80247180() {
-    return mFileIds;
-}
+
 
 void UnkClass1::fn_80247188(u32 fsysId) {
     if (mFileIds == NULL) {
@@ -97,5 +87,25 @@ u8 *fn_80247038(u8 *arg0, s32 arg1) {
         *temp_r3 = 0;
     }
     return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_802470E8(s32 arg0) {
+    s32 *temp_r3;
+
+    temp_r3 = (*(s32 **)((u8 *)(arg0) + (4)));
+    if ((temp_r3 != NULL) && ((s32) *temp_r3 != 0)) {
+        return 0;
+    }
+    return 1;
+}
+}
+
+extern "C" {
+
+s32 fn_80247180(s32 arg0) {
+    return (*(s32 *)((u8 *)(arg0) + (4)));
 }
 }

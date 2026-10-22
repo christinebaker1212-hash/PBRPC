@@ -40,3 +40,13 @@ s32 fn_8025B0F8(s32 arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 OSSendMessage(s32, s32, s32);
+s32 fn_8025B0C4(s32, s32);
+
+s32 fn_8025B0C4(s32 arg0, s32 arg1) {
+    return OSSendMessage(arg0 + 0x368, arg1, 0) != 0;
+}
+}
