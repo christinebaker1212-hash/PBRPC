@@ -205,3 +205,33 @@ bool GSmesh::fn_801EDF84(bool inverted) {
 
     return true;
 }
+
+extern "C" {
+
+s32 callDisplayList__8GSrenderFP13GSdisplayList(s32, s32);
+s32 fn_801EB044__10GSmaterialFbbb(u8 *, s32, s32, s32);
+s32 fn_801EB87C__10GSmaterialFP20_UnkMaterialStruct_3P8GSmatrix(u8 *, s32, s32);
+s32 fn_8023B948__8GSrenderFPv(s32, u8 *);
+s32 fn_8023C2E8__17_UnkClass8023C09CFv(s32);
+extern s32 sInstance__8GSrender;
+
+s32 fn_801EDDFC__6GSmeshFUlP8GSmatrixUl(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 temp_r31;
+    s32 temp_r4;
+    u8 *temp_r7;
+
+    temp_r7 = (*(u8 **)((u8 *)(arg0) + (0x14)));
+    if ((temp_r7 == NULL) || (temp_r4 = (*(s32 *)((u8 *)(arg0) + (0x18))), ((temp_r4 == 0) != 0)) || ((s32) (*(s32 *)((u8 *)(arg0) + (0x1C))) == 0) || ((s32) (*(u8 *)((u8 *)(temp_r7) + (0x33))) == 0)) {
+        return 0;
+    }
+    fn_8023C2E8__17_UnkClass8023C09CFv(temp_r4);
+    temp_r31 = ((u32) (*(u32 *)((u8 *)(arg0) + (0))) >> 1U) & 1;
+    fn_801EB044__10GSmaterialFbbb((*(u8 **)((u8 *)(arg0) + (0x14))), arg3, 1, temp_r31);
+    if (temp_r31 != 0) {
+        fn_801EB87C__10GSmaterialFP20_UnkMaterialStruct_3P8GSmatrix((*(u8 **)((u8 *)(arg0) + (0x14))), arg1, arg2);
+    }
+    callDisplayList__8GSrenderFP13GSdisplayList(sInstance__8GSrender, (*(s32 *)((u8 *)(arg0) + (0x1C))));
+    (*(s32 *)((u8 *)(arg0) + (4))) = fn_8023B948__8GSrenderFPv(sInstance__8GSrender, arg0);
+    return 1;
+}
+}
