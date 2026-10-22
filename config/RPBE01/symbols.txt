@@ -11984,7 +11984,7 @@ detail_StartSound__Q34nw4r3snd14SoundStartableFPQ34nw4r3snd11SoundHandleUlPQ54nw
 detail_PrepareSound__Q34nw4r3snd14SoundStartableFPQ34nw4r3snd11SoundHandleUlPQ54nw4r3snd6detail10BasicSound14AmbientArgInfoPQ44nw4r3snd6detail19ExternalSoundPlayerPCQ44nw4r3snd14SoundStartable9StartInfo = .text:0x80380B84; // type:function size:0x18
 InitSoundSystem__Q34nw4r3snd11SoundSystemFll = .text:0x80380B9C; // type:function size:0x68
 InitSoundSystem__Q34nw4r3snd11SoundSystemFRCQ44nw4r3snd11SoundSystem16SoundSystemParamPvUl = .text:0x80380C04; // type:function size:0x18C
-WaitForResetReady__Q34nw4r3snd11SoundSystemFv = .text:0x80380D90; // type:function size:0x74
+ShutdownSoundSystem__Q34nw4r3snd11SoundSystemFv = .text:0x80380D90; // type:function size:0x74
 __sinit_\snd_SoundSystem_cpp = .text:0x80380E04; // type:function size:0x48 scope:local
 GetInstance__Q44nw4r3snd6detail11SoundThreadFv = .text:0x80380E4C; // type:function size:0xC4
 __dt__Q44nw4r3snd6detail11SoundThreadFv = .text:0x80380F10; // type:function size:0x70 scope:weak

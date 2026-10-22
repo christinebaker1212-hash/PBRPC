@@ -7,6 +7,11 @@ namespace nw4r {
 namespace snd {
 namespace detail {
 
+ChannelManager &ChannelManager::GetInstance() {
+    static ChannelManager instance;
+    return instance;
+}
+
 u32 ChannelManager::GetRequiredMemSize() {
     return (AXGetMaxVoices() + VOICE_MARGIN) * sizeof(Channel);
 }

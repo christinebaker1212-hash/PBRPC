@@ -18,10 +18,7 @@ public:
     static const int WORK_SIZE_MAX = VOICE_MAX * sizeof(Channel);
 
 public:
-    static ChannelManager &GetInstance() {
-        static ChannelManager instance;
-        return instance;
-    }
+    static ChannelManager &GetInstance();
 
     u32 GetRequiredMemSize();
 
