@@ -143,3 +143,72 @@ s32 fn_8025716C(s32 arg0, s32 arg1) {
     return OSSendMessage(arg0 + 0x2E4, arg1, 0) != 0;
 }
 }
+
+extern "C" {
+
+s32 AXSetVoiceState(s32, s32);
+s32 fn_80259000(s32);
+
+s32 fn_80259000(s32 arg0) {
+    s32 temp_r0;
+    s32 var_r3;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (0x1A0)));
+    if (temp_r0 != 0) {
+        AXSetVoiceState(temp_r0, 1);
+    }
+    var_r3 = (*(s32 *)((u8 *)(arg0) + (0x1A4)));
+    if (var_r3 != 0) {
+        var_r3 = AXSetVoiceState(var_r3, 1);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 AXFreeVoice(s32);
+s32 fn_80259054(s32);
+s32 fn_80299274(s32);
+
+s32 fn_80259054(s32 arg0) {
+    s32 temp_r0;
+    s32 var_r3;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (0x1A0)));
+    if (temp_r0 != 0) {
+        fn_80299274(temp_r0);
+        AXFreeVoice((*(s32 *)((u8 *)(arg0) + (0x1A0))));
+        (*(s32 *)((u8 *)(arg0) + (0x1A0))) = 0;
+    }
+    var_r3 = (*(s32 *)((u8 *)(arg0) + (0x1A4)));
+    if (var_r3 != 0) {
+        fn_80299274(var_r3);
+        var_r3 = AXFreeVoice((*(s32 *)((u8 *)(arg0) + (0x1A4))));
+        (*(s32 *)((u8 *)(arg0) + (0x1A4))) = 0;
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_802598D8(s32);
+
+s32 fn_802598D8(s32 arg0) {
+    s32 temp_r3;
+    s32 var_r4;
+    u32 temp_r3_2;
+
+    temp_r3 = ((s32 (*)(s32))fn_80259420)(arg0);
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    temp_r3_2 = fn_8025821C((u8 *)(temp_r3));
+    var_r4 = 0;
+    if ((temp_r3_2 > 0xBU) || !((1 << temp_r3_2) & 0xA01)) {
+        var_r4 = 1;
+    }
+    return var_r4;
+}
+}
