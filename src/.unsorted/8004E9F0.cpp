@@ -86,3 +86,26 @@ void fn_8004F2A4(s32 arg0, f32 farg0) {
     } while (var_r30 < 0x20U);
 }
 }
+
+extern "C" {
+
+s32 fn_8004F300(s32);
+
+s32 fn_8004F300(s32 arg0) {
+    s32 var_r31;
+    s32 var_r3;
+    u32 var_r30;
+
+    var_r31 = arg0;
+    var_r30 = 0U;
+    do {
+        var_r3 = fn_8004EE68((const u8 *)(var_r31));
+        if (var_r3 != 0) {
+            var_r3 = ((s32 (*)(s32))fn_8004EDB0)(var_r31);
+        }
+        var_r30 += 1;
+        var_r31 += 8;
+    } while (var_r30 < 0x20U);
+    return var_r3;
+}
+}
