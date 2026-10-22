@@ -1276,6 +1276,14 @@ void WUDShutdown(void) {
         OSCancelAlarm(&p->alarm);
     }
 
+    // This revision writes the registered devices back to the settings.
+    memset(_scArray.regist, 0, sizeof(_scArray.regist));
+
+    for (i = 0, pIt = _wcb.stdListHead; pIt; pIt = pIt->next, i++) {
+        memcpy(_scArray.regist[i].addr, pIt->devInfo->devAddr, BD_ADDR_LEN);
+        memcpy(&_scArray.regist[i].info, pIt->devInfo, sizeof(_scArray.regist[i].info));
+    }
+
     p->shutdownState = WUD_STATE_SHUTDOWN_STORE_SETTINGS;
 
     OSCreateAlarm(&p->alarm);
@@ -1471,11 +1479,14 @@ static BOOL StopSync(void) {
     enabled = OSDisableInterrupts();
 
     if (p->libStatus == WUD_LIB_STATUS_3) {
-        if (p->syncState == WUD_STATE_SYNC_WAIT_FOR_SEARCH_RESULT) {
-            BTA_DmSearchCancel();
-        }
+        // This revision only stops a sync that is running.
+        if (p->syncLoopNum != 0) {
+            if (p->syncState == WUD_STATE_SYNC_WAIT_FOR_SEARCH_RESULT) {
+                BTA_DmSearchCancel();
+            }
 
-        p->syncLoopNum = 0;
+            p->syncLoopNum = 0;
+        }
 
         success = TRUE;
     }
