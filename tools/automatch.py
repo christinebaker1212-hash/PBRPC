@@ -122,6 +122,17 @@ def same(target, base) -> bool:
     return True
 
 
+def similarity(target, base) -> float:
+    """Share of instructions that agree (relocated words masked), aligned by difflib."""
+    import difflib
+
+    tw = mask(*target)
+    bw = mask(*base)
+    tw = [tw[i : i + 4] for i in range(0, len(tw), 4)]
+    bw = [bw[i : i + 4] for i in range(0, len(bw), 4)]
+    return difflib.SequenceMatcher(None, tw, bw, autojunk=False).ratio()
+
+
 def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
     m = re.search(r"^\.fn " + re.escape(fn) + r",.*?^\.endfn " + re.escape(fn) + r"$", asm_text, re.S | re.M)
     if not m:
@@ -131,10 +142,12 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
     return path
 
 
-def expand_macros(src: str) -> Optional[str]:
+def expand_macros(src: str, known: bool = False) -> Optional[str]:
     """Rewrites m2c's valid-syntax macros as plain C, so the output needs no
     header. Returns None if the code uses a macro with no plain equivalent."""
     src = re.sub(r"\bM2C_UNK(8|16|32|64)\b", r"s\1", src)
+    # A symbol of unknown type is addressed in bytes (&sym + 0x10).
+    src = re.sub(r"^extern M2C_UNK (\w+);", r"extern u8 \1;", src, flags=re.M)
     src = re.sub(r"\bM2C_UNK\b", "s32", src)
 
     def expand(name: str, fmt) -> None:
@@ -165,8 +178,63 @@ def expand_macros(src: str) -> Optional[str]:
     # C++ has no arithmetic on void pointers; m2c means byte offsets.
     src = re.sub(r"\bvoid \*", "u8 *", src)
     # Mangled names ending in "e" are variadic.
-    src = re.sub(r"^(.*\b\w+__F\w*e)\(\);", r"\1(...);", src, flags=re.M)
+    src = re.sub(r"^(\S[^(\n]*\b\w+__F\w*e)\([^;\n]*\);", r"\1(...);", src, flags=re.M)
+    if known:
+        src = known_prototypes(src)
     return prototype_unknown_calls(src)
+
+
+# Library functions m2c often guesses the wrong number of arguments for.
+KNOWN = {
+    "memset": ("u8 *memset(u8 *, s32, u32);", 3),
+    "memcpy": ("u8 *memcpy(u8 *, const u8 *, u32);", 3),
+    "memmove": ("u8 *memmove(u8 *, const u8 *, u32);", 3),
+    "memcmp": ("s32 memcmp(const u8 *, const u8 *, u32);", 3),
+    "strlen": ("u32 strlen(const s8 *);", 1),
+    "strcmp": ("s32 strcmp(const s8 *, const s8 *);", 2),
+    "strncmp": ("s32 strncmp(const s8 *, const s8 *, u32);", 3),
+    "strcpy": ("s8 *strcpy(s8 *, const s8 *);", 2),
+    "strncpy": ("s8 *strncpy(s8 *, const s8 *, u32);", 3),
+    "strcat": ("s8 *strcat(s8 *, const s8 *);", 2),
+    "OSReport": ("void OSReport(const s8 *, ...);", None),
+    "OSPanic": ("void OSPanic(const s8 *, s32, const s8 *, ...);", None),
+    "sprintf": ("s32 sprintf(s8 *, const s8 *, ...);", None),
+    "snprintf": ("s32 snprintf(s8 *, u32, const s8 *, ...);", None),
+    "printf": ("s32 printf(const s8 *, ...);", None),
+    "OSDisableInterrupts": ("s32 OSDisableInterrupts(void);", 0),
+    "OSEnableInterrupts": ("s32 OSEnableInterrupts(void);", 0),
+    "OSRestoreInterrupts": ("s32 OSRestoreInterrupts(s32);", 1),
+    "OSLockMutex": ("void OSLockMutex(u8 *);", 1),
+    "OSUnlockMutex": ("void OSUnlockMutex(u8 *);", 1),
+    "DCFlushRange": ("void DCFlushRange(u8 *, u32);", 2),
+    "DCStoreRange": ("void DCStoreRange(u8 *, u32);", 2),
+    "DCInvalidateRange": ("void DCInvalidateRange(u8 *, u32);", 2),
+}
+
+
+def known_prototypes(src: str) -> str:
+    """Declares known library functions with their real prototypes, and drops
+    the extra arguments m2c passes them (live registers it could not rule out)."""
+    for name, (proto, nargs) in KNOWN.items():
+        dm = re.search(r"^[^\n]*\b" + name + r"\([^;\n]*\);[^\n]*$", src, re.M)
+        if dm is None:
+            continue
+        src = src[: dm.start()] + proto + src[dm.end() :]
+        if nargs is None:
+            continue
+        pos = 0
+        while True:
+            c = re.compile(r"\b" + name + r"\(").search(src, pos)
+            if c is None:
+                break
+            if src.startswith(proto, src.rfind("\n", 0, c.start()) + 1):
+                pos = c.end()
+                continue
+            args, end = split_args(src, c.end() - 1)
+            new = name + "(" + ", ".join(args[:nargs]) + ")"
+            src = src[: c.start()] + new + src[end + 1 :]
+            pos = c.start() + len(new)
+    return src
 
 
 def split_args(text: str, start: int) -> Tuple[List[str], int]:
@@ -221,7 +289,8 @@ def prototype_unknown_calls(src: str) -> str:
     return src
 
 
-def m2c(m2c_path: Path, asm: Path, fn: str) -> Optional[str]:
+def m2c(m2c_path: Path, asm: Path, fn: str) -> List[str]:
+    """m2c's output as plain C, as is and with known library prototypes."""
     try:
         out = subprocess.run(
             [sys.executable, str(m2c_path), "-t", "ppc-mwcc-c", "--valid-syntax", "-f", fn, str(asm)],
@@ -230,10 +299,15 @@ def m2c(m2c_path: Path, asm: Path, fn: str) -> Optional[str]:
             timeout=60,
         )
     except subprocess.TimeoutExpired:
-        return None
+        return []
     if out.returncode != 0 or "M2C_ERROR" in out.stdout or "/* unknown instruction" in out.stdout:
-        return None
-    return expand_macros(out.stdout)
+        return []
+    variants = []
+    for known in (False, True):
+        v = expand_macros(out.stdout, known)
+        if v is not None and v not in variants:
+            variants.append(v)
+    return variants
 
 
 PREAMBLE = """typedef signed char s8;
@@ -268,6 +342,14 @@ def compile_cpp(edge: Dict[str, str], src: str, m2c_dir: Path, tmp: Path) -> Opt
     ]
     r = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
     if r.returncode != 0 or not obj.exists():
+        dump = os.environ.get("AUTOMATCH_DUMP")
+        if dump:
+            # Keep failing sources and compiler output, to improve the rewriting.
+            d = Path(dump)
+            d.mkdir(parents=True, exist_ok=True)
+            n = len(list(d.glob("*.cpp")))
+            (d / f"{n:04}.cpp").write_text(cpp.read_text(encoding="latin-1"), encoding="latin-1")
+            (d / f"{n:04}.err").write_text(r.stdout + r.stderr)
         return None
     return obj
 
@@ -393,21 +475,31 @@ def main() -> None:
             if tf is None:
                 continue
             fn_asm = extract_fn(asm_text, name, tmp)
-            src = m2c(args.m2c, fn_asm, name) if fn_asm else None
-            if src is None:
+            variants = m2c(args.m2c, fn_asm, name) if fn_asm else []
+            if not variants:
                 print(f"  {name}: m2c failed", flush=True)
                 continue
-            obj = compile_cpp(edge, src, args.m2c.parent, tmp)
-            if obj is None:
-                print(f"  {name}: compile failed", flush=True)
-                continue
-            bf = Obj(obj).function(name)
-            if bf is not None and same(tf, bf):
-                matched.append((name, int(f["size"])))
-                (out_dir / f"{name}.cpp").write_text(src)
-                print(f"  {name}: MATCH ({int(f['size']):#x})", flush=True)
-            else:
-                print(f"  {name}: differs", flush=True)
+            result = "compile failed"
+            best = (-1.0, "")
+            for src in variants:
+                obj = compile_cpp(edge, src, args.m2c.parent, tmp)
+                if obj is None:
+                    continue
+                bf = Obj(obj).function(name)
+                if bf is not None and same(tf, bf):
+                    matched.append((name, int(f["size"])))
+                    (out_dir / f"{name}.cpp").write_text(src)
+                    result = f"MATCH ({int(f['size']):#x})"
+                    break
+                if bf is not None:
+                    best = max(best, (similarity(tf, bf), src))
+                result = "differs"
+            if result == "differs" and best[0] >= 0:
+                # Near misses are worth finishing by hand.
+                (out_dir / "differs").mkdir(exist_ok=True)
+                (out_dir / "differs" / f"{name}.cpp").write_text(f"// similarity {best[0]:.3f}\n" + best[1])
+                result = f"differs ({best[0]:.3f})"
+            print(f"  {name}: {result}", flush=True)
     total = sum(s for _, s in matched)
     print(f"{unit}: {len(matched)}/{len(todo)} matched, {total:#x} bytes")
     if args.apply and matched:
