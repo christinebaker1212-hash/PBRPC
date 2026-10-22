@@ -51,6 +51,8 @@ class ElfObject:
 
         self.section_names: List[str] = [cstr(strtab_off + h[0]) for h in headers]
         self.section_sizes: List[int] = [h[5] for h in headers]
+        self.section_offsets: List[int] = [h[4] for h in headers]
+        self.data = data
         self.symbols: List[ElfSymbol] = []
         # Relocations keyed by the index of the section they apply to.
         self.relocs: Dict[int, List[ElfReloc]] = {}
