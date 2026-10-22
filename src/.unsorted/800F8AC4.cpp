@@ -40,3 +40,38 @@ s32 fn_80101E58(s32 arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8005A9F8(s32);
+s32 fn_800FE1E4(s32, s32);
+s32 fn_80253E8C(s32, s32, s32, s32);
+s32 fn_80253EB4(s32, s32, s32, s32);
+
+s32 fn_800FE1E4(s32 arg0, s32 arg1) {
+    s32 sp8;
+    s32 temp_r3;
+
+    temp_r3 = fn_80253E8C(arg0, arg1, 3, (s32) &sp8);
+    if (sp8 != 1) {
+        return temp_r3;
+    }
+    return fn_80253EB4(arg0, arg1, 1, fn_8005A9F8(0x1A));
+}
+}
+
+extern "C" {
+
+s32 fn_800FEC94(s32, s32);
+
+s32 fn_800FEC94(s32 arg0, s32 arg1) {
+    s32 sp8;
+    s32 temp_r3;
+
+    temp_r3 = fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    if (sp8 != 8) {
+        return temp_r3;
+    }
+    return fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0xE99));
+}
+}
