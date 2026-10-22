@@ -7815,3 +7815,21 @@ void fn_803C9490(BattleMon *battleMon, const u16 *nickname) {
     }
 }
 }
+
+extern "C" {
+
+s32 BattleSystem_Divide__Fii(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 var_r0;
+
+    var_r0 = 1;
+    if (arg0 < 0) {
+        var_r0 = -1;
+    }
+    temp_r3 = arg0 / arg1;
+    if (temp_r3 == 0) {
+        return var_r0;
+    }
+    return temp_r3;
+}
+}
