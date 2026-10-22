@@ -1734,8 +1734,7 @@ s32 WPADControlSpeaker(s32 chan, u32 command, WPADCallback pCallback) {
                     WPADiSendMuteSpeaker(&p->stdCmdQueue, TRUE, NULL);
 
                     WPADiSendWriteDataCmd(&p->stdCmdQueue, 0x01, WM_REG_SPEAKER_09, NULL);
-                    // Sends 0x80 instead of 0x08?
-                    WPADiSendWriteDataCmd(&p->stdCmdQueue, 0x80, WM_REG_SPEAKER_01, NULL);
+                    WPADiSendWriteDataCmd(&p->stdCmdQueue, 0x08, WM_REG_SPEAKER_01, NULL);
 
                     config[4] = _speakerVolume;
 

@@ -1833,13 +1833,18 @@ libs/RVL_SDK/src/ipc/ipcProfile.c:
 libs/RVL_SDK/src/ipc/fs.c:
 	.text       start:0x802A8FB4 end:0x802AA3F0
 	.sdata      start:0x80625F70 end:0x80625F80
-	.sbss       start:0x806283B8 end:0x806283CC
+	.sbss       start:0x806283B8 end:0x806283D0
 
 src/.unsorted/802A5B28.cpp:
 	.text       start:0x802AA3F0 end:0x802AA44C
 
 libs/RVL_SDK/src/wpad/WPAD.c:
 	.text       start:0x802AA44C end:0x802B18A8
+	.rodata     start:0x803EE9C0 end:0x803EEA00
+	.bss        start:0x8051F380 end:0x80522780
+	.sdata      start:0x80625F80 end:0x80625F90
+	.sbss       start:0x806283D0 end:0x80628400
+	.sdata2     start:0x8062AC60 end:0x8062AC68
 
 src/.unsorted/802AD0D4.cpp:
 	.text       start:0x802B18A8 end:0x802B61F4

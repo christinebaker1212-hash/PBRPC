@@ -1844,6 +1844,11 @@ src/.unsorted/802A5B28.cpp:
 
 libs/RVL_SDK/src/wpad/WPAD.c:
 	.text       start:0x802A5B84 end:0x802AD0D4
+	.rodata     start:0x803FDA68 end:0x803FDAA8
+	.bss        start:0x80536D40 end:0x8053A440
+	.sdata      start:0x8063DC60 end:0x8063DC70
+	.sbss       start:0x806400F8 end:0x80640128
+	.sdata2     start:0x80642A00 end:0x80642A08
 
 src/.unsorted/802AD0D4.cpp:
 	.text       start:0x802AD0D4 end:0x802B1C70
