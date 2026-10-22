@@ -69,3 +69,37 @@ void fn_8016532C(void) {
     fn_80265DEC__Q25gsapi11WiFiNetworkFv();
 }
 }
+
+extern "C" {
+
+s32 fn_801650AC(void);
+s32 fn_80165258(void);
+s32 fn_80165354(void);
+s32 fn_80168C48(void);
+s32 fn_801694A0(void);
+s32 fn_80265BB0__Q25gsapi11WiFiNetworkFUc(s32, s32);
+
+s32 fn_80165354(void) {
+    if ((fn_801650AC() == 0) || (fn_80165258() != 0)) {
+        return -1;
+    }
+    fn_80168C48();
+    fn_801694A0();
+    return fn_80265BB0__Q25gsapi11WiFiNetworkFUc(((s32 (*)(s32))fn_8025E31C)(fn_8025DFD0()), 2);
+}
+}
+
+extern "C" {
+
+s32 fn_801653A8(s32);
+s32 fn_80265C1C__Q25gsapi11WiFiNetworkFl(s32, s32);
+
+s32 fn_801653A8(s32 arg0) {
+    if ((fn_801650AC() == 0) || (fn_80165258() != 0)) {
+        return -1;
+    }
+    fn_80168C48();
+    fn_801694A0();
+    return fn_80265C1C__Q25gsapi11WiFiNetworkFl(((s32 (*)(s32))fn_8025E31C)(fn_8025DFD0()), arg0);
+}
+}
