@@ -2548,11 +2548,14 @@ libs/nw4r/src/snd/snd_InstancePool.cpp:
 libs/nw4r/src/snd/snd_Lfo.cpp:
 	.text       start:0x803765B4 end:0x803767A4
 
-src/.unsorted/80371DEC.cpp:
-	.text       start:0x803767A4 end:0x80377590
+libs/nw4r/src/snd/snd_MemorySoundArchive.cpp:
+	.text       start:0x803767A4 end:0x803767B0
+
+libs/nw4r/src/snd/snd_MidiSeqPlayer.cpp:
+	.text       start:0x803767B0 end:0x80376828
 
 libs/nw4r/src/snd/snd_MmlParser.cpp:
-	.text       start:0x80377590 end:0x80377714
+	.text       start:0x80376828 end:0x80377714
 
 libs/nw4r/src/snd/snd_MmlSeqTrack.cpp:
 	.text       start:0x80377714 end:0x803777D4
@@ -2584,10 +2587,10 @@ src/.unsorted/80375340.cpp:
 	.ctors      start:0x803E589C end:0x803E58A0
 
 libs/nw4r/src/snd/snd_SeqTrack.cpp:
-	.text       start:0x80379EF8 end:0x8037A078
+	.text       start:0x80379EF8 end:0x8037AF64
 
-src/.unsorted/8037567C.cpp:
-	.text       start:0x8037A078 end:0x8037AF78
+libs/nw4r/src/snd/snd_Sound3DListener.cpp:
+	.text       start:0x8037AF64 end:0x8037AF78
 
 libs/nw4r/src/snd/snd_Sound3DManager.cpp:
 	.text       start:0x8037AF78 end:0x8037B978
