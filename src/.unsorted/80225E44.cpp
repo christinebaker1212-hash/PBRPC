@@ -46,3 +46,84 @@ s32 fn_80226150(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80225FE0(s32);
+s32 fn_80226020(s32, s32, s32);
+s32 fn_80226190(s32, s32, s32);
+
+s32 fn_80226190(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r3;
+
+    var_r3 = fn_80225FE0(arg1);
+    if (var_r3 != 0) {
+        var_r3 = fn_80226020(var_r3, arg1, arg2);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_8022604C(s32, s32, s32);
+s32 fn_802261E0(s32, s32, s32);
+
+s32 fn_802261E0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r3;
+
+    var_r3 = fn_80225FE0((s32)(arg1));
+    if (var_r3 != 0) {
+        var_r3 = fn_8022604C(var_r3, arg1, arg2);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80226094(s32, s32, s32);
+s32 fn_80226230(s32, s32, s32);
+
+s32 fn_80226230(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r3;
+
+    var_r3 = fn_80225FE0((s32)(arg1));
+    if (var_r3 != 0) {
+        var_r3 = fn_80226094(var_r3, arg1, arg2);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_802260DC(s32, s32, s32);
+s32 fn_80226280(s32, s32, s32);
+
+s32 fn_80226280(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r3;
+
+    var_r3 = fn_80225FE0((s32)(arg1));
+    if (var_r3 != 0) {
+        var_r3 = fn_802260DC(var_r3, arg1, arg2);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_80226124(s32, s32, s32);
+s32 fn_802262D0(s32, s32, s32);
+
+s32 fn_802262D0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r3;
+
+    var_r3 = fn_80225FE0((s32)(arg1));
+    if (var_r3 != 0) {
+        var_r3 = fn_80226124(var_r3, arg1, arg2);
+    }
+    return var_r3;
+}
+}
