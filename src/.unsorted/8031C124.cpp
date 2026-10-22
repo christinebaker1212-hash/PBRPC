@@ -1279,3 +1279,33 @@ void fn_8035E744(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     fn_803622E8(arg0 + 0x4C, fn_80337F70(arg1), temp_r31, arg3);
 }
 }
+
+extern "C" {
+
+u8 *Erase__Q44nw4r2ut6detail12LinkListImplFPQ34nw4r2ut12LinkListNode(s32 *arg0, u8 *arg1) {
+    u8 **temp_r5;
+    u8 *temp_r6;
+
+    temp_r6 = (*(u8 **)((u8 *)(arg1) + (0)));
+    temp_r5 = (*(u8 ***)((u8 *)(arg1) + (4)));
+    (*(u8 ***)((u8 *)(temp_r6) + (4))) = temp_r5;
+    *temp_r5 = temp_r6;
+    *arg0 -= 1;
+    (*(u8 **)((u8 *)(arg1) + (0))) = NULL;
+    (*(u8 ***)((u8 *)(arg1) + (4))) = NULL;
+    return temp_r6;
+}
+}
+
+extern "C" {
+
+void fn_8035D364(u8 *arg0, s8 arg1) {
+    s32 temp_r6;
+
+    temp_r6 = (*(s32 *)((u8 *)(arg0) + (0x40)));
+    if (temp_r6 < 0x14) {
+        (*(s8 *)((u8 *)((arg0 + temp_r6)) + (0x2C))) = arg1;
+        (*(s32 *)((u8 *)(arg0) + (0x40))) = (s32) (temp_r6 + 1);
+    }
+}
+}
