@@ -23,3 +23,28 @@ void fn_801698B4(void) {
     lbl_8063F156 = 0x1;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(void);
+
+s32 fn_80169844(s32 arg0, s32 arg1) {
+    if ((arg0 != 0) && (arg1 > 0)) {
+        __dl__FPv();
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80009808(s32);
+s32 fn_80035D9C(void);
+s32 fn_80035DA4(void);
+
+void fn_80169888(void) {
+    fn_80009808(1);
+    fn_80035D9C();
+    fn_80035DA4();
+}
+}
