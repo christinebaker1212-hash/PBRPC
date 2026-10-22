@@ -35,3 +35,43 @@ struct Trainer {
     /* 0x24 */ u32 unk24;
     /* 0x28 */ u32 unk28;
 };
+
+// Party data layouts of a trainer, Diamond and Pearl format (the level is at the same offset in all four).
+enum TrainerMonDataType {
+    TRDATATYPE_BASE = 0,
+    TRDATATYPE_WITH_MOVES,
+    TRDATATYPE_WITH_ITEM,
+    TRDATATYPE_WITH_MOVES_AND_ITEM,
+};
+
+// size: 0x6
+struct TrainerMonBase {
+    /* 0x0 */ u16 dv;
+    /* 0x2 */ u16 level;
+    /* 0x4 */ u16 species;
+};
+
+// size: 0xE
+struct TrainerMonWithMoves {
+    /* 0x0 */ u16 dv;
+    /* 0x2 */ u16 level;
+    /* 0x4 */ u16 species;
+    /* 0x6 */ u16 moves[4];
+};
+
+// size: 0x8
+struct TrainerMonWithItem {
+    /* 0x0 */ u16 dv;
+    /* 0x2 */ u16 level;
+    /* 0x4 */ u16 species;
+    /* 0x6 */ u16 item;
+};
+
+// size: 0x10
+struct TrainerMonWithMovesAndItem {
+    /* 0x0 */ u16 dv;
+    /* 0x2 */ u16 level;
+    /* 0x4 */ u16 species;
+    /* 0x6 */ u16 item;
+    /* 0x8 */ u16 moves[4];
+};

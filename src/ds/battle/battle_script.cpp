@@ -3,6 +3,7 @@
 #include "common.hpp"
 #include "ds/battle/battle_common.hpp"
 #include "ds/battle/battle_strings.hpp"
+#include "ds/trainer_data.hpp"
 #include "ds/constants/abilities.hpp"
 #include "ds/constants/items.hpp"
 #include "ds/constants/moves.hpp"
@@ -14,8 +15,56 @@
 
 #define XtOffset(pointer_type, field) ((unsigned int)&(((pointer_type)NULL)->field))
 
+// Operands of a message command as read from the script.
+// size: 0x20
+struct BattleMessageParams {
+    /* 0x0 */ int id;
+    /* 0x4 */ int tags;
+    /* 0x8 */ int params[6];
+};
+
+extern "C" int fn_803D90C4(BattleContext *battleCtx, int battlerIn);
+
+static inline int BattleMessage_PokeTag(BattleSystem *battleSys, BattleContext *battleCtx, int battlerIn) {
+    int battler = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, battlerIn);
+    int tag = battler;
+    tag |= battleCtx->selectedPartySlot[battler] << 8;
+
+    return tag;
+}
+
+static inline int BattleMessage_PoffinTag(BattleContext *battleCtx, int battlerIn) {
+    int poffin;
+    switch (battlerIn) {
+        case BTLSCR_MSG_TEMP:
+            poffin = battleCtx->msgTemp;
+    }
+
+    return poffin;
+}
+
+static inline int BattleMessage_FlavorTag(BattleContext *battleCtx, int battlerIn) {
+    int flavor;
+    switch (battlerIn) {
+        case BTLSCR_MSG_TEMP:
+            flavor = battleCtx->msgTemp;
+    }
+
+    return flavor;
+}
+
+static inline int BattleMessage_TrainerClassTag(BattleSystem *battleSys, BattleContext *battleCtx, int battlerIn) {
+    return fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, battlerIn);
+}
+
+static inline int BattleMessage_TrainerNameTag(BattleSystem *battleSys, BattleContext *battleCtx, int battlerIn) {
+    return fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, battlerIn);
+}
+
 // pokeplatinum sProtectSuccessRate
 extern const u16 lbl_80642FF8[4];
+// pokeplatinum sTrainerClassPrizeMul
+extern const u8 lbl_80474040[];
 // pokeplatinum sWeightToPower
 extern const u16 lbl_80405A5C[][2];
 
@@ -971,6 +1020,62 @@ s32 fn_803CAC9C(u8 *a, u8 *b) {
 
 #pragma push
 #pragma optimize_for_size on
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BattleScript_CalcMoveDamage
+void fn_803CACF0(u8 *a, u8 *b) {
+    int moveType;
+    BattleSystem *battleSys = (BattleSystem *)a;
+    BattleContext *battleCtx = (BattleContext *)b;
+    if (Battler_Ability(battleCtx, battleCtx->attacker) == ABILITY_NORMALIZE) {
+        moveType = TYPE_NORMAL;
+    } else if (battleCtx->moveType) {
+        moveType = battleCtx->moveType;
+    } else {
+        moveType = CURRENT_MOVE_DATA.type;
+    }
+
+    battleCtx->damage = BattleSystem_CalcMoveDamage(battleSys,
+        battleCtx,
+        battleCtx->moveCur,
+        battleCtx->sideConditionsMask[BattleSystem_GetBattlerSide(battleSys, battleCtx->defender)],
+        battleCtx->fieldConditionsMask,
+        battleCtx->movePower,
+        moveType,
+        battleCtx->attacker,
+        battleCtx->defender,
+        battleCtx->criticalMul);
+    battleCtx->damage *= battleCtx->criticalMul;
+
+    if (Battler_HeldItemEffect(battleCtx, battleCtx->attacker) == HOLD_EFFECT_HP_DRAIN_ON_ATK) {
+        battleCtx->damage = battleCtx->damage * (100 + Battler_HeldItemPower(battleCtx, battleCtx->attacker, (enum HeldItemPowerOp)0)) / 100;
+    }
+
+    if (Battler_HeldItemEffect(battleCtx, battleCtx->attacker) == HOLD_EFFECT_BOOST_REPEATED) {
+        battleCtx->damage = battleCtx->damage * (10 + ATTACKING_MON.moveEffectsData.metronomeTurns) / 10;
+    }
+
+    if (ATTACKING_MON.moveEffectsData.meFirst) {
+        // TODO: Document how this works after documenting the Me First behavior.
+        if (battleCtx->meFirstTurnOrder == ATTACKING_MON.moveEffectsData.meFirstTurnNumber) {
+            ATTACKING_MON.moveEffectsData.meFirstTurnNumber--;
+        }
+
+        if (battleCtx->meFirstTurnOrder - ATTACKING_MON.moveEffectsData.meFirstTurnNumber < 2) {
+            battleCtx->damage = battleCtx->damage * 15 / 10;
+        } else {
+            ATTACKING_MON.moveEffectsData.meFirst = 0;
+        }
+    }
+}
+}
+
+#pragma pop
 
 extern "C" {
 
@@ -2509,6 +2614,70 @@ s32 fn_803CDE04(u8 *a, u8 *b) {
     BattleController_EmitTrainerMessage((BattleSystem *)a, fn_803D803C(a, b, x), y);
     return 0;
 }
+
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BattleScript_CalcPrizeMoney (sTrainerClassPrizeMul is lbl_80474040)
+s32 fn_803CDE80(u8 *a, u8 *b, u32 battler) {
+    BattleSystem *battleSys = (BattleSystem *)a;
+    BattleContext *battleCtx = (BattleContext *)b;
+    u8 lastLevel = 0;
+    void *rawParty = fn_8016DF70(5, sizeof(TrainerMonWithMovesAndItem) * MAX_PARTY_SIZE);
+
+    Trainer trainer;
+    Trainer_Load(battleSys->trainerIDs[battler], &trainer);
+    Trainer_LoadParty(battleSys->trainerIDs[battler], rawParty);
+
+    switch (trainer.monDataType) {
+        default:
+        case TRDATATYPE_BASE: {
+            TrainerMonBase *party = (TrainerMonBase *)rawParty;
+            lastLevel = party[trainer.partySize - 1].level;
+            break;
+        }
+
+        case TRDATATYPE_WITH_MOVES: {
+            TrainerMonWithMoves *party = (TrainerMonWithMoves *)rawParty;
+            lastLevel = party[trainer.partySize - 1].level;
+            break;
+        }
+
+        case TRDATATYPE_WITH_ITEM: {
+            TrainerMonWithItem *party = (TrainerMonWithItem *)rawParty;
+            lastLevel = party[trainer.partySize - 1].level;
+            break;
+        }
+
+        case TRDATATYPE_WITH_MOVES_AND_ITEM: {
+            TrainerMonWithMovesAndItem *party = (TrainerMonWithMovesAndItem *)rawParty;
+            lastLevel = party[trainer.partySize - 1].level;
+            break;
+        }
+    }
+
+    u32 prize;
+    if ((battleSys->battleType & BATTLE_TYPE_TAG) || battleSys->battleType == BATTLE_TYPE_TRAINER_WITH_AI_PARTNER) {
+        prize = lastLevel * 4 * battleCtx->prizeMoneyMul * lbl_80474040[trainer.trainerType];
+    } else if (battleSys->battleType & BATTLE_TYPE_DOUBLES) {
+        prize = lastLevel * 4 * battleCtx->prizeMoneyMul * 2 * lbl_80474040[trainer.trainerType];
+    } else {
+        prize = lastLevel * 4 * battleCtx->prizeMoneyMul * lbl_80474040[trainer.trainerType];
+    }
+
+    fn_8016E0A0(rawParty);
+    return prize;
+}
+}
+
+#pragma pop
+
+extern "C" {
 
 s32 fn_803CE014(u8 *a, u8 *b) {
     (*(u32 *)(b + 0xb4))++;
@@ -5064,6 +5233,26 @@ s32 fn_803D333C(u8 *a, u8 *b) {
 
 extern "C" {
 
+// Power of Low Kick and Grass Knot for a weight (pokeplatinum sWeightToPower lookup)
+u16 fn_803D3400(u32 weight) {
+    int i = 0;
+
+    for (; lbl_80405A5C[i][0] != 0xFFFF; i++) {
+        if (lbl_80405A5C[i][0] >= weight) {
+            break;
+        }
+    }
+
+    if (lbl_80405A5C[i][0] != 0xFFFF) {
+        return lbl_80405A5C[i][1];
+    }
+
+    return 120;
+}
+}
+
+extern "C" {
+
 // pokeplatinum BtlCmd_CalcWeightBasedPower
 s32 fn_803D3450(BattleSystem *battleSys, BattleContext *battleCtx) {
     battleCtx->scriptCursor++;
@@ -6771,10 +6960,835 @@ u32 fn_803D6E6C(u8 *p) {
     return r;
 }
 
+}
+
+extern "C" {
+
+// pokeplatinum BattleScript_VarAddress
+u32 *fn_803D6E8C(u8 *a, u8 *b, u32 var) {
+    BattleSystem *battleSys = (BattleSystem *)a;
+    BattleContext *battleCtx = (BattleContext *)b;
+
+    switch (var) {
+    case BTLVAR_BATTLE_TYPE:
+        return (u32 *)&battleSys->battleType;
+    case BTLVAR_CRITICAL_BOOSTS:
+        return (u32 *)&battleCtx->criticalBoosts;
+    case BTLVAR_SIDE_EFFECT_FLAGS_DIRECT:
+        return (u32 *)&battleCtx->sideEffectDirectFlags;
+    case BTLVAR_SIDE_EFFECT_FLAGS_INDIRECT:
+        return (u32 *)&battleCtx->sideEffectIndirectFlags;
+    case BTLVAR_SIDE_EFFECT_FLAGS_ABILITY:
+        return (u32 *)&battleCtx->sideEffectAbilityFlags;
+    case BTLVAR_SIDE_EFFECT_TYPE:
+        return (u32 *)&battleCtx->sideEffectType;
+    case BTLVAR_BATTLE_CTX_STATUS:
+        return (u32 *)&battleCtx->battleStatusMask;
+    case BTLVAR_FIELD_CONDITIONS:
+        return (u32 *)&battleCtx->fieldConditionsMask;
+    case BTLVAR_POWER_MULTI:
+        return (u32 *)&battleCtx->powerMul;
+    case BTLVAR_CALC_TEMP:
+        return (u32 *)&battleCtx->calcTemp;
+    case BTLVAR_MOVE_STATUS_FLAGS:
+        return (u32 *)&battleCtx->moveStatusFlags;
+    case BTLVAR_SIDE_CONDITIONS_ATTACKER:
+        return (u32 *)&battleCtx->sideConditionsMask[BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker)];
+    case BTLVAR_SIDE_CONDITIONS_DEFENDER:
+        return (u32 *)&battleCtx->sideConditionsMask[BattleSystem_GetBattlerSide(battleSys, battleCtx->defender)];
+    case BTLVAR_SIDE_CONDITIONS_EFFECT_MON:
+        return (u32 *)&battleCtx->sideConditionsMask[BattleSystem_GetBattlerSide(battleSys, battleCtx->sideEffectMon)];
+    case BTLVAR_DAMAGE:
+        return (u32 *)&battleCtx->damage;
+    case BTLVAR_ATTACKER:
+        return (u32 *)&battleCtx->attacker;
+    case BTLVAR_DEFENDER:
+        return (u32 *)&battleCtx->defender;
+    case BTLVAR_SIDE_EFFECT_MON:
+        return (u32 *)&battleCtx->sideEffectMon;
+    case BTLVAR_FAINTED_MON:
+        return (u32 *)&battleCtx->faintedMon;
+    case BTLVAR_SWITCHED_MON:
+        return (u32 *)&battleCtx->switchedMon;
+    case BTLVAR_MSG_BATTLER_TEMP:
+        return (u32 *)&battleCtx->msgBattlerTemp;
+    case BTLVAR_ATTACKER_STORED_DAMAGE:
+        return (u32 *)&battleCtx->storedDamage[battleCtx->attacker];
+    case BTLVAR_MSG_TEMP:
+        return (u32 *)&battleCtx->msgTemp;
+    case BTLVAR_PAY_DAY_COUNT:
+        return (u32 *)&battleCtx->payDayCount;
+    case BTLVAR_CURRENT_MOVE:
+        return (u32 *)&battleCtx->moveCur;
+    case BTLVAR_TOTAL_TURNS:
+        return (u32 *)&battleCtx->totalTurns;
+    case BTLVAR_MSG_ATTACKER:
+        return (u32 *)&battleCtx->msgAttacker;
+    case BTLVAR_MSG_DEFENDER:
+        return (u32 *)&battleCtx->msgDefender;
+    case BTLVAR_MOVE_TEMP:
+        return (u32 *)&battleCtx->moveTemp;
+    case BTLVAR_LAST_BATTLER_ID:
+        return (u32 *)&battleCtx->lastBattlerId;
+    case BTLVAR_MOVE_POWER:
+        return (u32 *)&battleCtx->movePower;
+    case BTLVAR_AFTER_MOVE_MESSAGE_TYPE:
+        return (u32 *)&battleCtx->afterMoveMessageType;
+    case BTLVAR_HP_CALC_TEMP:
+        return (u32 *)&battleCtx->hpCalcTemp;
+    case BTLVAR_RESULT_MASK:
+        return (u32 *)&battleSys->resultMask;
+    case BTLVAR_SIDE_EFFECT_PARAM:
+        return (u32 *)&battleCtx->sideEffectParam;
+    case BTLVAR_MSG_MOVE_TEMP:
+        return (u32 *)&battleCtx->msgMoveTemp;
+    case BTLVAR_MSG_ITEM_TEMP:
+        return (u32 *)&battleCtx->msgItemTemp;
+    case BTLVAR_MSG_ABILITY_TEMP:
+        return (u32 *)&battleCtx->msgAbilityTemp;
+    case BTLVAR_WEATHER_TURNS:
+        return (u32 *)&battleCtx->fieldConditions.weatherTurns;
+    case BTLVAR_BATTLER_SPEED_TEMP:
+        return (u32 *)&battleCtx->battlerSpeedTemp;
+    case BTLVAR_MULTI_HIT_LOOP:
+        return (u32 *)&battleCtx->multiHitLoop;
+    case BTLVAR_ATTACKER_PHYSICAL_DAMAGE_MASK:
+        return (u32 *)&battleCtx->turnFlags[battleCtx->attacker].physicalDamageAttackerMask;
+    case BTLVAR_ATTACKER_SPECIAL_DAMAGE_MASK:
+        return (u32 *)&battleCtx->turnFlags[battleCtx->attacker].specialDamageAttackerMask;
+    case BTLVAR_SCRIPT_TEMP:
+        return (u32 *)&battleCtx->scriptTemp;
+    case BTLVAR_CRITICAL_MUL:
+        return (u32 *)&battleCtx->criticalMul;
+    case BTLVAR_ATTACKER_LAST_DAMAGE_TAKEN:
+        return (u32 *)&battleCtx->turnFlags[battleCtx->attacker].lastDamageTaken;
+    case BTLVAR_DEFENDER_LAST_DAMAGE_TAKEN:
+        return (u32 *)&battleCtx->turnFlags[battleCtx->defender].lastDamageTaken;
+    case BTLVAR_ATTACKER_SELF_TURN_STATUS_FLAGS:
+        return (u32 *)&battleCtx->selfTurnFlags[battleCtx->attacker].statusFlags;
+    case BTLVAR_DEFENDER_SELF_TURN_STATUS_FLAGS:
+        return (u32 *)&battleCtx->selfTurnFlags[battleCtx->defender].statusFlags;
+    case BTLVAR_SIDE_EFFECT_MON_SELF_TURN_STATUS_FLAGS:
+        return (u32 *)&battleCtx->selfTurnFlags[battleCtx->sideEffectMon].statusFlags;
+    case BTLVAR_FLING_TEMP:
+        return (u32 *)&battleCtx->flingTemp;
+    case BTLVAR_FLING_SCRIPT:
+        return (u32 *)&battleCtx->flingScript;
+    case BTLVAR_BATTLE_SYS_STATUS:
+        return (u32 *)&battleSys->battleStatusMask;
+    case BTLVAR_ATTACKER_LOCKED_MOVE:
+        return (u32 *)&battleCtx->moveLockedInto[battleCtx->attacker];
+    case BTLVAR_HIT_DAMAGE:
+        return (u32 *)&battleCtx->hitDamage;
+    case BTLVAR_NUM_SAFARI_BALLS:
+        return (u32 *)&battleSys->safariBalls;
+    case BTLVAR_SWITCHED_MON_TEMP:
+        return (u32 *)&battleCtx->switchedMonTemp;
+    case BTLVAR_MOVE_TYPE:
+        return (u32 *)&battleCtx->moveType;
+    case BTLVAR_MOVE_EFFECT_CHANCE:
+        return (u32 *)&battleCtx->moveEffectChance;
+    case BTLVAR_REGULATION_FLAG:
+        return (u32 *)&battleSys->rulesetMask;
+    case BTLVAR_BATTLE_CTX_STATUS_2:
+        return (u32 *)&battleCtx->battleStatusMask2;
+    case BTLVAR_TURN_ORDER_COUNTER:
+        return (u32 *)&battleCtx->turnOrderCounter;
+    case BTLVAR_MAX_BATTLERS:
+        return (u32 *)&battleSys->maxBattlers;
+    case BTLVAR_ATTACKER_TEMP:
+        return (u32 *)&battleCtx->attackerTemp;
+    case BTLVAR_DEFENDER_TEMP:
+        return (u32 *)&battleCtx->defenderTemp;
+    case BTLVAR_DEFENDER_PHYSICAL_DAMAGE_TAKEN:
+        return (u32 *)&battleCtx->selfTurnFlags[battleCtx->defender].physicalDamageTaken;
+    case BTLVAR_MSG_BATTLER_TEMP_ASSURANCE_DAMAGE_MASK:
+        return (u32 *)&battleCtx->turnFlags[battleCtx->msgBattlerTemp].assuranceDamageMask;
+    case BTLVAR_DEFENDER_ASSURANCE_DAMAGE_MASK:
+        return (u32 *)&battleCtx->turnFlags[battleCtx->defender].assuranceDamageMask;
+    case BTLVAR_ATTACKER_SHELL_BELL_DAMAGE_DEALT:
+        return (u32 *)&battleCtx->selfTurnFlags[battleCtx->attacker].shellBellDamageDealt;
+    }
+
+    return NULL;
+}
+}
+
+extern "C" {
+
 void fn_803D8004(u8 *a, u8 *b) {
     fn_8016E0A0(b);
     fn_803DEF3C((Unk8063D230 *)a);
 }
+
+}
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BattleScript_Battler
+u32 fn_803D803C(u8 *a, u8 *b, u32 battlerIn) {
+    int battlerOut;
+    BattlerData *battlerData;
+    int maxBattlers, expectedBattlerType, side;
+    BattleSystem *battleSys = (BattleSystem *)a;
+    BattleContext *battleCtx = (BattleContext *)b;
+
+    switch (battlerIn) {
+    default:
+    case BTLSCR_ATTACKER:
+        battlerOut = battleCtx->attacker;
+        break;
+
+    case BTLSCR_DEFENDER:
+        battlerOut = battleCtx->defender;
+        break;
+
+    case BTLSCR_FAINTED_MON:
+        battlerOut = battleCtx->faintedMon;
+        break;
+
+    case BTLSCR_SWITCHED_MON:
+    case BTLSCR_SWITCHED_MON_AFTER:
+        battlerOut = battleCtx->switchedMon;
+        break;
+
+    case BTLSCR_SIDE_EFFECT_MON:
+        battlerOut = battleCtx->sideEffectMon;
+        break;
+
+    case BTLSCR_ABILITY_MON:
+        battlerOut = battleCtx->abilityMon;
+        break;
+
+    case BTLSCR_ENEMY:
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            battlerData = BattleSystem_GetBattlerData(battleSys, battlerOut);
+            if (battlerData->battlerType & BATTLER_TYPE_SOLO_ENEMY) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_ENEMY_SLOT_1:
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            battlerData = BattleSystem_GetBattlerData(battleSys, battlerOut);
+            if (battlerData->battlerType == BATTLER_TYPE_ENEMY_SIDE_SLOT_1 || battlerData->battlerType == BATTLER_TYPE_SOLO_ENEMY) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_ENEMY_SLOT_2:
+        if (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_DOUBLES) {
+            expectedBattlerType = BATTLER_TYPE_ENEMY_SIDE_SLOT_2;
+        } else {
+            expectedBattlerType = BATTLER_TYPE_SOLO_ENEMY;
+        }
+
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            battlerData = BattleSystem_GetBattlerData(battleSys, battlerOut);
+            if (battlerData->battlerType == expectedBattlerType) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_PLAYER:
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            battlerData = BattleSystem_GetBattlerData(battleSys, battlerOut);
+            if ((battlerData->battlerType & BATTLER_TYPE_SOLO_ENEMY) == FALSE) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_PLAYER_SLOT_1:
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            battlerData = BattleSystem_GetBattlerData(battleSys, battlerOut);
+            if (battlerData->battlerType == BATTLER_TYPE_PLAYER_SIDE_SLOT_1
+                || battlerData->battlerType == BATTLER_TYPE_SOLO_PLAYER) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_PLAYER_SLOT_2:
+        if (BattleSystem_GetBattleType(battleSys) & BATTLE_TYPE_DOUBLES) {
+            expectedBattlerType = BATTLER_TYPE_PLAYER_SIDE_SLOT_2;
+        } else {
+            expectedBattlerType = BATTLER_TYPE_SOLO_PLAYER;
+        }
+
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            battlerData = BattleSystem_GetBattlerData(battleSys, battlerOut);
+            if (battlerData->battlerType == expectedBattlerType) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_MSG_ATTACKER:
+        battlerOut = battleCtx->msgAttacker;
+        break;
+
+    case BTLSCR_MSG_DEFENDER:
+        battlerOut = battleCtx->msgDefender;
+        break;
+
+    case BTLSCR_ATTACKER_PARTNER: {
+        // must re-declare to match
+        int battlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < battlers; battlerOut++) {
+            if (battlerOut != battleCtx->attacker
+                && BattleSystem_GetBattlerSide(battleSys, battlerOut) == BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker)) {
+                break;
+            }
+        }
+
+        if (battlerOut == battlers) {
+            GF_ASSERT("FALSE");
+            battlerOut = 0;
+        }
+        break;
+    }
+
+    case BTLSCR_DEFENDER_PARTNER: {
+        // must re-declare to match
+        int battlers = BattleSystem_GetMaxBattlers(battleSys);
+        for (battlerOut = 0; battlerOut < battlers; battlerOut++) {
+            if (battlerOut != battleCtx->defender
+                && BattleSystem_GetBattlerSide(battleSys, battlerOut) == BattleSystem_GetBattlerSide(battleSys, battleCtx->defender)) {
+                break;
+            }
+        }
+
+        if (battlerOut == battlers) {
+            GF_ASSERT("FALSE");
+            battlerOut = 0;
+        }
+        break;
+    }
+
+    case BTLSCR_ATTACKER_ENEMY:
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        side = BattleSystem_GetBattlerSide(battleSys, battleCtx->attacker);
+
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            if (side != BattleSystem_GetBattlerSide(battleSys, battlerOut)) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_DEFENDER_ENEMY:
+        maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
+        side = BattleSystem_GetBattlerSide(battleSys, battleCtx->defender);
+
+        for (battlerOut = 0; battlerOut < maxBattlers; battlerOut++) {
+            if (side != BattleSystem_GetBattlerSide(battleSys, battlerOut)) {
+                break;
+            }
+        }
+        break;
+
+    case BTLSCR_MSG_TEMP:
+    case BTLSCR_MSG_BATTLER_TEMP:
+        battlerOut = battleCtx->msgBattlerTemp;
+        break;
+    }
+
+    GF_ASSERT(battlerOut != BATTLER_NONE);
+    return battlerOut;
+}
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+#pragma dont_inline on
+
+extern "C" {
+
+// pokeplatinum BattleMessageParams_Make
+#define battleCtx ((BattleContext *)b)
+#define msgParams ((BattleMessageParams *)c)
+void fn_803D8444(u8 *b, void *c) {
+    int i;
+    int tagCount = 0;
+
+    msgParams->id = fn_803D6E6C((u8 *)battleCtx);
+    msgParams->tags = fn_803D6E6C((u8 *)battleCtx);
+
+    switch (msgParams->tags) {
+    case TAG_NONE:
+        tagCount = 0;
+        break;
+
+    case TAG_NONE_SIDE_CONSCIOUS:
+    case TAG_NICKNAME:
+    case TAG_MOVE:
+    case TAG_STAT:
+    case TAG_ITEM:
+    case TAG_NUMBER:
+    case TAG_NUMBERS:
+    case TAG_TRNAME:
+        tagCount = 1;
+        break;
+
+    case TAG_NICKNAME_NICKNAME:
+    case TAG_NICKNAME_MOVE:
+    case TAG_NICKNAME_ABILITY:
+    case TAG_NICKNAME_STAT:
+    case TAG_NICKNAME_TYPE:
+    case TAG_NICKNAME_POKE:
+    case TAG_NICKNAME_ITEM:
+    case TAG_NICKNAME_POFFIN:
+    case TAG_NICKNAME_NUM:
+    case TAG_NICKNAME_TRNAME:
+    case TAG_NICKNAME_BOX:
+    case TAG_MOVE_SIDE:
+    case TAG_MOVE_NICKNAME:
+    case TAG_MOVE_MOVE:
+    case TAG_ABILITY_NICKNAME:
+    case TAG_ITEM_MOVE:
+    case TAG_NUMBER_NUMBER:
+    case TAG_TRNAME_TRNAME:
+    case TAG_TRNAME_NICKNAME:
+    case TAG_TRNAME_ITEM:
+    case TAG_TRNAME_NUM:
+    case TAG_TRCLASS_TRNAME:
+        tagCount = 2;
+        break;
+
+    case TAG_NICKNAME_NICKNAME_MOVE:
+    case TAG_NICKNAME_NICKNAME_ABILITY:
+    case TAG_NICKNAME_NICKNAME_ITEM:
+    case TAG_NICKNAME_MOVE_MOVE:
+    case TAG_NICKNAME_MOVE_NUMBER:
+    case TAG_NICKNAME_ABILITY_NICKNAME:
+    case TAG_NICKNAME_ABILITY_MOVE:
+    case TAG_NICKNAME_ABILITY_ITEM:
+    case TAG_NICKNAME_ABILITY_STAT:
+    case TAG_NICKNAME_ABILITY_TYPE:
+    case TAG_NICKNAME_ABILITY_STATUS:
+    case TAG_NICKNAME_ABILITY_NUMBER:
+    case TAG_NICKNAME_ITEM_NICKNAME:
+    case TAG_NICKNAME_ITEM_MOVE:
+    case TAG_NICKNAME_ITEM_STAT:
+    case TAG_NICKNAME_ITEM_STATUS:
+    case TAG_NICKNAME_BOX_BOX:
+    case TAG_ITEM_NICKNAME_FLAVOR:
+    case TAG_TRNAME_NICKNAME_NICKNAME:
+    case TAG_TRCLASS_TRNAME_NICKNAME:
+    case TAG_TRCLASS_TRNAME_ITEM:
+        tagCount = 3;
+        break;
+
+    case TAG_NICKNAME_ABILITY_NICKNAME_MOVE:
+    case TAG_NICKNAME_ABILITY_NICKNAME_ABILITY:
+    case TAG_NICKNAME_ABILITY_NICKNAME_STAT:
+    case TAG_NICKNAME_ITEM_NICKNAME_ITEM:
+    case TAG_TRNAME_NICKNAME_TRNAME_NICKNAME:
+    case TAG_TRCLASS_TRNAME_NICKNAME_NICKNAME:
+    case TAG_TRCLASS_TRNAME_NICKNAME_TRNAME:
+    case TAG_TRCLASS_TRNAME_TRCLASS_TRNAME:
+        tagCount = 4;
+        break;
+
+    case TAG_TRCLASS_TRNAME_NICKNAME_TRCLASS_TRNAME_NICKNAME:
+        tagCount = 6;
+        break;
+
+    default:
+        break;
+    }
+
+    for (i = 0; i < tagCount; i++) {
+        msgParams->params[i] = fn_803D6E6C((u8 *)battleCtx);
+    }
+}
+#undef battleCtx
+#undef msgParams
+}
+
+#pragma pop
+
+#pragma push
+#pragma optimize_for_size on
+
+extern "C" {
+
+// pokeplatinum BattleMessage_Make
+#define battleSys ((BattleSystem *)a)
+#define battleCtx ((BattleContext *)b)
+#define msgParams ((BattleMessageParams *)c)
+#define msg ((BattleMessage *)d)
+void fn_803D8520(u8 *a, u8 *b, void *c, u8 *d) {
+    msg->id = msgParams->id;
+    msg->tags = msgParams->tags;
+
+    switch (msg->tags) {
+    case TAG_NONE:
+        break;
+
+    case TAG_NONE_SIDE_CONSCIOUS:
+        msg->params[0] = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_NICKNAME:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_MOVE:
+        msg->params[0] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_STAT:
+        msg->params[0] = (int)fn_803D91D4((u8 *)battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_ITEM:
+        msg->params[0] = fn_803D90C4(battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_NUMBER:
+    case TAG_NUMBERS:
+        msg->params[0] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_TRNAME:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        break;
+
+    case TAG_NICKNAME_NICKNAME:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_MOVE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_ABILITY:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_STAT:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D91D4((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_TYPE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D916C((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_POKE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_PokeTag(battleSys, battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_ITEM:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        if (msg->id == 0x201) {
+            lbl_8048CE28._0C = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        }
+        break;
+
+    case TAG_NICKNAME_POFFIN:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_PoffinTag(battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_NUM:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_TRNAME:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_BOX:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = msgParams->params[1];
+        break;
+
+    case TAG_MOVE_SIDE:
+        msg->params[0] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D803C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_MOVE_NICKNAME:
+        msg->params[0] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_MOVE_MOVE:
+        msg->params[0] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_ABILITY_NICKNAME:
+        msg->params[0] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_ITEM_MOVE:
+        msg->params[0] = fn_803D90C4(battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NUMBER_NUMBER:
+        msg->params[0] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_TRNAME_TRNAME:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_TRNAME_NICKNAME:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_TRNAME_ITEM:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_TRNAME_NUM:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_TRCLASS_TRNAME:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        break;
+
+    case TAG_NICKNAME_NICKNAME_MOVE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_NICKNAME_ABILITY:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_NICKNAME_ITEM:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D90C4(battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_MOVE_MOVE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_MOVE_NUMBER:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_NICKNAME:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_MOVE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_ITEM:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D90C4(battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_STAT:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D91D4((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_TYPE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D916C((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_STATUS:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D91E4((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_NUMBER:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D915C((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ITEM_NICKNAME:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ITEM_MOVE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ITEM_STAT:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D91D4((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ITEM_STATUS:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        msg->params[2] = (int)fn_803D91E4((u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_BOX_BOX:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = msgParams->params[1];
+        msg->params[2] = msgParams->params[2];
+        break;
+
+    case TAG_ITEM_NICKNAME_FLAVOR:
+        msg->params[0] = fn_803D90C4(battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = BattleMessage_FlavorTag(battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_TRNAME_NICKNAME_NICKNAME:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_TRCLASS_TRNAME_NICKNAME:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_TRCLASS_TRNAME_ITEM:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D90C4(battleCtx, msgParams->params[2]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_NICKNAME_MOVE:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = (int)fn_803D90A0((u8 *)battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_NICKNAME_ABILITY:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_NICKNAME_ABILITY_NICKNAME_STAT:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D917C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = (int)fn_803D91D4((u8 *)battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_NICKNAME_ITEM_NICKNAME_ITEM:
+        msg->params[0] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D90C4(battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = fn_803D90C4(battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_TRNAME_NICKNAME_TRNAME_NICKNAME:
+        msg->params[0] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[1]);
+        msg->params[2] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[2]);
+        msg->params[3] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_TRCLASS_TRNAME_NICKNAME_NICKNAME:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_TRCLASS_TRNAME_NICKNAME_TRNAME:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_TRCLASS_TRNAME_TRCLASS_TRNAME:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        msg->params[2] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[2]);
+        msg->params[3] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[3]);
+        break;
+
+    case TAG_TRCLASS_TRNAME_NICKNAME_TRCLASS_TRNAME_NICKNAME:
+        msg->params[0] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[0]);
+        msg->params[1] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[1]);
+        msg->params[2] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[2]);
+        msg->params[3] = BattleMessage_TrainerClassTag(battleSys, battleCtx, msgParams->params[3]);
+        msg->params[4] = BattleMessage_TrainerNameTag(battleSys, battleCtx, msgParams->params[4]);
+        msg->params[5] = fn_803D903C((u8 *)battleSys, (u8 *)battleCtx, msgParams->params[5]);
+        break;
+
+    default:
+        GF_ASSERT("FALSE");
+        break;
+    }
+}
+#undef battleSys
+#undef battleCtx
+#undef msgParams
+#undef msg
+}
+
+#pragma pop
+
+extern "C" {
 
 u32 fn_803D903C(u8 *a, u8 *b, s32 c) {
     u32 r = fn_803D803C(a, b, c);
@@ -6791,6 +7805,43 @@ u8 *fn_803D90A0(u8 *p, s32 i) {
     }
     return p;
 }
+
+}
+
+extern "C" {
+
+// pokeplatinum BattleMessage_ItemTag
+int fn_803D90C4(BattleContext *battleCtx, int battlerIn) {
+    int item;
+    switch (battlerIn) {
+        case BTLSCR_ATTACKER:
+            item = battleCtx->battleMons[battleCtx->attacker].heldItem;
+            BattleAI_SetHeldItem(battleCtx, battleCtx->attacker, item);
+            break;
+
+        case BTLSCR_DEFENDER:
+            item = battleCtx->battleMons[battleCtx->defender].heldItem;
+            BattleAI_SetHeldItem(battleCtx, battleCtx->defender, item);
+            break;
+
+        case BTLSCR_MSG_BATTLER_TEMP:
+            item = battleCtx->battleMons[battleCtx->msgBattlerTemp].heldItem;
+            BattleAI_SetHeldItem(battleCtx, battleCtx->msgBattlerTemp, item);
+            break;
+
+        case BTLSCR_MSG_TEMP:
+            item = battleCtx->msgItemTemp;
+            break;
+
+        default:
+            break;
+    }
+
+    return item;
+}
+}
+
+extern "C" {
 
 u8 *fn_803D915C(u8 *p, s32 i) {
     if (i == 0xff) {
