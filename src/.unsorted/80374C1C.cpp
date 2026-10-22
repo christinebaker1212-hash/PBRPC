@@ -24,3 +24,20 @@ void fn_80374D24(u8 *arg0) {
     (*(s32 *)((u8 *)(arg0) + (0x21C))) = 0;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 fn_80374CCC(s32, s32);
+s32 fn_8037F940(s32, s32);
+
+s32 fn_80374CCC(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8037F940(arg0, 0);
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}

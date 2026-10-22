@@ -51,3 +51,13 @@ s32 fn_80372F08(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 CreateImpl__Q44nw4r3snd6detail8PoolImplFPvUlUl(s32, s32, s32, s32);
+s32 fn_80372EEC(s32, s32, s32);
+
+s32 fn_80372EEC(s32 arg0, s32 arg1, s32 arg2) {
+    return CreateImpl__Q44nw4r3snd6detail8PoolImplFPvUlUl(arg0 + 8, arg1, arg2, 0xF0);
+}
+}
