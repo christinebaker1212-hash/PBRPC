@@ -836,8 +836,27 @@ config.libs = [
         ],
     ),
     RVLSDKLib(
+        "tpl",
+        [
+            Object(Matching, "tpl/TPL.c"),
+        ],
+    ),
+    RVLSDKLib(
+        "thp",
+        [
+            Object(NonMatching, "thp/THPDec.c"),
+        ],
+    ),
+    RVLSDKLib(
+        "kpad",
+        [
+            Object(NonMatching, "kpad/KPAD.c"),
+        ],
+    ),
+    RVLSDKLib(
         "cx",
         [
+            Object(Matching, "cx/CXCompression.c"),
             Object(NonMatching, "cx/CXUncompression.c"),
         ],
     ),
@@ -1212,7 +1231,6 @@ config.libs = [
             Object(NonMatching, ".unsorted/802959F8.cpp"),
             Object(NonMatching, ".unsorted/802973F8.cpp"),
             Object(NonMatching, ".unsorted/80297890.cpp"),
-            Object(NonMatching, ".unsorted/8029B918.cpp"),
             Object(NonMatching, ".unsorted/802A2904.cpp"),
             Object(NonMatching, ".unsorted/802A5B28.cpp"),
             Object(NonMatching, ".unsorted/802AD0D4.cpp"),

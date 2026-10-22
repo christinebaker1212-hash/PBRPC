@@ -60,3 +60,5 @@ homebuttonLib/HBMFrameController.cpp
 homebuttonLib/HBMGUIManager.cpp
 homebuttonLib/HBMController.cpp
 homebuttonLib/HBMRemoteSpk.cpp
+tpl/TPL.c
+cx/CXCompression.c
