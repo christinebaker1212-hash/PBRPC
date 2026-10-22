@@ -583,6 +583,7 @@ libs/MSL_C/src/scanf.c:
 	extab       start:0x80006640 end:0x80006658
 	extabindex  start:0x800068A0 end:0x800068C4
 	.text       start:0x801D19A0 end:0x801D2F0C
+	.rodata     start:0x803EDC48 end:0x803EDC70
 
 libs/MSL_C/src/string.c:
 	extab       start:0x80006658 end:0x80006668
@@ -673,9 +674,11 @@ libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_ldexp.c:
 
 libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_sin.c:
 	.text       start:0x801D90C0 end:0x801D9198
+	.sdata2     start:0x80629E30 end:0x80629E38
 
 libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/s_tan.c:
 	.text       start:0x801D9198 end:0x801D9210
+	.sdata2     start:0x80629E38 end:0x80629E40
 
 libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_acos.c:
 	.text       start:0x801D9210 end:0x801D9214
@@ -694,6 +697,7 @@ libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/w_pow.c:
 
 libs/MSL_C/src/MSL_Common_Embedded/Math/Double_precision/e_sqrt.c:
 	.text       start:0x801D9224 end:0x801D946C
+	.sdata2     start:0x80629E40 end:0x80629E48
 
 libs/MSL_C/src/PPC_EABI/SRC/math_ppc.c:
 	.text       start:0x801D946C end:0x801D9470
@@ -1433,10 +1437,11 @@ libs/RVL_SDK/src/os/OSExec.c:
 
 libs/RVL_SDK/src/os/OSFatal.c:
 	.text       start:0x80271818 end:0x8027243C
-	.bss        start:0x804FCAE0 end:0x804FCDB4
+	.bss        start:0x804FCAE0 end:0x804FCDC0
 
 libs/RVL_SDK/src/os/OSFont.c:
 	.text       start:0x8027243C end:0x80273104
+	.sdata      start:0x80625DB8 end:0x80625DC0
 
 libs/RVL_SDK/src/os/OSInterrupt.c:
 	.text       start:0x80273104 end:0x80273888
@@ -1449,6 +1454,7 @@ libs/RVL_SDK/src/os/OSMessage.c:
 
 libs/RVL_SDK/src/os/OSMemory.c:
 	.text       start:0x80273B74 end:0x80274388
+	.data       start:0x804170C8 end:0x804170D8
 
 libs/RVL_SDK/src/os/OSMutex.c:
 	.text       start:0x80274388 end:0x8027468C
@@ -1509,6 +1515,9 @@ libs/RVL_SDK/src/os/__ppc_eabi_init.cpp:
 
 libs/RVL_SDK/src/exi/EXIBios.c:
 	.text       start:0x80278FD0 end:0x8027A864
+	.bss        start:0x804FDB00 end:0x804FDBC0
+	.sdata      start:0x80625DD8 end:0x80625DDC
+	.sbss       start:0x80627E38 end:0x80627E3C
 
 src/.unsorted/80275DEC.cpp:
 	.text       start:0x8027A864 end:0x8027A9DC
@@ -1557,6 +1566,7 @@ src/.unsorted/8027CCC4.cpp:
 
 libs/RVL_SDK/src/mtx/vec.c:
 	.text       start:0x802817A0 end:0x8028189C
+	.sdata2     start:0x8062A90C end:0x8062A918
 
 src/.unsorted/8027CE24.cpp:
 	.text       start:0x8028189C end:0x80281A9C
@@ -1636,6 +1646,7 @@ libs/RVL_SDK/src/dvd/dvdidutils.c:
 
 libs/RVL_SDK/src/dvd/dvdFatal.c:
 	.text       start:0x802919C8 end:0x80291B04
+	.sdata2     start:0x8062AA78 end:0x8062AA80
 
 libs/RVL_SDK/src/dvd/dvd_broadway.c:
 	.text       start:0x80291B04 end:0x802934F0
@@ -1645,6 +1656,7 @@ libs/RVL_SDK/src/ai/ai.c:
 
 libs/RVL_SDK/src/ax/AX.c:
 	.text       start:0x80293A24 end:0x80293A80
+	.sdata      start:0x80625EC8 end:0x80625ED0
 
 libs/RVL_SDK/src/ax/AXAlloc.c:
 	.text       start:0x80293A80 end:0x80293F38
@@ -1693,6 +1705,7 @@ libs/RVL_SDK/src/axfx/AXFXSrcCoef.c:
 
 libs/RVL_SDK/src/axfx/AXFXHooks.c:
 	.text       start:0x8029AE78 end:0x8029AEB0
+	.sdata      start:0x80625ED8 end:0x80625EE0
 
 libs/RVL_SDK/src/mem/mem_heapCommon.c:
 	.text       start:0x8029AEB0 end:0x8029B31C
@@ -1717,15 +1730,15 @@ src/.unsorted/80297890.cpp:
 
 libs/RVL_SDK/src/dsp/dsp.c:
 	.text       start:0x8029F7DC end:0x8029FA18
-	.sdata      start:0x80625EE0 end:0x80625EE4
-	.sbss       start:0x80628218 end:0x8062821C
+	.sdata      start:0x80625EE0 end:0x80625EE8
+	.sbss       start:0x80628218 end:0x80628220
 
 libs/RVL_SDK/src/dsp/dsp_debug.c:
 	.text       start:0x8029FA18 end:0x8029FA68
 
 libs/RVL_SDK/src/dsp/dsp_task.c:
 	.text       start:0x8029FA68 end:0x802A02FC
-	.sbss       start:0x80628220 end:0x80628238
+	.sbss       start:0x80628220 end:0x80628240
 
 libs/RVL_SDK/src/tpl/TPL.c:
 	.text       start:0x802A02FC end:0x802A0510
@@ -1767,6 +1780,7 @@ libs/RVL_SDK/src/ipc/memory.c:
 
 libs/RVL_SDK/src/ipc/ipcProfile.c:
 	.text       start:0x802A8DF0 end:0x802A8FB4
+	.sbss       start:0x806283B0 end:0x806283B8
 
 libs/RVL_SDK/src/ipc/fs.c:
 	.text       start:0x802A8FB4 end:0x802AA3F0
@@ -1793,6 +1807,7 @@ libs/RVL_SDK/src/wpad/debug_msg.c:
 
 libs/RVL_SDK/src/euart/euart.c:
 	.text       start:0x802B7FE8 end:0x802B8358
+	.sbss       start:0x80628418 end:0x80628428
 
 libs/RVL_SDK/src/usb/usb.c:
 	.text       start:0x802B8358 end:0x802B93F8
@@ -2169,6 +2184,7 @@ libs/RVL_SDK/src/nwc24/NWC24Mime.c:
 
 libs/RVL_SDK/src/nwc24/NWC24Schedule.c:
 	.text       start:0x803080E8 end:0x8030895C
+	.data       start:0x80435760 end:0x804357A8
 	.bss        start:0x80566AE0 end:0x80566C60
 	.sbss       start:0x80628540 end:0x80628550
 
@@ -2315,6 +2331,7 @@ libs/RVL_SDK/src/vf/d_vf_sys.c:
 
 libs/RVL_SDK/src/vf/d_hash.c:
 	.text       start:0x8031FE24 end:0x80320244
+	.bss        start:0x805F7948 end:0x805F7B88
 
 libs/RVL_SDK/src/vf/d_time.c:
 	.text       start:0x80320244 end:0x803202D4
@@ -2364,6 +2381,7 @@ src/.unsorted/80365F68.cpp:
 libs/nw4r/src/ut/ut_TextWriterBase.cpp:
 	.text       start:0x8036A6D8 end:0x8036C6A0
 	.ctors      start:0x803E5894 end:0x803E5898
+	.sbss       start:0x80628750 end:0x80628768
 
 libs/nw4r/src/snd/snd_AxManager.cpp:
 	.text       start:0x8036C6A0 end:0x8036DBE0
@@ -2474,6 +2492,7 @@ src/.unsorted/80376F7C.cpp:
 
 libs/nw4r/src/snd/snd_SoundArchive.cpp:
 	.text       start:0x8037B988 end:0x8037BF78
+	.data       start:0x8043C0E8 end:0x8043C108
 
 libs/nw4r/src/snd/snd_SoundArchiveFile.cpp:
 	.text       start:0x8037BF78 end:0x8037CD4C
@@ -2486,6 +2505,7 @@ src/.unsorted/803789A0.cpp:
 
 libs/nw4r/src/snd/snd_SoundArchivePlayer.cpp:
 	.text       start:0x8037D6B8 end:0x8037F2A8
+	.sdata2     start:0x8062AFB0 end:0x8062AFC0
 
 src/.unsorted/8037A8AC.cpp:
 	.text       start:0x8037F2A8 end:0x8037F320
@@ -2495,9 +2515,11 @@ libs/nw4r/src/snd/snd_SoundHandle.cpp:
 
 libs/nw4r/src/snd/snd_SoundHeap.cpp:
 	.text       start:0x8037F438 end:0x8037F5D8
+	.data       start:0x8043C168 end:0x8043C1C0
 
 libs/nw4r/src/snd/snd_SoundPlayer.cpp:
 	.text       start:0x8037F5D8 end:0x8037FC80
+	.sdata2     start:0x8062AFC0 end:0x8062AFC8
 
 src/.unsorted/8037B284.cpp:
 	.text       start:0x8037FC80 end:0x80380B18
@@ -2529,6 +2551,8 @@ src/.unsorted/8037D2B0.cpp:
 
 libs/nw4r/src/snd/snd_StrmPlayer.cpp:
 	.text       start:0x803826D0 end:0x803840AC
+	.data       start:0x8043C1C0 end:0x8043C2A8
+	.sdata2     start:0x8062AFC8 end:0x8062AFD0
 
 src/.unsorted/8037F5B0.cpp:
 	.text       start:0x803840AC end:0x80384128
@@ -2548,6 +2572,7 @@ libs/nw4r/src/snd/snd_TaskThread.cpp:
 
 libs/nw4r/src/snd/snd_Voice.cpp:
 	.text       start:0x80384E04 end:0x80387534
+	.sdata2     start:0x8062AFD0 end:0x8062B008
 
 src/.unsorted/803828FC.cpp:
 	.text       start:0x80387534 end:0x80387538
@@ -2557,6 +2582,8 @@ libs/nw4r/src/snd/snd_VoiceManager.cpp:
 
 libs/nw4r/src/snd/snd_Util.cpp:
 	.text       start:0x80387CC0 end:0x80388124
+	.data       start:0x8043C2E0 end:0x8043C2F0
+	.sdata      start:0x80626B18 end:0x80626B20
 
 src/.unsorted/8038340C.cpp:
 	.text       start:0x80388124 end:0x8038812C
@@ -2579,6 +2606,7 @@ libs/nw4r/src/math/math_triangular.cpp:
 
 libs/nw4r/src/lyt/lyt_pane.cpp:
 	.text       start:0x80389C64 end:0x8038AB1C
+	.sdata2     start:0x8062B0A0 end:0x8062B0C4
 
 src/.unsorted/80385E04.cpp:
 	.text       start:0x8038AB1C end:0x8038AB38
@@ -2586,6 +2614,7 @@ src/.unsorted/80385E04.cpp:
 
 libs/nw4r/src/lyt/lyt_group.cpp:
 	.text       start:0x8038AB38 end:0x8038ADE0
+	.data       start:0x8043D540 end:0x8043D550
 
 src/.unsorted/803860C8.cpp:
 	.text       start:0x8038ADE0 end:0x8038AE5C
@@ -2634,6 +2663,8 @@ src/.unsorted/8038E2E0.cpp:
 
 libs/nw4r/src/lyt/lyt_arcResourceAccessor.cpp:
 	.text       start:0x80393050 end:0x80393430
+	.data       start:0x8043D838 end:0x8043D850
+	.sdata      start:0x80626B20 end:0x80626B28
 
 libs/nw4r/src/lyt/lyt_common.cpp:
 	.text       start:0x80393430 end:0x80393EE4
@@ -2716,7 +2747,7 @@ src/ds/DSbridge.cpp:
 	.text       start:0x803DC848 end:0x803DD4E4
 	.ctors      start:0x803E58C8 end:0x803E58CC
 	.rodata     start:0x803F6A90 end:0x803F6B38
-	.data       start:0x80449F20 end:0x8044A00C
+	.data       start:0x80449F20 end:0x8044A010
 	.sbss       start:0x806288B8 end:0x806288C8
 
 src/.unsorted/803D9EB4.cpp:

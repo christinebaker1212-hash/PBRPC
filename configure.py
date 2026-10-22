@@ -571,7 +571,7 @@ config.libs = [
     RVLSDKLib(
         "exi",
         [
-            Object(NonMatching, "exi/EXIBios.c"),
+            Object(NonMatching, "exi/EXIBios.c", extra_cflags=["-schedule off -volatileasm"]),
             Object(NonMatching, "exi/EXIUart.c"),
         ],
     ),

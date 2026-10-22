@@ -3,6 +3,14 @@ os/OSReset.c
 os/OSRtc.c
 os/OSSemaphore.c
 os/OSSync.c
+tpl/TPL.c
+cx/CXCompression.c
+homebuttonLib/HBMBase.cpp
+homebuttonLib/HBMAnmController.cpp
+homebuttonLib/HBMFrameController.cpp
+homebuttonLib/HBMGUIManager.cpp
+homebuttonLib/HBMController.cpp
+homebuttonLib/HBMRemoteSpk.cpp
 ds/battle/battle_io_command.cpp
 ds/battle/battle_display.cpp
 ds/battle/battle_main.cpp
@@ -54,11 +62,3 @@ ds/string_template.cpp
 ds/message.cpp
 ds/convert_pokemon.cpp
 ds/convert_save.cpp
-homebuttonLib/HBMBase.cpp
-homebuttonLib/HBMAnmController.cpp
-homebuttonLib/HBMFrameController.cpp
-homebuttonLib/HBMGUIManager.cpp
-homebuttonLib/HBMController.cpp
-homebuttonLib/HBMRemoteSpk.cpp
-tpl/TPL.c
-cx/CXCompression.c

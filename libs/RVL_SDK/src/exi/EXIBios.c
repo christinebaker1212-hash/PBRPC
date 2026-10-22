@@ -1,4 +1,3 @@
-// Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/exi/EXIBios.c
 #include <private/exi.h>
 
 #include <private/os.h>
