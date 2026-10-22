@@ -62,3 +62,5 @@ homebuttonLib/HBMController.cpp
 homebuttonLib/HBMRemoteSpk.cpp
 tpl/TPL.c
 cx/CXCompression.c
+thp/THPDec.c
+thp/THPAudio.c

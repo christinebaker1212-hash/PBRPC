@@ -855,7 +855,8 @@ config.libs = [
     RVLSDKLib(
         "thp",
         [
-            Object(NonMatching, "thp/THPDec.c"),
+            Object(MatchingFor("RPBE01"), "thp/THPDec.c"),
+            Object(MatchingFor("RPBE01"), "thp/THPAudio.c"),
         ],
     ),
     RVLSDKLib(

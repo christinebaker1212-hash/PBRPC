@@ -1734,13 +1734,16 @@ libs/RVL_SDK/src/tpl/TPL.c:
 	.sdata2     start:0x8062ABE0 end:0x8062ABE8
 
 libs/RVL_SDK/src/thp/THPDec.c:
-	.text       start:0x802A0510 end:0x802A3D74
+	.text       start:0x802A0510 end:0x802A38E0
 	.rodata     start:0x803EE930 end:0x803EE9C0
 	.data       start:0x8042B2B0 end:0x8042B2F8
 	.bss        start:0x8051DBC0 end:0x8051DD10
 	.sdata      start:0x80625EF0 end:0x80625EF8
 	.sbss       start:0x80628240 end:0x80628368
 	.sdata2     start:0x8062ABE8 end:0x8062AC08
+
+libs/RVL_SDK/src/thp/THPAudio.c:
+	.text       start:0x802A38E0 end:0x802A3D74
 
 libs/RVL_SDK/src/kpad/KPAD.c:
 	.text       start:0x802A3D74 end:0x802A6B0C
