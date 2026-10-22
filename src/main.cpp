@@ -310,3 +310,12 @@ void fn_80007338(void) {
     lbl_8063E900 = 1;
 }
 }
+
+extern "C" {
+
+s32 fn_80007084(void);
+
+s32 fn_80007084(void) {
+    return (s32) lbl_8063E8FD;
+}
+}
