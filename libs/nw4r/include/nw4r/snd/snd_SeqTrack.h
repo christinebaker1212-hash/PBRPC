@@ -5,6 +5,8 @@
 #include <nw4r/snd/snd_Lfo.h>
 #include <nw4r/types_nw4r.h>
 
+#include <revolution/os.h>
+
 #include <revolution/wpad.h>
 
 namespace nw4r {
@@ -161,6 +163,7 @@ private:
     volatile s16 mTrackVariable[VARIABLE_NUM]; // at 0x98
     SeqPlayer *mPlayer;                        // at 0xB8
     Channel *mChannelList;                     // at 0xBC
+    OSMutex mMutex;                            // at 0xC0 (not in Wii Sports' revision)
 };
 
 } // namespace detail

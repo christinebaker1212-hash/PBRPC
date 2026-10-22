@@ -2558,8 +2558,15 @@ src/.unsorted/80371DEC.cpp:
 libs/nw4r/src/snd/snd_MmlParser.cpp:
 	.text       start:0x80372BD8 end:0x80372D5C
 
-src/.unsorted/80372D5C.cpp:
-	.text       start:0x80372D5C end:0x80372F94
+libs/nw4r/src/snd/snd_MmlSeqTrack.cpp:
+	.text       start:0x80372D5C end:0x80372E1C
+	.data       start:0x8044CCF8 end:0x8044CD08
+
+libs/nw4r/src/snd/snd_MmlSeqTrackAllocator.cpp:
+	.text       start:0x80372E1C end:0x80372F48
+
+libs/nw4r/src/snd/snd_NandSoundArchive.cpp:
+	.text       start:0x80372F48 end:0x80372F94
 
 libs/nw4r/src/snd/snd_RemoteSpeaker.cpp:
 	.text       start:0x80372F94 end:0x803737A8
