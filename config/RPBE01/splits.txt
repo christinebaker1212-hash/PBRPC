@@ -2695,9 +2695,14 @@ src/.unsorted/8038340C.cpp:
 libs/nw4r/src/snd/snd_WaveFile.cpp:
 	.text       start:0x8038812C end:0x80388364
 
-src/.unsorted/8038364C.cpp:
-	.text       start:0x80388364 end:0x803886F4
+libs/nw4r/src/snd/snd_WaveSound.cpp:
+	.text       start:0x80388364 end:0x803886BC
 	.ctors      start:0x803E58A8 end:0x803E58AC
+	.data       start:0x8043C2F0 end:0x8043C360
+	.sbss       start:0x80628830 end:0x80628838
+
+libs/nw4r/src/snd/snd_WaveSoundHandle.cpp:
+	.text       start:0x803886BC end:0x803886F4
 
 libs/nw4r/src/snd/snd_WsdFile.cpp:
 	.text       start:0x803886F4 end:0x80388A3C

@@ -70,7 +70,7 @@ def main() -> None:
         for cfg in {Path("config/RPBP01/symbols.txt"), Path("config") / args.version / "symbols.txt"}:
             text = cfg.read_text()
             for old, new in renames.items():
-                text = re.sub(r"^" + re.escape(old) + r" = ", new + " = ", text, flags=re.M)
+                text = re.sub(r"^" + re.escape(old) + r" = ", lambda m, new=new: new + " = ", text, flags=re.M)
             cfg.write_text(text)
     print(f"{len(renames)} renames total")
 

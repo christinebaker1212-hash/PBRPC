@@ -9,6 +9,8 @@
 #include <nw4r/snd/snd_WsdFile.h>
 #include <nw4r/types_nw4r.h>
 
+#include <revolution/os.h>
+
 #include <nw4r/ut.h>
 
 namespace nw4r {
@@ -130,15 +132,17 @@ private:
     const WsdCallback *mCallback; // at 0xA0
     u32 mCallbackData;            // at 0xA4
 
-    const void *mWsdData; // at 0xA8
-    int mWsdIndex;        // at 0xAC
+    OSMutex mMutex; // at 0xA8 (not in Wii Sports' revision)
 
-    StartOffsetType mStartOffsetType; // at 0xB0
-    int mStartOffset;                 // at 0xB4
+    const void *mWsdData; // at 0xC0
+    int mWsdIndex;        // at 0xC4
 
-    LfoParam mLfoParam;           // at 0xB8
-    WaveSoundInfo mWaveSoundInfo; // at 0xC8
-    Channel *mChannel;            // at 0xD4
+    StartOffsetType mStartOffsetType; // at 0xC8
+    int mStartOffset;                 // at 0xCC
+
+    LfoParam mLfoParam;           // at 0xD0
+    WaveSoundInfo mWaveSoundInfo; // at 0xE0
+    Channel *mChannel;            // at 0xEC
 };
 
 } // namespace detail
