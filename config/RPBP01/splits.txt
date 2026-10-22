@@ -2434,12 +2434,16 @@ libs/nw4r/src/ut/ut_FileStream.cpp:
 	.ctors      start:0x803E2248 end:0x803E224C
 
 libs/nw4r/src/ut/ut_DvdFileStream.cpp:
-	.text       start:0x80363618 end:0x80363C1C
+	.text       start:0x80363618 end:0x80363C30
+	.ctors      start:0x803E224C end:0x803E2250
 	.data       start:0x8044C6F0 end:0x8044C758
 
-src/.unsorted/80363C1C.cpp:
-	.text       start:0x80363C1C end:0x80363F6C
-	.ctors      start:0x803E224C end:0x803E2254
+libs/nw4r/src/ut/ut_DvdLockedFileStream.cpp:
+	.text       start:0x80363C30 end:0x80363E84
+	.ctors      start:0x803E2250 end:0x803E2254
+
+libs/nw4r/src/ut/ut_Font.cpp:
+	.text       start:0x80363E84 end:0x80363F6C
 
 libs/nw4r/src/ut/ut_ResFontBase.cpp:
 	.text       start:0x80363F6C end:0x8036453C
