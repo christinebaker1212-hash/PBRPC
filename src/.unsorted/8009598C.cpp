@@ -17,3 +17,21 @@ void fn_80099C48(void) {
     fn_80099AE0(&lbl_8063EE28, 0x18, lbl_8063ED50);
 }
 }
+
+extern "C" {
+
+s32 fn_8009868C(s32, s32);
+s32 fn_80253E8C(s32, s32, s32, s32);
+s32 fn_80253EB4(s32, s32, s32, s32);
+
+s32 fn_8009868C(s32 arg0, s32 arg1) {
+    u32 sp8;
+    s32 var_r3;
+
+    var_r3 = fn_80253E8C(arg0, arg1, 3, (s32) &sp8);
+    if (sp8 == 2U) {
+        var_r3 = fn_80253EB4(arg0, arg1, 2, 0x2ADC);
+    }
+    return var_r3;
+}
+}
