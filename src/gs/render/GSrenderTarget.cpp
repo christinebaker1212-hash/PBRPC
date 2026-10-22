@@ -91,3 +91,39 @@ void GSrenderTarget::fn_8023B3B8(u32 arg0) {
 }
 
 void GSrenderTarget::fn_8023B59C() {}
+
+extern "C" {
+
+s32 fn_8023481C(s32, s32, s32, s32);
+s32 fn_8023B490(s32, s32);
+s32 fn_8023B5A0(s32);
+extern s32 lbl_8063F730;
+extern s32 lbl_8063F734;
+extern s32 sInstance__8GSrender;
+
+s32 fn_8023B5A0(s32 arg0) {
+    s32 temp_r31;
+    s32 var_r3;
+    u8 temp_r4;
+
+    var_r3 = arg0;
+    temp_r31 = var_r3;
+    if ((s32) (*(s32 *)((u8 *)(var_r3) + (0xC))) != 0) {
+        if ((s32) (*(u16 *)((u8 *)(var_r3) + (6))) != 0) {
+            return var_r3;
+        }
+        lbl_8063F730 = var_r3;
+        lbl_8063F734 = (*(s32 *)((u8 *)(var_r3) + (0xC)));
+        var_r3 = fn_8023B490(var_r3, 0);
+        temp_r4 = (*(u8 *)((u8 *)(temp_r31) + (4)));
+        if (((s32) temp_r4 != 0) || ((s32) (*(u8 *)((u8 *)(temp_r31) + (5))) != 0)) {
+            var_r3 = fn_8023481C(sInstance__8GSrender, (s32) temp_r4, (s32) temp_r4, (s32) (*(u8 *)((u8 *)(temp_r31) + (5))));
+        }
+        lbl_8063F730 = 0;
+        lbl_8063F734 = 0;
+        /* Duplicate return node #7. Try simplifying control flow for better match */
+        return var_r3;
+    }
+    return var_r3;
+}
+}
