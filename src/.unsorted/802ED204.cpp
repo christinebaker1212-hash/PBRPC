@@ -554,3 +554,39 @@ s32 fn_802EE464(s32 arg0, s32 arg1) {
     return temp_r31;
 }
 }
+
+extern "C" {
+
+s32 SSLWrite(s32, s32, s32);                        /* extern */
+s32 fn_802F9DD0(s32, s32, s32, s32);                /* extern */
+
+s32 fn_802F9F68(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 temp_r0;
+    s32 var_r3;
+
+    if ((*(s32 *)((u8 *)(arg0) + (0xAC))) > 0) {
+        var_r3 = SSLWrite((*(s32 *)((u8 *)(arg0) + (0xAC))), arg2, arg3);
+    } else {
+        var_r3 = fn_802F9DD0(arg1, arg2, arg3, arg4);
+    }
+    if (var_r3 < 0) {
+        if ((s32) (*(s32 *)((u8 *)(arg0) + (0))) != 0) {
+            return -0x3EA;
+        }
+        if ((s32) (*(s32 *)((u8 *)(arg0) + (0xAC))) > 0) {
+            if ((u32) (var_r3 + 7) <= 1U) {
+                return 0;
+            }
+            goto block_11;
+        }
+        if (var_r3 == -0x38) {
+            return 0;
+        }
+block_11:
+        var_r3 = -0x3E9;
+        /* Duplicate return node #12. Try simplifying control flow for better match */
+        return var_r3;
+    }
+    return var_r3;
+}
+}
