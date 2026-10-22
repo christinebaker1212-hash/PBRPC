@@ -10,6 +10,8 @@
 
 #include <revolution/base/PPCArch.h>
 
+#include <math.h>
+
 #pragma optimizewithasm off
 
 inline void PushLight(const register GXLightObj* lt_obj, register void* dest) {
@@ -50,6 +52,47 @@ void GXInitLightPos(GXLightObj* lt_obj, f32 x, f32 y, f32 z) {
     obj->lpos[0] = x;
     obj->lpos[1] = y;
     obj->lpos[2] = z;
+}
+
+void GXInitLightDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz) {
+    __GXLightObjInt* obj = (__GXLightObjInt*)lt_obj;
+
+    obj->ldir[0] = -nx;
+    obj->ldir[1] = -ny;
+    obj->ldir[2] = -nz;
+}
+
+void GXInitSpecularDir(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz) {
+    __GXLightObjInt* obj = (__GXLightObjInt*)lt_obj;
+    f32 vx, vy, vz;
+    f32 mag;
+
+    vx = -nx;
+    vy = -ny;
+    vz = -nz + 1.0f;
+
+    mag = (vx * vx) + (vy * vy) + (vz * vz);
+    if (mag != 0.0f) {
+        mag = 1.0f / sqrtf(mag);
+    }
+
+    obj->ldir[0] = vx * mag;
+    obj->ldir[1] = vy * mag;
+    obj->ldir[2] = vz * mag;
+    obj->lpos[0] = nx * -1e18f;
+    obj->lpos[1] = ny * -1e18f;
+    obj->lpos[2] = nz * -1e18f;
+}
+
+void GXInitSpecularDirHA(GXLightObj* lt_obj, f32 nx, f32 ny, f32 nz, f32 hx, f32 hy, f32 hz) {
+    __GXLightObjInt* obj = (__GXLightObjInt*)lt_obj;
+
+    obj->ldir[0] = hx;
+    obj->ldir[1] = hy;
+    obj->ldir[2] = hz;
+    obj->lpos[0] = nx * -1e18f;
+    obj->lpos[1] = ny * -1e18f;
+    obj->lpos[2] = nz * -1e18f;
 }
 
 void GXInitLightColor(GXLightObj* lt_obj, GXColor color) {

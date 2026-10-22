@@ -9,6 +9,8 @@
 
 #include <revolution/base/PPCArch.h>
 
+#include <math.h>
+
 void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor color) {
     u32 fogclr;
     u32 fog0, fog1, fog2, fog3;
@@ -99,6 +101,37 @@ void GXSetFog(GXFogType type, f32 startz, f32 endz, f32 nearz, f32 farz, GXColor
     GX_WRITE_RAS_REG(fogclr);
 
     __GXData->bpSentNot = GX_FALSE;
+}
+
+void GXSetFogColor(GXColor color) {
+    u32 reg = 0xF2000000;
+
+    GX_SET_REG_FIELD(reg, 24, 0, *(u32*)&color >> 8);
+    GX_WRITE_RAS_REG(reg);
+    __GXData->bpSentNot = GX_FALSE;
+}
+
+void GXInitFogAdjTable(GXFogAdjTable* table, u16 width, const f32 projmtx[4][4]) {
+    f32 x, nearZ, step, sideX, range;
+    u32 i;
+
+    if (projmtx[3][3] == 0.0) {
+        nearZ = projmtx[2][3] / (projmtx[2][2] - 1.0f);
+        sideX = nearZ / projmtx[0][0];
+    } else {
+        sideX = 1.0f / projmtx[0][0];
+        nearZ = 1.73205f * sideX;
+    }
+
+    step = 2.0f / width;
+
+    for (i = 0; i < 10; i++) {
+        x = (i + 1) * 32;
+        x *= step;
+        x *= sideX;
+        range = sqrtf(1.0f + (x * x) / (nearZ * nearZ));
+        table->r[i] = (u32)(range * 256.0f) & 0xFFF;
+    }
 }
 
 void GXSetFogRangeAdj(GXBool enable, u16 center, const GXFogAdjTable* table) {

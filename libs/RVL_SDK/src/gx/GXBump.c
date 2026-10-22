@@ -184,6 +184,78 @@ void GXSetTevDirect(GXTevStageID tev_stage) {
     GXSetTevIndirect(tev_stage, GX_INDTEXSTAGE0, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_OFF, GX_ITW_OFF, GX_FALSE, GX_FALSE, GX_ITBA_OFF);
 }
 
+void GXSetTevIndWarp(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXBool signed_offset, GXBool replace_mode, GXIndTexMtxID matrix_sel) {
+    GXIndTexWrap wrap = replace_mode ? GX_ITW_0 : GX_ITW_OFF;
+    GXIndTexBiasSel bias = signed_offset ? GX_ITB_STU : GX_ITB_NONE;
+
+    GXSetTevIndirect(tev_stage, ind_stage, GX_ITF_8, bias, matrix_sel, wrap, wrap, GX_FALSE, GX_FALSE, GX_ITBA_OFF);
+}
+
+static inline GXIndTexWrap TileSizeToWrap(u16 size) {
+    switch (size) {
+        case 256:
+            return GX_ITW_256;
+        case 128:
+            return GX_ITW_128;
+        case 64:
+            return GX_ITW_64;
+        case 32:
+            return GX_ITW_32;
+        case 16:
+            return GX_ITW_16;
+        default:
+            return GX_ITW_OFF;
+    }
+}
+
+void GXSetTevIndTile(GXTevStageID tev_stage, GXIndTexStageID ind_stage, u16 tilesize_s, u16 tilesize_t, u16 tilespacing_s, u16 tilespacing_t,
+                     GXIndTexFormat format, GXIndTexMtxID matrix_sel, GXIndTexBiasSel bias_sel, GXIndTexAlphaSel alpha_sel) {
+    GXIndTexWrap wrap_s = TileSizeToWrap(tilesize_s);
+    GXIndTexWrap wrap_t = TileSizeToWrap(tilesize_t);
+    f32 mtx[2][3];
+
+    mtx[0][0] = tilespacing_s / 1024.0f;
+    mtx[0][1] = mtx[0][2] = 0.0f;
+    mtx[1][1] = tilespacing_t / 1024.0f;
+    mtx[1][0] = mtx[1][2] = 0.0f;
+    GXSetIndTexMtx(matrix_sel, mtx, 10);
+
+    GXSetTevIndirect(tev_stage, ind_stage, format, bias_sel, matrix_sel, wrap_s, wrap_t, GX_FALSE, GX_TRUE, alpha_sel);
+}
+
+void GXSetTevIndBumpST(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndTexMtxID matrix_sel) {
+    GXIndTexMtxID mtx_s;
+    GXIndTexMtxID mtx_t;
+
+    switch (matrix_sel) {
+        case GX_ITM_0:
+            mtx_s = GX_ITM_S0;
+            mtx_t = GX_ITM_T0;
+            break;
+        case GX_ITM_1:
+            mtx_s = GX_ITM_S1;
+            mtx_t = GX_ITM_T1;
+            break;
+        case GX_ITM_2:
+            mtx_s = GX_ITM_S2;
+            mtx_t = GX_ITM_T2;
+            break;
+    }
+
+    GXSetTevIndirect(tev_stage, ind_stage, GX_ITF_8, GX_ITB_ST, mtx_s, GX_ITW_0, GX_ITW_0, GX_FALSE, GX_FALSE, GX_ITBA_OFF);
+    GXSetTevIndirect((GXTevStageID)(tev_stage + 1), ind_stage, GX_ITF_8, GX_ITB_ST, mtx_t, GX_ITW_0, GX_ITW_0, GX_TRUE, GX_FALSE, GX_ITBA_OFF);
+    GXSetTevIndirect((GXTevStageID)(tev_stage + 2), ind_stage, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_OFF, GX_ITW_OFF, GX_TRUE, GX_FALSE,
+                     GX_ITBA_OFF);
+}
+
+void GXSetTevIndBumpXYZ(GXTevStageID tev_stage, GXIndTexStageID ind_stage, GXIndTexMtxID matrix_sel) {
+    GXSetTevIndirect(tev_stage, ind_stage, GX_ITF_8, GX_ITB_STU, matrix_sel, GX_ITW_OFF, GX_ITW_OFF, GX_FALSE, GX_FALSE, GX_ITBA_OFF);
+}
+
+void GXSetTevIndRepeat(GXTevStageID tev_stage) {
+    GXSetTevIndirect(tev_stage, GX_INDTEXSTAGE0, GX_ITF_8, GX_ITB_NONE, GX_ITM_OFF, GX_ITW_0, GX_ITW_0, GX_TRUE, GX_FALSE, GX_ITBA_OFF);
+}
+
 void __GXUpdateBPMask() {
 }
 

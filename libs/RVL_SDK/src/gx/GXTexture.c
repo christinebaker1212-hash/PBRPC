@@ -333,6 +333,10 @@ GXBool GXGetTexObjMipMap(const GXTexObj* to) {
     return (t->flags & 1) == 1;
 }
 
+u32 GXGetTexObjTlut(GXTexObj* tex_obj) {
+    return ((__GXTexObjInt*)tex_obj)->tlutName;
+}
+
 void GXLoadTexObjPreLoaded(const GXTexObj* obj, const GXTexRegion* region, GXTexMapID id) {
     __GXTlutRegionInt* tlr;
     u32 m0, m1;

@@ -369,6 +369,13 @@ GXFifoObj* GXGetGPFifo() {
     return (GXFifoObj*)&GPFifo;
 }
 
+void GXGetFifoPtrs(const GXFifoObj* fifo, void** readPtr, void** writePtr) {
+    __GXFifoObj* realFifo = (__GXFifoObj*)fifo;
+
+    *readPtr = realFifo->rdPtr;
+    *writePtr = realFifo->wrPtr;
+}
+
 u32 GXGetFifoCount(const GXFifoObj* fifo) {
     __GXFifoObj* realFifo = (__GXFifoObj*)fifo;
     return (u32)realFifo->count;
@@ -386,6 +393,16 @@ GXBreakPtCallback GXSetBreakPtCallback(GXBreakPtCallback cb) {
     BreakPointCB = cb;
     OSRestoreInterrupts(enabled);
     return oldcb;
+}
+
+void GXDisableBreakPt(void) {
+    BOOL enabled = OSDisableInterrupts();
+
+    GX_SET_REG_FIELD(__GXData->cpEnable, 1, 1, 0);
+    GX_SET_REG_FIELD(__GXData->cpEnable, 1, 5, 0);
+    GX_SET_CP_REG(1, __GXData->cpEnable);
+    __GXCurrentBP = NULL;
+    OSRestoreInterrupts(enabled);
 }
 
 void __GXFifoInit() {

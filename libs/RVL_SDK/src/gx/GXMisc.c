@@ -113,6 +113,25 @@ void GXAbortFrame() {
     }
 }
 
+void GXSetDrawSync(u16 token) {
+    BOOL enabled;
+    u32 reg;
+
+    enabled = OSDisableInterrupts();
+    reg = 0x48000000 | token;
+    GX_WRITE_RAS_REG(reg);
+    GX_SET_REG_FIELD(reg, 16, 0, token);
+    GX_SET_REG_FIELD(reg, 8, 24, 0x47);
+    GX_WRITE_RAS_REG(reg);
+    GXFlush();
+    OSRestoreInterrupts(enabled);
+    __GXData->bpSentNot = GX_FALSE;
+}
+
+u16 GXReadDrawSync() {
+    return GX_GET_PE_REG(7);
+}
+
 void GXSetDrawDone() {
     u32 reg;
     BOOL enabled;
@@ -142,6 +161,11 @@ void GXDrawDone() {
 
 void GXPixModeSync() {
     GX_WRITE_RAS_REG(__GXData->peCtrl);
+    __GXData->bpSentNot = GX_FALSE;
+}
+
+void GXTexModeSync() {
+    GX_WRITE_RAS_REG(0x63000000);
     __GXData->bpSentNot = GX_FALSE;
 }
 

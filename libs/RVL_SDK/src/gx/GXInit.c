@@ -423,7 +423,6 @@ void __GXInitGX() {
     GXLoadTexMtxImm(identity_mtx, GX_PTIDENTITY, GX_MTX3x4);
     GXSetViewport(0.0f, 0.0f, rmode->fbWidth, rmode->xfbHeight, 0.0f, 1.0f);
     GXSetProjectionv(GXDefaultProjData);
-    __GXSetGenMode();
     GXSetCoPlanar(GX_DISABLE);
     GXSetCullMode(GX_CULL_BACK);
     GXSetClipMode(GX_CLIP_ENABLE);
