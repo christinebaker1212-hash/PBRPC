@@ -201,3 +201,24 @@ void fn_8023E36C(u8 *arg0, s32 arg1, s32 arg2) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8023B88C__8GSrenderFUl(s32, s32);
+s32 fn_8023E434__FP9GStextureUl(s32, s32);
+extern s32 sInstance__8GSrender;
+
+s32 fn_8023E434__FP9GStextureUl(s32 arg0, s32 arg1) {
+    s32 temp_r4;
+
+    if ((u32) arg1 >= 8U) {
+        return 0;
+    }
+    temp_r4 = (*(s32 *)((u8 *)(arg0) + (0x50)));
+    if (temp_r4 != 0) {
+        fn_8023B88C__8GSrenderFUl(sInstance__8GSrender, temp_r4);
+        (*(s32 *)((u8 *)(arg0) + (0x50))) = 0;
+    }
+    return (*(s32 *)((u8 *)((arg0 + ((arg1 * 4) & 0x3FC))) + (0x28)));
+}
+}
