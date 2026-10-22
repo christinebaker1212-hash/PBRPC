@@ -1,4 +1,5 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/gx/GXLight.c
+// GXInitLightAttn, GXInitLightSpot and GXInitLightDistAttn are from SMGCommunity/Petari (CC0), src/RVL_SDK/gx/GXLight.c
 #include <private/os.h>
 #include <revolution/os.h>
 
@@ -11,6 +12,8 @@
 #include <revolution/base/PPCArch.h>
 
 #include <math.h>
+
+#define M_PI_F 3.14159265358979323846f
 
 #pragma optimizewithasm off
 
@@ -44,6 +47,118 @@ inline void PushLight(const register GXLightObj* lt_obj, register void* dest) {
     }
 #endif
     // clang-format on
+}
+
+void GXInitLightAttn(GXLightObj* lt_obj, f32 a0, f32 a1, f32 a2, f32 k0, f32 k1, f32 k2) {
+    __GXLightObjInt* obj;
+    obj = (__GXLightObjInt*)lt_obj;
+    obj->a[0] = a0;
+    obj->a[1] = a1;
+    obj->a[2] = a2;
+    obj->k[0] = k0;
+    obj->k[1] = k1;
+    obj->k[2] = k2;
+}
+
+void GXInitLightSpot(GXLightObj* lt_obj, f32 cutoff, GXSpotFn spot_func) {
+    f32 r, d, cr, a0, a1, a2;
+    __GXLightObjInt* obj;
+    obj = (__GXLightObjInt*)lt_obj;
+
+    if (cutoff <= 0.0f || cutoff > 90.0f) {
+        spot_func = GX_SP_OFF;
+    }
+
+    r = cutoff * M_PI_F / 180.0f;
+    cr = cos(r);
+
+    switch (spot_func) {
+    case GX_SP_FLAT:
+        a0 = -1000.0f * cr;
+        a1 = 1000.0f;
+        a2 = 0.0f;
+        break;
+    case GX_SP_COS:
+        a1 = 1.0f / (1.0f - cr);
+        a0 = -cr * a1;
+        a2 = 0.0f;
+        break;
+    case GX_SP_COS2:
+        a2 = 1.0f / (1.0f - cr);
+        a0 = 0.0F;
+        a1 = -cr * a2;
+        break;
+    case GX_SP_SHARP:
+        d = 1.0f / ((1.0f - cr) * (1.0f - cr));
+        a0 = cr * (cr - 2.0f) * d;
+        a1 = 2.0f * d;
+        a2 = -d;
+        break;
+    case GX_SP_RING1:
+        d = 1.0f / ((1.0f - cr) * (1.0f - cr));
+        a2 = -4.0f * d;
+        a0 = a2 * cr;
+        a1 = 4.0f * (1.0f + cr) * d;
+        break;
+    case GX_SP_RING2:
+        d = 1.0f / ((1.0f - cr) * (1.0f - cr));
+        a0 = 1.0f - 2.0f * cr * cr * d;
+        a1 = 4.0f * cr * d;
+        a2 = -2.0f * d;
+        break;
+    case GX_SP_OFF:
+    default:
+        a0 = 1.0f;
+        a1 = 0.0f;
+        a2 = 0.0f;
+        break;
+    }
+
+    obj->a[0] = a0;
+    obj->a[1] = a1;
+    obj->a[2] = a2;
+}
+
+void GXInitLightDistAttn(GXLightObj* lt_obj, f32 ref_dist, f32 ref_br, GXDistAttnFn dist_func) {
+    f32 k0, k1, k2;
+    __GXLightObjInt* obj;
+    obj = (__GXLightObjInt*)lt_obj;
+
+    if (ref_dist < 0.0f) {
+        dist_func = GX_DA_OFF;
+    }
+
+    if (ref_br <= 0.0f || ref_br >= 1.0f) {
+        dist_func = GX_DA_OFF;
+    }
+
+    switch (dist_func) {
+    case GX_DA_GENTLE:
+        k0 = 1.0f;
+        k1 = (1.0f - ref_br) / (ref_br * ref_dist);
+        k2 = 0.0f;
+        break;
+    case GX_DA_MEDIUM:
+        k0 = 1.0f;
+        k1 = 0.5f * (1.0f - ref_br) / (ref_br * ref_dist);
+        k2 = 0.5f * (1.0f - ref_br) / (ref_br * ref_dist * ref_dist);
+        break;
+    case GX_DA_STEEP:
+        k0 = 1.0f;
+        k1 = 0.0f;
+        k2 = (1.0f - ref_br) / (ref_br * ref_dist * ref_dist);
+        break;
+    case GX_DA_OFF:
+    default:
+        k0 = 1.0f;
+        k1 = 0.0f;
+        k2 = 0.0f;
+        break;
+    }
+
+    obj->k[0] = k0;
+    obj->k[1] = k1;
+    obj->k[2] = k2;
 }
 
 void GXInitLightPos(GXLightObj* lt_obj, f32 x, f32 y, f32 z) {

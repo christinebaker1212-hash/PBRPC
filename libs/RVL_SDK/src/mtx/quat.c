@@ -1,5 +1,5 @@
 // Imported from doldecomp/ogws (CC0), src/revolution/MTX/quat.c
-// TODO Not in this source yet: PSQUATInverse, PSQUATDivide, C_QUATRotAxisRad and C_QUATSquad.
+// PSQUATInverse, PSQUATDivide, C_QUATRotAxisRad and C_QUATSquad are written from the binary.
 #include <decomp.h>
 
 #define ASM asm
@@ -103,6 +103,60 @@ void PSQUATNormalize(register const Quaternion *in, register Quaternion *out) {
     // clang-format on
 }
 
+void PSQUATInverse(register const Quaternion *src, register Quaternion *inv) {
+    register f32 xy, zw, mag, c_two, c_zero, scale;
+
+    scale = 1.0f;
+
+    // clang-format off
+    asm {
+        psq_l    xy, 0(src), 0, 0
+        ps_mul   mag, xy, xy
+        psq_l    zw, 8(src), 0, 0
+        ps_sub   c_zero, scale, scale
+        ps_add   c_two, scale, scale
+        ps_madd  mag, zw, zw, mag
+        ps_sum0  mag, mag, mag, mag
+        fcmpu    cr0, mag, c_zero
+        beq      _conjugate
+        fres     scale, mag
+        ps_nmsub mag, mag, scale, c_two
+        ps_mul   scale, scale, mag
+    _conjugate:
+        ps_neg   c_two, scale
+        ps_muls1 mag, scale, zw
+        ps_muls0 xy, xy, c_two
+        ps_muls0 zw, zw, c_two
+        psq_st   mag, 12(inv), 1, 0
+        psq_st   xy, 0(inv), 0, 0
+        psq_st   zw, 8(inv), 1, 0
+    }
+    // clang-format on
+}
+
+void PSQUATDivide(const Quaternion *p, const Quaternion *q, Quaternion *r) {
+    Quaternion qInv;
+
+    PSQUATInverse(q, &qInv);
+    PSQUATMultiply(&qInv, p, r);
+}
+
+void C_QUATRotAxisRad(Quaternion *r, const Vec *axis, f32 rad) {
+    f32 half, s, c;
+    Vec nAxis;
+
+    PSVECNormalize(axis, &nAxis);
+
+    half = 0.5f * rad;
+    s = sinf(half);
+    c = cosf(half);
+
+    r->x = s * nAxis.x;
+    r->y = s * nAxis.y;
+    r->z = s * nAxis.z;
+    r->w = c;
+}
+
 void C_QUATMtx(Quaternion *quat, const Mtx mtx) {
     f32 root, trace;
     u32 dmax, dnext, dlast;
@@ -178,4 +232,15 @@ void C_QUATSlerp(const Quaternion *a, const Quaternion *b, Quaternion *out, f32 
     out->y = coeffa * a->y + coeffb * b->y;
     out->z = coeffa * a->z + coeffb * b->z;
     out->w = coeffa * a->w + coeffb * b->w;
+}
+
+void C_QUATSquad(const Quaternion *p, const Quaternion *a, const Quaternion *b, const Quaternion *q, Quaternion *r, f32 t) {
+    Quaternion pq, ab;
+    f32 t2;
+
+    t2 = 2.0f * t * (1.0f - t);
+
+    C_QUATSlerp(p, q, &pq, t);
+    C_QUATSlerp(a, b, &ab, t);
+    C_QUATSlerp(&pq, &ab, r, t2);
 }

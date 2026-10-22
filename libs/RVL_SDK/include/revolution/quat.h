@@ -9,6 +9,7 @@ extern "C" {
 
 // TODO(samm) Debug versions
 #define QUATInverse PSQUATInverse
+#define QUATDivide PSQUATDivide
 #define QUATMultiply PSQUATMultiply
 #define QUATNormalize PSQUATNormalize
 #define QUATMtx C_QUATMtx
@@ -17,6 +18,7 @@ extern "C" {
 #define QUATRotAxisRad C_QUATRotAxisRad
 
 void PSQUATInverse(const Quaternion *, Quaternion *);
+void PSQUATDivide(const Quaternion *, const Quaternion *, Quaternion *);
 void PSQUATMultiply(const Quaternion *, const Quaternion *, Quaternion *);
 void PSQUATNormalize(const Quaternion *, Quaternion *);
 void C_QUATMtx(Quaternion *, const Mtx);

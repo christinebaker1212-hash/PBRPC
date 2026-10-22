@@ -1546,10 +1546,7 @@ libs/RVL_SDK/src/vi/vi3in1.c:
 	.text       start:0x8027A888 end:0x8027BF2C
 
 libs/RVL_SDK/src/mtx/mtx.c:
-	.text       start:0x8027BF2C end:0x8027C5C0
-
-src/.unsorted/8027C5C0.cpp:
-	.text       start:0x8027C5C0 end:0x8027C9FC
+	.text       start:0x8027BF2C end:0x8027C9FC
 
 libs/RVL_SDK/src/mtx/mtxvec.c:
 	.text       start:0x8027C9FC end:0x8027CAA4
@@ -1557,19 +1554,13 @@ libs/RVL_SDK/src/mtx/mtxvec.c:
 libs/RVL_SDK/src/mtx/mtx44.c:
 	.text       start:0x8027CAA4 end:0x8027CCC4
 
-src/.unsorted/8027CCC4.cpp:
-	.text       start:0x8027CCC4 end:0x8027CD28
-
 libs/RVL_SDK/src/mtx/vec.c:
-	.text       start:0x8027CD28 end:0x8027CE24
-
-src/.unsorted/8027CE24.cpp:
-	.text       start:0x8027CE24 end:0x8027D024
+	.text       start:0x8027CCC4 end:0x8027D024
 
 libs/RVL_SDK/src/mtx/quat.c:
 	.text       start:0x8027D024 end:0x8027D5D8
 
-src/.unsorted/8027D5D8.cpp:
+libs/RVL_SDK/src/mtx/psmtx.c:
 	.text       start:0x8027D5D8 end:0x8027D624
 
 libs/RVL_SDK/src/gx/GXInit.c:
@@ -1590,11 +1581,8 @@ libs/RVL_SDK/src/gx/GXGeometry.c:
 libs/RVL_SDK/src/gx/GXFrameBuf.c:
 	.text       start:0x8028146C end:0x80281F38
 
-src/.unsorted/80281F38.cpp:
-	.text       start:0x80281F38 end:0x802821AC
-
 libs/RVL_SDK/src/gx/GXLight.c:
-	.text       start:0x802821AC end:0x80282610
+	.text       start:0x80281F38 end:0x80282610
 
 libs/RVL_SDK/src/gx/GXTexture.c:
 	.text       start:0x80282610 end:0x80283364

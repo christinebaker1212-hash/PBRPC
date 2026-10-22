@@ -63,10 +63,10 @@ void C_MTXQuat(Mtx, const Quaternion *);
 #define MTXQuat PSMTXQuat
 #endif // DEBUG
 
-void MTXLookAt(Mtx m, const Point3d *camPos, const Vec *camUp, const Point3d *target);
-void MTXLightFrustum(Mtx, f32, f32, f32, f32, f32, f32, f32, f32, f32);
-void MTXLightOrtho(Mtx, f32, f32, f32, f32, f32, f32, f32, f32);
-void MTXLightPerspective(Mtx, f32, f32, f32, f32, f32, f32);
+#define MTXLookAt C_MTXLookAt
+#define MTXLightFrustum C_MTXLightFrustum
+#define MTXLightPerspective C_MTXLightPerspective
+#define MTXLightOrtho C_MTXLightOrtho
 
 // MtxVec
 
@@ -100,14 +100,14 @@ void PSVECAdd(const Vec *a, const Vec *b, Vec *ab);
 void PSVECCrossProduct(const Vec *a, const Vec *b, Vec *axb);
 void PSVECNormalize(const Vec *src, Vec *dst);
 void PSVECScale(const Vec *src, Vec *dst, f32 scale);
-f32 PSVECSquareMag(Vec *vec);
+f32 PSVECSquareMag(const Vec *vec);
 void PSVECSubtract(const Vec *a, const Vec *b, Vec *ab);
 
 void C_VECAdd(const Vec *a, const Vec *b, Vec *ab);
 void C_VECCrossProduct(const Vec *a, const Vec *b, Vec *axb);
 void C_VECNormalize(const Vec *src, Vec *dst);
 void C_VECScale(const Vec *src, Vec *dst, f32 scale);
-f32 C_VECSquareMag(Vec *vec);
+f32 C_VECSquareMag(const Vec *vec);
 void C_VECSubtract(const Vec *a, const Vec *b, Vec *ab);
 
 #ifdef DEBUG
@@ -130,6 +130,7 @@ void C_VECSubtract(const Vec *a, const Vec *b, Vec *ab);
 void PSMTXConcatArray(const Mtx, const Mtx, Mtx, u32);
 void PSMTXTranspose(const Mtx, Mtx);
 void PSMTXRotAxisRad(Mtx, const Vec*, f32);
+void PSMTXReorder(const Mtx src, ROMtx dest);
 void C_MTXLookAt(Mtx, const Vec*, const Vec*, const Vec*);
 void C_MTXLightFrustum(Mtx, f32, f32, f32, f32, f32, f32, f32, f32, f32);
 void C_MTXLightPerspective(Mtx, f32, f32, f32, f32, f32, f32);
@@ -143,6 +144,8 @@ f32 PSVECMag(const Vec* v);
 f32 PSVECDotProduct(const Vec* a, const Vec* b);
 f32 PSVECSquareDistance(const Vec* a, const Vec* b);
 void C_VECHalfAngle(const Vec* a, const Vec* b, Vec* half);
+void C_VECReflect(const Vec* src, const Vec* normal, Vec* dst);
+f32 PSVECDistance(const Vec* a, const Vec* b);
 
 #ifdef __cplusplus
 }

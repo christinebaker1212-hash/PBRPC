@@ -1,4 +1,5 @@
 // Imported from koopthekoopa/wii-ipl (CC0), libs/RVL_SDK/src/mtx/mtxvec.c
+// PSMTXMultVecSR is from SMGCommunity/Petari (CC0), src/RVL_SDK/mtx/mtxvec.c
 #include <revolution/mtx.h>
 
 // clang-format off
@@ -36,6 +37,40 @@ asm void PSMTXMultVec(const register Mtx m, const register Vec* src, register Ve
     ps_madd f5, f3, f1, f4
     ps_sum0 f6, f5, f6, f5
     psq_st f6, Vec.z(dst), 1, 0
+    blr
+}
+
+
+asm void PSMTXMultVecSR
+(
+    const register Mtx m,
+    const register Vec *src,
+          register Vec *dst
+)
+{
+    nofralloc
+
+    psq_l   fp0, 0(m), 0, 0
+    psq_l   fp6, 0(src), 0, 0
+    psq_l   fp2, 16(m), 0, 0
+    ps_mul  fp8, fp0, fp6
+    psq_l   fp4, 32(m), 0, 0
+    ps_mul  fp10, fp2, fp6
+    psq_l   fp7, 8(src), 1, 0
+    ps_mul  fp12, fp4, fp6
+    psq_l   fp3, 24(m), 0, 0
+    ps_sum0 fp8, fp8, fp8, fp8
+    psq_l   fp5, 40(m), 0, 0
+    ps_sum0 fp10, fp10, fp10, fp10
+    psq_l   fp1, 8(m), 0, 0
+    ps_sum0 fp12, fp12, fp12, fp12
+    ps_madd fp9, fp1, fp7, fp8
+    psq_st  fp9, 0(dst), 1, 0
+    ps_madd fp11, fp3, fp7, fp10
+    psq_st  fp11, 4(dst), 1, 0
+    ps_madd fp13, fp5, fp7, fp12
+    psq_st  fp13, 8(dst), 1, 0
+
     blr
 }
 
