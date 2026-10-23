@@ -1310,11 +1310,18 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
         if d is None:
             return None
         return src[: d.end()] + "".join(f"    s32 {x};\n" for x in u) + src[d.end() :]
+    f = sorted(set(re.findall(r"\(10140\) undefined identifier '((?:fn|lbl)_\w+)'", err)))
+    if f:
+        # A symbol m2c addresses as data without declaring it
+        d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
+        if d is None:
+            return None
+        return src[: d.start()] + "".join(f"extern u8 {x}[];\n" for x in f) + src[d.start() :]
     c = re.search(r"\(10248\) function call\s*(?:#\s*)?'(\w+)\(", err)
     if c:
         return cast_call_arguments(src, c.group(1))
     e = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\((\d+)\)", err, re.M)
-    if e and e.group(2) in ("10499", "10144", "10162"):
+    if e and e.group(2) in ("10499", "10144", "10162", "10245"):
         lines = src.split("\n")
         i = int(e.group(1)) - first_line
         if not 0 <= i < len(lines):
@@ -1333,6 +1340,11 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
                 d = re.search(r"^\s+([\w ]+?\**) ?" + re.escape(a.group(2)) + r";$", src, re.M)
                 t = d.group(1).strip() if d else "s32"
                 lines[i] = f"{a.group(1)}{a.group(2)} = *({t} *)((*(u8 **){a.group(3)});"
+                return "\n".join(lines)
+            # `*fn(...)`: a pointer an integer-returning call gives back
+            new = re.sub(r"(?<![\w)])\*((?:fn|lbl)_\w+\()", r"*(u8 **)\1", lines[i], count=1)
+            if new != lines[i]:
+                lines[i] = new
                 return "\n".join(lines)
             # `*(int expression)`: m2c's address arithmetic on an integer
             for d in re.finditer(r"\*\((?![\w ]+\*+\))", lines[i]):
@@ -1357,9 +1369,17 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
                 d = re.compile(r"^(\s+|(?:__declspec\([^)]*\) )?extern )(s32|u32) " + re.escape(name) + r";$", re.M)
                 if d.search(src):
                     return d.sub(lambda m: f"{m.group(1)}{m.group(2)} *{name};", src, count=1)
+                # A parameter
+                p = re.compile(r"^([A-Za-z_][^\n;]*\([^)\n]*?)\b(s32|u32) " + re.escape(name) + r"\b(?=[^)\n]*\)\s*\{$)", re.M)
+                if p.search(src):
+                    return p.sub(lambda m: f"{m.group(1)}{m.group(2)} *{name}", src, count=1)
             return None
         # A pointer compared with an integer
         new = re.sub(r"\b(\w+) (==|!=|<=|>=|<|>) \(u32\)", r"(u32) \1 \2 (u32)", lines[i])
+        if new == lines[i]:
+            new = re.sub(r"(?<![\w.>*])\b(\w+) (==|!=|<=|>=|<|>) (\w+)\b(?![(\[])", r"(u32) \1 \2 (u32) \3", lines[i], count=1)
+        if new == lines[i]:
+            new = re.sub(r"(?<![\w.>*])\b(\w+) (==|!=|<=|>=|<|>) \(([\w ]+\*+)\) ", r"(u32) \1 \2 (u32) (\3) ", lines[i], count=1)
         if new == lines[i]:
             return None
         lines[i] = new
@@ -1391,6 +1411,12 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
     if not 0 <= i < len(lines):
         return None
     t, l = m.group(3), lines[i]
+    if "(**)(" in l and not re.match(r"^\s*(?:return\b|[^=(]+ = )", l):
+        # An argument of an indirect call: m2c's guess at the pointer's type
+        new = re.sub(r"\(\*\*\)\([^()]*\)", "(**)(...)", l, count=1)
+        if new != l:
+            lines[i] = new
+            return "\n".join(lines)
     if "*" in m.group(2) and t in ("float", "double"):
         # A pointer stored where m2c guessed a float: the location holds a pointer
         f = re.match(r"^(\s*)\(\*\((?:f32|f64) \*\)(.+) = (.+);\s*$", l)
