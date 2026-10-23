@@ -881,3 +881,43 @@ void fn_801E2D88(u8 *arg0, s32 arg1, s32 arg2) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_801E1614(s32);
+
+void fn_801E1C78(u8 *arg0) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x84)));
+    if (temp_r3 != 0) {
+        fn_801E1614(temp_r3);
+    }
+}
+}
+
+extern "C" {
+
+void fn_801E2938(u8 *arg0) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x30)));
+    if (temp_r3 != 0) {
+        fn_801E2810((s32)(temp_r3));
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80206DF4(s32);
+
+void fn_801E2E20(u8 *arg0) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x38)));
+    if (temp_r3 != 0) {
+        fn_80206DF4(temp_r3);
+    }
+}
+}
