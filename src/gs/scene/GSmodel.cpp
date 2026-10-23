@@ -569,3 +569,47 @@ void fn_801EF824(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_801E13B8__FP13GSchannelDatafP6GSvec2(u8 *, s32);
+s32 fn_801E1440__FP13GSchannelDatafP7GScolor(u8 *, s32);
+
+void fn_801F1554__7GSmodelFP17GSanimationObjectP13GSchannelDatafb(u8 *arg0, u8 *arg1, s32 arg2) {
+    s32 temp_r0_2;
+    s32 temp_r3;
+    s32 temp_r5;
+    u32 temp_r5_2;
+    u32 temp_r6_2;
+    u8 temp_r0;
+    u8 *temp_r6;
+
+    if (arg2 == 0) {
+        temp_r0 = (*(u8 *)((u8 *)(arg1) + (1)));
+        temp_r6 = (*(u8 **)((u8 *)(arg0) + (0x164)));
+        switch ((s32) temp_r0) {                    /* irregular */
+        case 17:
+            temp_r5 = (*(s32 *)((u8 *)(arg0) + (0x178)));
+            if ((temp_r5 != 0) && ((u32) temp_r5 != (u32) (*(u32 *)((u8 *)(temp_r6) + (0x10))))) {
+                fn_801E1440__FP13GSchannelDatafP7GScolor(arg1, temp_r5 + ((*(u16 *)((u8 *)(arg1) + (4))) * 4));
+                return;
+            }
+            break;
+        case 18:
+            temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x17C)));
+            if (temp_r3 != 0) {
+                temp_r5_2 = (*(u32 *)((u8 *)(temp_r6) + (0x14)));
+                if ((u32) temp_r3 != temp_r5_2) {
+                    temp_r0_2 = (*(u8 *)((u8 *)(arg1) + (3))) * 8;
+                    temp_r6_2 = *(u32 *)((u8 *)0 + (temp_r3 + temp_r0_2));
+                    if (temp_r6_2 != (u32) *(s32 *)((u8 *)0 + (temp_r5_2 + temp_r0_2))) {
+                        fn_801E13B8__FP13GSchannelDatafP6GSvec2(arg1, temp_r6_2 + ((*(u16 *)((u8 *)(arg1) + (4))) * 8));
+                        return;
+                    }
+                }
+            }
+            break;
+        }
+    }
+}
+}
