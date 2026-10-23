@@ -245,6 +245,22 @@ def FLOAT_CONSTS() -> Dict[str, str]:
     return _FLOAT_CONSTS
 
 
+def fold_overlaps(src: str) -> str:
+    """Stack scalars inside a stack array (m2c's view of a struct member) as
+    accesses to the array, so they share its memory."""
+    arrays = [(int(m.group(2), 16), int(m.group(3)) * SCALAR_SIZE.get(m.group(1), 4), m.group(2)) for m in re.finditer(r"^    (\w+) sp([0-9A-F]+)\[(\d+)\];$", src, re.M)]
+    for base, size, bname in arrays:
+        for m in list(re.finditer(r"^    (s8|u8|s16|u16|s32|u32|f32) sp([0-9A-F]+);\n", src, re.M)):
+            off = int(m.group(2), 16)
+            if not base < off < base + size:
+                continue
+            name, t = f"sp{m.group(2)}", m.group(1)
+            src = src.replace(m.group(0), "", 1)
+            src = re.sub(r"&" + name + r"\b", f"((u8 *)sp{bname} + {off - base})", src)
+            src = re.sub(r"\b" + name + r"\b", f"(*({t} *)((u8 *)sp{bname} + {off - base}))", src)
+    return src
+
+
 def float_literals(src: str) -> str:
     """Constants the code reads by value written as literals, as the original
     source likely did: MWCC can move a load of its own constant pool freely,
@@ -744,6 +760,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         # On the full rewrite, and on a version with only the safe rewrites
         for b in (w, byte_offsets(struct_globals(while_loops(inline_cr_temps(v))))):
             extra += [b, stack_arrays(b), stack_structs(b), stack_structs(b, top), ternaries(b), reverse_locals(b), compound_assignments(b), equality_constants(b)]
+            extra += [widen_params(b)]
             extra += [narrow_counters(b, t) for t in ("u16", "u8")]
             extra += [reverse_locals(x) for x in extra[-2:]]
         for x in extra:
@@ -751,7 +768,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
                 variants.append(x)
     out = []
     for v in variants:
-        w = float_literals(v)
+        w = fold_overlaps(float_literals(v))
         if w not in out:
             out.append(w)
     return out
@@ -903,6 +920,15 @@ def byte_offsets(src: str) -> str:
         lambda m: f"({m.group(1)}) ((u8 *){m.group(2)} {m.group(3)} " if m.group(2) in ptrs else m.group(0),
         src,
     )
+
+
+def widen_params(src: str) -> str:
+    """Small-integer parameters as s32 (the caller already extended them)."""
+    d = re.search(r"^([A-Za-z_][^\n;(]*\()([^)\n]*)(\)\s*\{)$", src, re.M)
+    if d is None:
+        return src
+    params = re.sub(r"\b(?:s8|u8|s16|u16) (arg\d+)\b", r"s32 \1", d.group(2))
+    return src[: d.start(2)] + params + src[d.end(2) :]
 
 
 def narrow_counters(src: str, t: str) -> str:
