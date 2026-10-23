@@ -48,7 +48,7 @@ extern "C" {
 
 s32 fn_80207B34(u8 *, u8 *);
 s32 fn_8020B9A4(u8 *, s32, s32, f32);
-s32 fn_8020C600(u8 *, s32);
+void fn_8020C600(u8 *arg0, u8 *arg1);
 s32 fn_8020C8B8(u8 *);
 
 void fn_8020C6AC(u8 *arg0, f32 farg0) {
@@ -60,7 +60,7 @@ void fn_8020C6AC(u8 *arg0, f32 farg0) {
         while (var_r31 != NULL) {
             temp_r30 = (*(u8 **)((u8 *)(var_r31) + (0x28)));
             if (fn_8020B9A4(var_r31, (*(s32 *)((u8 *)(arg0) + (0))), (*(s32 *)((u8 *)(arg0) + (0x20))), farg0) == 0) {
-                fn_8020C600(var_r31, (*(s32 *)((u8 *)(arg0) + (0x20))));
+                fn_8020C600((u8 *)(var_r31), (u8 *)((*(s32 *)((u8 *)(arg0) + (0x20)))));
                 fn_80207B34(arg0, var_r31);
             }
             var_r31 = temp_r30;
@@ -104,10 +104,21 @@ void fn_8020C848(u8 *arg0) {
         (*(u8 *)((u8 *)(arg0) + (0x18))) = 0U;
         while (var_r4 != NULL) {
             temp_r31 = (*(u8 **)((u8 *)(var_r4) + (0x28)));
-            fn_8020C600((u8 *)(var_r4), (s32)((*(s32 *)((u8 *)(arg0) + (0x20)))));
+            fn_8020C600((u8 *)((u8 *)(var_r4)), (u8 *)((s32)((*(s32 *)((u8 *)(arg0) + (0x20))))));
             var_r4 = temp_r31;
         }
         fn_80207B8C(arg0);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8021C564(s32, s32);
+
+void fn_8020C600(u8 *arg0, u8 *arg1) {
+    if ((*(s32 *)((u8 *)(arg1) + (0))) & 1) {
+        fn_8021C564((s32) (u16) ((*(s32 *)((u8 *)(arg1) + (0x58))) - 1), (s32) (*(s16 *)((u8 *)(arg0) + (0x58))));
     }
 }
 }
