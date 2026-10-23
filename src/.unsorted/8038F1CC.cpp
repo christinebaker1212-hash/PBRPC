@@ -6813,3 +6813,51 @@ void fn_8038F1CC(s32 arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80392560(s32 arg0, s32 arg1, u32 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = ((s32 (*)(void))fn_8039252C)();
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    if (arg2 >= 0x65U) {
+        return 0;
+    }
+    return *(s32 *)((u8 *)0 + (temp_r3 + (arg2 * 4)));
+}
+}
+
+extern "C" {
+
+s32 fn_80398128(s32 arg0, s32 arg1, u32 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = ((s32 (*)(void))fn_80397E44)();
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    if (arg2 >= 2U) {
+        return 0;
+    }
+    return *(s32 *)((u8 *)0 + (temp_r3 + (arg2 * 0x10)));
+}
+}
+
+extern "C" {
+
+s32 fn_80399F64(s32 arg0, s32 arg1, u32 arg2) {
+    s32 temp_r3;
+
+    temp_r3 = ((s32 (*)(void))fn_80399EE0)();
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    if (arg2 >= 2U) {
+        return 0;
+    }
+    return *(s32 *)((u8 *)0 + (temp_r3 + (arg2 * 0xC)));
+}
+}
