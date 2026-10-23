@@ -107,3 +107,17 @@ void fn_8025A7BC(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 resumeThread__14GSthreadHandleFv(s32);
+
+void fn_8025A7A8(u8 *arg0) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x200)));
+    if (temp_r3 != 0) {
+        resumeThread__14GSthreadHandleFv(temp_r3);
+    }
+}
+}
