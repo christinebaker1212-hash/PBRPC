@@ -530,13 +530,22 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = struct_globals(v)
         if w != v and w not in variants:
             variants.append(w)
+    # m2c's `(T *) (p + n)` means a byte offset, which C scales when p is
+    # not a byte pointer
+    for v in list(variants[:2]):
+        w = byte_offsets(v)
+        if w != v and w not in variants:
+            variants.append(w)
     # All the control-flow rewrites together
     for v in list(variants[:2]) + [w for b in buffers for w in b]:
         w = while_loops(inline_cr_temps(v))
         w = range_switch(w) or w
         w = single_case_switch(w) or w
-        t = ternaries(w)
-        for x in (w, stack_arrays(w), t):
+        w = byte_offsets(struct_globals(w))
+        extra = [stack_arrays(w), ternaries(w), reverse_locals(w)]
+        extra += [narrow_counters(w, t) for t in ("u16", "u8")]
+        extra += [reverse_locals(x) for x in extra[-2:]]
+        for x in [w] + extra:
             if x not in variants:
                 variants.append(x)
     return variants
@@ -612,6 +621,23 @@ def struct_globals(src: str) -> str:
         tag = f"S_{name}"
         src = src[: d.start()] + f"struct {tag} {{ " + " ".join(members) + " };\n" + f"{d.group(1)}struct {tag} {name};" + src[d.end() :]
         src = access.sub(lambda m: f"{name}.f_{int(m.group(3), 0):X}" if m.group(2) == name else m.group(0), src)
+    return src
+
+
+def byte_offsets(src: str) -> str:
+    ptrs = set(re.findall(r"^\s+(?:s16|u16|s32|u32|f32|f64|s64|u64) \*(\w+);$", src, re.M))
+    return re.sub(
+        r"\(([\w ]+\*)\) \((\w+) ([+-]) ",
+        lambda m: f"({m.group(1)}) ((u8 *){m.group(2)} {m.group(3)} " if m.group(2) in ptrs else m.group(0),
+        src,
+    )
+
+
+def narrow_counters(src: str, t: str) -> str:
+    """Loop counters (variables incremented by one) as t, which MWCC narrows
+    after each increment."""
+    for c in set(re.findall(r"^\s+(var_r\d+) \+= 1;$", src, re.M)):
+        src = re.sub(r"^(\s+)s32 " + c + ";$", r"\1" + t + " " + c + ";", src, flags=re.M)
     return src
 
 
