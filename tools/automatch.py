@@ -139,6 +139,15 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
     if not m:
         return None
     text = re.sub(r"\bcror (eq|2), (lt|gt|0|1), (eq|2)$", lambda c: "cror 2, " + {"lt": "0", "gt": "1"}.get(c.group(2), c.group(2)) + ", 2", m.group(0), flags=re.M)
+    # A tail call before the end of the function: m2c only follows one in
+    # last position
+    lines = text.split("\n")
+    last = max(i for i, l in enumerate(lines) if re.match(r"^/\*", l))
+    for i, l in enumerate(lines[:last]):
+        t = re.match(r"^(/\*.*?\*/\s*)b ([A-Za-z_][\w@$]*)$", l)
+        if t:
+            lines[i] = f"{t.group(1)}bl {t.group(2)}\n{t.group(1)}blr"
+    text = "\n".join(lines)
     tables = ""
     for jt in sorted(set(re.findall(r"\b(jumptable_\w+)@ha", text))):
         entries = JUMP_TABLES().get(jt)
