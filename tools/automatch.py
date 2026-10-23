@@ -486,6 +486,21 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = while_loops(v)
         if w != v and w not in variants:
             variants.append(w)
+    # Vectors and small structs passed by address, which m2c splits into one
+    # stack variable per member
+    for v in list(variants[:2]):
+        w = stack_arrays(v)
+        if w != v:
+            for x in (w, reverse_locals(w)):
+                if x not in variants:
+                    variants.append(x)
+    # A buffer m2c declared as one stack variable: size it to the target frame
+    buffers = [b for b in (stack_buffer(v, asm_text) for v in variants[:2] + [stack_arrays(v) for v in variants[:2]]) if b]
+    for b in buffers:
+        for w in b:
+            for x in (w, reverse_locals(w)):
+                if x not in variants:
+                    variants.append(x)
     # MWCC compiles a one-case switch as beq/b; m2c turns it into an early return
     for v in variants[:2]:
         w = single_case_switch(v)
@@ -514,6 +529,61 @@ def while_loops(src: str) -> str:
         new = f"{ind}while ({cond}) {{\n{body}{ind}}}\n"
         src = src[: m.start()] + new + src[m.end() :]
         pos = m.start() + len(new)
+
+
+def stack_arrays(src: str) -> str:
+    """Consecutive stack variables of one type, the first address-taken, as an
+    array: `f32 sp18, sp1C, sp20; f(&sp18)` -> `f32 sp18[3]; f(sp18)`."""
+    decls = {int(m.group(2), 16): m.group(1) for m in re.finditer(r"^    (s32|u32|f32|s16|u16) sp([0-9A-F]+);$", src, re.M)}
+    taken = sorted({int(x, 16) for x in re.findall(r"&sp([0-9A-F]+)\b", src)})
+    for base in taken:
+        t = decls.get(base)
+        if t is None:
+            continue
+        size = 2 if t in ("s16", "u16") else 4
+        n = 1
+        while decls.get(base + n * size) == t and (base + n * size) not in taken:
+            n += 1
+        if n < 2:
+            continue
+        for k in range(n):
+            name = f"sp{base + k * size:X}"
+            if k == 0:
+                src = re.sub(r"^    " + t + " " + name + ";$", f"    {t} {name}[{n}];", src, flags=re.M)
+                src = re.sub(r"(?<![&\w])" + name + r"\b(?!\[)", f"{name}[0]", src)
+                src = re.sub(r"&" + name + r"\b", name, src)
+            else:
+                src = re.sub(r"^    " + t + " " + name + ";\n", "", src, flags=re.M)
+                src = re.sub(r"\b" + name + r"\b", f"sp{base:X}[{k}]", src)
+    return src
+
+
+def stack_buffer(src: str, asm_text: str) -> List[str]:
+    """The highest address-taken stack variable as an array reaching up to the
+    target frame's register save area, at two plausible sizes."""
+    f = re.search(r"stwu r1, -0x([0-9a-fA-F]+)\(r1\)", asm_text)
+    if f is None:
+        return []
+    frame = int(f.group(1), 16)
+    saves = [int(x, 16) for x in re.findall(r"\b(?:stw r(?:1[4-9]|2\d|3[01])|stfd f\d+|psq_st f\d+), 0x([0-9a-fA-F]+)\(r1\)", asm_text)]
+    g = re.search(r"bl _savegpr_(\d+)", asm_text)
+    if g:
+        saves.append(frame - 4 * (32 - int(g.group(1))))
+    top = min(saves) if saves else frame
+    taken = [int(x, 16) for x in re.findall(r"&sp([0-9A-F]+)\b", src)]
+    if not taken:
+        return []
+    off = max(taken)
+    d = re.search(r"^(\s+)([\w ]+?) sp" + f"{off:X}" + r";$", src, re.M)
+    room = top - off
+    if d is None or room <= 8:
+        return []
+    out = []
+    for size in sorted({room & ~3, 1 << (room.bit_length() - 1)}, reverse=True):
+        w = src[: d.start()] + f"{d.group(1)}{d.group(2)} sp{off:X}[{size}];" + src[d.end() :]
+        w = re.sub(r"&sp" + f"{off:X}" + r"\b", f"sp{off:X}", w)
+        out.append(w)
+    return out
 
 
 def single_case_switch(src: str) -> Optional[str]:
