@@ -144,3 +144,18 @@ void fn_8017BE5C(u8 *arg0, s32 arg1, s32 arg2) {
     (*(u8 *)((u8 *)(arg0) + (6))) = (u8) ((*(u8 *)((u8 *)(arg0) + (6))) | 0x20);
 }
 }
+
+extern "C" {
+
+struct S_lbl_8048DF88 { s32 f_0; s32 f_4; s32 f_8; s32 f_C; };
+__declspec(section ".data") extern struct S_lbl_8048DF88 lbl_8048DF88;
+
+void fn_8017B4CC() {
+    lbl_8063F228 = ((s32 (*)(s32, s32))allocFromHeap__5GSmemFP12MEMiHeapHeadUl)(gUnkHeap2, 0xA0);
+    ((s32 (*)(void))fn_8017B4B8)();
+    lbl_8048DF88.f_0 = 0;
+    lbl_8048DF88.f_4 = 0;
+    lbl_8048DF88.f_8 = 0;
+    lbl_8048DF88.f_C = 0;
+}
+}
