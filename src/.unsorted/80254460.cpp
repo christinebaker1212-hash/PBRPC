@@ -362,3 +362,36 @@ u8 *fn_80259044(u8 *arg0) {
     return arg0;
 }
 }
+
+extern "C" {
+
+void fn_802556A8(u8 *arg0, s32 arg1, s32 arg2) {
+    u32 var_r31;
+    u32 temp_r30;
+
+    temp_r30 = (*(u32 *)((u8 *)((*(u8 **)((u8 *)(arg0) + (4)))) + (0x30)));
+    var_r31 = 0U;
+    while (var_r31 < temp_r30) {
+        fn_802554D8((s32)((s32) arg0), (s32)((s32) var_r31), (s32)(arg1), (s32)(arg2));
+        var_r31 += 1;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80255890(u8 *arg0) {
+    s32 temp_r0;
+    s32 var_r31;
+    u32 var_r30;
+
+    var_r31 = 0;
+    var_r30 = 0U;
+    while (var_r30 < (u32) (*(u32 *)((u8 *)(arg0) + (0x24)))) {
+        temp_r0 = *((s32 * (*)(s32, u32))GetSoundPlayer__Q34nw4r3snd18SoundArchivePlayerFUl)((*(s32 *)((u8 *)(arg0) + (4))), var_r30);
+        var_r30 += 1;
+        var_r31 += temp_r0;
+    }
+    return var_r31;
+}
+}
