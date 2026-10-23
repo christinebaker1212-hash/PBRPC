@@ -536,3 +536,51 @@ static u32 __AXGetSrcCycles(u16 select, const AXPBSRC* src) {
 s32 AXGetMaxVoices(void) {
     return __AXMaxVoices;
 }
+
+void AXSetVoiceSrcType(AXVPB* vpb, u32 type) {
+    BOOL old;
+    AXPB* ppb;
+
+    old = OSDisableInterrupts();
+    ppb = &vpb->pb;
+    switch (type) {
+        case AX_SRC_TYPE_NONE: {
+            ppb->srcSelect = 2;
+            break;
+        }
+        case AX_SRC_TYPE_LINEAR: {
+            ppb->srcSelect = 1;
+            break;
+        }
+        case AX_SRC_TYPE_4TAP_8K: {
+            ppb->srcSelect = 0;
+            ppb->coefSelect = 0;
+            break;
+        }
+        case AX_SRC_TYPE_4TAP_12K: {
+            ppb->srcSelect = 0;
+            ppb->coefSelect = 1;
+            break;
+        }
+        case AX_SRC_TYPE_4TAP_16K: {
+            ppb->srcSelect = 0;
+            ppb->coefSelect = 2;
+            break;
+        }
+    }
+
+    vpb->sync |= AX_PBSYNC_SELECT;
+    OSRestoreInterrupts(old);
+}
+
+void AXSetVoiceSrcRatio(AXVPB* vpb, float ratio) {
+    u32 r;
+    BOOL old;
+
+    old = OSDisableInterrupts();
+    r = 65536.0f * ratio;
+    vpb->pb.src.ratioHi = ((u32)r >> 0x10);
+    vpb->pb.src.ratioLo = ((u32)r);
+    vpb->sync |= AX_PBSYNC_SRC_RATIO;
+    OSRestoreInterrupts(old);
+}

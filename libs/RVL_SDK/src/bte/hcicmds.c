@@ -1367,3 +1367,19 @@ void btsnd_hcic_vendor_spec_cmd(void *buffer, UINT16 opcode, UINT8 len, UINT8 *p
 
     btu_hcif_send_cmd(p);
 }
+
+void btsnd_hcic_write_conn_acc_tout(void *buffer, UINT16 timeout)
+{
+	BT_HDR *p = buffer;
+	UINT8 *pp = (UINT8 *)(p + 1);
+
+	p->len = HCIC_PREAMBLE_SIZE + HCIC_PARAM_SIZE_WRITE_PARAM2;
+	p->offset = 0;
+
+	UINT16_TO_STREAM(pp, HCI_WRITE_CONN_ACCEPT_TOUT);
+	UINT8_TO_STREAM(pp, HCIC_PARAM_SIZE_WRITE_PARAM2);
+
+	UINT16_TO_STREAM(pp, timeout);
+
+	btu_hcif_send_cmd(p);
+}
