@@ -260,3 +260,119 @@ loop_14:
     goto loop_14;
 }
 }
+
+extern "C" {
+
+s32 fn_80024700__Fv(void);
+s32 fn_80035D9C(void);
+s32 fn_80035EA8(s32);
+s32 fn_80035ED8(s32);
+s32 fn_801763E4(s32);
+s32 fn_8017642C(s32, s32);
+s32 fn_80176508(s32);
+s32 fn_801765D0(s32, s32);
+s32 fn_80176CEC(s32, s32, s32, s32, s32);
+extern s32 lbl_8063F170;
+extern s32 lbl_8063F178;
+
+void fn_8016D258() {
+    s32 sp8[8];
+    s32 temp_r3;
+    u8 *temp_r3_2;
+
+    temp_r3 = fn_80035D9C();
+    if (temp_r3 != 0) {
+        lbl_8063F170 = 4;
+        fn_80176C04((s32)(lbl_8063F16C));
+        if ((s32) lbl_8063F178 != (s32) (*(u8 *)((u8 *)(&lbl_8048CDB4) + (0x1B)))) {
+            fn_80176CEC(lbl_8063F16C, fn_80035ED8(temp_r3), 0, 0, 1);
+            lbl_8063F178 = (s32) (*(u8 *)((u8 *)(&lbl_8048CDB4) + (0x1B)));
+        }
+        fn_801763E4((s32) sp8);
+        if (fn_80035EA8(temp_r3) == 0x2D) {
+            temp_r3_2 = (*(u8 **)((u8 *)(temp_r3) + (0x970)));
+            if ((temp_r3_2 != NULL) && ((s32) (*(u8 *)((u8 *)(temp_r3_2) + (6))) == 0)) {
+                fn_80024700__Fv();
+            }
+        }
+        fn_800217CC__FP11Unk8063E970iPv((s32)(fn_8000C7E8__Fv()), (s32)(6), (s32)(0));
+        fn_80176508((s32) sp8);
+        fn_800217CC__FP11Unk8063E970iPv((s32)(fn_8000C7E8__Fv()), (s32)(0), (s32)(0));
+        fn_801765D0((s32) sp8, 1);
+        lbl_8063F170 = 5;
+        fn_8017642C((s32) sp8, -1);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8017BF70(s32, s32, s32);
+
+void fn_8016DC10(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r3;
+
+    var_r3 = fn_8017BF70(arg0, arg1, arg2);
+    while (var_r3 == -1) {
+        sleepCurrentThread__15GSthreadManagerFv((s32)(sInstance__15GSthreadManager));
+        var_r3 = fn_8017BF70(arg0, arg1, arg2);
+    }
+    if (var_r3 == -2) {
+        BattleSystem_SetResultMask((s32)(fn_803AC828()), (s32)(7));
+    }
+}
+}
+
+extern "C" {
+
+s32 allocFromHeap__5GSmemFP12MEMiHeapHeadUl(s32, s32);
+s32 setDefaultGroupID__5GSmemFUs(s32);
+extern s32 lbl_8063F180;
+
+s32 fn_8016DF70(s32 arg0, s32 arg1) {
+    s32 saved_reg_r31;
+    s32 var_r31;
+    s32 temp_r4;
+    s32 temp_r30;
+
+    var_r31 = saved_reg_r31;
+    temp_r4 = lbl_8063F17C + arg1;
+    lbl_8063F17C = temp_r4;
+    if (temp_r4 > (s32) lbl_8063F180) {
+        lbl_8063F180 = temp_r4;
+    }
+    if ((u32) (arg0 + 0x10000) != 0xFFFFU) {
+        var_r31 = setDefaultGroupID__5GSmemFUs(0x64);
+    }
+    temp_r30 = allocFromHeap__5GSmemFP12MEMiHeapHeadUl(gUnkHeap2, arg1);
+    if ((u32) (arg0 + 0x10000) != 0xFFFFU) {
+        setDefaultGroupID__5GSmemFUs((s32) (u16) var_r31);
+    }
+    return temp_r30;
+}
+}
+
+extern "C" {
+
+s32 fn_8016E008(s32 arg0, s32 arg1) {
+    s32 saved_reg_r31;
+    s32 var_r31;
+    s32 temp_r4;
+    s32 temp_r30;
+
+    var_r31 = saved_reg_r31;
+    temp_r4 = lbl_8063F17C + arg1;
+    lbl_8063F17C = temp_r4;
+    if (temp_r4 > (s32) lbl_8063F180) {
+        lbl_8063F180 = temp_r4;
+    }
+    if ((u32) (arg0 + 0x10000) != 0xFFFFU) {
+        var_r31 = setDefaultGroupID__5GSmemFUs((s32)(0x64));
+    }
+    temp_r30 = allocFromHeap__5GSmemFP12MEMiHeapHeadUl((s32)(gUnkHeap2), (s32)(arg1));
+    if ((u32) (arg0 + 0x10000) != 0xFFFFU) {
+        setDefaultGroupID__5GSmemFUs((s32)((s32) (u16) var_r31));
+    }
+    return temp_r30;
+}
+}
