@@ -75,3 +75,38 @@ s32 fn_8007F81C() {
     return (*(s32 *)((u8 *)(&lbl_8047A968) + (0xC))) != (*(s32 *)((u8 *)(&lbl_8047A978) + (0xC)));
 }
 }
+
+extern "C" {
+
+s32 fn_80253E8C(s32, s32, s32, s32);
+s32 fn_80253EB4(s32, s32, s32, s32);
+extern u16 lbl_8063ECB8;
+
+void fn_8007ED44(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C(arg0, arg1, 3, (s32) &sp8);
+    switch (sp8) {
+    case 1:
+        (*(u8 *)((u8 *)(arg1) + (2))) = 0xEF;
+        (*(u8 *)((u8 *)(arg1) + (3))) = 0xEF;
+        (*(u8 *)((u8 *)(arg1) + (4))) = 0xEF;
+        (*(u8 *)((u8 *)(arg1) + (5))) = 0xFF;
+        switch ((s32) lbl_8063ECB8) {                   /* irregular */
+        case 0:
+            fn_80253EB4(arg0, arg1, 2, 0x2E59);
+            return;
+        case 3:
+            fn_80253EB4(arg0, arg1, 2, 0x2E6A);
+            return;
+        case 4:
+            fn_80253EB4(arg0, arg1, 2, 0x2E76);
+            return;
+        case 5:
+            fn_80253EB4(arg0, arg1, 2, 0x2E6F);
+            return;
+        }
+    }
+    return;
+}
+}
