@@ -557,6 +557,25 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
     c = re.search(r"\(10248\) function call '(\w+)\(", err)
     if c:
         return cast_call_arguments(src, c.group(1))
+    e = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\((\d+)\)", err, re.M)
+    if e and e.group(2) in ("10499", "10144"):
+        lines = src.split("\n")
+        i = int(e.group(1)) - first_line
+        if not 0 <= i < len(lines):
+            return None
+        if e.group(2) == "10499":
+            # An integer variable m2c dereferences: make it a pointer
+            for name in re.findall(r"\*\(?(\w+)\)?", lines[i]):
+                d = re.compile(r"^(\s+)(s32|u32) " + re.escape(name) + r";$", re.M)
+                if d.search(src):
+                    return d.sub(lambda m: f"{m.group(1)}{m.group(2)} *{name};", src, count=1)
+            return None
+        # A pointer compared with an integer
+        new = re.sub(r"\b(\w+) (==|!=|<=|>=|<|>) \(u32\)", r"(u32) \1 \2 (u32)", lines[i])
+        if new == lines[i]:
+            return None
+        lines[i] = new
+        return "\n".join(lines)
     m = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\(10209\) illegal implicit conversion from '[^']*' to\s*\n?#?\s*'([^']+)'", err, re.M)
     if m is None:
         return None
