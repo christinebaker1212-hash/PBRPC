@@ -9,8 +9,8 @@ dated. Write facts and next steps, not narration.
 - Target: a matching decomp of Pokémon Battle Revolution, USA (`RPBE01`).
 - Develop on branch `claude/affectionate-faraday-jfatks`; never commit game data.
 - Never make changes to the Moemon Kai repository.
-- Commit and push for every 2% of progress. Next checkpoint: **35.42%** matched,
-  then 37.42%, and so on.
+- Commit and push for every 2% of progress. Next checkpoint: **37.42%** matched (35.50% reached),
+  then 39.42%, and so on.
 - The build must stay byte-identical: `build/RPBE01/main.dol` SHA1
   `b8d70d7500497dc74bed4223260f3c0ac8540c83`. Check before every commit:
   `python3 configure.py --version RPBE01 && ninja && sha1sum build/RPBE01/main.dol`.
