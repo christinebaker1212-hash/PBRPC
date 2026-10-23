@@ -6,7 +6,7 @@ extern "C" {
 
 extern u32 lbl_8063D5BC;
 extern u8 lbl_8063D5B8;
-void fn_80162EDC();
+s32 fn_80162EDC();
 
 void fn_80162B88(void) {}
 void fn_80162B8C(void) {}
@@ -164,5 +164,71 @@ s32 fn_8025E0B0(s32);
 s32 fn_80162F20(void) {
     fn_80162B8C();
     return fn_8025E0B0(fn_8025DFD0());
+}
+}
+
+extern "C" {
+
+s32 fn_8025E158(s32);
+
+s32 fn_80162EDC() {
+    s32 temp_r31;
+
+    temp_r31 = fn_8025E158(fn_8025DFD0());
+    fn_80167A60();
+    return temp_r31;
+}
+}
+
+extern "C" {
+
+s32 createThread__15GSthreadManagerFUlPFPv_PvPvUllUs(s32, s32, s32, s32, s32, s32, s32);
+s32 fn_8016340C(void);
+s32 fn_80163B7C(s32);
+s32 fn_801687C8(s32);
+s32 fn_80168C48(void);
+s32 fn_801694A0(void);
+s32 fn_8025DF80(s32);
+s32 fn_802ED204(s32);
+void fn_8016315C(void);
+extern s32 sInstance__15GSthreadManager;
+
+void fn_80162F48(s32 arg0) {
+    fn_8016340C();
+    fn_802ED204(0);
+    fn_8025DFD0();
+    fn_8025DF80(arg0);
+    fn_80163B7C(arg0);
+    fn_80167A60();
+    fn_80168C48();
+    fn_801694A0();
+    fn_801687C8(0x200);
+    createThread__15GSthreadManagerFUlPFPv_PvPvUllUs(sInstance__15GSthreadManager, 0x1770, (s32) &fn_8016315C, 0, 0x4000, 8, 1);
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8041F178;
+
+void fn_80163000(s32 arg0) {
+    if (fn_80009838() == 0) {
+        fn_80163674();
+        ((s32 (*)(s32, s32))fn_80162D6C)((s32) &lbl_8041F178, 4);
+        lbl_8063F048 = 4;
+        lbl_8063F050 = 1;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8016304C() {
+    if (fn_80009838() == 0) {
+        fn_80163674();
+        ((s32 (*)(s32, s32))fn_80162D6C)((s32) &lbl_8041F178, 1);
+        lbl_8063F048 = 4;
+        lbl_8063F050 = 2;
+    }
 }
 }

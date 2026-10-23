@@ -80,3 +80,29 @@ void fn_8004D814(void) {
     }
 }
 }
+
+extern "C" {
+
+s32 __construct_array(s32, s32, s32, s32, s32);
+s32 fn_8004D904(s32);
+s32 fn_8004E9F0(s32);
+s32 fn_8004F0BC(s32);
+s32 fn_8004F12C(s32);
+void fn_800478E4(void);
+void fn_80047908(void);
+void fn_80048728(void);
+void fn_80048748(void);
+void fn_8004DE88(void);
+void fn_8004DEF8(void);
+
+s32 fn_8004D85C(s32 arg0) {
+    __construct_array(arg0, (s32) &fn_80048728, (s32) &fn_80048748, 0x9C, 0x30);
+    __construct_array(arg0 + 0x1D40, (s32) &fn_800478E4, (s32) &fn_80047908, 0x38, 0x30);
+    __construct_array(arg0 + 0x27C0, (s32) &fn_8004DE88, (s32) &fn_8004DEF8, 0x68, 0x20);
+    fn_8004E9F0(arg0 + 0x34C0);
+    fn_8004F0BC(arg0 + 0x3510);
+    fn_8004F12C(arg0 + 0x3510);
+    fn_8004D904(arg0);
+    return arg0;
+}
+}
