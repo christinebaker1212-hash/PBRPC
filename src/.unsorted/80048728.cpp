@@ -25,11 +25,11 @@ void fn_80048728(u8 *arg0) {
 extern "C" {
 
 s32 __dl__FPv(s32);
-s32 fn_8004879C(void);
+void fn_8004879C(u8 *arg0);
 
 s32 fn_80048748(s32 arg0, s32 arg1) {
     if (arg0 != 0) {
-        fn_8004879C();
+        ((s32 (*)(void))fn_8004879C)();
         if (arg1 > 0) {
             __dl__FPv(arg0);
         }
@@ -203,5 +203,41 @@ s32 fn_80048908(u8 *arg0, s32 arg1, s32 arg2) {
     (*(s32 *)((u8 *)(arg0) + (0x8C))) = arg1;
     (*(s32 *)((u8 *)(arg0) + (0x90))) = arg2;
     return temp_r31;
+}
+}
+
+extern "C" {
+
+s32 fn_80048CD8(s32, s32);
+
+void fn_8004879C(u8 *arg0) {
+    s32 temp_r3;
+    s32 temp_r4;
+    s32 var_r31;
+    u32 var_r30;
+
+    if (((u8 *) (*(u8 **)((u8 *)(arg0) + (0x94))) != NULL) && ((s32) (*(s32 *)((u8 *)(arg0) + (0x98))) != 0)) {
+        var_r30 = 0U;
+        var_r31 = 0;
+        while (var_r30 < (u32) (*(u32 *)((u8 *)((*(u8 **)((u8 *)(arg0) + (0x94)))) + (0x10)))) {
+            temp_r4 = (*(s32 *)((u8 *)(((*(s32 *)((u8 *)(arg0) + (0x98))) + var_r31)) + (0x10)));
+            if (temp_r4 != 0) {
+                fn_80048CD8((s32) arg0, temp_r4);
+            }
+            var_r31 += 0x20;
+            var_r30 += 1;
+        }
+    }
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (1))) != 0) {
+        temp_r3 = (*(s32 *)((u8 *)(arg0) + (4)));
+        if (temp_r3 != 0) {
+            free__5GSmemFPv((s32)(temp_r3));
+            (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+        }
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x98))) = 0;
+    (*(u8 **)((u8 *)(arg0) + (0x94))) = NULL;
+    (*(s8 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x88))) = 0;
 }
 }
