@@ -263,3 +263,57 @@ s32 fn_800C4CF8(s32 arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+u32 fn_800BA7EC(u32 arg0) {
+    switch (arg0) {
+    case 0:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x350))) >> 0xCU) & 0xF;
+    case 1:
+        return (u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x350))) >> 0x18U;
+    case 2:
+        return (u32) (u8) ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x350))) >> 0x10U);
+    case 3:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x350))) >> 5U) & 0x7F;
+    case 4:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x350))) >> 1U) & 0xF;
+    case 6:
+        return (*(u32 *)((u8 *)(lbl_8063EED8) + (0x350))) & 1;
+    case 7:
+        return (u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 0x1CU;
+    case 8:
+        return (u32) (u8) ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 0x14U);
+    case 9:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 0xFU) & 0x1F;
+    case 5:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 0xCU) & 7;
+    case 11:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 6U) & 0x3F;
+    case 12:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 3U) & 7;
+    case 10:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x354))) >> 2U) & 1;
+    case 13:
+        return (*(u32 *)((u8 *)(lbl_8063EED8) + (0x35C)));
+    case 14:
+        return (u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x358))) >> 0x1DU;
+    case 15:
+        return (u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) >> 0x1AU;
+    case 16:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) >> 0x14U) & 0x3F;
+    case 18:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) >> 0xEU) & 0x3F;
+    case 19:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) >> 8U) & 0x3F;
+    case 20:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) >> 3U) & 0x1F;
+    case 17:
+        return ((u32) (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) >> 2U) & 1;
+    case 21:
+        return (*(u32 *)((u8 *)(lbl_8063EED8) + (0x360))) & 3;
+    default:
+        return -1U;
+    }
+}
+}
