@@ -80,7 +80,7 @@ void fn_802613A4(u8 *arg0) {
 extern "C" {
 
 void fn_802625D0(u8 *arg0, s32 arg1);
-s32 fn_802627A0(void);
+void fn_802627A0(s32 arg0);
 s32 fn_80262B00(void);
 s32 fn_80262B04(void);
 
@@ -104,7 +104,7 @@ void fn_802615DC(u8 *arg0) {
         (*(s32 *)((u8 *)(arg0) + (0xFB4))) = (s32) (temp_r4 + 1);
         return;
     case 4:
-        fn_802627A0();
+        ((s32 (*)(void))fn_802627A0)();
         fn_802625D0((u8 *)(arg0), (s32)(3));
         return;
     }
@@ -444,5 +444,87 @@ s32 fn_80261A64(u8 *arg0) {
         var_r30 += 1;
     }
     return var_r31;
+}
+}
+
+extern "C" {
+
+struct VT_fn_802623D0_0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual s32 v13(void); };
+
+s32 fn_802623D0(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0xFC4))) == 0) {
+        return -1;
+    }
+    ((VT_fn_802623D0_0 *)(arg0))->v13();
+    (*(s32 *)((u8 *)(arg0) + (0xFC4))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xFDC))) = 1;
+    (*(s32 *)((u8 *)(arg0) + (0xFE0))) = 1;
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8025F0E8(void);
+
+void fn_802627A0(s32 arg0) {
+    fn_8025F0E8();
+    fn_8025EE18((s32)(arg0));
+}
+}
+
+extern "C" {
+
+s32 fn_8025ECF8(u8 **, s32, u32, s32, s32);
+struct VT_fn_802628A0_0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual s32 v8(void); };
+struct VT_fn_802628A0_1 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual u16 v19(void); };
+struct VT_fn_802628A0_2 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual s32 v20(s32); };
+
+s32 fn_802628A0(u8 **arg0, s32 arg1, u32 arg2, s32 arg3) {
+    s32 temp_r3;
+    u32 var_r30;
+
+    var_r30 = arg2;
+    if (((VT_fn_802628A0_0 *)(arg0))->v8() == 0) {
+        return -1;
+    }
+    if (var_r30 > ((VT_fn_802628A0_1 *)(arg0))->v19()) {
+        return -1;
+    }
+    if (((VT_fn_802628A0_2 *)(arg0))->v20((s32)(arg3)) == 0) {
+        return -1;
+    }
+    temp_r3 = fn_8025ECF8(arg0, arg1, var_r30, 0, arg3);
+    if (temp_r3 < 0) {
+        var_r30 = (u32) temp_r3;
+    }
+    return (s32) var_r30;
+}
+}
+
+extern "C" {
+
+s32 fn_8025B9FC(s32);
+struct VT_fn_80262984_0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual s32 v8(void); };
+struct VT_fn_80262984_1 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15(); virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19(); virtual s32 v20(s32); };
+
+s32 fn_80262984(u8 *arg0, s32 arg1) {
+    u16 temp_r4;
+    s32 temp_r5;
+    s32 temp_r3;
+
+    if (((VT_fn_80262984_0 *)(arg0))->v8() == 0) {
+        return -1;
+    }
+    if (((VT_fn_80262984_1 *)(arg0))->v20((s32)(arg1)) == 0) {
+        return -1;
+    }
+    temp_r3 = fn_8025B9FC(arg1);
+    temp_r4 = (*(u16 *)((u8 *)(arg0) + (0xF08)));
+    temp_r5 = 1 << arg1;
+    if (temp_r4 & temp_r5) {
+        (*(u16 *)((u8 *)(arg0) + (0xF08))) = (u16) (temp_r4 & ~temp_r5);
+    }
+    return temp_r3;
 }
 }
