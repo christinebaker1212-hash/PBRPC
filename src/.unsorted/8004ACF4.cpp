@@ -336,3 +336,37 @@ void fn_8004C798(u8 *arg0) {
     fn_8004C7E4(arg0);
 }
 }
+
+extern "C" {
+
+s32 fn_801F611C(s32, s32);
+
+void fn_8004B998(s8 *arg0) {
+    s32 temp_r3;
+
+    *arg0 = 0;
+    fn_80050388((u8 *)((s32) (arg0 + 0x1C)));
+    temp_r3 = ((s32)fn_8004B1E4((EffBase *)((s32) arg0)));
+    if (temp_r3 != 0) {
+        fn_801F611C(temp_r3, 0);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80050BE0(s32);
+s32 fn_801F63C4(s32, s32);
+
+void fn_8004C910(u8 *arg0) {
+    s32 temp_r3;
+
+    (*(s8 *)((u8 *)(arg0) + (0))) = 0;
+    fn_80050BE0((s32) (arg0 + 0x40));
+    fn_80050388((u8 *)((s32) (arg0 + 0x1C)));
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0xB4)));
+    if (temp_r3 != 0) {
+        fn_801F63C4(temp_r3, 1);
+    }
+}
+}
