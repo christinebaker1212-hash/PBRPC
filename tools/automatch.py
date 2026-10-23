@@ -138,7 +138,12 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
     m = re.search(r"^\.fn " + re.escape(fn) + r",.*?^\.endfn " + re.escape(fn) + r"$", asm_text, re.S | re.M)
     if not m:
         return None
-    text = re.sub(r"\bcror (eq|2), (lt|gt|0|1), (eq|2)$", lambda c: "cror 2, " + {"lt": "0", "gt": "1"}.get(c.group(2), c.group(2)) + ", 2", m.group(0), flags=re.M)
+    text = re.sub(
+        r"\bcror (?:eq|2|0x2), (lt|gt|0|1|0x0|0x1), (?:eq|2|0x2)$",
+        lambda c: "cror 2, " + {"lt": "0", "gt": "1", "0x0": "0", "0x1": "1"}.get(c.group(1), c.group(1)) + ", 2",
+        m.group(0),
+        flags=re.M,
+    )
     # A tail call before the end of the function: m2c only follows one in
     # last position
     lines = text.split("\n")
@@ -147,7 +152,19 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
         t = re.match(r"^(/\*.*?\*/\s*)b ([A-Za-z_][\w@$]*)$", l)
         if t:
             lines[i] = f"{t.group(1)}bl {t.group(2)}\n{t.group(1)}blr"
-    text = "\n".join(lines)
+    # m2c matches fcmpo + cror only when adjacent; the scheduler may put an
+    # instruction between them
+    instr = lambda l: re.sub(r"^/\*.*?\*/\s*", "", l).strip()
+    for i, l in enumerate(lines):
+        if instr(l).startswith("cror ") and i > 1 and not instr(lines[i - 1]).startswith("fcmp"):
+            for k in range(i - 1, max(i - 4, 0), -1):
+                t = instr(lines[k])
+                if t.startswith("fcmp"):
+                    lines.insert(k + 1, lines.pop(i))
+                    break
+                if t.endswith(":") or t.startswith(("b", "cmp", "cr", "mtcr", "mfcr")) or re.match(r"^\w+\. ", t):
+                    break
+    text = "\n".join(cr_to_cr0(lines))
     tables = ""
     for jt in sorted(set(re.findall(r"\b(jumptable_\w+)@ha", text))):
         entries = JUMP_TABLES().get(jt)
@@ -164,6 +181,41 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
     path = tmp / "fn.s"
     path.write_text(".text\n" + text + "\n" + tables)
     return path
+
+
+def cr_to_cr0(lines: List[str]) -> List[str]:
+    """m2c only supports compares into cr0: a compare into another field is
+    moved to just before the branch that reads it, as a compare into cr0."""
+    instr = lambda l: re.sub(r"^/\*.*?\*/\s*", "", l).strip()
+    i = 0
+    while i < len(lines):
+        m = re.match(r"^(cmp\w*) (cr[1-7]), (r\d+), (.+)$", instr(lines[i]))
+        if not m:
+            i += 1
+            continue
+        op, cr, reg, rest = m.groups()
+        j, ok = i + 1, True
+        while j < len(lines):
+            t = instr(lines[j])
+            if re.search(r"\b" + cr + r"\b", t):
+                break
+            first = re.match(r"^(\w+)\.? (r\d+)", t)
+            if first and first.group(2) == reg and not first.group(1).startswith(("st", "cmp")) or re.match(r"^bl ", t) and reg in ("r0",) + tuple(f"r{k}" for k in range(3, 13)):
+                ok = False
+                break
+            j += 1
+        if not ok or j >= len(lines):
+            i += 1
+            continue
+        b = re.match(r"^(b\w+) " + cr + r", (\S+)$", instr(lines[j]))
+        nxt = next((instr(l) for l in lines[j + 1 :] if instr(l) and not instr(l).endswith(":")), "")
+        if not b or re.match(r"^b(?:eq|ne|lt|gt|le|ge)\w* (?!cr)", nxt):
+            i += 1
+            continue
+        prefix = re.match(r"^(/\*.*?\*/\s*)?", lines[j]).group(0)
+        lines[j] = f"{prefix}{op} {reg}, {rest}\n{prefix}{b.group(1)} {b.group(2)}"
+        del lines[i]
+    return lines
 
 
 _JUMP_TABLES: Optional[Dict[str, List[int]]] = None
@@ -248,9 +300,92 @@ KNOWN = {
     "DCFlushRange": ("void DCFlushRange(u8 *, u32);", 2),
     "DCStoreRange": ("void DCStoreRange(u8 *, u32);", 2),
     "DCInvalidateRange": ("void DCInvalidateRange(u8 *, u32);", 2),
+    "PSMTXConcat": ("void PSMTXConcat(u8 *, u8 *, u8 *);", 3),
+    "PSMTXConcatArray": ("void PSMTXConcatArray(u8 *, u8 *, u8 *, u32);", 4),
+    "PSMTXCopy": ("void PSMTXCopy(u8 *, u8 *);", 2),
+    "PSMTXIdentity": ("void PSMTXIdentity(u8 *);", 1),
+    "PSMTXInvXpose": ("u32 PSMTXInvXpose(u8 *, u8 *);", 2),
+    "PSMTXInverse": ("u32 PSMTXInverse(u8 *, u8 *);", 2),
+    "PSMTXMultVec": ("void PSMTXMultVec(u8 *, u8 *, u8 *);", 3),
+    "PSMTXMultVecSR": ("void PSMTXMultVecSR(u8 *, u8 *, u8 *);", 3),
+    "PSMTXQuat": ("void PSMTXQuat(u8 *, u8 *);", 2),
+    "PSMTXRotAxisRad": ("void PSMTXRotAxisRad(u8 *, u8 *, f32);", 3),
+    "PSMTXRotRad": ("void PSMTXRotRad(u8 *, s8, f32);", 3),
+    "PSMTXRotTrig": ("void PSMTXRotTrig(u8 *, s8, f32, f32);", 4),
+    "PSMTXScale": ("void PSMTXScale(u8 *, f32, f32, f32);", 4),
+    "PSMTXScaleApply": ("void PSMTXScaleApply(u8 *, u8 *, f32, f32, f32);", 5),
+    "PSMTXTrans": ("void PSMTXTrans(u8 *, f32, f32, f32);", 4),
+    "PSMTXTransApply": ("void PSMTXTransApply(u8 *, u8 *, f32, f32, f32);", 5),
+    "PSMTXTranspose": ("void PSMTXTranspose(u8 *, u8 *);", 2),
+    "PSVECAdd": ("void PSVECAdd(u8 *, u8 *, u8 *);", 3),
+    "PSVECCrossProduct": ("void PSVECCrossProduct(u8 *, u8 *, u8 *);", 3),
+    "PSVECDotProduct": ("f32 PSVECDotProduct(u8 *, u8 *);", 2),
+    "PSVECMag": ("f32 PSVECMag(u8 *);", 1),
+    "PSVECNormalize": ("void PSVECNormalize(u8 *, u8 *);", 2),
+    "PSVECScale": ("void PSVECScale(u8 *, u8 *, f32);", 3),
+    "PSVECSquareDistance": ("f32 PSVECSquareDistance(u8 *, u8 *);", 2),
+    "PSVECSquareMag": ("f32 PSVECSquareMag(u8 *);", 1),
+    "PSVECSubtract": ("void PSVECSubtract(u8 *, u8 *, u8 *);", 3),
     "OSGetTime": ("s64 OSGetTime(void);", 0),
     "OSGetTick": ("u32 OSGetTick(void);", 0),
 }
+
+
+def c_type(t: str) -> Optional[str]:
+    """A header type as one of the basic types the generated code uses."""
+    t = re.sub(r"\b(const|volatile|struct|union|enum|static|inline|extern|register)\b", "", t).strip()
+    # Structs passed by value go by address
+    if "*" in t or "[" in t or re.search(r"\b(Mtx|Mtx44|Mtx23|MtxPtr|ROMtx|GXColor|GXColorS10)\b", t):
+        return "u8 *"
+    t = " ".join(t.split())
+    table = {
+        "void": "void", "f32": "f32", "float": "f32", "f64": "f64", "double": "f64",
+        "u8": "u8", "s8": "s8", "char": "s8", "unsigned char": "u8", "signed char": "s8",
+        "u16": "u16", "s16": "s16", "short": "s16", "unsigned short": "u16",
+        "s64": "s64", "u64": "u64", "long long": "s64", "unsigned long long": "u64", "OSTime": "s64", "OSTick": "u32",
+    }
+    if t in table:
+        return table[t]
+    if t in ("u32", "unsigned", "unsigned int", "unsigned long", "size_t", "uintptr_t", "BOOL", "bool", "GXBool") or t.startswith("u"):
+        return "u32"
+    if re.fullmatch(r"\w+", t):
+        return "s32"
+    return None
+
+
+def sdk_prototypes() -> Dict[str, Tuple[str, Optional[int]]]:
+    """Prototypes of the C library functions, from the headers in libs/."""
+    out: Dict[str, Tuple[str, Optional[int]]] = {}
+    proto = re.compile(r"^\s*(?:extern\s+)?([A-Za-z_][\w ]*?[\s\*]+)([A-Za-z_]\w*)\s*\(([^;{()]*)\)\s*;", re.M)
+    for d in ("RVL_SDK", "RevoEX", "MSL_C"):
+        for h in (ROOT / "libs" / d).rglob("*.h"):
+            for m in proto.finditer(h.read_text(encoding="latin-1")):
+                ret, name, params = c_type(m.group(1)), m.group(2), m.group(3).strip()
+                if ret is None or name in out or m.group(1).strip() in ("return", "typedef"):
+                    continue
+                if params in ("", "void"):
+                    out[name] = (f"{ret} {name}(void);", 0)
+                    continue
+                types = []
+                for prm in params.split(","):
+                    prm = prm.strip()
+                    if prm == "...":
+                        types.append("...")
+                        continue
+                    # Drop the parameter name, if there is one
+                    q = re.match(r"^(.*?[\s\*])\s*([A-Za-z_]\w*)\s*(\[[^\]]*\])?$", prm)
+                    t = c_type(q.group(1) + ("*" if q.group(3) else "")) if q and q.group(1).strip() not in ("const", "unsigned", "signed", "struct") else c_type(prm)
+                    if t is None or t == "void":
+                        break
+                    types.append(t)
+                else:
+                    variadic = "..." in types
+                    out[name] = (f"{ret} {name}({', '.join(types)});", None if variadic else len(types))
+    return out
+
+
+for _name, _proto in sdk_prototypes().items():
+    KNOWN.setdefault(_name, _proto)
 
 
 def known_prototypes(src: str) -> str:
