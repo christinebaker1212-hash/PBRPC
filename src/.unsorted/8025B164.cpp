@@ -59,3 +59,17 @@ s32 fn_8025B680(s32 arg0, s32 arg1) {
     return OSSendMessage((s32)(arg0 + 0x33C), (s32)(arg1), (s32)(1));
 }
 }
+
+extern "C" {
+
+s32 resumeThread__14GSthreadHandleFv(s32);
+
+void fn_8025B200(u8 *arg0) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x204)));
+    if (temp_r3 != 0) {
+        resumeThread__14GSthreadHandleFv(temp_r3);
+    }
+}
+}
