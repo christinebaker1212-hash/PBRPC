@@ -98,3 +98,90 @@ void fn_801FE14C(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 __dt__14GSrenderModuleFv(s32, s32);
+s32 fn_8023645C__FPv(s32);
+s32 fn_8023CA6C(s32);
+s32 free__5GSmemFPv(s32);
+__declspec(section ".data") extern s32 lbl_80423768;
+extern s32 lbl_8063F410;
+
+u8 *fn_801FB734(u8 *arg0, s32 arg1) {
+    s32 temp_r0;
+    s32 temp_r3;
+    s32 temp_r3_2;
+    s32 temp_r3_3;
+    s32 temp_r3_4;
+    u8 *temp_r3_5;
+
+    if (arg0 != NULL) {
+        temp_r0 = (*(s32 *)((u8 *)(arg0) + (0x420)));
+        (*(s32 **)((u8 *)(arg0) + (0xC))) = &lbl_80423768;
+        if (temp_r0 != 0) {
+            fn_8023645C__FPv(temp_r0);
+        }
+        temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x41C)));
+        if (temp_r3 != 0) {
+            fn_8023645C__FPv(temp_r3);
+        }
+        temp_r3_2 = (*(s32 *)((u8 *)(arg0) + (0x414)));
+        if (temp_r3_2 != 0) {
+            fn_8023645C__FPv(temp_r3_2);
+        }
+        temp_r3_3 = (*(s32 *)((u8 *)(arg0) + (0x418)));
+        if (temp_r3_3 != 0) {
+            fn_8023645C__FPv(temp_r3_3);
+        }
+        temp_r3_4 = (*(s32 *)((u8 *)(arg0) + (0x3EC)));
+        if (temp_r3_4 != 0) {
+            free__5GSmemFPv(temp_r3_4);
+        }
+        fn_8023CA6C((s32) (arg0 + 0x18));
+        temp_r3_5 = arg0 + 0x18;
+        lbl_8063F410 = 0;
+        if (temp_r3_5 != NULL) {
+            fn_8023CA6C((s32) temp_r3_5);
+        }
+        __dt__14GSrenderModuleFv((s32) arg0, 0);
+        if (arg1 > 0) {
+            __dl__FPv((s32) arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8023B420__14GSrenderTargetFUl(s32, s32);
+
+void fn_801FEF68(u8 *arg0) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+    u32 var_r31;
+
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (0x468))) != 0) {
+        if ((s32) (*(u8 *)((u8 *)(arg0) + (0x467))) != 0) {
+            var_r31 = (*(u32 *)((u8 *)(arg0) + (0x10)));
+        } else {
+            var_r31 = (*(u32 *)((u8 *)(arg0) + (0x14)));
+        }
+        temp_r3 = ((s32)findTarget__14GSrenderTargetFl((s32)((s32) (u8) (var_r31 >> 0x10U))));
+        if (temp_r3 != 0) {
+            fn_8023B420__14GSrenderTargetFUl(temp_r3, (s32) var_r31);
+        }
+        temp_r3_2 = (*(s32 *)((u8 *)(arg0) + (0x498)));
+        (*(u8 *)((u8 *)(arg0) + (0x468))) = 0U;
+        (*(s8 *)((u8 *)(arg0) + (0x484))) = 0;
+        (*(s8 *)((u8 *)(arg0) + (0x485))) = 0;
+        (*(s16 *)((u8 *)(arg0) + (0x464))) = 0;
+        if (temp_r3_2 != 0) {
+            fn_8023645C__FPv((s32)(temp_r3_2));
+            (*(s32 *)((u8 *)(arg0) + (0x498))) = 0;
+        }
+    }
+}
+}
