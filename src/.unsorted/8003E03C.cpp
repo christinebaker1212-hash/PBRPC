@@ -85,7 +85,7 @@ extern "C" {
 
 s32 __dl__FPv(s32);
 s32 __nw__FUl(s32);
-s32 fn_8003E164(s32);
+u8 *fn_8003E164(u8 *arg0);
 s32 fn_8023EB58(s32, s32, s32, s32, s32);
 extern s32 lbl_8063F778;
 
@@ -97,7 +97,7 @@ void fn_8003E03C() {
     }
     var_r3 = __nw__FUl(0x90);
     if (var_r3 != 0) {
-        var_r3 = fn_8003E164(var_r3);
+        var_r3 = ((s32)fn_8003E164((u8 *)(var_r3)));
     }
     lbl_8063EA80 = var_r3;
     fn_8023EB58(lbl_8063F778, (s32) &fn_8003E124, (s32) &fn_8003E158, 3, 0xC);
@@ -175,5 +175,19 @@ void fn_8003E4B8(u8 *arg0, f32 farg0) {
         var_r30 += 1;
         var_r31 += 4;
     } while (var_r30 < 0x20);
+}
+}
+
+extern "C" {
+
+s32 memset(s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_8063CE34;
+
+u8 *fn_8003E164(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    memset((s32)(arg0 + 0x10), (s32)(0), (s32)(0x80U));
+    (*(s32 **)((u8 *)(arg0) + (4))) = &lbl_8063CE34;
+    (*(u8 **)((u8 *)(arg0) + (8))) = (u8 *) ((u8 *)(u8 *)&lbl_8063CE34 + 0x10);
+    return arg0;
 }
 }
