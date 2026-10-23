@@ -40,3 +40,14 @@ s32 fn_8026FC18(s32 arg0) {
     return OSWakeupThread(arg0);
 }
 }
+
+extern "C" {
+
+extern s32 lbl_8063FAD0;
+extern s32 lbl_8063FAD4;
+
+void OSGetSaveRegion(s32 *arg0, s32 *arg1) {
+    *arg0 = lbl_8063FAD0;
+    *arg1 = lbl_8063FAD4;
+}
+}
