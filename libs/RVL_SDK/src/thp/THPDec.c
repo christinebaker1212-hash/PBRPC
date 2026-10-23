@@ -7,6 +7,8 @@
 #define __REGISTER register
 #endif
 
+const char* __THPVersion = "<< RVL_SDK - THP \trelease build: Nov 30 2006 03:09:42 (0x4199_60831) >>";
+
 static u8 THPStatistics[1120] ATTRIBUTE_ALIGN(32);
 
 static THPHuffmanTab* Ydchuff ATTRIBUTE_ALIGN(32);
@@ -511,17 +513,17 @@ static void __THPDecompressYUV(void* tileY, void* tileU, void* tileV) {
     if (__THPInfo->xPixelSize == 512 && targetY == 448) {
         while (currentY < targetY) {
             __THPDecompressiMCURow512x448();
-            U16_ADD(currentY, 16);
+            currentY += 16;
         }
     } else if (__THPInfo->xPixelSize == 640 && targetY == 480) {
         while (currentY < targetY) {
             __THPDecompressiMCURow640x480();
-            U16_ADD(currentY, 16);
+            currentY += 16;
         }
     } else {
         while (currentY < targetY) {
             __THPDecompressiMCURowNxN();
-            U16_ADD(currentY, 16);
+            currentY += 16;
         }
     }
 
@@ -2376,6 +2378,9 @@ static void __THPHuffDecodeDCTCompV(__REGISTER THPFileInfo* info, THPCoeff* bloc
 
 BOOL THPInit(void) {
     u8* base;
+
+    OSRegisterVersion(__THPVersion);
+
     base = (u8*)(0xE000 << 16);
 
     __THPLCWork512[0] = base;
@@ -2387,11 +2392,10 @@ BOOL THPInit(void) {
 
     base = (u8*)(0xE000 << 16);
     __THPLCWork640[0] = base;
-    base += 0x2800;
+    base += 0x2A00;
     __THPLCWork640[1] = base;
-    base += 0xA00;
+    base += 0xA80;
     __THPLCWork640[2] = base;
-    base += 0xA00;
 
     OSInitFastCast();
 
