@@ -310,9 +310,17 @@ def declare_context(src: str) -> str:
     return "".join(e + "\n" for e in extra) + src
 
 
-def m2c(m2c_path: Path, asm: Path, fn: str) -> List[str]:
+def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[str]:
     """m2c's output as plain C, as is and with known library prototypes."""
-    ctx = ["--context", str(CONTEXT_FILE)] if CONTEXT else []
+    ctx = []
+    if CONTEXT and use_context:
+        # The context's guess at fn's own prototype types every parameter as
+        # s32, which keeps m2c from seeing pointers; let m2c infer fn's own.
+        own = asm.parent / "context.c"
+        own.write_text(
+            "".join(l + "\n" for l in CONTEXT_FILE.read_text().splitlines() if not re.search(r"\b" + re.escape(fn) + r"\(", l))
+        )
+        ctx = ["--context", str(own)]
     try:
         out = subprocess.run(
             [sys.executable, str(m2c_path), "-t", "ppc-mwcc-c", "--valid-syntax", *ctx, "-f", fn, str(asm)],
@@ -325,7 +333,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str) -> List[str]:
     if out.returncode != 0 or "M2C_ERROR" in out.stdout or "/* unknown instruction" in out.stdout:
         return []
     variants = []
-    text = declare_context(out.stdout) if CONTEXT else out.stdout
+    text = declare_context(out.stdout) if CONTEXT and use_context else out.stdout
     for known in (False, True):
         v = expand_macros(text, known)
         if v is not None and v not in variants:
@@ -583,6 +591,8 @@ def main() -> None:
                 continue
             fn_asm = extract_fn(asm_text, name, tmp)
             variants = m2c(args.m2c, fn_asm, name) if fn_asm else []
+            if fn_asm:
+                variants += [v for v in m2c(args.m2c, fn_asm, name, use_context=False) if v not in variants]
             if not variants:
                 print(f"  {name}: m2c failed", flush=True)
                 continue
