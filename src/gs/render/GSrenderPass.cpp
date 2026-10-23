@@ -114,3 +114,15 @@ u8 *fn_80236C9C(u8 *arg0) {
     return arg0;
 }
 }
+
+extern "C" {
+
+struct S_lbl_8063F6F8 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063F6F8 lbl_8063F6F8;
+
+void fn_80237774() {
+    lbl_8063F6F8.f_0 = 1;
+    lbl_8063F6F8.f_2 = 4;
+    lbl_8063F6F8.f_4 = 0;
+}
+}
