@@ -378,7 +378,7 @@ s32 fn_800081A8(s32 arg0, s32 arg1, s32 arg2) {
 
 extern "C" {
 
-void fn_80008260(void);
+s32 fn_80008260(s32 arg0, s32 arg1, s32 arg2);
 
 s32 fn_800087A0(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_r31;
@@ -539,5 +539,296 @@ extern "C" {
 void fn_80009774(s32 arg0, s32 arg1) {
     ((s32 (*)(s32, s32))unlockCacheEntry__7GScacheFUlUl)(arg0, arg1);
     getCachedFile__7GScacheFUlUl((u32)(arg0), (s32)(arg1));
+}
+}
+
+extern "C" {
+
+s32 fn_8038F804(s32);
+s32 fn_8038FAA4(s32);
+s32 fn_8038FCDC(s32);
+s32 fn_80390324(s32);
+s32 fn_803905F8(s32);
+s32 fn_803908B4(s32);
+s32 fn_80390BC4(s32);
+s32 fn_80391114(s32);
+s32 fn_803915EC(s32);
+s32 fn_80391824(s32);
+s32 fn_80392234(s32);
+s32 fn_803924F8(s32);
+s32 fn_803927B8(s32);
+s32 fn_80392AD0(s32);
+s32 fn_80395190(s32);
+s32 fn_80395A20(s32);
+s32 fn_80395D7C(s32);
+s32 fn_8039633C(s32);
+s32 fn_80396634(s32);
+s32 fn_803969C4(s32);
+s32 fn_80396C98(s32);
+s32 fn_803970A4(s32);
+s32 fn_8039754C(s32);
+s32 fn_80397874(s32);
+s32 fn_80397E10(s32);
+s32 fn_80398578(s32);
+s32 fn_803988B4(s32);
+s32 fn_80398BA4(s32);
+s32 fn_80398EFC(s32);
+s32 fn_803994BC(s32);
+s32 fn_803997B0(s32);
+s32 fn_80399BF0(s32);
+s32 fn_80399EAC(s32);
+__declspec(section ".data") extern s32 lbl_8063CE34;
+
+s32 fn_80008260(s32 arg0, s32 arg1, s32 arg2) {
+    switch (arg2) {                                 /* irregular */
+    case 0x800200:
+        fn_80391114((s32) &lbl_8063CE34);
+        break;
+    case 0x7D0200:
+        fn_803908B4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 4));
+        break;
+    case 0x7B0200:
+        fn_8038F804((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 8));
+        break;
+    case 0x7C0200:
+        fn_8038FCDC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0xC));
+        break;
+    case 0x810200:
+        fn_80391824((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x10));
+        break;
+    case 0x820200:
+        fn_80392234((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x14));
+        break;
+    case 0x840200:
+        fn_80392AD0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x18));
+        break;
+    case 0x7F0200:
+        fn_803924F8((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x1C));
+        break;
+    case 0x830200:
+        fn_80390324((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x20));
+        break;
+    case 0x7E0200:
+        fn_803905F8((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x24));
+        break;
+    case 0x850200:
+        fn_80395D7C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x28));
+        break;
+    case 0x860200:
+        fn_80395190((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x2C));
+        break;
+    case 0x870200:
+        fn_80395A20((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x30));
+        break;
+    case 0xBB70200:
+        fn_80390BC4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x34));
+        break;
+    case 0x11830200:
+        fn_8039633C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x38));
+        break;
+    case 0x11C00200:
+        fn_803915EC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x3C));
+        break;
+    case 0x12330200:
+        fn_8038FAA4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x40));
+        break;
+    case 0x12880200:
+        fn_80396634((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x44));
+        break;
+    case 0x12A90200:
+        fn_803927B8((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x48));
+        break;
+    case 0x16410200:
+        fn_803969C4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x4C));
+        break;
+    case 0x1B070200:
+        fn_80396C98((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x50));
+        break;
+    case 0x1BF50200:
+        fn_803970A4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x54));
+        break;
+    case 0x1CE50200:
+        fn_8039754C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x58));
+        break;
+    case 0x1D5A0200:
+        fn_80397874((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x5C));
+        break;
+    case 0x1D9C0200:
+        fn_80397E10((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x60));
+        break;
+    case 0x1D9D0200:
+        fn_80398578((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x64));
+        break;
+    case 0x1DAF0200:
+        fn_803988B4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x68));
+        break;
+    case 0x20A70200:
+        fn_80398BA4((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x6C));
+        break;
+    case 0x21150200:
+        fn_80398EFC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x70));
+        break;
+    case 0x215B0200:
+        fn_803994BC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x74));
+        break;
+    case 0x216E0200:
+        fn_803997B0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x78));
+        break;
+    case 0x23550200:
+        fn_80399BF0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x7C));
+        break;
+    case 0x27CD0200:
+        fn_80399EAC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x80));
+        break;
+    }
+    return 1;
+}
+}
+
+extern "C" {
+
+s32 fn_8038F1CC(s32);
+s32 fn_8038F6A0(s32, s32);
+s32 fn_8038F940(s32, s32);
+s32 fn_8038FB78(s32, s32);
+s32 fn_803901C0(s32, s32);
+s32 fn_80390494(s32, s32);
+s32 fn_80390750(s32, s32);
+s32 fn_80390A60(s32, s32);
+s32 fn_80390FB0(s32, s32);
+s32 fn_80391488(s32, s32);
+s32 fn_803916C0(s32, s32);
+s32 fn_803920D0(s32, s32);
+s32 fn_80392394(s32, s32);
+s32 fn_80392654(s32, s32);
+s32 fn_8039296C(s32, s32);
+s32 fn_8039502C(s32, s32);
+s32 fn_803958BC(s32, s32);
+s32 fn_80395C18(s32, s32);
+s32 fn_803961D8(s32, s32);
+s32 fn_803964D0(s32, s32);
+s32 fn_80396860(s32, s32);
+s32 fn_80396B34(s32, s32);
+s32 fn_80396F40(s32, s32);
+s32 fn_803973E8(s32, s32);
+s32 fn_80397710(s32, s32);
+s32 fn_80397CAC(s32, s32);
+s32 fn_80398414(s32, s32);
+s32 fn_80398750(s32, s32);
+s32 fn_80398A40(s32, s32);
+s32 fn_80398D98(s32, s32);
+s32 fn_80399358(s32, s32);
+s32 fn_8039964C(s32, s32);
+s32 fn_80399A8C(s32, s32);
+s32 fn_80399D48(s32, s32);
+
+s32 fn_80008814(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    ((s32 (*)(s32, s32))unlockCacheEntry__7GScacheFUlUl)(arg0, arg1);
+    temp_r31 = getCachedFile__7GScacheFUlUl((u32)(arg0), (s32)(arg1));
+    switch (arg1) {                                 /* irregular */
+    case 0x800200:
+        fn_80390FB0((s32) &lbl_8063CE34, temp_r31);
+        break;
+    case 0x7D0200:
+        fn_80390750((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 4), temp_r31);
+        break;
+    case 0x7B0200:
+        fn_8038F6A0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 8), temp_r31);
+        break;
+    case 0x7C0200:
+        fn_8038FB78((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0xC), temp_r31);
+        break;
+    case 0x810200:
+        fn_803916C0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x10), temp_r31);
+        break;
+    case 0x820200:
+        fn_803920D0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x14), temp_r31);
+        break;
+    case 0x840200:
+        fn_8039296C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x18), temp_r31);
+        break;
+    case 0x7F0200:
+        fn_80392394((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x1C), temp_r31);
+        break;
+    case 0x830200:
+        fn_803901C0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x20), temp_r31);
+        break;
+    case 0x7E0200:
+        fn_80390494((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x24), temp_r31);
+        break;
+    case 0x850200:
+        fn_80395C18((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x28), temp_r31);
+        break;
+    case 0x860200:
+        fn_8039502C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x2C), temp_r31);
+        break;
+    case 0x870200:
+        fn_803958BC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x30), temp_r31);
+        fn_8038F1CC((s32) &lbl_8063CE34);
+        break;
+    case 0xBB70200:
+        fn_80390A60((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x34), temp_r31);
+        break;
+    case 0x11830200:
+        fn_803961D8((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x38), temp_r31);
+        break;
+    case 0x11C00200:
+        fn_80391488((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x3C), temp_r31);
+        break;
+    case 0x12330200:
+        fn_8038F940((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x40), temp_r31);
+        break;
+    case 0x12880200:
+        fn_803964D0((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x44), temp_r31);
+        break;
+    case 0x12A90200:
+        fn_80392654((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x48), temp_r31);
+        break;
+    case 0x16410200:
+        fn_80396860((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x4C), temp_r31);
+        break;
+    case 0x1B070200:
+        fn_80396B34((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x50), temp_r31);
+        break;
+    case 0x1BF50200:
+        fn_80396F40((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x54), temp_r31);
+        break;
+    case 0x1CE50200:
+        fn_803973E8((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x58), temp_r31);
+        break;
+    case 0x1D5A0200:
+        fn_80397710((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x5C), temp_r31);
+        break;
+    case 0x1D9C0200:
+        fn_80397CAC((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x60), temp_r31);
+        break;
+    case 0x1D9D0200:
+        fn_80398414((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x64), temp_r31);
+        break;
+    case 0x1DAF0200:
+        fn_80398750((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x68), temp_r31);
+        break;
+    case 0x20A70200:
+        fn_80398A40((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x6C), temp_r31);
+        break;
+    case 0x21150200:
+        fn_80398D98((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x70), temp_r31);
+        break;
+    case 0x215B0200:
+        fn_80399358((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x74), temp_r31);
+        break;
+    case 0x216E0200:
+        fn_8039964C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x78), temp_r31);
+        break;
+    case 0x23550200:
+        fn_80399A8C((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x7C), temp_r31);
+        break;
+    case 0x27CD0200:
+        fn_80399D48((s32) ((u8 *)(u8 *)&lbl_8063CE34 + 0x80), temp_r31);
+        break;
+    }
+    return temp_r31;
 }
 }
