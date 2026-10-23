@@ -30,3 +30,21 @@ s32 fn_8017C5D0(void) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 __nw__FUl(s32);
+s32 fn_8017C604(void);
+
+void fn_8017C590(void) {
+    s32 var_r3;
+
+    if ((s32) lbl_8063F238 == 0) {
+        var_r3 = __nw__FUl(0xBC);
+        if (var_r3 != 0) {
+            var_r3 = fn_8017C604();
+        }
+        lbl_8063F238 = var_r3;
+    }
+}
+}

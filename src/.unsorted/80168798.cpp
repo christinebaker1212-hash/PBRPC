@@ -104,13 +104,7 @@ extern "C" {
 s32 fn_80166D20(void);
 s32 fn_80168858(void);
 
-s32 fn_80168900(void) {
 
-    if (fn_80164C6C(0) == 0) {
-        return 0;
-    }
-    return fn_80166D20();
-}
 }
 
 extern "C" {
@@ -186,5 +180,37 @@ s32 fn_8016894C(s32 arg0) {
         lbl_8063F114 = fn_8025DFC0(fn_8025DFD0(), 0x6EC);
     }
     return memcpy(lbl_8063F114, arg0, 0x6EC);
+}
+}
+
+extern "C" {
+
+s32 fn_80168900(void);
+
+s32 fn_80168900(void) {
+    s32 temp_r3;
+
+    if (fn_80168858() == 0) {
+        return 0;
+    }
+    temp_r3 = fn_80164C6C((s32)(0));
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    return ((s32 (*)(s32))fn_80166D20)(temp_r3);
+}
+}
+
+extern "C" {
+
+void fn_80168B64(void) {
+    ((s32 (*)(void))fn_80168B60)();
+}
+}
+
+extern "C" {
+
+void fn_80168B68(void) {
+    ((s32 (*)(void))fn_80168B60)();
 }
 }
