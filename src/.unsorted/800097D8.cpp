@@ -185,19 +185,90 @@ void fn_8000A008(s32 arg0) {
 extern "C" {
 
 s32 __nw__FUl(s32);
-s32 fn_8000994C(s32);
-s32 fn_8000A060(s32);
+u8 *fn_8000994C(u8 *arg0);
+void fn_8000A060(u8 *arg0);
 
 void fn_8000A73C() {
     s32 var_r3;
 
     var_r3 = __nw__FUl(0xD4);
     if (var_r3 != 0) {
-        var_r3 = fn_8000994C(var_r3);
+        var_r3 = ((s32)fn_8000994C((u8 *)(var_r3)));
     }
     (*(s32 (*))&lbl_8063E930) = var_r3;
     if (var_r3 != 0) {
-        fn_8000A060(var_r3);
+        fn_8000A060((u8 *)(var_r3));
     }
+}
+}
+
+extern "C" {
+
+void fn_80009DC8(u8 *arg0);
+s32 memset(s32, s32, s32);
+
+u8 *fn_8000994C(u8 *arg0) {
+    (*(s8 *)((u8 *)(arg0) + (3))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (1))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (2))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (5))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (6))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (8))) = 1;
+    (*(s8 *)((u8 *)(arg0) + (7))) = 0;
+    (*(f32 *)((u8 *)(arg0) + (0x18))) = (f32) (1.0f);
+    (*(s8 *)((u8 *)(arg0) + (0xD))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0xE))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x14))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0xC))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xD0))) = 0;
+    memset((s32)(arg0 + 0x20), (s32)(0), (s32)(0x40U));
+    memset((s32)(arg0 + 0x60), (s32)(0), (s32)(0x40U));
+    fn_80009DC8((u8 *)((s32) arg0));
+    return arg0;
+}
+}
+
+extern "C" {
+
+void fn_80009DC8(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0x6C))) = 0;
+    (*(f32 *)((u8 *)(arg0) + (0x64))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (0x68))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (0x74))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (0x78))) = (f32) (0.0f);
+    (*(s32 *)((u8 *)(arg0) + (0x7C))) = 0;
+    (*(f32 *)((u8 *)(arg0) + (0x84))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (0x88))) = (f32) (0.0f);
+    (*(s32 *)((u8 *)(arg0) + (0x8C))) = 0;
+    (*(f32 *)((u8 *)(arg0) + (0x94))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (0x98))) = (f32) (0.0f);
+    (*(s32 *)((u8 *)(arg0) + (0x9C))) = 0;
+}
+}
+
+extern "C" {
+
+void HBMCreate(u8 *);
+void HBMSetAdjustFlag(u32);
+void MEMInitAllocatorForExpHeap(u8 *, s32, s32);
+s32 fn_80009E04(s32, s32);
+extern u8 *sInstance__8GSrender;
+
+void fn_8000A060(u8 *arg0) {
+    if ((s32) (*(u8 *)((u8 *)(sInstance__8GSrender) + (0x7A))) != 0) {
+        (*(u8 *)((u8 *)(arg0) + (2))) = 1U;
+    }
+    fn_80009E04((s32) arg0, (s32) (arg0 + 0x20));
+    MEMInitAllocatorForExpHeap(arg0 + 0xA0, gUnkHeap2, 0x20);
+    (*(s32 *)((u8 *)(arg0) + (0x30))) = 0;
+    (*(u8 **)((u8 *)(arg0) + (0x5C))) = (u8 *) (arg0 + 0xA0);
+    (*(s32 *)((u8 *)(arg0) + (0x4C))) = 0;
+    HBMCreate(arg0 + 0x20);
+    ((s32 (*)(s32))fn_8000A008)((s32) arg0);
+    HBMSetAdjustFlag((u32) (*(u8 *)((u8 *)(arg0) + (2))));
+    (*(s8 *)((u8 *)(arg0) + (0))) = 1;
 }
 }
