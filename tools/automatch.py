@@ -591,7 +591,7 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
     """Fixes an "illegal implicit conversion" (C++ does not convert between
     integers and pointers as C does) by casting the assigned or returned
     value to the type the compiler wanted."""
-    u = sorted(set(re.findall(r"\(10140\) undefined identifier '(sp[0-9A-F]+(?:_\w+)?)'", err)))
+    u = sorted(set(re.findall(r"\(10140\) undefined identifier '(sp[0-9A-F]+(?:_\w+)?|saved_reg_\w+)'", err)))
     if u:
         # stack temporaries m2c used without declaring them
         d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
@@ -608,6 +608,13 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
         if not 0 <= i < len(lines):
             return None
         if e.group(2) == "10499":
+            # A loaded integer m2c indexes as a pointer: `x = *((*(s32 *)(p)) + (i))`
+            a = re.match(r"^(\s*)(\w+) = \*\(\(\*\(s32 \*\)(.*)\);$", lines[i])
+            if a:
+                d = re.search(r"^\s+([\w ]+?\**) ?" + re.escape(a.group(2)) + r";$", src, re.M)
+                t = d.group(1).strip() if d else "s32"
+                lines[i] = f"{a.group(1)}{a.group(2)} = *({t} *)((*(u8 **){a.group(3)});"
+                return "\n".join(lines)
             # An integer variable m2c dereferences: make it a pointer
             for name in re.findall(r"\*\(?(\w+)\)?", lines[i]):
                 d = re.compile(r"^(\s+)(s32|u32) " + re.escape(name) + r";$", re.M)
@@ -643,7 +650,7 @@ def compile_cpp(edge: Dict[str, str], src: str, m2c_dir: Path, tmp: Path) -> Opt
     """Compiles src; LAST_SOURCE is src with the casts it needed."""
     global LAST_SOURCE
     first_line = PREAMBLE.count("\n") + 2
-    for _ in range(12):
+    for _ in range(20):
         cpp = tmp / "scratch.cpp"
         cpp.write_text(PREAMBLE + f'extern "C" {{\n{src}\n}}\n', encoding="latin-1")
         obj = tmp / "scratch.o"
