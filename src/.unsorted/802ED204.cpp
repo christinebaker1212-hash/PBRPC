@@ -1844,3 +1844,111 @@ s32 fn_802FF800(s32 arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_802F0B14(u8 *, s32 *);
+extern s32 lbl_806401FC;
+extern u8 lbl_80643038;
+
+s32 fn_802F1C1C() {
+    u8 *var_r31;
+    u32 var_r30;
+    u32 temp_r29;
+    s32 temp_r3;
+
+    if ((s32) lbl_806401F8 == 0) {
+        return -0xEC;
+    }
+    if ((s32) lbl_806401FC != 0) {
+        return -1;
+    }
+    var_r30 = 0U;
+    temp_r29 = (*(u32 *)((u8 *)((*(u8 *(*))&lbl_80643030)) + (0x5760)));
+    var_r31 = (*(u8 *(*))&lbl_80643030) + 0x5772;
+loop_5:
+    if ((var_r30 != temp_r29) && (fn_802F0B14((u8 *)(var_r31), (s32 *)(&lbl_80643038)) == 0)) {
+        temp_r3 = fn_802F1F30((s32)(var_r30), (s32)(0), (s32)(0));
+        if (temp_r3 < 0) {
+            return temp_r3;
+        }
+    }
+    var_r30 += 1;
+    var_r31 += 6;
+    if (var_r30 >= 0x10U) {
+        return 0;
+    }
+    goto loop_5;
+}
+}
+
+extern "C" {
+
+void fn_802F1EA4() {
+    u8 *temp_r31;
+
+    temp_r31 = (*(u8 *(*))&lbl_80643030);
+    if (temp_r31 != NULL) {
+        (*(s32 *)((u8 *)(temp_r31) + (0x5760))) = 0;
+        (*(s32 *)((u8 *)(temp_r31) + (0x5764))) = 0;
+        memset((s32)(temp_r31 + 0x5772), (s32)(0), (s32)(0x60));
+        memset((s32)(temp_r31 + 0x6504), (s32)(0), (s32)(0x20));
+        memset((s32)(temp_r31 + 0x6084), (s32)(0), (s32)(0x400));
+        memset((s32)(temp_r31 + 0x6484), (s32)(0), (s32)(0x40));
+        memset((s32)(temp_r31 + 0x64C4), (s32)(0), (s32)(0x40));
+    }
+}
+}
+
+extern "C" {
+
+void fn_802F320C() {
+    u8 *temp_r31;
+
+    temp_r31 = (*(u8 *(*))&lbl_80643030);
+    if (temp_r31 != NULL) {
+        if ((s32) (*(u16 *)((u8 *)(temp_r31) + (0x7290))) != 0) {
+            OSJoinThread((s32)(temp_r31 + 0x6FC8), (s32)(0));
+        }
+        memset((s32)(temp_r31 + 0x6FC8), (s32)(0), (s32)(0x318));
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_802F3AB0() {
+    u8 *temp_r30;
+
+    temp_r30 = (*(u8 *(*))&lbl_80643030);
+    OSInitMessageQueue((s32)(temp_r30 + 0x6524), (s32)(temp_r30 + 0x6544), (s32)(0x20));
+    ((s32 (*)(u8 *))OSInitMutex)(temp_r30 + 0x65DC);
+    memset((s32)(temp_r30 + 0x5560), (s32)(0), (s32)(0x80));
+    (*(s32 *)((u8 *)(temp_r30) + (0x65F4))) = 0;
+    memset((s32)(temp_r30 + 0x65F8), (s32)(0), (s32)(0x14));
+    (*(s32 *)((u8 *)(temp_r30) + (0x660C))) = 0;
+    (*(s32 *)((u8 *)(temp_r30) + (0x6610))) = 0;
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_802F5018(void);
+
+s32 fn_802F4FE8(s32 arg0, s32 arg1) {
+    return fn_802F5018() - arg1;
+}
+}
+
+extern "C" {
+
+s32 fn_802F7E94(u8 *);
+
+s32 fn_802F8008(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (4))) != 0) {
+        return 0;
+    }
+    return fn_802F7E94(arg0 + 0x30);
+}
+}
