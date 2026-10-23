@@ -36,16 +36,7 @@ extern "C" {
 s32 LoadGroup__Q34nw4r3snd18SoundArchivePlayerFUlPQ34nw4r3snd22SoundMemoryAllocatableUl(s32, u32, s32, s32);
 void fn_80255904(s32 *arg0);
 
-s32 fn_80254A30(u8 *arg0, u32 arg1, s32 arg2, s32 arg3) {
-    s32 var_r31;
 
-    var_r31 = arg3;
-
-    if ((var_r31 != 0) && (var_r31 & 0x3F)) {
-        var_r31 = (var_r31 + 0x1F) & 0xFFFFFFE0;
-    }
-    return LoadGroup__Q34nw4r3snd18SoundArchivePlayerFUlPQ34nw4r3snd22SoundMemoryAllocatableUl((*(s32 *)((u8 *)(arg0) + (4))), arg1, (*(s32 *)((u8 *)(arg0) + (8))) + (arg2 * 0x2C), var_r31) != 0;
-}
 }
 
 extern "C" {
@@ -321,6 +312,53 @@ s32 fn_8025948C(s32 arg0, s32 arg1) {
             ((s32 (*)(s32))__dl__FPv)(arg0);
         }
     }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80254A30(s32 arg0, u32 arg1, s32 arg2, s32 arg3) {
+    s32 var_r31;
+
+    var_r31 = arg3;
+    if (arg1 >= ((s32 (*)(s32))fn_80255904)(arg0)) {
+        return 0;
+    }
+    if ((var_r31 != 0) && (var_r31 & 0x3F)) {
+        var_r31 = (var_r31 + 0x1F) & 0xFFFFFFE0;
+    }
+    return LoadGroup__Q34nw4r3snd18SoundArchivePlayerFUlPQ34nw4r3snd22SoundMemoryAllocatableUl((s32)((*(s32 *)((u8 *)(arg0) + (4)))), (u32)((s32) arg1), (s32)((*(s32 *)((u8 *)(arg0) + (8))) + (arg2 * 0x2C)), (s32)(var_r31)) != 0;
+}
+}
+
+extern "C" {
+
+s32 __construct_array(s32, s32, s32, s32, s32);
+s32 memset(s32, s32, s32);
+
+u8 *fn_80259044(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x18))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x1C))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x20))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x24))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x28))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x2C))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x48))) = 0;
+    __construct_array((s32) (arg0 + 0x4C), (s32) &fn_80259104, (s32) &fn_80259110, 0xC, 8);
+    (*(s8 *)((u8 *)(arg0) + (0xAC))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0xAD))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xB0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xB4))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xD0))) = 0;
+    memset((s32) (arg0 + 0x30), 0, 0xC);
+    memset((s32) (arg0 + 0x3C), 0, 0xC);
     return arg0;
 }
 }
