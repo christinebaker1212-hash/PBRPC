@@ -754,6 +754,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = while_loops(inline_cr_temps(v))
         w = range_switch(w) or w
         w = single_case_switch(w) or w
+        w = empty_then_switch(w) or w
         w = byte_offsets(struct_globals(w))
         top = frame_top(asm_text)
         extra = []
@@ -922,7 +923,7 @@ def byte_offsets(src: str) -> str:
         pos = j + 1
     src = "".join(out) + src[pos:]
     # `&sym + n`: m2c counts n in bytes whatever type the declaration has
-    src = re.sub(r"(?<![\w)])&(lbl_\w+) ([+-]) ", r"(u8 *)&\1 \2 ", src)
+    src = re.sub(r"(?<![\w)])&([A-Za-z_]\w*) ([+-]) ", r"(u8 *)&\1 \2 ", src)
     return re.sub(
         r"\(([\w ]+\*)\) \((\w+) ([+-]) ",
         lambda m: f"({m.group(1)}) ((u8 *){m.group(2)} {m.group(3)} " if m.group(2) in ptrs else m.group(0),
@@ -1177,6 +1178,36 @@ def ternaries(src: str) -> str:
         src,
         flags=re.M,
     )
+
+
+def empty_then_switch(src: str) -> Optional[str]:
+    """`if (x != K) { } else REST` as `switch (x) { case K: REST }`."""
+    m = re.search(r"^( +)if \(([^\n]+) != (-?(?:0x[0-9A-F]+|\d+))U?\) \{\n(?:\s*\n)?\1\} else ", src, re.M)
+    if m is None:
+        return None
+    ind, x, k = m.groups()
+    # The rest of the if/else chain
+    pos = m.end()
+    while True:
+        b = src.index("{", pos)
+        depth, j = 0, b
+        while j < len(src):
+            depth += {"{": 1, "}": -1}.get(src[j], 0)
+            if depth == 0:
+                break
+            j += 1
+        pos = j + 1
+        if not src.startswith(" else ", pos):
+            break
+        pos += len(" else ")
+    chain = src[m.end() : pos]
+    if chain.startswith("{"):
+        body = chain[1:].rstrip("}").rstrip()
+        body = body.strip("\n") + "\n"
+    else:
+        body = "".join("    " + l if l.strip() else l for l in (ind + chain + "\n").splitlines(keepends=True))
+    new = f"{ind}switch ({x}) {{\n{ind}case {k}:\n{body}{ind}    break;\n{ind}}}"
+    return src[: m.start()] + new + src[pos:]
 
 
 def range_switch(src: str) -> Optional[str]:
