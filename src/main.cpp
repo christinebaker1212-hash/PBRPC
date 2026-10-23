@@ -363,3 +363,15 @@ u8 fn_80007084() {
     return lbl_8063E8FD;
 }
 }
+
+extern "C" {
+
+struct S_lbl_8063E8E0 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063E8E0 lbl_8063E8E0;
+
+void fn_8000746C() {
+    lbl_8063E8E0.f_0 = 1;
+    lbl_8063E8E0.f_2 = 4;
+    lbl_8063E8E0.f_4 = 0;
+}
+}
