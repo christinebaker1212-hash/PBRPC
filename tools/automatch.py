@@ -785,6 +785,19 @@ def size_pragma(src: str) -> str:
 
 def while_loops(src: str) -> str:
     """`loop_N: if (c) { body goto loop_N; }` as `while (c) { body }`."""
+    # `loop_N: if (c) { if (d) { A } else { B goto loop_N; } }`: a loop that
+    # leaves through A
+    m = re.search(
+        r"^ *loop_(\d+):\n( *)if \(([^\n]*)\) \{\n\2    if \(([^\n]*)\) \{\n(.*?)^\2    \} else \{\n(.*?)^\2        goto loop_\1;\n\2    \}\n\2\}\n",
+        src,
+        re.S | re.M,
+    )
+    if m and f"loop_{m.group(1)}" not in src[: m.start()] + src[m.end() :] + m.group(5) + m.group(6):
+        ind, a, b = m.group(2), m.group(5), m.group(6)
+        last = [l for l in a.splitlines() if l.strip()]
+        brk = "" if last and re.match(r"^\s*return\b", last[-1]) else f"{ind}        break;\n"
+        b = "".join(l[4:] if l.startswith(ind + "        ") else l for l in b.splitlines(keepends=True))
+        src = src[: m.start()] + f"{ind}while ({m.group(3)}) {{\n{ind}    if ({m.group(4)}) {{\n{a}{brk}{ind}    }}\n{b}{ind}}}\n" + src[m.end() :]
     # `loop_N: if (c) { if (d) { body goto loop_N; } }`: a loop that breaks
     nested = re.compile(
         r"^ *loop_(\d+):\n( *)if \(([^\n]*)\) \{\n\2    if \(([^\n]*)\) \{\n(.*?)^\2        goto loop_\1;\n\2    \}\n\2\}\n",
