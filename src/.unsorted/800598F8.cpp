@@ -77,3 +77,23 @@ void fn_8005A45C() {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8000B170__Fiif(s32, s32, f32);
+extern f32 lbl_80640BC4;
+
+void fn_8005A4CC(s32 arg0) {
+    switch (arg0) {                                 /* irregular */
+    case 1:
+        fn_8000B170__Fiif(0x21F, 0, lbl_80640BC4);
+        return;
+    case 2:
+        fn_8000B170__Fiif(0x220, 0, lbl_80640BC4);
+        return;
+    case 3:
+        fn_8000B170__Fiif(0x21E, 0, lbl_80640BC4);
+        return;
+    }
+}
+}
