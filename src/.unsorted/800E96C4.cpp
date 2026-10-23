@@ -83,3 +83,40 @@ s32 fn_800F8094(s32 arg0, s32 arg1) {
     return temp_r30;
 }
 }
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8047DAE0;
+
+void fn_800ED9E8(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {
+    case 1:
+        if (((u16) (*(u16 *)((u8 *)(&lbl_8047DAE0) + (0xCE))) >> 1U) & 3) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x2DBF));
+            return;
+        }
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x512E));
+    }
+    return;
+}
+}
+
+extern "C" {
+
+void fn_800EDA78(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {                                  /* irregular */
+    case 0x4:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x2DC0));
+        return;
+    case 0x50:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x2DC1));
+        return;
+    }
+}
+}
