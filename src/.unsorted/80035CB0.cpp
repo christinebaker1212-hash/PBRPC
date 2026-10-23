@@ -334,3 +334,21 @@ void fn_80036EBC(u8 *arg0) {
     (*(u8 **)((u8 *)(arg0) + (0x96C))) = (u8 *) (arg0 + 0x4E0);
 }
 }
+
+extern "C" {
+
+s32 __nw__FUl(s32);
+
+s32 fn_80035D58() {
+    s32 var_r3;
+
+    if ((s32) (*(s32 (*))&lbl_8063EA68) == 0) {
+        var_r3 = __nw__FUl(0x974);
+        if (var_r3 != 0) {
+            var_r3 = fn_80035CE0((s32)(var_r3));
+        }
+        (*(s32 (*))&lbl_8063EA68) = var_r3;
+    }
+    return (*(s32 (*))&lbl_8063EA68);
+}
+}
