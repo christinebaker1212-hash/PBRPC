@@ -121,3 +121,47 @@ void fn_800A7C8C(s32 arg0) {
     fn_80253E10(arg0, 4, var_f31);
 }
 }
+
+extern "C" {
+
+void fn_800A6AFC(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {                                  /* irregular */
+    case 4:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x3087));
+        return;
+    case 6:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x3089));
+        return;
+    case 8:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x308A));
+        return;
+    }
+}
+}
+
+extern "C" {
+
+void fn_800A6BA8(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {
+    case 8:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x3069));
+        return;
+    case 10:
+    case 14:
+    case 16:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x306F));
+        return;
+    case 12:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x306A));
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+}
