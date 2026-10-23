@@ -508,7 +508,7 @@ void AXSetVoiceAddr(AXVPB* vpb, AXPBADDR* addr) {
 }
 
 void AXGetLpfCoefs(u16 freq, u16* a, u16* b) {
-    f32 rf31 = 2.0f - cosf(2 * M_PI * freq / AX_SAMPLE_RATE);
+    f32 rf31 = 2.0f - cosf(6.2831855f * freq / 32000.0f);
     f32 rf30 = sqrtf(rf31 * rf31 - 1.0f) - rf31;
 
     *b = 32768 * -rf30;
