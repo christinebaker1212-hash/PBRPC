@@ -43,3 +43,15 @@ s32 fn_801FA044(u8 *arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+struct S_version_806276D8 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_version_806276D8 version_806276D8;
+
+void fn_801FA074() {
+    version_806276D8.f_0 = 1;
+    version_806276D8.f_2 = 4;
+    version_806276D8.f_4 = 0;
+}
+}
