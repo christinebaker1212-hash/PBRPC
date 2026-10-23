@@ -66,3 +66,15 @@ s32 fn_800AA354(s32 arg0, s32 *arg1, s32 arg2) {
     return temp_r30;
 }
 }
+
+extern "C" {
+
+s32 fn_8015CC78(s32, s32, s32, s32);
+s32 fn_80250134(s32, s32, s32, s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_80418508;
+
+void fn_800AA2E8() {
+    fn_8015CC78((s32) (u32) ((100.0f) * (*(f32 *)((u8 *)(((u8 *)(u8 *)&lbl_80418508 + (lbl_8063EEAC * 0x10))) + (0xC)))), 5, 0xE, 1);
+    fn_80250134(0x2D73, 0x190, 0x14A, 0, 0, -1);
+}
+}
