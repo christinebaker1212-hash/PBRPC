@@ -545,3 +545,16 @@ s32 fn_8004BF58(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80049084(void);
+__declspec(section ".data") extern s32 lbl_8040AAA8;
+
+u8 *fn_8004ADBC(u8 *arg0) {
+    fn_80049084();
+    (*(s32 *)((u8 *)(arg0) + (0x2C))) = 0;
+    (*(s32 **)((u8 *)(arg0) + (0x28))) = &lbl_8040AAA8;
+    return arg0;
+}
+}
