@@ -1164,10 +1164,77 @@ void GSrender::sync() {
 
 extern "C" {
 
-s32 fn_8023801C(void);
+void fn_8023801C(s32 arg0, u8 *arg1);
 
 void fn_802380BC(u8 *arg0, s32 arg1) {
-    fn_8023801C();
+    ((s32 (*)(void))fn_8023801C)();
     (*(s32 *)((u8 *)(arg0) + (0x173C))) = arg1;
+}
+}
+
+extern "C" {
+
+s32 fn_80237FA4__8GSrenderFv(s32);
+s32 fn_80237FA8__8GSrenderFUc(s32, s32);
+s32 fn_80237FAC__8GSrenderFv(s32);
+s32 fn_80237FB0__8GSrenderFUc(s32, s32);
+s32 setupAdditiveMultiTexture__8GSrenderFUc(s32, s32);
+s32 setupFlatTranslucentTexture__8GSrenderFv(s32);
+s32 setupMultiplicativeMultiTexture__8GSrenderFUc(s32, s32);
+s32 setupVertexColoring__8GSrenderFv(s32);
+
+void fn_80237FB4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    if (arg3 == 0) {
+        if (arg1 == 0) {
+            if (arg2 == 0) {
+                setupFlatTranslucentTexture__8GSrenderFv(arg0);
+                return;
+            }
+            setupAdditiveMultiTexture__8GSrenderFUc(arg0, arg2);
+            return;
+        }
+        if (arg2 == 0) {
+            setupVertexColoring__8GSrenderFv(arg0);
+            return;
+        }
+        setupMultiplicativeMultiTexture__8GSrenderFUc(arg0, arg2);
+        return;
+    }
+    if (arg1 == 0) {
+        if (arg2 == 0) {
+            fn_80237FA4__8GSrenderFv(arg0);
+            return;
+        }
+        fn_80237FA8__8GSrenderFUc(arg0, arg2);
+        return;
+    }
+    if (arg2 == 0) {
+        fn_80237FAC__8GSrenderFv(arg0);
+        return;
+    }
+    fn_80237FB0__8GSrenderFUc(arg0, arg2);
+}
+}
+
+extern "C" {
+
+s32 fn_8023CAA8__FP14GSvertexFormatUl(s32, s32);
+
+void fn_8023801C(s32 arg0, u8 *arg1) {
+    u8 temp_r31;
+    u8 temp_r30;
+    s32 var_r29;
+
+    temp_r30 = (*(u8 *)((u8 *)(arg1) + (2)));
+    temp_r31 = (*(u8 *)((u8 *)(arg1) + (3)));
+    var_r29 = 0;
+    if ((fn_8023CAA8__FP14GSvertexFormatUl((s32) arg1, 0xA) != 0) || (fn_8023CAA8__FP14GSvertexFormatUl((s32) arg1, 0x19) != 0)) {
+        var_r29 = 1;
+    }
+    if ((s32) temp_r30 == 0) {
+        ((s32 (*)(s32, s32, s32, s32))fn_80237FB4)(arg0, 0, (s32) temp_r31, var_r29);
+        return;
+    }
+    ((s32 (*)(s32, s32, s32, s32))fn_80237FB4)(arg0, 1, (s32) temp_r31, var_r29);
 }
 }
