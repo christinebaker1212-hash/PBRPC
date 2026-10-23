@@ -94,3 +94,16 @@ s32 fn_80044C8C(s32 arg0, s32 arg1, s32 arg2) {
     return fn_8015C308(arg1, arg2);
 }
 }
+
+extern "C" {
+
+s32 fn_8000739C__Fv(void);
+s32 fn_80044908(s32);
+
+void fn_80044850(void) {
+    if ((s32) lbl_8063EAA8 != 0) {
+        fn_8000739C__Fv();
+        fn_80044908(lbl_8063EAA8);
+    }
+}
+}
