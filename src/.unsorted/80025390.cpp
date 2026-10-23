@@ -80,3 +80,64 @@ s32 fn_8002569C(s32 arg0) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 __construct_new_array(s32, s32, s32, s32, s32);
+s32 __nw__FUl(s32);
+s32 __nwa__FUl(s32);
+s32 createThread__15GSthreadManagerFUlPFPv_PvPvUllUs(s32, s32, s32, s32, s32, s32, s32);
+s32 fn_80032E60(s32, s32);
+s32 fn_80229C08(s32);
+void fn_80027ED4(void);
+__declspec(section ".data") extern s32 lbl_804096D0;
+extern u8 lbl_8063E9BE;
+extern s32 lbl_8063E9C0;
+extern s32 sInstance__15GSthreadManager;
+
+s32 fn_80025390(s32 arg0) {
+    s32 temp_r3;
+
+    fn_80229C08(arg0);
+    (*(s32 **)((u8 *)(arg0) + (0x988))) = &lbl_804096D0;
+    fn_80032E60(arg0 + 0x998, (s32) &lbl_804096D0);
+    if ((s32) lbl_8063E9BE == 0) {
+        temp_r3 = __nw__FUl(0x10);
+        if (temp_r3 != 0) {
+            (*(s32 *)((u8 *)(temp_r3) + (0xC))) = 0;
+            (*(s32 *)((u8 *)(temp_r3) + (4))) = 0;
+            (*(s32 *)((u8 *)(temp_r3) + (8))) = 0;
+            (*(s32 *)((u8 *)(temp_r3) + (0))) = 8;
+            (*(s32 *)((u8 *)(temp_r3) + (0xC))) = __construct_new_array(__nwa__FUl(0x110), (s32) &fn_80025478, 0, 0x20, 8);
+        }
+        lbl_8063E9C0 = temp_r3;
+        createThread__15GSthreadManagerFUlPFPv_PvPvUllUs(sInstance__15GSthreadManager, 0x65, (s32) &fn_80027ED4, 0, 0x4000, 8, 1);
+        lbl_8063E9BE = 1;
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x98C))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x990))) = 0;
+    lbl_8063E9BF = 0;
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80032E64(s32, s32);
+s32 fn_80224964(s32, s32, s32);
+extern u8 lbl_8063D350;
+
+void fn_800255A8(u8 *arg0, s32 arg1) {
+    s32 temp_r31;
+    s32 temp_r3;
+
+    temp_r31 = fn_8003E15C();
+    temp_r3 = fn_80224964(arg1, (s32) &lbl_8063D350, 0);
+    if (temp_r3 != 0) {
+        fn_80032E64((s32)(arg0 + 0x998), (s32)(temp_r3 + 0x10));
+        if ((temp_r31 != 0) && ((s32) (*(s32 *)((u8 *)(arg0) + (0x998))) != 0)) {
+            fn_8003E388((s32)(temp_r31), (s32)((s32) (arg0 + 0x998)));
+        }
+    }
+}
+}
