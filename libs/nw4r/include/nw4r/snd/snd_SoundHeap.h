@@ -23,7 +23,10 @@ public:
     bool Create(void *pBase, u32 size);
     void Destroy();
 
-    void Clear();
+    void Clear() {
+        ut::detail::AutoLock<OSMutex> lock(mMutex);
+        mFrameHeap.Clear();
+    }
 
     int SaveState();
     void LoadState(int id);
