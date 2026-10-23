@@ -163,3 +163,23 @@ s32 fn_80025048(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 fn_800250E8(s32, s32);
+s32 fn_800251F8(s32, s32, s32, s32, s32, s32, s32);
+s32 fn_8022D02C(s32, s32);
+
+void fn_80025278(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    fn_800251F8(arg0, arg1, fn_8022D02C(fn_800250E8(arg0, arg1), arg2), arg3, arg4, arg5, arg6);
+}
+}
+
+extern "C" {
+
+s32 fn_80025178(s32, s32, s32, s32, s32, s32, s32);
+
+void fn_800252EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+    fn_80025178(arg0, arg1, fn_8022D02C((s32)(fn_800250E8((s32)(arg0), (s32)(arg1))), (s32)(arg2)), arg3, arg4, arg5, arg6);
+}
+}
