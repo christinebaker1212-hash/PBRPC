@@ -234,3 +234,27 @@ void fn_801644EC() {
     }
 }
 }
+
+extern "C" {
+
+struct VT_fn_80164BA8_0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual s32 v3(void); };
+
+s32 fn_80164BA8() {
+    s32 var_r3;
+    u8 **temp_r3;
+
+    fn_8025DFD0();
+    temp_r3 = ((u8 ** (*)(void))fn_8025E2B8)();
+    if (temp_r3 == NULL) {
+        return -1;
+    }
+    var_r3 = ((VT_fn_80164BA8_0 *)(temp_r3))->v3();
+    if (var_r3 < 0) {
+        var_r3 = 0;
+    }
+    if (var_r3 > 3) {
+        var_r3 = 3;
+    }
+    return var_r3;
+}
+}
