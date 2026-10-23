@@ -1094,3 +1094,29 @@ s32 fn_801ED35C(s32 arg0) {
     return arg0 + 0x1D4;
 }
 }
+
+extern "C" {
+
+s32 fn_801E8858(s32, s32);
+s32 fn_801E8BA4(s32, s32);
+s32 fn_801E9114(s32, s32, s32);
+
+void fn_801E9C18(u8 *arg0, s32 arg1) {
+    s32 temp_r5;
+    u8 *temp_r6;
+
+    temp_r6 = (*(u8 **)((u8 *)(arg0) + (0xC)));
+    if (((*(u8 *)((u8 *)(temp_r6) + (0x5D))) & 4) && ((u8) (*(u8 *)((u8 *)(arg0) + (0x21))) != 0xFF)) {
+        temp_r5 = ((u32) (s8) (*(u8 *)((u8 *)(temp_r6) + (0x74))) >> 0x1FU) ^ 1;
+        if ((s8) (*(u8 *)((u8 *)(temp_r6) + (0x76))) < 0) {
+            fn_801E8858((s32) arg0, temp_r5);
+            return;
+        }
+        if ((s8) (*(u8 *)((u8 *)(temp_r6) + (0x77))) < 0) {
+            fn_801E9114((s32) arg0, arg1, temp_r5);
+            return;
+        }
+        fn_801E8BA4((s32) arg0, temp_r5);
+    }
+}
+}
