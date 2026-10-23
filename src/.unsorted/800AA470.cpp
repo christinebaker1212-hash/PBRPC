@@ -618,3 +618,24 @@ void fn_800B8D50() {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80390CB0(u8 *, s32, s32 *);
+
+void fn_800BCAC0(s32 arg0) {
+    fn_80390CB0((u8 *)&(*(s32 (*))&lbl_8063CE34) + 0x34, arg0, &(*(s32 (*))&lbl_8063CE34));
+}
+}
+
+extern "C" {
+
+struct S_version_806271B0 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_version_806271B0 version_806271B0;
+
+void fn_800BCAD4() {
+    version_806271B0.f_0 = 1;
+    version_806271B0.f_2 = 4;
+    version_806271B0.f_4 = 0;
+}
+}
