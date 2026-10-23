@@ -58,7 +58,7 @@ extern "C" {
 
 s32 fn_80207B34(s32, s32);
 s32 fn_802099CC(s32, s32, s32, f32);
-s32 fn_8020A640(s32, s32);
+void fn_8020A640(u8 *arg0, s32 arg1);
 
 void fn_8020AC3C(u8 *arg0, f32 farg0) {
     u8 *var_r31;
@@ -69,7 +69,7 @@ void fn_8020AC3C(u8 *arg0, f32 farg0) {
         while (var_r31 != NULL) {
             temp_r30 = (*(u8 **)((u8 *)(var_r31) + (0x28)));
             if (fn_802099CC((s32) var_r31, (*(s32 *)((u8 *)(arg0) + (0))), (*(s32 *)((u8 *)(arg0) + (0x20))), farg0) == 0) {
-                fn_8020A640((s32) var_r31, (*(s32 *)((u8 *)(arg0) + (0x20))));
+                fn_8020A640((u8 *)((s32) var_r31), (s32)((*(s32 *)((u8 *)(arg0) + (0x20)))));
                 fn_80207B34((s32) arg0, (s32) var_r31);
             }
             var_r31 = temp_r30;
@@ -111,7 +111,7 @@ void fn_8020AE10(u8 *arg0) {
         (*(u8 *)((u8 *)(arg0) + (0x18))) = 0U;
         while (var_r4 != NULL) {
             temp_r31 = (*(u8 **)((u8 *)(var_r4) + (0x28)));
-            fn_8020A640((s32)((s32) var_r4), (s32)((*(s32 *)((u8 *)(arg0) + (0x20)))));
+            fn_8020A640((u8 *)((s32)((s32) var_r4)), (s32)((s32)((*(s32 *)((u8 *)(arg0) + (0x20))))));
             var_r4 = temp_r31;
         }
         fn_80207B8C((s32) arg0);
@@ -130,11 +130,31 @@ void fn_8020AF8C(u8 *arg0, f32 farg0) {
         while (var_r31 != NULL) {
             temp_r30 = (*(u8 **)((u8 *)(var_r31) + (0x28)));
             if (fn_802099CC((s32)((s32) var_r31), (s32)(0), (s32)((*(s32 *)((u8 *)(arg0) + (0x20)))), (f32)(farg0)) == 0) {
-                fn_8020A640((s32)((s32) var_r31), (s32)((*(s32 *)((u8 *)(arg0) + (0x20)))));
+                fn_8020A640((u8 *)((s32)((s32) var_r31)), (s32)((s32)((*(s32 *)((u8 *)(arg0) + (0x20))))));
                 fn_80207B34((s32)((s32) arg0), (s32)((s32) var_r31));
             }
             var_r31 = temp_r30;
         }
+    }
+}
+}
+
+extern "C" {
+
+struct VT_fn_8020A640_0 { u8 pad[28]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual s32 v5(void); };
+
+void fn_8020A640(u8 *arg0, s32 arg1) {
+    u8 *temp_r3;
+    u8 *var_r31;
+
+    var_r31 = (*(u8 **)((u8 *)(arg0) + (0x100)));
+    while (var_r31 != NULL) {
+        ((VT_fn_8020A640_0 *)(var_r31))->v5();
+        var_r31 = (*(u8 **)((u8 *)(var_r31) + (4)));
+    }
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x104)));
+    if (temp_r3 != NULL) {
+        ((VT_fn_8020A640_0 *)(temp_r3))->v5();
     }
 }
 }
