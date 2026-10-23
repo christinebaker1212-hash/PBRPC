@@ -2559,3 +2559,11 @@ void fn_80184E20(s32 arg0, s32 arg1, s32 arg2) {
     ((s32)fn_8017F7B0((void *)(((s32)fn_801C3AA4((void *)(temp_r31)))), (u32)(arg2)));
 }
 }
+
+extern "C" {
+
+s32 fn_801857AC(s32 arg0, s32 arg1, s32 arg2) {
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    return fn_801C4858((void *)(arg1), (u32)(arg2), (u32)(0), (u32)(0)) == 0;
+}
+}

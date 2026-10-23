@@ -139,3 +139,63 @@ s32 fn_801612DC(void) {
     return memset(fn_8015F6A0(), 0, 0x100);
 }
 }
+
+extern "C" {
+
+s32 fn_8015D4EC() {
+    return ((u32) (*(u32 *)((u8 *)(&lbl_80488300) + (0x28))) >> 0x1EU) & 1;
+}
+}
+
+extern "C" {
+
+u8 * fn_8015F690() {
+    return (u8 *)(lbl_80488300 + 0x100);
+}
+}
+
+extern "C" {
+
+void fn_8015F72C(u8 arg0) {
+    u8 var_r3;
+
+    var_r3 = arg0;
+    if (var_r3 >= 4U) {
+        var_r3 = 0;
+    }
+    (*(u8 *)((u8 *)(lbl_80488300) + (0x50))) = var_r3;
+}
+}
+
+extern "C" {
+
+u8 fn_8015F748() {
+    return (*(u8 *)((u8 *)(lbl_80488300) + (0x50)));
+}
+}
+
+extern "C" {
+
+s32 fn_8007D224(void);
+
+void fn_80161294() {
+    u8 *temp_r3;
+
+    temp_r3 = (unsigned char *)(((s32)fn_8015F690()));
+    memset((s32)((s32)(temp_r3)), (s32)((s32)(0)), (s32)((s32)(0x50U)));
+    fn_8007D224();
+    (*(s8 *)((u8 *)(temp_r3) + (0x45))) = 1;
+    ((s32 (*)(void))fn_80161308)();
+}
+}
+
+extern "C" {
+
+s32 freeToHeap__5GSmemFP12MEMiHeapHeadPv(s32, s32);
+extern s32 gUnkHeap2;
+
+void fn_80162724() {
+    freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, (*(s32 *)((u8 *)(&lbl_80488300) + (0x10))));
+    (*(s32 *)((u8 *)(&lbl_80488300) + (0x10))) = 0;
+}
+}

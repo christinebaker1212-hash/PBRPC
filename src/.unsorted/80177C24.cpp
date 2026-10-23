@@ -94,3 +94,18 @@ s32 fn_80177EB8(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 __destroy_arr(s32, s32, s32, s32);
+
+s32 fn_80177F20(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        __destroy_arr(arg0 + 0xB8, (s32) &fn_80177EB8, 0xC, 4);
+        if (arg1 > 0) {
+            __dl__FPv((s32)(arg0));
+        }
+    }
+    return arg0;
+}
+}

@@ -152,3 +152,111 @@ s32 fn_8016D1D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return fn_800217CC__FP11Unk8063E970iPv(fn_8000C7E8__Fv(), 3, (arg0 << 0x10) | arg1);
 }
 }
+
+extern "C" {
+
+s32 fn_8005D78C(s32, s32, s32, s32);
+
+void fn_8016C914() {
+    if (lbl_8063F188 & 0x800) {
+        fn_8005D78C(0, 0xF, 0, 0);
+    } else {
+        fn_8005D78C(0, 0xC, 0xF, 0);
+    }
+    do {
+        sleepCurrentThread__15GSthreadManagerFv((s32)(sInstance__15GSthreadManager));
+    } while (fn_8005EC20((s32)(0)) != 0xF4FAU);
+}
+}
+
+extern "C" {
+
+u8 BattleSystem_GetBattlerType(s32, s32);
+s32 Party_GetPokemonBySlotIndex__FPC5Partyl(s32, s32);
+s32 Pokemon_GetValue__FP7PokemonUlPv(s32, s32, s32);
+
+s32 fn_8016D948(s32 arg0, u8 *arg1) {
+    u8 temp_r0;
+    u8 temp_r3;
+
+    if (lbl_8063F188 & 8) {
+        if (BattleSystem_GetBattlerType((*(s32 *)((u8 *)(arg1) + (4))), (*(s32 *)((u8 *)(arg1) + (0x1C)))) == 2) {
+            if (arg0 & 1) {
+                return 0x505A;
+            }
+            goto block_6;
+        }
+        if (!(arg0 & 1)) {
+            return 0x505A;
+        }
+        goto block_6;
+    }
+block_6:
+    if (Pokemon_GetValue__FP7PokemonUlPv(Party_GetPokemonBySlotIndex__FPC5Partyl((*(s32 *)((u8 *)(arg1) + (0))), arg0), 0xA2, 0) == 0) {
+        (*(u8 *)((u8 *)(arg1) + (0xD))) = (u8) arg0;
+        return 0x2ED2;
+    }
+    temp_r3 = (*(u8 *)((u8 *)((arg1 + arg0)) + (0x20)));
+    if (((u8) (*(u8 *)((u8 *)(arg1) + (0xA))) == temp_r3) || ((u8) (*(u8 *)((u8 *)(arg1) + (0xB))) == temp_r3)) {
+        (*(u8 *)((u8 *)(arg1) + (0xD))) = (u8) arg0;
+        return 0x2ED1;
+    }
+    temp_r0 = (*(u8 *)((u8 *)(arg1) + (9)));
+    if ((temp_r0 != 6) && (temp_r0 == temp_r3)) {
+        (*(u8 *)((u8 *)(arg1) + (0xD))) = (u8) arg0;
+        return 0x2ED3;
+    }
+    if ((s32) (*(u16 *)((u8 *)(arg1) + (0x1A))) != 0) {
+        (*(u8 *)((u8 *)(arg1) + (0xD))) = (u8) (*(u8 *)((u8 *)(arg1) + (0xC)));
+        return 0x30BB;
+    }
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8016D850(void);
+u8 fn_80177BDC(s32, s32);
+__declspec(section ".data") extern s32 lbl_8048CDB4;
+
+void fn_8016DC8C() {
+    s32 var_r30;
+    s32 var_r29;
+    s32 temp_r3;
+
+    if (lbl_8063F188 & 8) {
+        var_r30 = 0;
+loop_2:
+        if (((s32) (*(u8 *)((u8 *)((lbl_8063F1C8 + var_r30)) + (0x7C))) == 0) && ((s32) fn_80177BDC(var_r30, 0xA) == 7)) {
+            BattleSystem_SetResultMask((s32)(fn_803AC828()), (s32)(7));
+            return;
+        }
+        var_r30 += 1;
+        if (var_r30 >= 4) {
+            return;
+        }
+        goto loop_2;
+    }
+    temp_r3 = fn_8016D850();
+    if (!(temp_r3 & 3) && ((s32) fn_80177BDC(0, 0xA) == 7)) {
+        BattleSystem_SetResultMask((s32)(fn_803AC828()), (s32)(7));
+        return;
+    }
+    if (!(temp_r3 & 0xC) && ((s32) fn_80177BDC(1, 0xA) == 7)) {
+        BattleSystem_SetResultMask((s32)(fn_803AC828()), (s32)(7));
+        return;
+    }
+    var_r29 = 0;
+loop_14:
+    if (((*(u8 *)((u8 *)(&lbl_8048CDB4) + (0x1A))) & (8 << var_r29)) && ((s32) fn_80177BDC(var_r29, 0xA) == 7)) {
+        BattleSystem_SetResultMask((s32)(fn_803AC828()), (s32)(7));
+        return;
+    }
+    var_r29 += 1;
+    if (var_r29 >= 4) {
+        return;
+    }
+    goto loop_14;
+}
+}
