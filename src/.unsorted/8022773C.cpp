@@ -9,12 +9,12 @@ void fn_8022894C(void) {}
 
 extern "C" {
 
-s32 fn_80227964(void);
+s32 fn_80227964(s32 arg0);
 s32 fn_802279C4(void);
 
 s32 fn_80227B50(void) {
     if (fn_802279C4() != 0) {
-        return fn_80227964();
+        return ((s32 (*)(void))fn_80227964)();
     }
     return 0;
 }
@@ -22,10 +22,10 @@ s32 fn_80227B50(void) {
 
 extern "C" {
 
-s32 fn_80227BB4(void);
+void fn_80227BB4(u8 *arg0);
 
 s32 fn_80227B84(s32 arg0) {
-    fn_80227BB4();
+    ((s32 (*)(void))fn_80227BB4)();
     return arg0;
 }
 }
@@ -33,7 +33,7 @@ s32 fn_80227B84(s32 arg0) {
 extern "C" {
 
 void fn_80227BD8(u8 *arg0, s8 arg1, s32 arg2, s32 arg3) {
-    fn_80227BB4();
+    ((s32 (*)(void))fn_80227BB4)();
     (*(s32 *)((u8 *)(arg0) + (0x14))) = arg2;
     (*(s32 *)((u8 *)(arg0) + (0x10))) = 1;
     (*(s8 *)((u8 *)(arg0) + (0x18))) = arg1;
@@ -66,11 +66,11 @@ void fn_80228214(void) {
 
 extern "C" {
 
-s32 fn_80227CC4(void);
+void fn_80227CC4(u8 *arg0);
 
 void fn_80228240(void) {
     if (fn_80227FC4() != 0) {
-        fn_80227CC4();
+        ((s32 (*)(void))fn_80227CC4)();
     }
 }
 }
@@ -249,7 +249,7 @@ s32 fn_802280E8(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (temp_r3_2 == NULL) {
         return 0;
     }
-    fn_80227BB4();
+    ((s32 (*)(void))fn_80227BB4)();
     ((s32 (*)(u8 *, s32, s32, s32))fn_80227BD8)(temp_r3_2, arg1, arg2, arg3);
     fn_80228000(arg0, temp_r3_2);
     temp_r3_3 = (*(s32 *)((u8 *)(arg0) + (8))) + 1;
@@ -265,14 +265,14 @@ s32 fn_802280E8(u8 *arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 extern "C" {
 
-s32 fn_80227CDC(s32);
+void fn_80227CDC(u8 *arg0);
 
 void fn_80228190(s32 arg0, s32 arg1) {
     s32 temp_r3;
 
     temp_r3 = ((s32 (*)(s32, s32))fn_80227FC4)(arg0, arg1);
     if (temp_r3 != 0) {
-        fn_80227CDC(temp_r3);
+        fn_80227CDC((u8 *)(temp_r3));
         fn_8022809C((s32)(arg0), (s32)(temp_r3));
         ((s32 (*)(s32))fn_80227BB4)(temp_r3);
     }
@@ -402,6 +402,87 @@ extern s32 sInstance__15GSthreadManager;
 void fn_802288F8(s32 arg0, s32 arg1) {
     while (fn_80228888(arg0, arg1) == 0) {
         sleepCurrentThread__15GSthreadManagerFv(sInstance__15GSthreadManager);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8022A900(s32, s32);
+
+s32 fn_80227964(s32 arg0) {
+    s32 temp_r3;
+
+    temp_r3 = fn_80227804((s32)(arg0));
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    if (fn_8022A900(temp_r3, (*(s32 *)((u8 *)(arg0) + (4)))) == 0) {
+        (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+        return 0;
+    }
+    return 1;
+}
+}
+
+extern "C" {
+
+void fn_80227BB4(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x19))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x1A))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x18))) = 0;
+}
+}
+
+extern "C" {
+
+void fn_80227CC4(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0x10))) == 3) {
+        fn_80227B14((s32)((s32) (arg0 + 0x1C)));
+    }
+}
+}
+
+extern "C" {
+
+void fn_80227CDC(u8 *arg0) {
+    s32 temp_r0;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (0x10)));
+    switch (temp_r0) {                              /* irregular */
+    case 3:
+        fn_80227AD8((s32)((s32) (arg0 + 0x1C)));
+        return;
+    case 5:
+        fn_802278A8((s32)((s32) (arg0 + 0x1C)));
+        return;
+    case 4:
+        return;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80227E04(u8 *arg0, s32 arg1) {
+    s32 temp_r0;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (0x10)));
+    switch (temp_r0) {                              /* irregular */
+    case 3:
+        return ((s32 (*)(s32, s32))fn_80227B50)((s32) (arg0 + 0x1C), arg1);
+    case 5:
+        if (arg1 == (s32) (*(s32 *)((u8 *)(arg0) + (0xC)))) {
+            return fn_80227964((s32)((s32) (arg0 + 0x1C)));
+        }
+        return 0;
+    default:
+    case 4:
+        return 0;
     }
 }
 }
