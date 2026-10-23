@@ -363,7 +363,7 @@ def fill_parameters(src: str, fn: str) -> str:
     # m2c takes the register save area set up through r11 (_savegpr) for a
     # stack argument; one the body never reads is not a parameter
     body = src[m.end() :]
-    params = [p for p in params if not (re.search(r"\barg_sp\w*$", p) and not re.search(r"\b" + p.split()[-1] + r"\b", body))]
+    params = [p for p in params if not (re.search(r"\barg_sp\w*$", p) and not re.search(r"\b" + re.escape(p.split()[-1].lstrip("*")) + r"\b", body))]
     by_index = {}
     for p in params:
         pm = re.search(r"\barg(\d+)$", p)
