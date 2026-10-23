@@ -168,7 +168,7 @@ s32 fn_8004FBB0(s32 arg0, s32 arg1) {
 extern "C" {
 
 s32 fn_8023EB58(s32, s32, s32, s32, s32);
-void fn_8004F3E4(void);
+void fn_8004F3E4();
 extern s32 lbl_8063F778;
 
 void fn_8004F37C() {
@@ -183,5 +183,17 @@ void fn_8004F37C() {
     }
     lbl_8063EB10 = var_r3;
     fn_8023EB58(lbl_8063F778, (s32) &fn_8004F3E4, (s32) &fn_8004F418, 3, 0xC);
+}
+}
+
+extern "C" {
+
+s32 fn_8000739C__Fv(void);
+
+void fn_8004F3E4() {
+    if ((s32) lbl_8063EB10 != 0) {
+        fn_8000739C__Fv();
+        ((s32 (*)(s32))fn_8004F4CC)(lbl_8063EB10);
+    }
 }
 }
