@@ -3579,3 +3579,25 @@ s32 resetGX__Q23EGG7StateGXFv(s32 arg0, s32 arg1) {
     return ((s32) (-temp_r3 & ~temp_r3) >> 0x1F) & 0x72;
 }
 }
+
+extern "C" {
+
+s32 fn_8000AFE0__Fi(s32);
+s32 fn_8000B170__Fiif(s32, s32, f32);
+
+s32 fn_8000B170__Fiif(s32 arg0, s32 arg1, f32 farg0) {
+    s16 temp_r31;
+    s32 temp_r3;
+
+    if (fn_8000AFE0__Fi(arg0) == 0) {
+        return 0;
+    }
+    temp_r31 = ((s32)fn_80392FE8((void *)(lbl_8063E954), (int)(arg0)));
+    temp_r3 = ((s32 (*)(s32, s32, s32, s32))fn_80254E70)(((s32)fn_802544D0()), (s32) temp_r31, arg1, 0);
+    if (temp_r3 < 0) {
+        return 0;
+    }
+    fn_8000B030__Fiiif((s32)(temp_r3), (s32)(arg0), (s32)(arg1), (f32)(farg0));
+    return 1;
+}
+}
