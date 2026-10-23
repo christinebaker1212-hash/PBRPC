@@ -31,3 +31,44 @@ void fn_802367D4(u8 *arg0, s32 arg1) {
     (*(s32 *)((u8 *)(temp_r3_3) + (0))) = (s32) ((*(s32 *)((u8 *)(temp_r3_3) + (0))) | 7);
 }
 }
+
+extern "C" {
+
+s32 PSMTXIdentity(s32);
+s32 allocAndClear__5GSmemFUl(s32);
+
+u8 *__ct__17_UnkClass80236704FUl(u8 *arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 *temp_r4;
+
+    temp_r3 = allocAndClear__5GSmemFUl(arg1 * 0x94);
+    (*(s32 *)((u8 *)(arg0) + (0))) = temp_r3;
+    (*(s32 *)((u8 *)(arg0) + (4))) = temp_r3;
+    (*(s32 *)((u8 *)(arg0) + (8))) = (s32) (temp_r3 + ((arg1 - 1) * 0x94));
+    PSMTXIdentity(temp_r3 + 4);
+    temp_r4 = (long *)((*(s32 *)((u8 *)(arg0) + (4))));
+    *temp_r4 = (s32) (*temp_r4 | 7);
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 free__5GSmemFPv(s32);
+
+s32 *__dt__17_UnkClass80236704Fv(s32 *arg0, s32 arg1) {
+    s32 temp_r3;
+
+    if (arg0 != NULL) {
+        temp_r3 = *arg0;
+        if (temp_r3 != 0) {
+            free__5GSmemFPv(temp_r3);
+        }
+        if (arg1 > 0) {
+            __dl__FPv((s32) arg0);
+        }
+    }
+    return arg0;
+}
+}

@@ -130,3 +130,26 @@ void fn_800447E4() {
     fn_8023EB58(lbl_8063F778, (s32) &fn_80044850, (s32) &fn_80044884, 3, 0xC);
 }
 }
+
+extern "C" {
+
+s32 fn_80044DF4(s32);
+
+void fn_80044990(u32 arg0) {
+    u32 temp_r31;
+    u32 var_r29;
+    u32 var_r30;
+
+    var_r30 = arg0 + 0x780;
+    var_r29 = arg0;
+    while (var_r30 != (u32) (arg0 + 0xEC0)) {
+        ((s32 (*)(s32))fn_80044AAC)((s32) var_r30);
+        var_r30 += 0xE8;
+    }
+    temp_r31 = var_r29 + 0x780;
+    while (var_r29 != temp_r31) {
+        fn_80044DF4((s32) var_r29);
+        var_r29 += 0xF0;
+    }
+}
+}
