@@ -760,7 +760,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         # On the full rewrite, and on a version with only the safe rewrites
         for b in (w, byte_offsets(struct_globals(while_loops(inline_cr_temps(v))))):
             extra += [b, stack_arrays(b), stack_structs(b), stack_structs(b, top), ternaries(b), reverse_locals(b), compound_assignments(b), equality_constants(b)]
-            extra += [widen_params(b)]
+            extra += [widen_params(b), ctr_loops(b)]
             extra += [narrow_counters(b, t) for t in ("u16", "u8")]
             extra += [reverse_locals(x) for x in extra[-2:]]
         for x in extra:
@@ -929,6 +929,52 @@ def widen_params(src: str) -> str:
         return src
     params = re.sub(r"\b(?:s8|u8|s16|u16) (arg\d+)\b", r"s32 \1", d.group(2))
     return src[: d.start(2)] + params + src[d.end(2) :]
+
+
+def ctr_loops(src: str) -> str:
+    """m2c's count-register loops (`var_ctr = N; loop: ... var_ctr -= 1; if
+    (var_ctr != 0) goto loop;`) as the `for` loops MWCC compiled them from."""
+    head = r"^( *)(?:(var_r\d+) = 0;\n\1)?(var_ctr\w*) = ([^;\n]+);\n *loop_(\d+):\n"
+    tail = r"(\s*){ctr} -= 1;\n\s*if \({ctr} != 0\) \{{\n\s*goto loop_{k};\n\s*\}}\n"
+    for m in list(re.finditer(head, src, re.M)):
+        if m.group(0) not in src:
+            continue
+        ind, idx, ctr, n, k = m.groups()
+        start = src.index(m.group(0))
+        rest = src[start + len(m.group(0)) :]
+        # Form 1: `if (c) { A } else { incs; ctr -= 1; if (ctr) goto loop; }`
+        f1 = re.match(
+            r"(" + ind + r"if \([^\n]*\) \{\n.*?\n)" + ind + r"\} else \{\n(.*?)" + ind + r"    " + ctr + r" -= 1;\n" + ind + r"    if \(" + ctr + r" != 0\) \{\n" + ind + r"        goto loop_" + k + r";\n" + ind + r"    \}\n" + ind + r"\}\n",
+            rest,
+            re.S,
+        )
+        # Form 2: `body; ctr -= 1; if (ctr) goto loop;` at the loop's level
+        f2 = re.match(
+            r"(.*?)" + ind + ctr + r" -= 1;\n" + ind + r"if \(" + ctr + r" != 0\) \{\n" + ind + r"    goto loop_" + k + r";\n" + ind + r"\}\n",
+            rest,
+            re.S,
+        )
+        if f1:
+            then, incs = f1.group(1), f1.group(2)
+            # The then-branch leaves the loop
+            last = [l for l in then.splitlines() if l.strip()][-1]
+            then += ("" if re.match(r"^\s*return\b", last) else ind + "    break;\n") + ind + "}\n"
+            body = then + "".join(l[4:] if l.startswith(ind + "    ") else l for l in incs.splitlines(keepends=True))
+            end = len(f1.group(0))
+        elif f2:
+            body, end = f2.group(1), len(f2.group(0))
+        else:
+            continue
+        if f"loop_{k}" in rest[end:] or f"loop_{k}" in body or ctr in body:
+            continue
+        var = ctr
+        if idx and re.search(r"^\s*" + idx + r" \+= 1;\n", body, re.M):
+            body = re.sub(r"^\s*" + idx + r" \+= 1;\n", "", body, count=1, flags=re.M)
+            var = idx
+        body = "".join("    " + l if l.strip() else l for l in body.splitlines(keepends=True))
+        loop = f"{ind}for ({var} = 0; {var} < {n}; {var}++) {{\n{body}{ind}}}\n"
+        src = src[:start] + loop + rest[end:]
+    return src
 
 
 def narrow_counters(src: str, t: str) -> str:
