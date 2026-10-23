@@ -525,7 +525,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         if w is not None and w not in variants:
             variants.append(w)
     # All the control-flow rewrites together
-    for v in list(variants[:2]):
+    for v in list(variants[:2]) + [w for b in buffers for w in b]:
         w = while_loops(inline_cr_temps(v))
         w = range_switch(w) or w
         w = single_case_switch(w) or w
@@ -606,8 +606,12 @@ def stack_buffer(src: str, asm_text: str) -> List[str]:
     if d is None or room <= 8:
         return []
     out = []
+    t = d.group(2).strip()
+    elem = 1 if t in ("s8", "u8") else 2 if t in ("s16", "u16") else 8 if t in ("s64", "u64", "f64") else 4
     for size in sorted({room & ~3, 1 << (room.bit_length() - 1)}, reverse=True):
-        w = src[: d.start()] + f"{d.group(1)}{d.group(2)} sp{off:X}[{size}];" + src[d.end() :]
+        if size // elem < 2:
+            continue
+        w = src[: d.start()] + f"{d.group(1)}{d.group(2)} sp{off:X}[{size // elem}];" + src[d.end() :]
         w = re.sub(r"&sp" + f"{off:X}" + r"\b", f"sp{off:X}", w)
         out.append(w)
     return out
