@@ -200,3 +200,62 @@ u32 fn_80061B9C(u32 arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_800569EC__FP7Pokemon(s32);
+s32 fn_8015C308(s32, s32);
+s32 fn_80253EDC(s32, s32, s32, s32);
+
+void fn_80064900(s32 arg0, s32 arg1) {
+    s32 var_r31;
+    s32 var_r30;
+    s32 sp8;
+
+    if ((s32) (*(u16 *)((u8 *)(&lbl_80478408) + (0x6E))) == 0) {
+        var_r31 = (*(s32 *)((u8 *)(&lbl_80478408) + (4)));
+        var_r30 = (*(s32 *)((u8 *)(&lbl_80478408) + (8)));
+    } else {
+        var_r31 = (*(s32 *)((u8 *)(&lbl_80478408) + (0x1C)));
+        var_r30 = (*(s32 *)((u8 *)(&lbl_80478408) + (0x20)));
+    }
+    fn_80253EDC(arg0, arg1, 3, (s32) &sp8);
+    switch (sp8) {
+    case 1:
+        switch ((s32) (*(u16 *)((u8 *)(&lbl_80478408) + (0x6A)))) { /* irregular */
+        case 0:
+            fn_8015C308(0x15, fn_800569EC__FP7Pokemon(var_r31));
+            return;
+        case 2:
+            fn_8015C308(0x15, fn_800569EC__FP7Pokemon(var_r30));
+            /* fallthrough */
+        case 1:
+            return;
+        }
+    }
+    return;
+}
+}
+
+extern "C" {
+
+s32 fn_800584A0__Fv(void);
+s32 fn_800584B0__Fv(void);
+
+void fn_80069230(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    if ((fn_800584A0__Fv() == 0) || (fn_800584B0__Fv() == 0)) {
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        return;
+    }
+    switch (sp8) {
+    case 1:
+        if (((u16) (*(u16 *)((u8 *)(&lbl_80478408) + (0xB2))) >> 0xDU) & 1) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        }
+    }
+    return;
+}
+}
