@@ -919,6 +919,7 @@ def byte_offsets(src: str) -> str:
     )
     # `(p + n)` on a non-byte pointer (a local or a global): n is in bytes
     types.update((n, t) for t, n in re.findall(r"^(?:__declspec\([^)]*\) )?extern ((?:s16|u16|s32|u32|f32|f64|s64|u64) \*)(\w+);$", src, re.M))
+    types.update((n, t + " *") for t, n in re.findall(r"^\s+(s16|u16|s32|u32|f32|f64|s64|u64) (\w+)\[\d+\];$", src, re.M))
     out, pos = [], 0
     for m in re.finditer(r"\((\w+) ([+-]) ", src):
         if m.start() < pos or m.group(1) not in types:
@@ -932,7 +933,11 @@ def byte_offsets(src: str) -> str:
         if j >= len(src):
             break
         rest = src[m.end() : j]
-        out.append(src[pos : m.start()] + f"(({types[m.group(1)]})((u8 *){m.group(1)} {m.group(2)} {rest}))")
+        # Dereferenced: keep the element type; otherwise byte arithmetic
+        if src[: m.start()].rstrip().endswith("*") and not src[: m.start()].rstrip().endswith("**"):
+            out.append(src[pos : m.start()] + f"(({types[m.group(1)]})((u8 *){m.group(1)} {m.group(2)} {rest}))")
+        else:
+            out.append(src[pos : m.start()] + f"((u8 *){m.group(1)} {m.group(2)} {rest})")
         pos = j + 1
     src = "".join(out) + src[pos:]
     # `&sym + n`: m2c counts n in bytes whatever type the declaration has
