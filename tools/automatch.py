@@ -480,7 +480,22 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         r = reverse_locals(v)
         if r not in variants:
             variants.append(r)
+    # MWCC compiles a one-case switch as beq/b; m2c turns it into an early return
+    for v in variants[:2]:
+        w = single_case_switch(v)
+        if w is not None and w not in variants:
+            variants.append(w)
     return variants
+
+
+def single_case_switch(src: str) -> Optional[str]:
+    """`if (x != K) { return y; } rest` as `switch (x) { case K: rest } return y;`."""
+    m = re.search(r"^    if \(([^\n]+) != (-?(?:0x[0-9A-F]+|\d+))\) \{\n        (return[^;]*;)\n    \}\n(.*?)^\}", src, re.S | re.M)
+    if m is None or m.group(4).strip() == "":
+        return None
+    rest = "".join("    " + l if l.strip() else l for l in m.group(4).splitlines(keepends=True))
+    body = f"    switch ({m.group(1)}) {{\n    case {m.group(2)}:\n{rest}    }}\n    {m.group(3)}\n"
+    return src[: m.start()] + body + src[m.end() - 1 :]
 
 
 def reverse_locals(src: str) -> str:
