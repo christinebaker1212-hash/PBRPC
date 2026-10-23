@@ -671,6 +671,12 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = byte_offsets(v)
         if w != v and w not in variants:
             variants.append(w)
+    # C++ virtual calls: MWCC loads the vtable straight into r12 only for a
+    # real virtual call
+    for v in list(variants):
+        w = virtual_calls(v)
+        if w != v and w not in variants:
+            variants.append(w)
     # All the control-flow rewrites together
     for v in list(variants[:2]) + [w for b in buffers for w in b]:
         w = while_loops(inline_cr_temps(v))
@@ -774,6 +780,57 @@ def narrow_counters(src: str, t: str) -> str:
     for c in set(re.findall(r"^\s+(var_r\d+) \+= 1;$", src, re.M)):
         src = re.sub(r"^(\s+)s32 " + c + ";$", r"\1" + t + " " + c + ";", src, flags=re.M)
     return src
+
+
+VCALL = re.compile(
+    r"\(\*\(([\w ]+?\**) \(\*\*\)\(([^()]*)\)\)\(\(u8 \*\)(?:\(\*(\w+)\)|\(\(\*\(u8 \*\*\)\(\(u8 \*\)\((\w+)\) \+ \((0x[0-9A-F]+|\d+)\)\)\)\)) \+ \((0x[0-9A-F]+|\d+)\)\)\)\("
+)
+
+
+def virtual_calls(src: str) -> str:
+    """m2c's calls through a vtable slot as C++ virtual calls."""
+    classes: Dict[str, str] = {}
+    f = re.search(r"^[A-Za-z_][^\n;]*?\b(\w+)\([^;\n]*\)\s*\{$", src, re.M)
+    prefix = f"VT_{f.group(1)}" if f else "VT"
+    out, pos = [], 0
+    for m in VCALL.finditer(src):
+        if m.start() < pos:
+            continue
+        ret, params, obj = m.group(1).strip(), m.group(2).strip(), m.group(3) or m.group(4)
+        voff = int(m.group(5), 0) if m.group(5) else 0
+        off = int(m.group(6), 0)
+        if off < 8 or (off - 8) % 4:
+            continue
+        slot = (off - 8) // 4
+        args, end = split_args(src, m.end() - 1)
+        types = [param_type(x) or "s32" for x in params.split(",")] if params not in ("", "void") else []
+        if not args:
+            explicit, types = [], []
+        elif args[0].strip() == obj:
+            explicit = args[1:]
+            types = types[1:] if len(types) == len(args) else ["s32"] * len(explicit)
+        else:
+            # m2c left out `this` (it often drops an argument register that
+            # holds a call's result)
+            explicit = args
+            types = types if len(types) == len(args) else ["s32"] * len(explicit)
+        sig = ", ".join(types) or "void"
+        key = f"{voff}_{slot}_{ret}_{sig}"
+        if key not in classes:
+            name = f"{prefix}_{len(classes)}"
+            pad = f"u8 pad[{voff}]; " if voff else ""
+            virt = " ".join(f"virtual void v{k}();" for k in range(slot))
+            classes[key] = f"struct {name} {{ {pad}{virt} virtual {ret} v{slot}({sig}); }};"
+        name = classes[key].split()[1]
+        call = f"(({name} *)({obj}))->v{slot}(" + ", ".join(f"({t})({a})" for t, a in zip(types, explicit)) + ")"
+        out.append(src[pos : m.start()] + call)
+        pos = end + 1
+    if not classes:
+        return src
+    src = "".join(out) + src[pos:]
+    # The classes go before the function
+    d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
+    return src[: d.start()] + "".join(c + "\n" for c in classes.values()) + src[d.start() :] if d else src
 
 
 def stack_arrays(src: str) -> str:
@@ -1120,6 +1177,9 @@ def split_output(src: str) -> Tuple[List[str], str]:
 
 def decl_name(decl: str) -> Optional[str]:
     decl = re.sub(r"^__declspec\([^)]*\) ", "", decl)
+    st = re.match(r"^struct (\w+) \{", decl)
+    if st:
+        return st.group(1)
     p = re.search(r"\(\*+\s*(\w+)\)", decl)
     if p:
         return p.group(1)
