@@ -3622,3 +3622,47 @@ s32 fn_8000B210__Fiif(s32 arg0, s32 arg1, f32 farg0) {
     return 1;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+
+s32 fn_8000CC28__FPvi(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    if (arg0 != 0) {
+        temp_r31 = (*(s32 (*))&lbl_8063EA68);
+        if (!(temp_r31 == 0)) {
+            if (!(temp_r31 == 0)) {
+                if (!(temp_r31 == 0)) {
+                    if (!(temp_r31 == 0)) {
+                        fn_8000CC28__FPvi(temp_r31, 1);
+                        __dl__FPv(temp_r31);
+                    }
+                    __dl__FPv(temp_r31);
+                }
+                __dl__FPv(temp_r31);
+            }
+            __dl__FPv(temp_r31);
+        }
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_800222B8(s32);
+s32 fn_80022D70(s32);
+
+void fn_8001FC94__FP11Unk8063E970(u8 *arg0) {
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (0x9D46))) != 0) {
+        fn_80022D70((s32) arg0);
+        return;
+    }
+    fn_800222B8((s32) arg0);
+}
+}

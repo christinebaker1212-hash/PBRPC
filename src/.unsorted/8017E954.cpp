@@ -110,7 +110,7 @@ int fn_80180058(void *t, void *p);
 u8 fn_801802D0(void *t, void *p);
 u8 fn_80180328(void *t, void *p);
 u8 fn_80180380(void *t, void *p);
-u16 fn_8018028C(void *p);
+void fn_8018028C(s32 arg0, s32 arg1);
 u8 fn_801818D8(void *p);
 
 int fn_8017EA58(int x) {
@@ -399,16 +399,7 @@ u8 fn_8017F7F4(void *p, u32 a) {
     }
     return F8(q, 2);
 }
-u16 fn_8018028C(void *p) {
-    if (p == 0) {
-        return 0;
-    }
-    void *q = fn_8017E398(p);
-    if (q == 0) {
-        return 0;
-    }
-    return F16(q, 0xa);
-}
+
 
 u32 fn_80180C24(void *t, void *p) {
     if (fn_801C1898(t) == 1) {
@@ -889,8 +880,8 @@ void fn_80182A74(Unk82A74 *p) {
 }
 
 int fn_80180D1C(void *t, void *p, void *q) {
-    int a = fn_8018028C(fn_801C3AC8(p));
-    int b = fn_8018028C(fn_801C3AC8(q));
+    int a = ((u16 (*)(void *p))fn_8018028C)(fn_801C3AC8(p));
+    int b = ((u16 (*)(void *p))fn_8018028C)(fn_801C3AC8(q));
     u8 c = fn_80180DA8(p);
     u8 d = fn_80180DA8(q);
     return ApplyStatStage(c, a) - ApplyStatStage(d, b);
@@ -1790,10 +1781,10 @@ u8 fn_80182B50(void *t, void *p, void **arr, void *q) {
     if (acc == 0) {
         acc = 100;
     }
-    sp = fn_8018028C(d);
+    sp = ((u16 (*)(void *p))fn_8018028C)(d);
     for (i = 0; i < 2; i++) {
         if (arr[i] != 0) {
-            buf[i] = fn_8018028C(fn_8017D118(fn_8017F05C(arr[i])));
+            buf[i] = ((u16 (*)(void *p))fn_8018028C)(fn_8017D118(fn_8017F05C(arr[i])));
         } else {
             buf[i] = 0;
         }
@@ -2069,54 +2060,7 @@ u16 fn_80180ED4(void *t, void *p, u16 *keys, s16 *vals, u32 mode) {
     return n;
 }
 
-u32 fn_801846D4(void *t, void *p, void *q, u32 mv) {
-    u32 buf[8];
-    if (t == 0) {
-        return 0;
-    }
-    if (p == 0) {
-        return 0;
-    }
-    if (q == 0) {
-        return 0;
-    }
-    if (mv == 0) {
-        return 0;
-    }
-    void *a = fn_8017F05C(p);
-    void *b = fn_8017F05C(q);
-    fn_8017D118(a);
-    fn_8017D118(b);
-    u8 ty0 = fn_801C2F40(q, 0);
-    u8 ty1 = fn_801C2F40(q, 1);
-    u8 mt = fn_8017F464(t, mv, p);
-    fn_801C03A0(lbl_8063F248, t, (void **)buf, 1, 1);
-    if (((u32 (*)(void))fn_801C1898)() == 1) {
-        if (!(fn_80181700(q) & 0x18) && mv != 0xc3 && fn_80185540(buf, (u32)q) != 1) {
-            if ((fn_80181700(q) & 0x40) && (mv != 0x57 || mv != 0x147 || mv != 0x10 || mv != 0xef)) {
-                return 0;
-            }
-            if (fn_80181700(q) & 0x80) {
-                if (mv != 0x59 || mv != 0xde) {
-                    return 0;
-                }
-                if (((u16 (*)(void *, void *))fn_8017F9F0)(t, b) == 0x1a) {
-                    return 0;
-                }
-                if (ty0 == 2 || ty1 == 2) {
-                    return 0;
-                }
-            }
-            if ((fn_80181700(q) & 0x40000) && (mv != 0xfa || mv != 0x39)) {
-                return 0;
-            }
-        }
-    }
-    if (fn_801C1754() == 1 && fn_803BF874(mt, ty0, ty1) == 0) {
-        return 0;
-    }
-    return 1;
-}
+
 
 u8 fn_801833DC(void *t, void *p, u32 m1, u32 m2, u32 lvl) {
     u32 buf[8];
@@ -2173,7 +2117,7 @@ void fn_8018563C(void *t, Unk82A74 *arr, u8 *count, u32 mv, u32 mode) {
         e = &arr[i];
         found = 0;
         for (j = 0; j < 2; j++) {
-            sp[j] = fn_8018028C(fn_801C3AC8((void *)e->a[j]));
+            sp[j] = ((u16 (*)(void *p))fn_8018028C)(fn_801C3AC8((void *)e->a[j]));
             u8 l = fn_80180DA8((void *)e->a[j]);
             lv[j] = l;
             if (lv[j] != 6) {
@@ -2565,5 +2509,79 @@ extern "C" {
 s32 fn_801857AC(s32 arg0, s32 arg1, s32 arg2) {
     ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
     return fn_801C4858((void *)(arg1), (u32)(arg2), (u32)(0), (u32)(0)) == 0;
+}
+}
+
+extern "C" {
+
+void fn_8018028C(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    temp_r31 = ((s32)fn_8017F05C((void *)(arg1)));
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    ((s32)fn_801C4150((void *)(temp_r31)));
+}
+}
+
+extern "C" {
+
+s32 BattleSystem_TypeMatchupMultiplier__FUcUcUc(u8, u8, u8);
+__declspec(section ".data") extern s32 lbl_80463B28;
+
+s32 fn_801846D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    s32 sp8[8];
+    s32 temp_r28;
+    s32 temp_r29;
+    u8 temp_r29_2;
+    u8 temp_r30;
+    u8 temp_r31;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+    if (arg1 == 0) {
+        return 0;
+    }
+    if (arg2 == 0) {
+        return 0;
+    }
+    if (arg3 == 0) {
+        return 0;
+    }
+    temp_r29 = ((s32)fn_8017F05C((void *)(arg1)));
+    temp_r28 = ((s32)fn_8017F05C((void *)(arg2)));
+    ((s32)fn_8017D118((void *)(temp_r29)));
+    ((s32)fn_8017D118((void *)(temp_r28)));
+    temp_r29_2 = fn_801C2F40((void *)(arg2), (u8)(0));
+    temp_r30 = fn_801C2F40((void *)(arg2), (u8)(1));
+    temp_r31 = fn_8017F464((void *)(arg0), (u32)(arg3), (void *)(arg1));
+    ((s32)fn_801C03A0((void *)(&lbl_80463B28), (void *)(arg0), (void **)(sp8), (u32)(1), (u32)(1)));
+    if ((((u32 (*)(void))fn_801C1898)() == 1U) && !(((s32)fn_80181700((void *)(arg2))) & 0x18) && ((u32) arg3 != 0xC3U) && (fn_80185540((u32 *)(sp8), (u32)(arg2)) != 1U)) {
+        if ((((s32)fn_80181700((void *)(arg2))) & 0x40) && (((u32) arg3 != 0x57U) || ((u32) arg3 != 0x147U) || ((u32) arg3 != 0x10U) || ((u32) arg3 != 0xEFU))) {
+            return 0;
+        }
+        if (((s32)fn_80181700((void *)(arg2))) & 0x80) {
+            if (((u32) arg3 != 0x59U) || ((u32) arg3 != 0xDEU)) {
+                return 0;
+            }
+            if (((u16 (*)(s32, s32))fn_8017F9F0)(arg0, temp_r28) == 0x1A) {
+                return 0;
+            }
+            if ((temp_r29_2 == 2) || (temp_r30 == 2)) {
+                return 0;
+            }
+            goto block_27;
+        }
+block_27:
+        if ((((s32)fn_80181700((void *)(arg2))) & 0x40000) && (((u32) arg3 != 0xFAU) || ((u32) arg3 != 0x39U))) {
+            return 0;
+        }
+        goto block_31;
+    }
+block_31:
+    if ((fn_801C1754() == 1U) && (BattleSystem_TypeMatchupMultiplier__FUcUcUc(temp_r31, temp_r29_2, temp_r30) == 0)) {
+        return 0;
+    }
+    return 1;
 }
 }
