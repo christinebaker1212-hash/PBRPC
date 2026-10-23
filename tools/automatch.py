@@ -223,6 +223,42 @@ def cr_to_cr0(lines: List[str]) -> List[str]:
     return lines
 
 
+_FLOAT_CONSTS: Optional[Dict[str, str]] = None
+
+
+def FLOAT_CONSTS() -> Dict[str, str]:
+    """Float and double constants in .sdata2, as C literals."""
+    global _FLOAT_CONSTS
+    if _FLOAT_CONSTS is None:
+        _FLOAT_CONSTS = {}
+        for f in (ROOT / "build/RPBE01/asm").rglob("*.s"):
+            t = f.read_text()
+            for sec in re.finditer(r'^\.section \.sdata2.*?(?=^\.section |\Z)', t, re.S | re.M):
+                for m in re.finditer(r"^\.obj (\w+), \w+\n\s*\.(float|double) (\S+)\n\.endobj", sec.group(0), re.M):
+                    v = m.group(3)
+                    if not re.fullmatch(r"-?[\d.]+(?:e[-+]?\d+)?", v) and v not in ("inf", "-inf"):
+                        continue
+                    if v in ("inf", "-inf"):
+                        continue
+                    lit = v if re.search(r"[.e]", v) else v + ".0"
+                    _FLOAT_CONSTS[m.group(1)] = lit + ("f" if m.group(2) == "float" else "")
+    return _FLOAT_CONSTS
+
+
+def float_literals(src: str) -> str:
+    """Constants the code reads by value written as literals, as the original
+    source likely did: MWCC can move a load of its own constant pool freely,
+    but not one of a global that stores might alias."""
+    consts = FLOAT_CONSTS()
+    for name in set(re.findall(r"\blbl_\w+", src)):
+        lit = consts.get(name)
+        if lit is None or re.search(r"&" + name + r"\b", src):
+            continue
+        src = re.sub(r"^(?:__declspec\([^)]*\) )?extern [\w ]+ " + name + r";\n", "", src, flags=re.M)
+        src = re.sub(r"\b" + name + r"\b", f"({lit})", src)
+    return src
+
+
 _JUMP_TABLES: Optional[Dict[str, List[int]]] = None
 
 
@@ -713,7 +749,12 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         for x in extra:
             if x not in variants:
                 variants.append(x)
-    return variants
+    out = []
+    for v in variants:
+        w = float_literals(v)
+        if w not in out:
+            out.append(w)
+    return out
 
 
 def while_loops(src: str) -> str:
