@@ -88,3 +88,27 @@ void fn_80207BDC(u8 *arg0, u8 *arg1, u8 *arg2) {
     (*(u8 **)((u8 *)(arg0) + (0x10))) = arg1;
 }
 }
+
+extern "C" {
+
+s32 freeToHeap__5GSmemFP12MEMiHeapHeadPv(s32, s32);
+extern s32 gUnkHeap2;
+__declspec(section ".data") extern s32 lbl_80423868;
+
+u8 *fn_802079B4(u8 *arg0, s32 arg1) {
+    s32 temp_r4;
+
+    if (arg0 != NULL) {
+        temp_r4 = (*(s32 *)((u8 *)(arg0) + (8)));
+        (*(s32 **)((u8 *)(arg0) + (0x1C))) = &lbl_80423868;
+        if (temp_r4 != 0) {
+            freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, temp_r4);
+            (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+        }
+        if (arg1 > 0) {
+            freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, (s32) arg0);
+        }
+    }
+    return arg0;
+}
+}
