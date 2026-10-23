@@ -67,3 +67,16 @@ s32 fn_8004DDCC(s32 arg0, s32 arg1) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 fn_8000739C__Fv(void);
+s32 fn_8004D9D8(s32);
+
+void fn_8004D814(void) {
+    if ((s32) lbl_8063EAF0 != 0) {
+        fn_8000739C__Fv();
+        fn_8004D9D8(lbl_8063EAF0);
+    }
+}
+}
