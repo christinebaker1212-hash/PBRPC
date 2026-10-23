@@ -701,7 +701,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = range_switch(w) or w
         w = single_case_switch(w) or w
         w = byte_offsets(struct_globals(w))
-        extra = [stack_arrays(w), ternaries(w), reverse_locals(w), compound_assignments(w)]
+        extra = [stack_arrays(w), ternaries(w), reverse_locals(w), compound_assignments(w), equality_constants(w)]
         extra += [narrow_counters(w, t) for t in ("u16", "u8")]
         extra += [reverse_locals(x) for x in extra[-2:]]
         for x in [w] + extra:
@@ -804,6 +804,21 @@ def compound_assignments(src: str) -> str:
                     break
         out.append(l)
     return "\n".join(out)
+
+
+def equality_constants(src: str) -> str:
+    """`(u32) (x + K) == 0U` (m2c's view of addis/subis + cmplwi 0) as `x == -K`."""
+
+    def fix(m: "re.Match[str]") -> str:
+        x, k, op = m.group(1), int(m.group(2), 16), m.group(3)
+        depth = 0
+        for ch in x:
+            depth += {"(": 1, ")": -1}.get(ch, 0)
+            if depth < 0:
+                return m.group(0)
+        return f"(u32) ({x}) {op} 0x{(-k) & 0xFFFFFFFF:X}U" if depth == 0 else m.group(0)
+
+    return re.sub(r"\(u32\) \((.+?) \+ (0x[0-9A-F]+)\) (==|!=) 0U?\b", fix, src)
 
 
 def byte_offsets(src: str) -> str:
