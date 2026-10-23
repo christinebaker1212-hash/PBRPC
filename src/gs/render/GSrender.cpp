@@ -644,3 +644,34 @@ void fn_80231374__8GSrenderFPv(void) {
     (*(s32 *)((u8 *)(sInstance__8GSrender) + (0x16F4))) = 0;
 }
 }
+
+extern "C" {
+
+s32 fn_8023B6B0__8GSrenderFv(u8 *);
+
+void fn_802310C0__8GSrenderFv(u8 *arg0) {
+    s32 (*temp_r12)();
+    s32 temp_r3;
+
+    temp_r3 = OSDisableInterrupts();
+    temp_r12 = (*(s32 (**)())((u8 *)(arg0) + (0x1728)));
+    (*(s8 *)((u8 *)(arg0) + (0x1719))) = 1;
+    if (temp_r12 != NULL) {
+        temp_r12();
+    }
+    fn_8023B6B0__8GSrenderFv(arg0);
+    OSSetIdleFunction(0, 0, 0, 0);
+    GXSetDrawDoneCallback(0);
+    GXSetDrawSyncCallback(0);
+    GXSetBreakPtCallback(0);
+    GXSetTexRegionCallback(0);
+    GXSetTlutRegionCallback(0);
+    VISetPreRetraceCallback(0);
+    VISetPostRetraceCallback(0);
+    GXAbortFrame();
+    VISetBlack(1);
+    VIFlush();
+    OSRestoreInterrupts(temp_r3);
+    VIWaitForRetrace();
+}
+}
