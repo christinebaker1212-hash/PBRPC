@@ -94,3 +94,18 @@ u32 fn_80167354(s32 arg0, u8 *arg1, u32 arg2) {
     return var_r31;
 }
 }
+
+extern "C" {
+
+s32 fn_80168AFC(void);
+s32 fn_80168B0C(void);
+
+s32 fn_80167430(s32 arg0, u8 *arg1) {
+    s32 sp8[2];
+
+    sp8[0] = fn_80168AFC();
+    sp8[1] = fn_80168B0C();
+    memcpy((s32)((s32)(arg1)), (s32)((s32)((u8 *) sp8)), (s32)((s32)(8U)));
+    return 8;
+}
+}
