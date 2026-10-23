@@ -120,3 +120,13 @@ void fn_800EDA78(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s16 fn_800EA380(u32 arg0) {
+    if (arg0 >= 0xFU) {
+        return -1;
+    }
+    return (*(s16 *)((u8 *)(((u8 *)(u8 *)&lbl_8047DAE0 + ((arg0 * 2) & 0x1FFFE))) + (0xB0)));
+}
+}
