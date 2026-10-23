@@ -321,6 +321,33 @@ def CONTEXT_TEXT() -> List[str]:
     return _CONTEXT_LINES
 
 
+def fill_parameters(src: str, fn: str) -> str:
+    """m2c names parameters after their registers (arg2 is r5) and leaves out
+    the ones the function never reads; put them back, up to the arity the
+    context gives, so the others stay in their registers."""
+    m = re.search(r"^([^\n(]*\b" + re.escape(fn) + r")\(([^)]*)\) \{", src, re.M)
+    if m is None:
+        return src
+    params = [p.strip() for p in m.group(2).split(",")] if m.group(2).strip() not in ("", "void") else []
+    by_index = {}
+    for p in params:
+        pm = re.search(r"\barg(\d+)$", p)
+        if pm is None:
+            return src  # stack or float arguments: leave as m2c wrote them
+        by_index[int(pm.group(1))] = p
+    arity = 0
+    ctx = CONTEXT.get(fn)
+    if ctx:
+        cm = re.search(r"\(([^)]*)\)", ctx)
+        if cm and cm.group(1).strip() not in ("", "void"):
+            arity = len(cm.group(1).split(","))
+    count = max([arity] + [i + 1 for i in by_index])
+    if count == len(params):
+        return src
+    full = [by_index.get(i, f"s32 arg{i}") for i in range(count)]
+    return src[: m.start(2)] + ", ".join(full) + src[m.end(2) :]
+
+
 def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[str]:
     """m2c's output as plain C, as is and with known library prototypes."""
     ctx = []
@@ -353,6 +380,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         return []
     variants = []
     text = declare_context(out.stdout) if CONTEXT and use_context else out.stdout
+    text = fill_parameters(text, fn)
     for known in (False, True):
         v = expand_macros(text, known)
         if v is not None and v not in variants:
