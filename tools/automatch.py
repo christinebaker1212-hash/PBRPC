@@ -29,7 +29,7 @@ import subprocess
 import sys
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from elf32 import ElfObject
@@ -210,6 +210,8 @@ KNOWN = {
     "DCFlushRange": ("void DCFlushRange(u8 *, u32);", 2),
     "DCStoreRange": ("void DCStoreRange(u8 *, u32);", 2),
     "DCInvalidateRange": ("void DCInvalidateRange(u8 *, u32);", 2),
+    "OSGetTime": ("s64 OSGetTime(void);", 0),
+    "OSGetTick": ("u32 OSGetTick(void);", 0),
 }
 
 
@@ -352,6 +354,26 @@ def fill_parameters(src: str, fn: str) -> str:
     return src[: m.start(2)] + ", ".join(full) + src[m.end(2) :]
 
 
+RETURN_EXTEND = {("clrlwi", "24"): "u8", ("clrlwi", "16"): "u16", ("extsb", None): "s8", ("extsh", None): "s16"}
+
+
+def call_return_types(asm_text: str) -> Dict[str, str]:
+    """Return types of callees whose result the caller extends right after the
+    call: the context types every return as s32."""
+    found: Dict[str, Set[str]] = {}
+    lines = [re.sub(r"^/\*.*?\*/\s*", "", l).strip() for l in asm_text.splitlines()]
+    lines = [l for l in lines if l and not l.startswith(("#", "."))]
+    for i, l in enumerate(lines[:-1]):
+        m = re.match(r"bl (\w+)$", l)
+        if not m:
+            continue
+        n = re.match(r"(clrlwi|extsb|extsh)\.? r\d+, r3(?:, (\d+))?$", lines[i + 1])
+        t = RETURN_EXTEND.get((n.group(1), n.group(2))) if n else None
+        if t:
+            found.setdefault(m.group(1), set()).add(t)
+    return {k: v.pop() for k, v in found.items() if len(v) == 1}
+
+
 def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[str]:
     """m2c's output as plain C, as is and with known library prototypes."""
     ctx = []
@@ -362,12 +384,17 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         # Only what the function refers to: m2c parses the whole context on
         # every run, which took most of the time.
         used = set(re.findall(r"[A-Za-z_][\w@$]*", asm.read_text()))
+        rets = call_return_types(asm.read_text())
         keep = []
         for l in CONTEXT_TEXT():
             m = re.search(r"\b(\w+)\s*(?:\(|\[|;)", l)
             if l.startswith("typedef"):
                 keep.append(l)
             elif m and m.group(1) in used and m.group(1) != fn:
+                if m.group(1) in KNOWN:
+                    l = KNOWN[m.group(1)][0]
+                elif m.group(1) in rets:
+                    l = re.sub(r"^s32 (?=" + re.escape(m.group(1)) + r"\()", rets[m.group(1)] + " ", l)
                 keep.append(l)
         own.write_text("".join(l + "\n" for l in keep))
         ctx = ["--context", str(own)]
@@ -384,6 +411,8 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         return []
     variants = []
     text = declare_context(out.stdout) if CONTEXT and use_context else out.stdout
+    for name, t in call_return_types(asm.read_text()).items():
+        text = re.sub(r"^s32 (?=" + re.escape(name) + r"\()", t + " ", text, flags=re.M)
     text = fill_parameters(text, fn)
     text = re.sub(r"\bCLZ\(", "__cntlzw(", text)
     # A function m2c only takes the address of is declared as data, which
@@ -476,13 +505,26 @@ def cast_call_arguments(src: str, name: str) -> Optional[str]:
     """Casts the arguments of calls to name to the types of its prototype
     (the one in src, or a known library one)."""
     p = re.search(r"^[^\n(]*\b" + re.escape(name) + r"\(([^)]*)\);", src, re.M) or re.search(
-        r"\b" + re.escape(name) + r"\(([^)]*)\);", KNOWN.get(name, "")
+        r"\b" + re.escape(name) + r"\(([^)]*)\);", KNOWN.get(name, ("",))[0]
     )
     if p is None:
         return None
-    params = [param_type(x) for x in p.group(1).split(",")] if p.group(1).strip() not in ("", "void") else []
-    if "..." in p.group(1) or "" in params:
+    variadic = "..." in p.group(1)
+    raw = [x for x in p.group(1).split(",") if x.strip() != "..."]
+    params = [param_type(x) for x in raw] if p.group(1).strip() not in ("", "void", "...") else []
+    if "" in params:
         return None
+    counts = set()
+    for c in re.finditer(r"\b" + re.escape(name) + r"\(", src):
+        line_start = src.rfind("\n", 0, c.start()) + 1
+        if not re.match(r"^[A-Za-z_]", src[line_start:]):
+            counts.add(len(split_args(src, c.end() - 1)[0]))
+    if not variadic and counts and counts != {len(params)} and p.re.pattern.startswith("^"):
+        # Calls disagree on the number of arguments: m2c (without context)
+        # guessed a fixed prototype for a variadic function
+        fixed = min(counts | {len(params)})
+        new_params = ", ".join(params[:fixed] + ["..."])
+        return src[: p.start(1)] + new_params + src[p.end(1) :]
     out, pos, changed = [], 0, False
     for c in re.finditer(r"\b" + re.escape(name) + r"\(", src):
         if c.start() < pos:
@@ -491,9 +533,10 @@ def cast_call_arguments(src: str, name: str) -> Optional[str]:
         if re.match(r"^[A-Za-z_]", src[line_start:]):
             continue
         args, end = split_args(src, c.end() - 1)
-        if len(args) != len(params):
+        if len(args) != len(params) and not (variadic and len(args) > len(params)):
             continue
-        new = name + "(" + ", ".join(a if a.startswith(f"({t})") else f"({t})({a})" for t, a in zip(params, args)) + ")"
+        cast = [a if a.startswith(f"({t})") else f"({t})({a})" for t, a in zip(params, args)]
+        new = name + "(" + ", ".join(cast + args[len(params) :]) + ")"
         changed |= new != src[c.start() : end + 1]
         out.append(src[pos : c.start()] + new)
         pos = end + 1
@@ -504,13 +547,13 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
     """Fixes an "illegal implicit conversion" (C++ does not convert between
     integers and pointers as C does) by casting the assigned or returned
     value to the type the compiler wanted."""
-    u = re.search(r"\(10140\) undefined identifier '(sp[0-9A-F]+(?:_\w+)?)'", err)
+    u = sorted(set(re.findall(r"\(10140\) undefined identifier '(sp[0-9A-F]+(?:_\w+)?)'", err)))
     if u:
-        # a stack temporary m2c used without declaring it
+        # stack temporaries m2c used without declaring them
         d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
         if d is None:
             return None
-        return src[: d.end()] + f"    s32 {u.group(1)};\n" + src[d.end() :]
+        return src[: d.end()] + "".join(f"    s32 {x};\n" for x in u) + src[d.end() :]
     c = re.search(r"\(10248\) function call '(\w+)\(", err)
     if c:
         return cast_call_arguments(src, c.group(1))
