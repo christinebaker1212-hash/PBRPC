@@ -339,3 +339,100 @@ s32 fn_80261178(s32 arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 strncpy(s32, s32, s32);
+
+void fn_80260EC8(u8 *arg0, s16 arg1, s8 *arg2) {
+    strncpy((s32)(arg0 + 0x34), (s32)(arg2), (s32)(0x40U));
+    (*(s16 *)((u8 *)(arg0) + (4))) = arg1;
+    (*(s8 *)((u8 *)(arg0) + (0x73))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x24))) = fn_8025E370();
+}
+}
+
+extern "C" {
+
+s32 memcpy(s32, s32, s32);
+
+s32 fn_80260FA0(u8 *arg0, u8 *arg1) {
+    s32 temp_r3;
+    s32 var_r5;
+    u32 temp_r30;
+    u32 temp_r3_2;
+    u32 temp_r3_3;
+    u32 temp_r4;
+    u32 var_r6;
+
+    if ((u16) (*(u16 *)((u8 *)(arg1) + (0))) != 3) {
+        return -1;
+    }
+    if ((u16) (*(u16 *)((u8 *)(arg1) + (4))) != (u16) (*(u16 *)((u8 *)(arg0) + (2)))) {
+        return -1;
+    }
+    if ((u8) (*(u8 *)((u8 *)(arg0) + (0))) != 1) {
+        return -1;
+    }
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (1))) == 0) {
+        return 3;
+    }
+    temp_r3 = fn_8025E370();
+    (*(s32 *)((u8 *)(arg0) + (0x18))) = temp_r3;
+    if (temp_r3 == 0) {
+        (*(s32 *)((u8 *)(arg0) + (0x18))) = -1;
+    }
+    temp_r4 = (*(u32 *)((u8 *)(arg0) + (0x10)));
+    (*(s32 *)((u8 *)(arg0) + (0x1C))) = (s32) (*(s32 *)((u8 *)(arg0) + (0x18)));
+    var_r6 = (*(u32 *)((u8 *)(arg1) + (8)));
+    var_r5 = (*(u16 *)((u8 *)(arg1) + (6)));
+    (*(u32 *)((u8 *)(arg0) + (0x14))) = (u32) (*(u32 *)((u8 *)(arg1) + (0xC)));
+    if (var_r6 > temp_r4) {
+        return 2;
+    }
+    temp_r3_2 = (*(u32 *)((u8 *)(arg0) + (0xC)));
+    if (var_r6 >= temp_r3_2) {
+        var_r6 = temp_r3_2;
+        var_r5 = 0;
+    }
+    if ((u32) (var_r6 + var_r5) >= temp_r3_2) {
+        var_r5 = temp_r3_2 - var_r6;
+    }
+    temp_r30 = var_r6 + var_r5;
+    if ((temp_r4 < temp_r30) && ((s32) var_r5 != 0)) {
+        memcpy((s32)((*(s32 *)((u8 *)(arg0) + (8))) + var_r6), (s32)(arg1 + 0x10), (s32)((u32) var_r5));
+        (*(u32 *)((u8 *)(arg0) + (0x10))) = temp_r30;
+    }
+    temp_r3_3 = (*(u32 *)((u8 *)(arg0) + (0x10)));
+    if ((temp_r3_3 >= (u32) (*(u32 *)((u8 *)(arg0) + (0xC)))) || (temp_r3_3 >= (u32) (*(u32 *)((u8 *)(arg0) + (0x14))))) {
+        (*(u8 *)((u8 *)(arg0) + (1))) = 0U;
+        return 0;
+    }
+    return 1;
+}
+}
+
+extern "C" {
+
+s32 fn_802610F0(u8 *arg0, u32 arg1, s32 arg2, s32 arg3, s16 arg4) {
+    s32 temp_r3;
+
+    if ((u16) (*(u16 *)((u8 *)(arg0) + (2))) != arg1) {
+        return -1;
+    }
+    (*(s8 *)((u8 *)(arg0) + (0))) = 2;
+    (*(s8 *)((u8 *)(arg0) + (1))) = 1;
+    (*(s16 *)((u8 *)(arg0) + (4))) = arg4;
+    (*(s32 *)((u8 *)(arg0) + (8))) = arg2;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = arg3;
+    (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = arg3;
+    temp_r3 = fn_8025E370();
+    (*(s32 *)((u8 *)(arg0) + (0x18))) = temp_r3;
+    if (temp_r3 == 0) {
+        (*(s32 *)((u8 *)(arg0) + (0x18))) = -1;
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x1C))) = (s32) (*(s32 *)((u8 *)(arg0) + (0x18)));
+    return 0;
+}
+}
