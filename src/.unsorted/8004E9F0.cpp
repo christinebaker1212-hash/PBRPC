@@ -19,11 +19,11 @@ u8 fn_8004EE68(const u8 *p) {
 extern "C" {
 
 s32 __dl__FPv(s32);
-s32 fn_8004EA94(void);
+void fn_8004EA94(s32 *arg0);
 
 s32 fn_8004EA40(s32 arg0, s32 arg1) {
     if (arg0 != 0) {
-        fn_8004EA94();
+        ((s32 (*)(void))fn_8004EA94)();
         if (arg1 > 0) {
             __dl__FPv(arg0);
         }
@@ -120,5 +120,20 @@ s32 fn_8004F0BC(s32 arg0) {
     memset((u8 *)(arg0), (s32)(0), (s32)(0x100));
     (*(f32 *)((u8 *)(arg0) + (0x180))) = (f32) lbl_80640A60;
     return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_801E0904(s32);
+
+void fn_8004EA94(s32 *arg0) {
+    s32 temp_r0;
+
+    temp_r0 = *arg0;
+    if (temp_r0 != 0) {
+        fn_801E0904(temp_r0);
+        *arg0 = 0;
+    }
 }
 }
