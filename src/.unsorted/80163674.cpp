@@ -218,3 +218,19 @@ s32 fn_80163DC4(s32 arg0) {
     return sp8;
 }
 }
+
+extern "C" {
+
+s32 fn_80164518(void);
+
+void fn_801644EC() {
+    s32 temp_r0;
+
+    temp_r0 = (*(s32 (*))&lbl_8063D5F0) - 1;
+    (*(s32 (*))&lbl_8063D5F0) = temp_r0;
+    if (temp_r0 <= 0) {
+        (*(s32 (*))&lbl_8063D5F0) = 4;
+        fn_80164518();
+    }
+}
+}
