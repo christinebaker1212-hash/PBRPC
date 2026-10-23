@@ -378,3 +378,31 @@ void fn_80200D78(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+void fn_80200D08(u8 *arg0, s32 arg1) {
+    u8 *temp_r0;
+    u8 *var_r5;
+    u8 *var_r6;
+
+    if (((s32) (*(s32 *)((u8 *)(arg0) + (4))) != 0) && (arg1 != 0) && (var_r6 = (*(u8 **)((u8 *)(arg0) + (0x10))), var_r5 = NULL, ((var_r6 == NULL) == 0))) {
+        while (var_r6 != NULL) {
+            if (!((u32) (*(u32 *)((u8 *)(var_r6) + (0))) != (u32) arg1)) {
+                break;
+            }
+            var_r5 = var_r6;
+            var_r6 = (*(u8 **)((u8 *)(var_r6) + (4)));
+        }
+        if (var_r6 != NULL) {
+            temp_r0 = (*(u8 **)((u8 *)(var_r6) + (4)));
+            if (var_r5 != NULL) {
+                (*(u8 **)((u8 *)(var_r5) + (4))) = temp_r0;
+            } else {
+                (*(u8 **)((u8 *)(arg0) + (0x10))) = temp_r0;
+            }
+            freeNode__12GSlinkedListFP10GSlistNode((s32)((s32) var_r6));
+        }
+    }
+}
+}

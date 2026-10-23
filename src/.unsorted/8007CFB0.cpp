@@ -243,3 +243,13 @@ void fn_8007F674(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80253E10(s32, s32, f32);
+
+void fn_8007ED00(s32 arg0) {
+    fn_80253E10(arg0, 4, (0.0f));
+    fn_80253E10(arg0, 6, (1.0f));
+}
+}
