@@ -83,3 +83,27 @@ void fn_8025AD58(s32 arg0, s32 arg1) {
     OSSendMessage((s32)(arg0 + 0x29C), (s32)(arg1), (s32)(1));
 }
 }
+
+extern "C" {
+
+s32 stopThread__14GSthreadHandleFb(s32, s32);
+
+void fn_8025A7BC(u8 *arg0) {
+    s32 sp8;
+    s32 temp_r0;
+
+    temp_r0 = (*(s32 *)((u8 *)(arg0) + (0x200)));
+    if (temp_r0 != 0) {
+        stopThread__14GSthreadHandleFb(temp_r0, 0);
+        (*(s32 *)((u8 *)(arg0) + (0x200))) = 0;
+    }
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (0x6B))) != 0) {
+        do {
+
+        } while (OSReceiveMessage((s32)(arg0 + 0x254), (s32 *)(&sp8), (s32)(0)) != 0);
+    }
+    while (OSReceiveMessage((s32)(arg0 + 0x29C), (s32 *)(&sp8), (s32)(0)) != 0) {
+        fn_8025ACE0((s32)(arg0), (s32)(sp8));
+    }
+}
+}
