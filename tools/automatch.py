@@ -329,6 +329,10 @@ def fill_parameters(src: str, fn: str) -> str:
     if m is None:
         return src
     params = [p.strip() for p in m.group(2).split(",")] if m.group(2).strip() not in ("", "void") else []
+    # m2c takes the register save area set up through r11 (_savegpr) for a
+    # stack argument; one the body never reads is not a parameter
+    body = src[m.end() :]
+    params = [p for p in params if not (re.search(r"\barg_sp\w*$", p) and not re.search(r"\b" + p.split()[-1] + r"\b", body))]
     by_index = {}
     for p in params:
         pm = re.search(r"\barg(\d+)$", p)
@@ -342,7 +346,7 @@ def fill_parameters(src: str, fn: str) -> str:
         if cm and cm.group(1).strip() not in ("", "void"):
             arity = len(cm.group(1).split(","))
     count = max([arity] + [i + 1 for i in by_index])
-    if count == len(params):
+    if count == len(params) and m.group(2).count(",") + 1 == len(params):
         return src
     full = [by_index.get(i, f"s32 arg{i}") for i in range(count)]
     return src[: m.start(2)] + ", ".join(full) + src[m.end(2) :]
@@ -381,6 +385,9 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
     variants = []
     text = declare_context(out.stdout) if CONTEXT and use_context else out.stdout
     text = fill_parameters(text, fn)
+    # A function m2c only takes the address of is declared as data, which
+    # MWCC would address through the small data area
+    text = re.sub(r"^extern [\w ]+?\*? ?\b(fn_[0-9A-F]{8})\s*;", r"void \1(void);", text, flags=re.M)
     for known in (False, True):
         v = expand_macros(text, known)
         if v is not None and v not in variants:
