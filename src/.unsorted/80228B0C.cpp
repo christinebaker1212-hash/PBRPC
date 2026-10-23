@@ -88,10 +88,10 @@ void fn_80228FEC(Unk80226364_04 *inner, u32 x, u32 y) {
 
 extern "C" {
 
-s32 fn_80228B8C(void);
+void fn_80228B8C(u8 *arg0);
 
 u8 *fn_80228B0C(u8 *arg0) {
-    fn_80228B8C();
+    ((s32 (*)(void))fn_80228B8C)();
     (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
     (*(s32 *)((u8 *)(arg0) + (0x1C))) = 0;
     return arg0;
@@ -151,5 +151,42 @@ void fn_80229000(u8 *arg0) {
     temp_r31 = (*(s32 *)((u8 *)(arg0) + (0))) + ((*(s32 *)((u8 *)(arg0) + (4))) * 0x224);
     ((s32 (*)(s32))fn_80228C34)(temp_r31);
     ((s32 (*)(s32))fn_80228C70)(temp_r31);
+}
+}
+
+extern "C" {
+
+u8 *memset(u8 *, s32, u32);
+
+void fn_80228B8C(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x10))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x11))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x18))) = 1;
+    (*(s32 *)((u8 *)(arg0) + (0x220))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0x1C))) = 0;
+    memset(arg0 + 0x20, 0, 0x200);
+}
+}
+
+extern "C" {
+
+s32 suspendThread__15GSthreadManagerFUl(s32, s32);
+extern s32 sInstance__15GSthreadManager;
+
+void fn_80229044(u8 *arg0) {
+    suspendThread__15GSthreadManagerFUl(sInstance__15GSthreadManager, *(s32 *)((u8 *)0 + ((*(s32 *)((u8 *)(arg0) + (0))) + ((*(s32 *)((u8 *)(arg0) + (4))) * 0x224))));
+    ((s32 (*)(s32))fn_80228C5C)((*(s32 *)((u8 *)(arg0) + (0))) + ((*(s32 *)((u8 *)(arg0) + (4))) * 0x224));
+}
+}
+
+extern "C" {
+
+s32 resumeThread__15GSthreadManagerFUl(s32, s32);
+
+void fn_80229098(u8 *arg0) {
+    resumeThread__15GSthreadManagerFUl(sInstance__15GSthreadManager, *(s32 *)((u8 *)0 + ((*(s32 *)((u8 *)(arg0) + (0))) + ((*(s32 *)((u8 *)(arg0) + (4))) * 0x224))));
+    ((s32 (*)(s32))fn_80228C70)((*(s32 *)((u8 *)(arg0) + (0))) + ((*(s32 *)((u8 *)(arg0) + (4))) * 0x224));
 }
 }
