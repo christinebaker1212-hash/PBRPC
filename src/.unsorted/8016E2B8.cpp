@@ -69,3 +69,29 @@ s32 fn_8016E674(void) {
     return lbl_8063F1CC;
 }
 }
+
+extern "C" {
+
+struct S_lbl_8048CDD8 { s32 f_0; s32 f_4; s32 f_8; s32 f_C; };
+
+s32 fn_8016E6B0() {
+    s32 temp_r0;
+    s32 temp_r3;
+
+    if ((s32) lbl_8063F1CC != 0) {
+        temp_r0 = lbl_8063F1CC - 1;
+        temp_r3 = (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_0;
+        lbl_8063F1CC = temp_r0;
+        if (temp_r0 != 0) {
+            (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_0 = (s32) (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_4;
+            (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_4 = (s32) (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_8;
+            (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_8 = (s32) (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_C;
+            (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_C = 0;
+            return temp_r3;
+        }
+        (*(struct S_lbl_8048CDD8 (*))&lbl_8048CDD8).f_0 = 0;
+        return temp_r3;
+    }
+    return 0;
+}
+}

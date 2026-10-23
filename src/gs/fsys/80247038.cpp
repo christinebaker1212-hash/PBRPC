@@ -131,3 +131,15 @@ s32 fn_80247088(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+struct S_lbl_8063F848 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063F848 lbl_8063F848;
+
+void fn_80247260() {
+    lbl_8063F848.f_0 = 1;
+    lbl_8063F848.f_2 = 4;
+    lbl_8063F848.f_4 = 0;
+}
+}

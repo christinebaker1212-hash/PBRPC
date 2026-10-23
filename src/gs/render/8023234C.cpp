@@ -120,3 +120,15 @@ s32 fn_80232404__8GSrenderFPFUl_vUl(s32 arg0, s32 arg1, s32 arg2) {
     return (*(s32 *)((u8 *)(temp_r3) + (8)));
 }
 }
+
+extern "C" {
+
+struct S_version_80627998 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_version_80627998 version_80627998;
+
+void fn_8023281C() {
+    version_80627998.f_0 = 1;
+    version_80627998.f_2 = 4;
+    version_80627998.f_4 = 0;
+}
+}

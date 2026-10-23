@@ -72,3 +72,15 @@ s32 *__dt__17_UnkClass80236704Fv(s32 *arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+struct S_lbl_8063F6B0 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063F6B0 lbl_8063F6B0;
+
+void fn_8023692C() {
+    lbl_8063F6B0.f_0 = 1;
+    lbl_8063F6B0.f_2 = 4;
+    lbl_8063F6B0.f_4 = 0;
+}
+}
