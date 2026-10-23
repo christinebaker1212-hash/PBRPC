@@ -193,24 +193,9 @@ s32 fn_80259054(s32 arg0) {
 
 extern "C" {
 
-s32 fn_802598D8(s32);
+s32 fn_802598D8();
 
-s32 fn_802598D8(s32 arg0) {
-    s32 temp_r3;
-    s32 var_r4;
-    u32 temp_r3_2;
 
-    temp_r3 = ((s32 (*)(s32))fn_80259420)(arg0);
-    if (temp_r3 == 0) {
-        return 0;
-    }
-    temp_r3_2 = fn_8025821C((u8 *)(temp_r3));
-    var_r4 = 0;
-    if ((temp_r3_2 > 0xBU) || !((1 << temp_r3_2) & 0xA01)) {
-        var_r4 = 1;
-    }
-    return var_r4;
-}
 }
 
 extern "C" {
@@ -458,5 +443,23 @@ u8 *fn_80259248(u8 *arg0, s32 arg1) {
         }
     }
     return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_802598D8() {
+    s32 var_r4;
+    u32 temp_r3;
+
+    if (((s32)fn_80259420()) == 0) {
+        return 0;
+    }
+    temp_r3 = ((u32 (*)(void))fn_8025821C)();
+    var_r4 = 0;
+    if ((temp_r3 > 0xBU) || !((1 << temp_r3) & 0xA01)) {
+        var_r4 = 1;
+    }
+    return var_r4;
 }
 }

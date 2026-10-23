@@ -6798,3 +6798,18 @@ s32 *fn_80399CE8(s32 *arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+void fn_8038F1CC(s32 arg0) {
+    s32 temp_r31;
+    u32 var_r30;
+
+    var_r30 = 0U;
+    while (var_r30 < ((u32)fn_80395A88((s32 **)(arg0 + 0x30)))) {
+        temp_r31 = fn_80395AD8((s32)(arg0 + 0x30), (s32)(var_r30));
+        fn_80395B40((s32)(arg0 + 0x30), (s32)(var_r30), (s32)((u16) ((temp_r31 - ((s32 (*)(s32, u32))fn_80395AA4)(arg0 + 0x30, var_r30)) + 1)));
+        var_r30 += 1;
+    }
+}
+}
