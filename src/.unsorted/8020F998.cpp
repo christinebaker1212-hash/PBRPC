@@ -19,3 +19,27 @@ s32 fn_802114E8(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80207B34(u8 *, u8 *);
+s32 fn_8020FE14(u8 *, s32, s32, f32);
+s32 fn_802113E8(u8 *);
+
+void fn_802107C0(u8 *arg0, f32 farg0) {
+    u8 *var_r31;
+    u8 *temp_r30;
+
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (0x18))) != 0) {
+        var_r31 = (*(u8 **)((u8 *)(arg0) + (0x10)));
+        while (var_r31 != NULL) {
+            temp_r30 = (*(u8 **)((u8 *)(var_r31) + (0x28)));
+            if (fn_8020FE14(var_r31, (*(s32 *)((u8 *)(arg0) + (0))), (*(s32 *)((u8 *)(arg0) + (0x20))), farg0) == 0) {
+                fn_80207B34(arg0, var_r31);
+            }
+            var_r31 = temp_r30;
+        }
+        fn_802113E8(arg0);
+    }
+}
+}
