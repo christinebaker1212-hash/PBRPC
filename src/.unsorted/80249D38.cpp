@@ -513,3 +513,32 @@ u16 fn_80250560(s32 arg0, f32 farg0) {
     return fn_80250584(arg0, farg0);
 }
 }
+
+extern "C" {
+
+s32 fn_8024AA80(u8 *, s32, s32, u8);
+
+void fn_8024AD04(u8 *arg0) {
+    u8 *var_r31;
+    s32 var_r30;
+
+    var_r30 = 0;
+    var_r31 = arg0;
+    do {
+        if ((u8) *(arg0 + (var_r30 + 0x64F0C)) == 1) {
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DCC))), 0, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DD0))), 1, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DD4))), 2, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DD8))), 3, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DDC))), 4, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DE0))), 5, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DE4))), 6, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DE8))), 7, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DEC))), 8, var_r30);
+            fn_8024AA80(arg0, (*(s32 *)((u8 *)(var_r31) + (0x64DF0))), 9, var_r30);
+        }
+        var_r30 += 1;
+        var_r31 += 0x28;
+    } while ((s32) var_r30 < 8);
+}
+}

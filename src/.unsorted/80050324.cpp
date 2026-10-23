@@ -420,3 +420,65 @@ void fn_80051FD4(s32 arg0, u8 *arg1, s32 arg2) {
     (*(f32 *)((u8 *)(temp_r3) + (0x18))) = (f32) (*(f32 *)((u8 *)(arg1) + (4)));
 }
 }
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040AC88;
+
+void fn_80050324(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 **)((u8 *)(arg0) + (0x20))) = &lbl_8040AC88;
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040AC00;
+
+void fn_8005052C(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 **)((u8 *)(arg0) + (0x30))) = &lbl_8040AC00;
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040ABC8;
+
+void fn_800507F0(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 **)((u8 *)(arg0) + (0x20))) = &lbl_8040ABC8;
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040AB98;
+
+void fn_80050B34(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (0))) = 0;
+    (*(s32 **)((u8 *)(arg0) + (0x38))) = &lbl_8040AB98;
+}
+}
+
+extern "C" {
+
+s32 fn_80253DF0(s16, s32, s32);
+__declspec(section ".data") extern s32 lbl_8040ACB0;
+extern s8 lbl_8063D48D;
+
+void fn_80054158() {
+    fn_80253DF0((*(s16 *)((u8 *)(&lbl_8040ACB0) + (2))), 8, 0);
+    fn_80253DF0((*(s16 *)((u8 *)(&lbl_8040ACB0) + (4))), 8, 0);
+    lbl_8063D48D = 0;
+}
+}
+
+extern "C" {
+
+void fn_800541AC() {
+    fn_80253DF0((s16)((*(s16 *)((u8 *)(&lbl_8040ACB0) + (2)))), (s32)(8), (s32)(1));
+    fn_80253DF0((s16)((*(s16 *)((u8 *)(&lbl_8040ACB0) + (4)))), (s32)(8), (s32)(1));
+    lbl_8063D48D = 1;
+}
+}
