@@ -18,7 +18,9 @@ from typing import Optional, Tuple
 def find_def(src: str, name: str) -> Optional[Tuple[int, int]]:
     """Span of the definition of name: from the start of its signature line
     (including comments directly above) to its closing brace."""
-    for m in re.finditer(r"^[^\n;{}#]*?\b" + re.escape(name) + r"\s*\(", src, re.M):
+    # A definition starts at the beginning of a line; an indented match is a
+    # call inside another function's body
+    for m in re.finditer(r"^(?![ \t])[^\n;{}#]*?\b" + re.escape(name) + r"\s*\(", src, re.M):
         # The signature ends at the first '{' or ';' after the parameter list.
         depth, i = 0, m.end() - 1
         while i < len(src):
@@ -34,6 +36,10 @@ def find_def(src: str, name: str) -> Optional[Tuple[int, int]]:
         while j < len(src) and src[j] not in "{;":
             j += 1
         if j >= len(src) or src[j] == ";":
+            continue
+        # Between the parameter list and the body: only `const` or a
+        # constructor's initializer list
+        if not re.fullmatch(r"\s*(?:const\s*)?(?::[^{;]*)?", src[i + 1 : j]):
             continue
         depth = 0
         k = j

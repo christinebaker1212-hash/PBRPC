@@ -151,6 +151,15 @@ dated. Write facts and next steps, not narration.
   register-only near misses.
 - SDK prototypes are read from `libs/*/include` into `KNOWN`.
 - 37.42% matched at `d948fff`.
+- Bug found and fixed (`tools/graft.py` `find_def`, used by automatch's
+  `remove_definition`): an indented call followed by `{` on the same line
+  (`    if (fn_X(...) == 0) {`) was taken for fn_X's definition, so applying a
+  match for fn_X deleted that block from another function. Definitions now
+  must start at column 0 with only `const` or an initializer list before `{`.
+  An audit against `0ea9a9b` found two functions damaged this way
+  (`fn_802F61FC`, `fn_803541DC`), both restored; and that `lyt_pane`'s static
+  initializer stopped matching after the library run (reverted that file).
+  GPT's apply-time protection of existing matches would also catch these.
 
 ### Pitfalls
 

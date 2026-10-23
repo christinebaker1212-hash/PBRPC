@@ -269,7 +269,23 @@ void fn_802F61FC(s32 arg0, s32 arg1, s32 arg2) {
     s32 var_r31;
     void *temp_r3;
 
-
+    if (fn_802F5BC4(0, &sp8) == 0) {
+        if (arg0 == 0x17) {
+            var_r31 = -5;
+        } else {
+            temp_r3 = fn_802F5AA8(0xC, 0x20);
+            if (temp_r3 == NULL) {
+                var_r31 = -0x31;
+            } else {
+                (*(s32 *)((u8 *)(temp_r3) + (0))) = arg0;
+                (*(s32 *)((u8 *)(temp_r3) + (4))) = arg1;
+                (*(s32 *)((u8 *)(temp_r3) + (8))) = arg2;
+                var_r31 = IOS_Ioctl(sp8, 0xF, temp_r3, 0xC, 0, 0);
+                fn_802F5B90(0xC, temp_r3, 0x20);
+            }
+        }
+        fn_802F5CAC(0, var_r31);
+    }
 }
 }
 

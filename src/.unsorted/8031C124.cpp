@@ -681,7 +681,9 @@ s32 fn_80351A24(u8 *arg0);
 s32 *fn_80351B98(s32 arg0);
 
 void fn_803541DC(void) {
-
+    if (((s32 (*)(void))fn_80351B98)() != 0) {
+        ((void (*)(void))fn_80351A24)();
+    }
 }
 }
 
