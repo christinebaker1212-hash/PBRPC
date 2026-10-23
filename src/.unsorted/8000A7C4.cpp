@@ -72,3 +72,20 @@ void free(s32 arg0) {
     freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, arg0);
 }
 }
+
+extern "C" {
+
+s32 fn_80025278(s32, s32, s32, s32, s32, s32, s32);
+s32 fn_80249890__6GSfsysFUl(s32);
+s32 freeFsysCacheEntries__7GScacheFUl(s32);
+__declspec(section ".data") extern s32 lbl_80405EA4;
+extern s32 lbl_8063E9B0;
+
+void fn_8000A95C(s32 arg0, s32 arg1) {
+    if ((s32) lbl_8063E9B0 != 0) {
+        fn_80025278(lbl_8063E9B0, 1, (s32) &lbl_80405EA4, arg1, 0, 0, 0);
+    }
+    fn_80249890__6GSfsysFUl(0xC);
+    freeFsysCacheEntries__7GScacheFUl(0xC);
+}
+}
