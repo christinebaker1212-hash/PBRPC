@@ -152,3 +152,13 @@ s32 fn_80263A44(void) {
     return fn_8026391C() != 0;
 }
 }
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_80425B80;
+
+void fn_8026321C(u8 *arg0, s32 arg1) {
+    (*(s32 *)((u8 *)(arg0) + (0xF44))) = arg1;
+    (*(s32 *)((u8 *)(&lbl_80425B80) + (0xC))) = arg1;
+}
+}
