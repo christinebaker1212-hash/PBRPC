@@ -305,3 +305,19 @@ s32 fn_80036068(s32 arg0) {
     return arg0 + 0x30;
 }
 }
+
+extern "C" {
+
+u8 *fn_80036D3C(s32 arg0, s32 arg1) {
+    u8 *temp_r3;
+
+    if ((arg1 < 0) || (arg1 > 3)) {
+        return NULL;
+    }
+    temp_r3 = (unsigned char *)(arg0 + (arg1 * 0x34));
+    if ((s32) (*(u8 *)((u8 *)(temp_r3) + (0x347))) != 0) {
+        return temp_r3 + 0x340;
+    }
+    return temp_r3 + 0x410;
+}
+}
