@@ -127,3 +127,54 @@ s32 fn_8023B5A0(s32 arg0) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+
+void fn_8023B2F0__14GSrenderTargetFv(u8 *arg0) {
+    u8 *temp_r31;
+    u8 *var_r3;
+
+    var_r3 = (*(u8 **)((u8 *)(arg0) + (0x10)));
+    while (var_r3 != NULL) {
+        temp_r31 = (*(u8 **)((u8 *)(var_r3) + (0x10)));
+        __dl__FPv((s32) var_r3);
+        var_r3 = temp_r31;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8023B240(u8 *arg0, u32 arg1) {
+    u8 *temp_r31;
+    u8 *var_r3;
+
+    var_r3 = (*(u8 **)((u8 *)(arg0) + (0x10)));
+    while (var_r3 != NULL) {
+        temp_r31 = (*(u8 **)((u8 *)(var_r3) + (0x10)));
+        if ((u32) (*(u32 *)((u8 *)(var_r3) + (0))) == arg1) {
+            __dl__FPv((s32)((s32) var_r3));
+        }
+        var_r3 = temp_r31;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8023B298(u8 *arg0, u32 arg1) {
+    u8 *temp_r31;
+    u8 *var_r3;
+
+    var_r3 = (*(u8 **)((u8 *)(arg0) + (0x10)));
+    while (var_r3 != NULL) {
+        temp_r31 = (*(u8 **)((u8 *)(var_r3) + (0x10)));
+        if ((u32) (*(u32 *)((u8 *)(var_r3) + (4))) == arg1) {
+            __dl__FPv((s32)((s32) var_r3));
+        }
+        var_r3 = temp_r31;
+    }
+}
+}
