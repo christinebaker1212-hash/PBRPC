@@ -423,34 +423,69 @@ typedef double f64;
 """
 
 
-def compile_cpp(edge: Dict[str, str], src: str, m2c_dir: Path, tmp: Path) -> Optional[Path]:
-    cpp = tmp / "scratch.cpp"
-    cpp.write_text(PREAMBLE + f'extern "C" {{\n{src}\n}}\n', encoding="latin-1")
-    obj = tmp / "scratch.o"
-    if obj.exists():
-        obj.unlink()
-    cflags = shlex.split(edge["cflags"])
-    cmd = [
-        str(ROOT / "build/tools/wibo"),
-        str(ROOT / "build/compilers" / edge["mw_version"] / "mwcceppc.exe"),
-        *cflags,
-        "-c",
-        str(cpp),
-        "-o",
-        str(obj),
-    ]
-    r = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
-    if r.returncode != 0 or not obj.exists():
-        dump = os.environ.get("AUTOMATCH_DUMP")
-        if dump:
-            # Keep failing sources and compiler output, to improve the rewriting.
-            d = Path(dump)
-            d.mkdir(parents=True, exist_ok=True)
-            n = len(list(d.glob("*.cpp")))
-            (d / f"{n:04}.cpp").write_text(cpp.read_text(encoding="latin-1"), encoding="latin-1")
-            (d / f"{n:04}.err").write_text(r.stdout + r.stderr)
+LAST_SOURCE = ""
+
+
+def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
+    """Fixes an "illegal implicit conversion" (C++ does not convert between
+    integers and pointers as C does) by casting the assigned or returned
+    value to the type the compiler wanted."""
+    m = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\(10209\) illegal implicit conversion from '[^']*' to\s*\n?#?\s*'([^']+)'", err, re.M)
+    if m is None:
         return None
-    return obj
+    lines = src.split("\n")
+    i = int(m.group(1)) - first_line
+    if not 0 <= i < len(lines):
+        return None
+    t, l = m.group(2), lines[i]
+    a = re.match(r"^(\s*)(.+?) = (.+);\s*$", l)
+    r = re.match(r"^(\s*)return (.+);\s*$", l)
+    if a and not a.group(3).startswith(f"({t})"):
+        lines[i] = f"{a.group(1)}{a.group(2)} = ({t})({a.group(3)});"
+    elif r and not r.group(2).startswith(f"({t})"):
+        lines[i] = f"{r.group(1)}return ({t})({r.group(2)});"
+    else:
+        return None
+    return "\n".join(lines)
+
+
+def compile_cpp(edge: Dict[str, str], src: str, m2c_dir: Path, tmp: Path) -> Optional[Path]:
+    """Compiles src; LAST_SOURCE is src with the casts it needed."""
+    global LAST_SOURCE
+    first_line = PREAMBLE.count("\n") + 2
+    for _ in range(12):
+        cpp = tmp / "scratch.cpp"
+        cpp.write_text(PREAMBLE + f'extern "C" {{\n{src}\n}}\n', encoding="latin-1")
+        obj = tmp / "scratch.o"
+        if obj.exists():
+            obj.unlink()
+        cflags = shlex.split(edge["cflags"])
+        cmd = [
+            str(ROOT / "build/tools/wibo"),
+            str(ROOT / "build/compilers" / edge["mw_version"] / "mwcceppc.exe"),
+            *cflags,
+            "-c",
+            str(cpp),
+            "-o",
+            str(obj),
+        ]
+        r = subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT)
+        if r.returncode == 0 and obj.exists():
+            LAST_SOURCE = src
+            return obj
+        fixed = cast_conversion(src, r.stdout + r.stderr, first_line)
+        if fixed is None:
+            break
+        src = fixed
+    dump = os.environ.get("AUTOMATCH_DUMP")
+    if dump:
+        # Keep failing sources and compiler output, to improve the rewriting.
+        d = Path(dump)
+        d.mkdir(parents=True, exist_ok=True)
+        n = len(list(d.glob("*.cpp")))
+        (d / f"{n:04}.cpp").write_text(cpp.read_text(encoding="latin-1"), encoding="latin-1")
+        (d / f"{n:04}.err").write_text(r.stdout + r.stderr)
+    return None
 
 
 DECL_NAME = re.compile(r"\b(\w+)\s*(?:\[[^\]]*\])?\s*(?:\(|;)")
@@ -747,11 +782,11 @@ def main() -> None:
                     bf = Obj(obj).function(name)
                     if bf is not None and same(tf, bf):
                         matched.append((name, int(f["size"])))
-                        (out_dir / f"{name}.cpp").write_text(src)
+                        (out_dir / f"{name}.cpp").write_text(LAST_SOURCE)
                         result = f"MATCH ({int(f['size']):#x})"
                         break
                     if bf is not None:
-                        best = max(best, (similarity(tf, bf), src))
+                        best = max(best, (similarity(tf, bf), LAST_SOURCE))
                     result = "differs"
                 # Without the context m2c infers every type itself, which
                 # compiles where the context's guesses did not.
