@@ -96,3 +96,29 @@ void fn_8000AD50(void) {
     fn_80224584__15GSthreadManagerFb(sInstance__15GSthreadManager, 0);
 }
 }
+
+#include "common.hpp"
+
+extern "C" {
+
+s32 fn_80227574(s32 *, s32, s32, s32, s32);
+
+void fn_8000AD18(s32 arg0) {
+    fn_80227574((s32 *)(&fn_8000ACE8), (s32)(arg0), (s32)(0x2000), (s32)(9), (s32)(1));
+}
+}
+
+extern "C" {
+
+s32 __register_global_object(s32 *, s32 *, s32 *);
+s32 fn_80225E94(s32 *, s32, s32 *, s32 *, s32 *);
+void fn_8000AD34(void);
+void fn_80225EE0(void);
+__declspec(section ".data") extern s32 lbl_80474F00;
+__declspec(section ".data") extern s32 lbl_80474F0C;
+
+void fn_8000AD5C() {
+    fn_80225E94((s32 *)(&lbl_80474F0C), (s32)(1), (s32 *)(&fn_8000AD18), (s32 *)(&fn_8000AD34), (s32 *)(&fn_8000AD50));
+    __register_global_object((s32 *)(&lbl_80474F0C), (s32 *)(&fn_80225EE0), (s32 *)(&lbl_80474F00));
+}
+}
