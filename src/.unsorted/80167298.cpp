@@ -77,3 +77,20 @@ s32 fn_80167490(s32 arg0, s32 arg1) {
     return 0x6EC;
 }
 }
+
+extern "C" {
+
+s32 strlen(s32);
+__declspec(section ".data") extern s8 lbl_8048C928;
+
+u32 fn_80167354(s32 arg0, u8 *arg1, u32 arg2) {
+    u32 var_r31;
+
+    var_r31 = strlen((s32)(&lbl_8048C928)) + 1;
+    if (var_r31 > arg2) {
+        var_r31 = arg2;
+    }
+    memcpy((s32)((s32)(arg1)), (s32)((s32)((u8 *) &lbl_8048C928)), (s32)((s32)(var_r31)));
+    return var_r31;
+}
+}
