@@ -502,10 +502,28 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
                 if x not in variants:
                     variants.append(x)
     # MWCC compiles a one-case switch as beq/b; m2c turns it into an early return
+    # m2c keeps a reused comparison result in a temp_crN variable
+    for v in list(variants[:2]):
+        w = inline_cr_temps(v)
+        if w != v and w not in variants:
+            variants.append(w)
+    for v in list(variants[:2]):
+        w = range_switch(v)
+        if w is not None and w not in variants:
+            variants.append(w)
     for v in variants[:2]:
         w = single_case_switch(v)
         if w is not None and w not in variants:
             variants.append(w)
+    # All the control-flow rewrites together
+    for v in list(variants[:2]):
+        w = while_loops(inline_cr_temps(v))
+        w = range_switch(w) or w
+        w = single_case_switch(w) or w
+        t = ternaries(w)
+        for x in (w, stack_arrays(w), t):
+            if x not in variants:
+                variants.append(x)
     return variants
 
 
@@ -584,6 +602,51 @@ def stack_buffer(src: str, asm_text: str) -> List[str]:
         w = re.sub(r"&sp" + f"{off:X}" + r"\b", f"sp{off:X}", w)
         out.append(w)
     return out
+
+
+def inline_cr_temps(src: str) -> str:
+    """Comparison results m2c stores in temp_crN_* variables, written inline."""
+    for m in list(re.finditer(r"^ +(temp_cr\d_\w+) = ([^\n;]+);\n", src, re.M)):
+        name, expr = m.group(1), m.group(2)
+        if len(re.findall(r"^ +" + name + r" = ", src, re.M)) != 1:
+            continue
+        src = re.sub(r"^ +" + name + r" = [^\n;]+;\n", "", src, count=1, flags=re.M)
+        src = re.sub(r"^ +s32 " + name + r";\n", "", src, count=1, flags=re.M)
+        src = re.sub(r"\b" + name + r" != 0\b", f"({expr})", src)
+        src = re.sub(r"\b" + name + r" == 0\b", f"!({expr})", src)
+        src = re.sub(r"\b" + name + r"\b", f"({expr})", src)
+    return src
+
+
+def ternaries(src: str) -> str:
+    """`if (c) { x = a; } else { x = b; }` as `x = c ? a : b;`."""
+    return re.sub(
+        r"^( +)if \(([^\n]+)\) \{\n\1    (\w+) = ([^\n;]+);\n\1\} else \{\n\1    \3 = ([^\n;]+);\n\1\}\n",
+        lambda m: f"{m.group(1)}{m.group(3)} = ({m.group(2)}) ? ({m.group(4)}) : ({m.group(5)});\n",
+        src,
+        flags=re.M,
+    )
+
+
+def range_switch(src: str) -> Optional[str]:
+    """`if (x < B) { if (x < A) goto L; body } L:` as a switch over A..B-1,
+    which MWCC compiles to the same two compares."""
+    m = re.search(
+        r"^( +)if \(([^\n]+) < (-?\d+)\) \{\n\1    if \(\2 < (-?\d+)\) \{\n\1        goto (block_\d+);\n\1    \}\n(.*?)^\1\}\n\5:\n",
+        src,
+        re.S | re.M,
+    )
+    if m is None:
+        return None
+    ind, x, hi, lo, label, body = m.groups()
+    hi, lo = int(hi), int(lo)
+    if not 0 < hi - lo <= 16:
+        return None
+    rest = src[: m.start()] + src[m.end() :]
+    keep_label = label in rest
+    cases = "".join(f"{ind}case {k}:\n" for k in range(lo, hi))
+    new = f"{ind}switch ({x}) {{\n{cases}{body}{ind}}}\n" + (f"{label}:\n" if keep_label else "")
+    return src[: m.start()] + new + src[m.end() :]
 
 
 def single_case_switch(src: str) -> Optional[str]:
