@@ -78,17 +78,28 @@ void *SoundThread::SoundThreadFunc(void *pArg) {
 }
 
 void SoundThread::RegisterPlayerCallback(PlayerCallback *pCallback) {
-    ut::detail::AutoLock<OSMutex> lock(mMutex);
+    ut::AutoInterruptLock lock;
     mPlayerCallbackList.PushBack(pCallback);
 }
 
 void SoundThread::UnregisterPlayerCallback(PlayerCallback *pCallback) {
-    ut::detail::AutoLock<OSMutex> lock(mMutex);
+    ut::AutoInterruptLock lock;
     mPlayerCallbackList.Erase(pCallback);
 }
 
+// Calls FUNC on every callback in LIST, letting interrupts in around each
+// call (the callbacks may unregister themselves).
+#define CALL_EACH_UNLOCKED(LIST, TYPE, FUNC, ENABLED)                                                                \
+    for (TYPE::Iterator it = (LIST).GetBeginIter(); it != (LIST).GetEndIter();) {                                    \
+        TYPE::Iterator cur = it++;                                                                                    \
+        OSRestoreInterrupts(ENABLED);                                                                                 \
+        cur->FUNC();                                                                                                  \
+        ENABLED = OSDisableInterrupts();                                                                              \
+    }
+
 void SoundThread::SoundThreadProc() {
     OSMessage msg;
+    BOOL enabled;
 
     while (true) {
         OSReceiveMessage(&mMsgQueue, &msg, OS_MESSAGE_BLOCK);
@@ -96,8 +107,12 @@ void SoundThread::SoundThreadProc() {
         if (reinterpret_cast<u32>(msg) == MSG_AX_CALLBACK) {
             ut::detail::AutoLock<OSMutex> lock(mMutex);
 
-            NW4R_UT_LINKLIST_FOREACH_SAFE (it, mSoundFrameCallbackList,
-                                           { it->OnBeginSoundFrame(); })
+            enabled = OSDisableInterrupts();
+            {
+                ut::AutoInterruptLock lock;
+                CALL_EACH_UNLOCKED(mSoundFrameCallbackList, SoundFrameCallbackList, OnBeginSoundFrame, enabled)
+                OSRestoreInterrupts(enabled);
+            }
 
             u32 start = OSGetTick();
             {
@@ -105,8 +120,9 @@ void SoundThread::SoundThreadProc() {
                 AxManager::GetInstance().Update();
 
                 if (!AxManager::GetInstance().IsDiskError()) {
-                    NW4R_UT_LINKLIST_FOREACH_SAFE (it, mPlayerCallbackList,
-                                                   { it->OnUpdateFrameSoundThread(); })
+                    BOOL enabled = OSDisableInterrupts();
+                    CALL_EACH_UNLOCKED(mPlayerCallbackList, PlayerCallbackList, OnUpdateFrameSoundThread, enabled)
+                    OSRestoreInterrupts(enabled);
 
                     ChannelManager::GetInstance().UpdateAllChannel();
                 }
@@ -116,17 +132,21 @@ void SoundThread::SoundThreadProc() {
             }
             mProcessTick = OSGetTick() - start;
 
-            NW4R_UT_LINKLIST_FOREACH_SAFE (it, mSoundFrameCallbackList,
-                                           { it->OnEndSoundFrame(); })
+            enabled = OSDisableInterrupts();
+            CALL_EACH_UNLOCKED(mSoundFrameCallbackList, SoundFrameCallbackList, OnEndSoundFrame, enabled)
+            OSRestoreInterrupts(enabled);
 
         } else if (reinterpret_cast<u32>(msg) == MSG_SHUTDOWN) {
-            NW4R_UT_LINKLIST_FOREACH_SAFE (it, mPlayerCallbackList,
-                                           { it->OnShutdownSoundThread(); })
+            enabled = OSDisableInterrupts();
+            CALL_EACH_UNLOCKED(mPlayerCallbackList, PlayerCallbackList, OnShutdownSoundThread, enabled)
+            OSRestoreInterrupts(enabled);
 
             break;
         }
     }
 }
+
+#undef CALL_EACH_UNLOCKED
 
 } // namespace detail
 } // namespace snd
