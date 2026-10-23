@@ -109,3 +109,16 @@ s32 fn_8004F300(s32 arg0) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 __construct_array(s32, s32, s32, s32, s32);
+
+s32 fn_8004F0BC(s32 arg0) {
+    __construct_array(arg0, (s32) &fn_8004ED4C, (s32) &fn_8004ED5C, 8, 0x20);
+    memset((u8 *)(arg0 + 0x100), (s32)(0), (s32)(0x80));
+    memset((u8 *)(arg0), (s32)(0), (s32)(0x100));
+    (*(f32 *)((u8 *)(arg0) + (0x180))) = (f32) lbl_80640A60;
+    return arg0;
+}
+}
