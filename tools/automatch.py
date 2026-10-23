@@ -695,6 +695,7 @@ def stack_buffer(src: str, asm_text: str) -> List[str]:
         if size // elem < 2:
             continue
         w = src[: d.start()] + f"{d.group(1)}{d.group(2)} sp{off:X}[{size // elem}];" + src[d.end() :]
+        w = re.sub(r"(?<![&\w])sp" + f"{off:X}" + r"\b(?!\[)", f"sp{off:X}[0]", w)
         w = re.sub(r"&sp" + f"{off:X}" + r"\b", f"sp{off:X}", w)
         out.append(w)
     return out
@@ -855,15 +856,22 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
         if d is None:
             return None
         return src[: d.end()] + "".join(f"    s32 {x};\n" for x in u) + src[d.end() :]
-    c = re.search(r"\(10248\) function call '(\w+)\(", err)
+    c = re.search(r"\(10248\) function call\s*(?:#\s*)?'(\w+)\(", err)
     if c:
         return cast_call_arguments(src, c.group(1))
     e = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\((\d+)\)", err, re.M)
-    if e and e.group(2) in ("10499", "10144"):
+    if e and e.group(2) in ("10499", "10144", "10162"):
         lines = src.split("\n")
         i = int(e.group(1)) - first_line
         if not 0 <= i < len(lines):
             return None
+        if e.group(2) == "10162":
+            # An indirect call with fewer arguments than m2c's pointer type
+            new = re.sub(r"\(\*\*\)\([^()]*\)", "(**)(...)", lines[i], count=1)
+            if new == lines[i]:
+                return None
+            lines[i] = new
+            return "\n".join(lines)
         if e.group(2) == "10499":
             # A loaded integer m2c indexes as a pointer: `x = *((*(s32 *)(p)) + (i))`
             a = re.match(r"^(\s*)(\w+) = \*\(\(\*\(s32 \*\)(.*)\);$", lines[i])
@@ -872,9 +880,27 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
                 t = d.group(1).strip() if d else "s32"
                 lines[i] = f"{a.group(1)}{a.group(2)} = *({t} *)((*(u8 **){a.group(3)});"
                 return "\n".join(lines)
+            # `*(int expression)`: m2c's address arithmetic on an integer
+            for d in re.finditer(r"\*\((?![\w ]+\*+\))", lines[i]):
+                depth, j = 0, d.end() - 1
+                while j < len(lines[i]):
+                    depth += {"(": 1, ")": -1}.get(lines[i][j], 0)
+                    if depth == 0:
+                        break
+                    j += 1
+                if j >= len(lines[i]):
+                    break
+                inner = lines[i][d.end() : j]
+                if not re.search(r"\+", inner):
+                    continue
+                lhs = re.match(r"^\s*(\w+) = ", lines[i])
+                decl = lhs and re.search(r"^\s+([\w ]+?\**) ?" + re.escape(lhs.group(1)) + r";$", src, re.M)
+                t = decl.group(1).strip() if decl else "s32"
+                lines[i] = lines[i][: d.start()] + f"*({t} *)((u8 *)0 + ({inner}))" + lines[i][j + 1 :]
+                return "\n".join(lines)
             # An integer variable m2c dereferences: make it a pointer
             for name in re.findall(r"\*\(?(\w+)\)?", lines[i]):
-                d = re.compile(r"^(\s+)(s32|u32) " + re.escape(name) + r";$", re.M)
+                d = re.compile(r"^(\s+|(?:__declspec\([^)]*\) )?extern )(s32|u32) " + re.escape(name) + r";$", re.M)
                 if d.search(src):
                     return d.sub(lambda m: f"{m.group(1)}{m.group(2)} *{name};", src, count=1)
             return None
