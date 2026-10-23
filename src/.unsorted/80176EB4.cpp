@@ -40,3 +40,16 @@ u16 fn_80177378(s32 arg0) {
     return 0x81ACU;
 }
 }
+
+extern "C" {
+
+s32 fn_80167FC4(s32, s32);
+
+void fn_80177A48(s32 arg0, s32 arg1, s32 arg2) {
+    switch (arg2) {
+    case 4:
+        fn_80167FC4(arg0, arg1);
+    }
+    return;
+}
+}
