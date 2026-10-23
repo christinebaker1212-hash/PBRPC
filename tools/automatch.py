@@ -1232,7 +1232,15 @@ def range_switch(src: str) -> Optional[str]:
         re.S | re.M,
     )
     if m is None:
-        return None
+        # `if (x >= A) { if (x > B) return; body }` at the end of the function
+        m = re.search(r"^( +)if \(([^\n]+) >= (-?\d+)\) \{\n\1    if \(\2 > (-?\d+)\) \{\n\1        return;\n\1    \}\n(.*?)^\1\}\n\}", src, re.S | re.M)
+        if m is None:
+            return None
+        ind, x, lo, hi, body = m.group(1), m.group(2), int(m.group(3)), int(m.group(4)), m.group(5)
+        if not 0 <= hi - lo < 16:
+            return None
+        cases = "".join(f"{ind}case {k}:\n" for k in range(lo, hi + 1))
+        return src[: m.start()] + f"{ind}switch ({x}) {{\n{cases}{body}{ind}}}\n}}" + src[m.end() :]
     ind, x, hi, lo, label, body = m.groups()
     hi, lo = int(hi), int(lo)
     if not 0 < hi - lo <= 16:
