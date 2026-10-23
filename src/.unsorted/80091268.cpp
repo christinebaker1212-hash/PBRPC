@@ -213,3 +213,189 @@ void fn_80091AB4(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8008A54C(void);
+s32 fn_8008AF50(s32);
+s32 fn_8015C308(s32, s32);
+s32 fn_80162A90(s32);
+extern u16 lbl_8063ECE2;
+extern u8 lbl_8063ED32;
+extern u8 *lbl_8063ED90;
+
+void fn_80091444(s32 arg0, s32 arg1) {
+    u32 sp8;
+    s32 temp_r31;
+    s32 temp_r3;
+    s32 var_r30;
+
+    var_r30 = 0;
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32 *)((s32) &sp8));
+    temp_r31 = fn_8008AF50(1);
+    temp_r3 = fn_8008AF50(2);
+    switch (sp8) {                                  /* switch 1 */
+    case 0:                                         /* switch 1 */
+        var_r30 = fn_8008A54C();
+        break;
+    case 3:                                         /* switch 1 */
+        if (temp_r31 != 0) {
+            fn_8015C308(0x17, fn_8008AF50(1));
+            var_r30 = 0x2A26;
+        }
+        if ((fn_80162A90(0x39) == 1U) && ((u32) (*(u32 *)((u8 *)(lbl_8063ED90) + (0x10))) == 0x3EDU)) {
+            fn_8015C308(0x18, fn_8008AF50(4));
+            var_r30 = 0x2A28;
+        }
+        break;
+    case 4:                                         /* switch 1 */
+        if (temp_r3 == 0) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0));
+        } else {
+            fn_8015C308(0x18, fn_8008AF50(2));
+            var_r30 = 0x2A27;
+        }
+        break;
+    case 5:                                         /* switch 1 */
+        if (temp_r31 == 0) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        }
+        break;
+    case 6:                                         /* switch 1 */
+        if (temp_r3 == 0) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        }
+        break;
+    case 8:                                         /* switch 1 */
+        if ((s32) lbl_8063ED32 == 0) {
+            switch ((s32) lbl_8063ED0C) {           /* switch 2; irregular */
+            case 2:                                 /* switch 2 */
+                var_r30 = 0x2A29;
+                break;
+            case 1:                                 /* switch 2 */
+                var_r30 = 0x2A2A;
+                break;
+            case 3:                                 /* switch 2 */
+                var_r30 = 0x2A57;
+                break;
+            }
+        }
+        break;
+    case 11:                                        /* switch 1 */
+        if ((s32) lbl_8063ED32 == 0) {
+            var_r30 = 0x2A2B;
+        }
+        break;
+    case 12:                                        /* switch 1 */
+        if ((s32) lbl_8063ED32 != 0) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        }
+        break;
+    case 13:                                        /* switch 1 */
+        if ((s32) lbl_8063ED32 == 0) {
+            var_r30 = 0x2A2C;
+        }
+        break;
+    case 14:                                        /* switch 1 */
+    case 18:                                        /* switch 1 */
+        if ((s32) lbl_8063ED32 != 0) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        }
+        break;
+    case 17:                                        /* switch 1 */
+        if (((u16) lbl_8063ECE2 == 0xD) && ((s32) lbl_8063ED32 != 0)) {
+            fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        }
+        break;
+    }
+    if (var_r30 != 0) {
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(var_r30));
+    }
+}
+}
+
+extern "C" {
+
+void fn_80093658(s32 arg0, s32 arg1) {
+    s32 sp8;
+    s32 var_r31;
+
+    var_r31 = 0;
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32 *)((s32) &sp8));
+    switch (sp8) {                                  /* switch 1 */
+    case 0x11:                                      /* switch 1 */
+        var_r31 = 0x2A72;
+        break;
+    case 0x14:                                      /* switch 1 */
+        var_r31 = 0x2A73;
+        break;
+    case 0x17:                                      /* switch 1 */
+        var_r31 = 0x2A74;
+        break;
+    case 0x1A:                                      /* switch 1 */
+        var_r31 = 0x2A75;
+        break;
+    case 0x1D:                                      /* switch 1 */
+        var_r31 = 0x2A76;
+        break;
+    case 0x20:                                      /* switch 1 */
+        var_r31 = 0x2A77;
+        break;
+    case 0x23:                                      /* switch 1 */
+        var_r31 = 0x2A78;
+        break;
+    case 0x26:                                      /* switch 1 */
+        var_r31 = 0x2A79;
+        break;
+    case 0x29:                                      /* switch 1 */
+        var_r31 = 0x2A7A;
+        break;
+    case 0x2C:                                      /* switch 1 */
+        var_r31 = 0x2A7B;
+        break;
+    case 0xF:                                       /* switch 1 */
+        switch (lbl_8063ED0C) {                     /* switch 2 */
+        case 1:                                     /* switch 2 */
+            var_r31 = 0x2A7E;
+            break;
+        case 2:                                     /* switch 2 */
+            var_r31 = 0x2A7F;
+            break;
+        case 3:                                     /* switch 2 */
+            var_r31 = 0x2A80;
+            break;
+        case 4:                                     /* switch 2 */
+            var_r31 = 0x2A81;
+            break;
+        case 5:                                     /* switch 2 */
+            var_r31 = 0x2A82;
+            break;
+        case 6:                                     /* switch 2 */
+            var_r31 = 0x2A83;
+            break;
+        case 7:                                     /* switch 2 */
+            var_r31 = 0x2A84;
+            break;
+        case 8:                                     /* switch 2 */
+            var_r31 = 0x2A85;
+            break;
+        case 9:                                     /* switch 2 */
+            var_r31 = 0x2A86;
+            break;
+        case 10:                                    /* switch 2 */
+            var_r31 = 0x2A87;
+            break;
+        }
+        break;
+    case 0x2E:                                      /* switch 1 */
+    case 0x31:                                      /* switch 1 */
+    case 0x3E:                                      /* switch 1 */
+    case 0x3F:                                      /* switch 1 */
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(1), (s32)(0));
+        break;
+    }
+    if (var_r31 != 0) {
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(var_r31));
+    }
+}
+}
