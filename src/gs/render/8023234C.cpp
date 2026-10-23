@@ -103,3 +103,20 @@ void GSrender::fn_802327E8() {
     fn_8023B6BC();
     fn_8023FD64();
 }
+
+extern "C" {
+
+u8 *fn_8023246C__8GSrenderFv(void);
+s32 fn_8023B948__8GSrenderFPv(s32, s32);
+
+s32 fn_80232404__8GSrenderFPFUl_vUl(s32 arg0, s32 arg1, s32 arg2) {
+    u8 *temp_r3;
+
+    temp_r3 = fn_8023246C__8GSrenderFv();
+    (*(s32 *)((u8 *)(temp_r3) + (0))) = arg1;
+    (*(s32 *)((u8 *)(temp_r3) + (4))) = arg2;
+    (*(s32 *)((u8 *)(temp_r3) + (8))) = fn_8023B948__8GSrenderFPv(arg0, arg2);
+    GXSetDrawDone();
+    return (*(s32 *)((u8 *)(temp_r3) + (8)));
+}
+}
