@@ -462,19 +462,3 @@ Material *Pane::GetMaterial() const {
 
 } // namespace lyt
 } // namespace nw4r
-
-#include "common.hpp"
-
-extern "C" {
-
-void fn_80385328() {
-
-}
-}
-
-extern "C" {
-
-void fn_8038580C() {
-
-}
-}
