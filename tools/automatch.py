@@ -870,6 +870,32 @@ def equality_constants(src: str) -> str:
 
 def byte_offsets(src: str) -> str:
     ptrs = set(re.findall(r"^\s+(?:s16|u16|s32|u32|f32|f64|s64|u64) \*(\w+);$", src, re.M))
+    types = dict((n, t) for t, n in re.findall(r"^\s+((?:s16|u16|s32|u32|f32|f64|s64|u64) \*)(\w+);$", src, re.M))
+    # `p += n` on a non-byte pointer: m2c counts n in bytes
+    src = re.sub(
+        r"^(\s+)(\w+) ([+-])= ((?:0x[0-9A-F]+|\d+));$",
+        lambda m: f"{m.group(1)}{m.group(2)} = ({types[m.group(2)]})((u8 *){m.group(2)} {m.group(3)} {m.group(4)});" if m.group(2) in types else m.group(0),
+        src,
+        flags=re.M,
+    )
+    # `(p + n)` on a non-byte pointer (a local or a global): n is in bytes
+    types.update((n, t) for t, n in re.findall(r"^(?:__declspec\([^)]*\) )?extern ((?:s16|u16|s32|u32|f32|f64|s64|u64) \*)(\w+);$", src, re.M))
+    out, pos = [], 0
+    for m in re.finditer(r"\((\w+) ([+-]) ", src):
+        if m.start() < pos or m.group(1) not in types:
+            continue
+        depth, j = 0, m.start()
+        while j < len(src):
+            depth += {"(": 1, ")": -1}.get(src[j], 0)
+            if depth == 0:
+                break
+            j += 1
+        if j >= len(src):
+            break
+        rest = src[m.end() : j]
+        out.append(src[pos : m.start()] + f"(({types[m.group(1)]})((u8 *){m.group(1)} {m.group(2)} {rest}))")
+        pos = j + 1
+    src = "".join(out) + src[pos:]
     # `&sym + n`: m2c counts n in bytes whatever type the declaration has
     src = re.sub(r"(?<![\w)])&(lbl_\w+) ([+-]) ", r"(u8 *)&\1 \2 ", src)
     return re.sub(
