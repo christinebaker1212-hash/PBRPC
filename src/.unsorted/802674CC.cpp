@@ -68,13 +68,11 @@ void fn_80267690(u8 *arg0) {
 extern "C" {
 
 s32 fn_80267600(void);
-s32 fn_8026765C(s32);
+s32 fn_8026765C();
 s32 fn_80267710(s32, s32);
 
 void fn_802676B4(s32 arg0, s32 arg1) {
-    if ((fn_80267600() == 0) || (fn_8026765C(arg0) != 0)) {
-        fn_80267710(arg0, arg1);
-    }
+
 }
 }
 
@@ -174,5 +172,35 @@ s32 fn_802681B0(s32 arg0, s32 arg1, s32 arg2) {
     (*(s32 *)((u8 *)(temp_r3) + (0x3C))) = arg2;
     fn_80267690((u8 *)(arg0));
     return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_80333F58(void);
+
+void fn_802675DC() {
+    ((s32 (*)(void))fn_802674DC)();
+    fn_80333F58();
+}
+}
+
+extern "C" {
+
+s32 fn_803333B4(void);
+
+s32 fn_8026765C() {
+    ((s32 (*)(void))fn_802674DC)();
+    return fn_803333B4() == 0;
+}
+}
+
+extern "C" {
+
+s32 fn_803338A4(void);
+
+void fn_802677F8() {
+    ((s32 (*)(void))fn_802674DC)();
+    fn_803338A4();
 }
 }

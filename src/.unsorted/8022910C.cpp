@@ -112,3 +112,59 @@ s32 fn_8022A2B4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return fn_8022A35C(arg0, fn_8022CF90(arg0, (s32) (u16) arg1), arg2, arg3, arg4);
 }
 }
+
+extern "C" {
+
+s32 fn_80229478(void);
+
+s32 fn_80229424(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_80229478();
+        if (arg1 > 0) {
+            ((s32 (*)(s32))__dl__FPv)(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8022A900() {
+    s32 *temp_r3;
+
+    temp_r3 = ((s32 *)fn_8022A85C());
+    if (temp_r3 != NULL) {
+        return *temp_r3 != 0;
+    }
+    return 0;
+}
+}
+
+extern "C" {
+
+void fn_8022AB38() {
+    s32 *temp_r3;
+    s32 temp_r0;
+
+    temp_r3 = ((s32 *)fn_8022A85C());
+    if (temp_r3 != NULL) {
+        temp_r0 = *temp_r3;
+        if (temp_r0 != 0) {
+            *temp_r3 = temp_r0 | 2;
+        }
+    }
+}
+}
+
+extern "C" {
+
+void fn_8022AB74() {
+    s32 *temp_r3;
+
+    temp_r3 = ((s32 *)fn_8022A85C());
+    if (temp_r3 != NULL) {
+        *temp_r3 &= 0xFFFFFFFD;
+    }
+}
+}

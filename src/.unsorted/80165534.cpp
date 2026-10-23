@@ -248,3 +248,10 @@ s32 fn_80166D14(s32 arg0, s32 arg1) {
     return memcpy((s32)(arg0 + 0x1958), (s32)(arg1), (s32)(0x10));
 }
 }
+
+extern "C" {
+
+void fn_80166D04(s32 arg0) {
+    memset((u8 *)(arg0 + 0x1958), (s32)(0), (s32)(0x10));
+}
+}

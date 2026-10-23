@@ -31,7 +31,7 @@ void fn_8021C224(void) {
 extern "C" {
 
 s32 allocAndClear__5GSmemFUl(s32);
-s32 fn_8021C254(void);
+void fn_8021C254();
 s32 fn_8021C274(s32);
 s32 fn_8021C388(void);
 extern u8 lbl_8063F52F;
@@ -55,5 +55,15 @@ s32 fn_8021C274(s32 arg0) {
     }
     lbl_8063F536 = (s16) arg0;
     return 1;
+}
+}
+
+extern "C" {
+
+s32 fn_8023EB58(s32, s32 *, s32 *, s32, s32);
+extern s32 lbl_8063F778;
+
+void fn_8021C254() {
+    fn_8023EB58((s32)(lbl_8063F778), (s32 *)(&fn_8021C220), (s32 *)(&fn_8021C224), (s32)(2), (s32)(8));
 }
 }
