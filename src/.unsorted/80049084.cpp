@@ -242,3 +242,82 @@ u8 *fn_8004AB90(u8 *arg0) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_800252EC(s32, s32, s32, s32, s32, s32, s32);
+s32 fn_80037D2C(s32, s32);
+s32 fn_8003D4B4(s32);
+s32 fn_8003D4CC(s32);
+s32 fn_8003D80C(s32);
+s32 fn_8003D824(s32);
+s32 fn_800482AC(s32);
+__declspec(section ".data") extern s32 lbl_8040A508;
+extern s32 lbl_8063E9B0;
+
+void fn_8004A820(u8 *arg0) {
+    u8 *temp_r5;
+    u8 *temp_r30;
+    u32 temp_r7;
+    s32 *temp_r3;
+    s32 temp_r29;
+
+    temp_r30 = (*(u8 **)((u8 *)(arg0) + (0x14)));
+    temp_r5 = (*(u8 **)((u8 *)(arg0) + (0x18)));
+    temp_r7 = (*(u32 *)((u8 *)(temp_r30) + (0x3C)));
+    temp_r29 = lbl_8063E9B0;
+    temp_r3 = (long *)((*(s32 *)((u8 *)(temp_r5) + (0x34))));
+    switch (temp_r7) {
+    case 0:
+        if (temp_r3 != 0) {
+            fn_8003D4CC((s32)(temp_r3));
+        }
+        break;
+    case 1:
+        if (temp_r3 != 0) {
+            fn_8003D824((s32)(temp_r3));
+        }
+        break;
+    case 2:
+        if (temp_r3 != 0) {
+            fn_80037D2C((s32)(temp_r3), (s32)(0));
+        }
+        break;
+    case 3:
+        if (temp_r3 != 0) {
+            fn_80037D2C((s32)(temp_r3), (s32)(1));
+        }
+        break;
+    case 5:
+        if (temp_r3 != 0) {
+            *temp_r3 = (s32) (*temp_r3 | 0x1000);
+        }
+        break;
+    case 6:
+        if (temp_r3 != 0) {
+            *temp_r3 = (s32) (*temp_r3 & 0xFFFFEFFF);
+        }
+        break;
+    case 7:
+        if (temp_r3 != 0) {
+            fn_8003D4B4((s32)(temp_r3));
+        }
+        break;
+    case 9:
+        if (temp_r3 != 0) {
+            fn_8003D80C((s32)(temp_r3));
+        }
+        break;
+    case 11:
+        fn_800482AC((s32) temp_r5);
+        break;
+    case 10:
+        if (temp_r29 != 0) {
+            fn_800252EC(temp_r29, 0, (s32) &lbl_8040A508, 0, (s32) temp_r7, (*(s32 *)((u8 *)(temp_r30) + (0x40))), (*(s32 *)((u8 *)(temp_r30) + (0x44))));
+            fn_800252EC(temp_r29, 2, (s32) &lbl_8040A508, 0, (s32) (*(u32 *)((u8 *)(temp_r30) + (0x3C))), (*(s32 *)((u8 *)(temp_r30) + (0x40))), (*(s32 *)((u8 *)(temp_r30) + (0x44))));
+        }
+        break;
+    }
+    (*(s32 *)((u8 *)(arg0) + (8))) = (s32) ((*(s32 *)((u8 *)(arg0) + (8))) | 2);
+}
+}

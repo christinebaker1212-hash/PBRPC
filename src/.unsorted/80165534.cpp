@@ -57,7 +57,7 @@ s32 fn_8016592C(u8 *arg0) {
 
 extern "C" {
 
-s32 fn_8016615C(s32);
+void fn_8016615C(u8 *arg0);
 s32 fn_80166210(s32);
 s32 fn_80166630(s32);
 s32 fn_8025DFD0(void);
@@ -76,7 +76,7 @@ void fn_801660D8(s32 arg0) {
             fn_80166210(arg0);
             return;
         case 2:
-            fn_8016615C(arg0);
+            fn_8016615C((u8 *)(arg0));
             return;
         case 3:
             fn_80166630(arg0);
@@ -253,5 +253,39 @@ extern "C" {
 
 void fn_80166D04(s32 arg0) {
     memset((u8 *)(arg0 + 0x1958), (s32)(0), (s32)(0x10));
+}
+}
+
+extern "C" {
+
+s32 fn_80162B70(void);
+s32 fn_80164D04(void);
+s32 fn_80165534(s32);
+s32 fn_801657F0(s32);
+s32 fn_8025E314(s32);
+s32 fn_80262FEC(s32, s32);
+
+void fn_8016615C(u8 *arg0) {
+    u16 temp_r0;
+
+    temp_r0 = (*(u16 *)((u8 *)(arg0) + (0x86C)));
+    switch ((s32) temp_r0) {                        /* irregular */
+    case 0:
+        if (fn_80162B70() == 1) {
+            if (fn_80262FEC(fn_8025E314(fn_8025DFD0()), (s32) (*(u16 *)((u8 *)(arg0) + (0)))) != 0) {
+                memcpy((s32)((s32)((*(u8 **)((u8 *)(arg0) + (0x189C))))), (s32)((s32)(fn_80165534((s32) (arg0 + 2)) + 0xC)), (s32)((s32)(0x20U)));
+            } else {
+                fn_801657F0((s32) (arg0 + 2));
+            }
+            (*(s32 *)((u8 *)(arg0) + (0x1898))) = 1;
+        }
+        if (fn_80162B70() == 2) {
+            fn_80164D04();
+        }
+        (*(u16 *)((u8 *)(arg0) + (0x86C))) = (u16) ((*(u16 *)((u8 *)(arg0) + (0x86C))) + 1);
+        /* fallthrough */
+    case 1:
+        return;
+    }
 }
 }
