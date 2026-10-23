@@ -546,3 +546,26 @@ s32 fn_801F0B50__7GSmodelFUl(s32 arg0, s32 arg1) {
     return fn_801F0B7C__7GSmodelFUlb(arg0, arg1, (s32) ((u32) ((8 - var_r6) | (var_r6 - 8)) >> 0x1FU));
 }
 }
+
+extern "C" {
+
+s32 fn_8023B88C__8GSrenderFUl(s32, s32);
+s32 free__5GSmemFPv(s32);
+extern s32 sInstance__8GSrender;
+
+void fn_801EF824(u8 *arg0) {
+    s32 temp_r4;
+
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (4))) != 0) {
+        if ((s32) (*(u8 *)((u8 *)(arg0) + (0x1B))) != 0) {
+            temp_r4 = (*(s32 *)((u8 *)(arg0) + (0x14)));
+            if (temp_r4 != 0) {
+                fn_8023B88C__8GSrenderFUl(sInstance__8GSrender, temp_r4);
+                (*(s32 *)((u8 *)(arg0) + (0x14))) = 0;
+            }
+        }
+        free__5GSmemFPv((*(s32 *)((u8 *)(arg0) + (4))));
+        (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+    }
+}
+}
