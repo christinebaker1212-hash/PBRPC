@@ -27,7 +27,7 @@ void fn_8004746C(u32 a0, u32 a1, u32 a2, u32 a3, u32 a4, u32 a5, u32 a6, u32 a7)
 
 extern "C" {
 
-s32 fn_80044F74(void);
+void fn_80044F74(u8 *arg0);
 
 u8 *fn_80044F28(u8 *arg0) {
     (*(s8 *)((u8 *)(arg0) + (0x40))) = 0;
@@ -36,7 +36,7 @@ u8 *fn_80044F28(u8 *arg0) {
     (*(s8 *)((u8 *)(arg0) + (0x10))) = 0;
     (*(s8 *)((u8 *)(arg0) + (0x11))) = 0;
     (*(s8 *)((u8 *)(arg0) + (0x12))) = 0;
-    fn_80044F74();
+    ((s32 (*)(void))fn_80044F74)();
     return arg0;
 }
 }
@@ -378,6 +378,48 @@ void fn_80046104(u8 *arg0, s32 arg1, s32 arg2) {
                 setCurrentScene__17GShierarchyModuleFP7GSscene(temp_r3_3);
             }
         }
+    }
+}
+}
+
+extern "C" {
+
+void fn_80044F74(u8 *arg0) {
+    (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (8))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xC))) = 0;
+    (*(s16 *)((u8 *)(arg0) + (0x3C))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x3E))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x43))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x3F))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x40))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x41))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x42))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x10))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x11))) = 0;
+    (*(s8 *)((u8 *)(arg0) + (0x12))) = 0;
+}
+}
+
+extern "C" {
+
+s32 fn_80045174(s32, s32, s32);
+
+void fn_80045814(s32 arg0, s32 arg1, s32 arg2) {
+    if ((arg1 >= 0) && (arg1 <= 3)) {
+        fn_80045174(arg0 + (arg1 * 0x44) + 0xC, arg1, arg2);
+    }
+}
+}
+
+extern "C" {
+
+void fn_800474F0(u8 *arg0, s32 arg1) {
+    s32 temp_r3;
+
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x168)));
+    if (temp_r3 != 0) {
+        fn_801E4BCC((s32)(temp_r3), (s32)(arg1));
     }
 }
 }

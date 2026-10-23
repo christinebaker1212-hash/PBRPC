@@ -105,13 +105,13 @@ void fn_8025D390(u32 a0, u32 a1, u32 a2, u32 a3, u32 a4, u32 a5, u32 a6, u32 a7)
 
 extern "C" {
 
-s32 fn_8025CF9C(void);
+void fn_8025CF9C(u8 *arg0);
 void fn_8025CFF0(s32 arg0);
 
 void fn_8025CF0C(u8 *arg0, s32 arg1, s32 arg2) {
     (*(s32 *)((u8 *)(arg0) + (0x6054))) = arg2;
     (*(s32 *)((u8 *)(arg0) + (0x6050))) = arg1;
-    fn_8025CF9C();
+    ((s32 (*)(void))fn_8025CF9C)();
     (*(s32 *)((u8 *)(arg0) + (0x6058))) = 1;
     fn_8025CFF0((s32)(arg0));
 }
@@ -121,7 +121,7 @@ extern "C" {
 
 void fn_8025CF50(u8 *arg0) {
     if (((s32) (*(s32 *)((u8 *)(arg0) + (0x6050))) != 0) && ((s32) (*(s32 *)((u8 *)(arg0) + (0x6054))) != 0)) {
-        fn_8025CF9C();
+        ((s32 (*)(void))fn_8025CF9C)();
         fn_8025CFF0((s32)(arg0));
     }
 }
@@ -182,7 +182,7 @@ extern "C" {
 s32 fn_8025BAB8(void);
 s32 fn_802F1234(s32, s32);
 s32 fn_802F39C8(s32 *, s32);
-void fn_8025B7FC(void);
+void fn_8025B7FC(s32 arg0, s32 arg1);
 
 s32 fn_8025B838(s32 arg0, s32 arg1) {
     s32 temp_r3;
@@ -249,7 +249,7 @@ void fn_8025BD40(s32 arg0, s32 arg1, s32 arg2) {
 
 extern "C" {
 
-s32 fn_8025C188(void);
+void fn_8025C188(s32 arg0);
 s32 fn_8031CF54(void);
 s32 fn_8031D0E8(s32, s32 *, s32 *);
 void fn_8025C24C(void);
@@ -260,7 +260,7 @@ s32 fn_8025C8D0() {
         break;
     case 3:
         (*(s32 *)((u8 *)(&lbl_80425110) + (4))) = fn_8031D0E8((s32)((*(s32 *)((u8 *)(&lbl_80425110) + (0x24)))), (s32 *)(&fn_8025C24C), (s32 *)(&lbl_80425110));
-        fn_8025C188();
+        ((s32 (*)(void))fn_8025C188)();
         if ((s32) (*(s32 *)((u8 *)(&lbl_80425110) + (4))) >= 0) {
             (*(s32 *)((u8 *)(&lbl_80425110) + (0))) = 4;
         } else {
@@ -274,7 +274,7 @@ s32 fn_8025C8D0() {
         break;
     case 5:
         (*(s32 *)((u8 *)(&lbl_80425110) + (4))) = fn_8031D0E8((s32)((*(s32 *)((u8 *)(&lbl_80425110) + (0x24)))), (s32 *)(&fn_8025C24C), (s32 *)(&lbl_80425110));
-        fn_8025C188();
+        ((s32 (*)(void))fn_8025C188)();
         if ((s32) (*(s32 *)((u8 *)(&lbl_80425110) + (4))) >= 0) {
             (*(s32 *)((u8 *)(&lbl_80425110) + (0))) = 6;
         } else {
@@ -327,5 +327,96 @@ void fn_8025BEB4() {
     OSReport((const s8 *)(&lbl_804250F0));
     fn_802F5364();
     OSReport((const s8 *)(&lbl_8063D9D8));
+}
+}
+
+extern "C" {
+
+s32 fn_8025BB50(s32);
+
+void fn_8025B72C(s32 arg0, s32 arg1) {
+    (*(s32 (*(*))())&lbl_8063F95C)();
+    fn_8025BB50(arg1);
+}
+}
+
+extern "C" {
+
+void fn_8025B7FC(s32 arg0, s32 arg1) {
+    (*(s32 (*(*))())&lbl_8063F958)();
+    fn_8025BB50((s32)(arg1));
+}
+}
+
+extern "C" {
+
+void fn_8025C188(s32 arg0) {
+    switch (arg0) {
+    case 0:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 0;
+        return;
+    case -6:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 1;
+        return;
+    case -5:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 2;
+        return;
+    case -4:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 3;
+        return;
+    case -3:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 4;
+        return;
+    case -2:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 5;
+        return;
+    case -1:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 6;
+        return;
+    default:
+        (*(s32 *)((u8 *)(&(*(s32 (*))&lbl_80425110)) + (8))) = 0;
+        return;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8025CC48() {
+    switch ((s32) (*(s32 (*))&lbl_80502548)) {                   /* irregular */
+    case 1:
+        return 1;
+    case 3:
+        (*(s32 (*))&lbl_80502548) = 1;
+        return 1;
+    default:
+    case 2:
+        return 0;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8025D3B8(s32, s32, s32);
+
+void fn_8025CF9C(u8 *arg0) {
+    s32 temp_r31;
+
+    temp_r31 = (*(s32 *)((u8 *)(arg0) + (0x6050)));
+    fn_8025D3B8((s32) (arg0 + 0x6000), temp_r31, 0x7000);
+    fn_8025D7CC((s32)((s32) (arg0 + 0x6010)), (s32)(temp_r31 + 0x7000), (s32)(0x1000));
+}
+}
+
+extern "C" {
+
+s32 fn_8025D800(s32);
+
+s32 fn_8025D2CC(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0x6058))) != 0) {
+        return fn_8025D800((s32) (arg0 + 0x6010));
+    }
+    return 0;
 }
 }
