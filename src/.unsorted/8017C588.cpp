@@ -34,7 +34,7 @@ s32 fn_8017C5D0(void) {
 extern "C" {
 
 s32 __nw__FUl(s32);
-s32 fn_8017C604(void);
+s8 *fn_8017C604(s8 *arg0);
 
 void fn_8017C590(void) {
     s32 var_r3;
@@ -42,7 +42,7 @@ void fn_8017C590(void) {
     if ((s32) lbl_8063F238 == 0) {
         var_r3 = __nw__FUl(0xBC);
         if (var_r3 != 0) {
-            var_r3 = fn_8017C604();
+            var_r3 = ((s32 (*)(void))fn_8017C604)();
         }
         lbl_8063F238 = var_r3;
     }
@@ -93,5 +93,16 @@ void fn_8017C7F0(u8 *arg0, s32 arg1, s32 arg2) {
             var_r31 += 1;
         } while (var_r31 < 6);
     }
+}
+}
+
+extern "C" {
+
+s32 memset(u8 *, s32, s32);
+
+s8 *fn_8017C604(s8 *arg0) {
+    *arg0 = 0;
+    memset((u8 *)(arg0 + 2), (s32)(0), (s32)(0x90));
+    return arg0;
 }
 }
