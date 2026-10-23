@@ -63,3 +63,19 @@ void fn_8005C9B8(s32 arg0) {
     fn_8005B5BC((s32) &lbl_80478178, arg0);
 }
 }
+
+extern "C" {
+
+s32 __register_global_object(s32, s32, s32);
+void fn_8005CEAC(void);
+__declspec(section ".data") extern s32 lbl_80478168;
+struct S_lbl_8063EBC0 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063EBC0 lbl_8063EBC0;
+
+void fn_8005CE74() {
+    lbl_8063EBC0.f_0 = 1;
+    lbl_8063EBC0.f_2 = 4;
+    lbl_8063EBC0.f_4 = 0;
+    __register_global_object((s32) &lbl_80478178, (s32) &fn_8005CEAC, (s32) &lbl_80478168);
+}
+}
