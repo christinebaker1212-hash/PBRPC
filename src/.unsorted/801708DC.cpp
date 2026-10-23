@@ -390,3 +390,47 @@ s32 fn_80176920(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return fn_800252EC(temp_r31, 0, &lbl_804202F8, arg1, arg2, arg3, arg4);
 }
 }
+
+extern "C" {
+
+u8 fn_80170C38(u8 *arg0) {
+    u16 temp_r0;
+    u8 var_r3;
+
+    temp_r0 = (*(u16 *)((u8 *)(arg0) + (4)));
+    switch (temp_r0) {
+    case 1:
+    case 4:
+        var_r3 = 0x6A;
+        if ((u8) (*(u8 *)((u8 *)(arg0) + (2))) == 0xC) {
+            return 0x66U;
+        }
+        return var_r3;
+    case 2:
+    case 5:
+    case 7:
+        var_r3 = 0x6B;
+        if ((u8) (*(u8 *)((u8 *)(arg0) + (2))) == 0xC) {
+            return 0x67U;
+        }
+        /* Duplicate return node #12. Try simplifying control flow for better match */
+        return var_r3;
+    case 3:
+        var_r3 = 0x6C;
+        if ((u8) (*(u8 *)((u8 *)(arg0) + (2))) == 0xC) {
+            return 0x68U;
+        }
+        /* Duplicate return node #12. Try simplifying control flow for better match */
+        return var_r3;
+    case 6:
+        var_r3 = 0x6D;
+        if ((u8) (*(u8 *)((u8 *)(arg0) + (2))) == 0xC) {
+            return 0x69U;
+        }
+        /* Duplicate return node #12. Try simplifying control flow for better match */
+        return var_r3;
+    default:
+        return (*(u8 *)((u8 *)(arg0) + (2)));
+    }
+}
+}
