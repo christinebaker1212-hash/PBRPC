@@ -19,3 +19,34 @@ void fn_8025D3B8(u8 *arg0, u8 *arg1, s32 arg2) {
     (*(s32 *)((u8 *)(arg1) + (0x1C))) = 0;
 }
 }
+
+extern "C" {
+
+s32 OSReport(s32, ...);
+__declspec(section ".data") extern s8 lbl_80425430;
+
+s32 fn_8025D55C(s32 arg0, s32 arg1) {
+    if (arg1 == 0) {
+        return 0;
+    }
+    if (arg1 & 0x1F) {
+        OSReport((s32)(&lbl_80425430), 0x20);
+    }
+    return (*(s32 *)((u8 *)(arg1) + (-0x14)));
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s8 lbl_80425464;
+
+u16 fn_8025D5B4(s32 arg0, s32 arg1) {
+    if (arg1 == 0) {
+        return 0U;
+    }
+    if (arg1 & 0x1F) {
+        OSReport((s32)((s32)(&lbl_80425464)), 0x20);
+    }
+    return (*(u16 *)((u8 *)(arg1) + (-8)));
+}
+}
