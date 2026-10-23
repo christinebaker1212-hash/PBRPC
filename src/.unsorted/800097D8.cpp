@@ -137,3 +137,67 @@ s32 fn_80009854(void) {
     return 1;
 }
 }
+
+extern "C" {
+
+s32 C_MTXOrtho(s32, f32, f32, f32, f32, f32, f32);
+s32 GXSetProjection(s32, s32);
+extern f32 lbl_80640628;
+extern f32 lbl_8064062C;
+extern f32 lbl_80640630;
+extern f32 lbl_80640634;
+extern f32 lbl_80640638;
+extern f32 lbl_8064063C;
+extern f32 lbl_80640640;
+extern f32 lbl_80640644;
+
+void fn_800099EC(s32 arg0, s32 arg1) {
+    s32 sp8[18];
+
+    if (arg1 != 0) {
+        C_MTXOrtho((s32) sp8, lbl_80640628, lbl_8064062C, lbl_80640630, lbl_80640634, lbl_80640638, lbl_8064063C);
+    } else {
+        C_MTXOrtho((s32) sp8, lbl_80640628, lbl_8064062C, lbl_80640640, lbl_80640644, lbl_80640638, lbl_8064063C);
+    }
+    GXSetProjection((s32) sp8, 1);
+}
+}
+
+extern "C" {
+
+s32 HBMCreateSound(s32, s32, s32);
+s32 allocFromHeapAndClear__5GSmemFP12MEMiHeapHeadUl(s32, s32);
+s32 strcat(s32, s32);
+s32 strcpy(s32, s32);
+extern s32 gUnkHeap2;
+__declspec(section ".data") extern s8 lbl_803FB728;
+__declspec(section ".data") extern s8 lbl_80405E80;
+
+void fn_8000A008(s32 arg0) {
+    s8 sp8[40];
+
+    strcpy((s32)(sp8), (s32)(&lbl_803FB728));
+    strcat((s32)(sp8), (s32)(&lbl_80405E80));
+    HBMCreateSound((s32) sp8, allocFromHeapAndClear__5GSmemFP12MEMiHeapHeadUl(gUnkHeap2, 0x80000), 0x80000);
+}
+}
+
+extern "C" {
+
+s32 __nw__FUl(s32);
+s32 fn_8000994C(s32);
+s32 fn_8000A060(s32);
+
+void fn_8000A73C() {
+    s32 var_r3;
+
+    var_r3 = __nw__FUl(0xD4);
+    if (var_r3 != 0) {
+        var_r3 = fn_8000994C(var_r3);
+    }
+    (*(s32 (*))&lbl_8063E930) = var_r3;
+    if (var_r3 != 0) {
+        fn_8000A060(var_r3);
+    }
+}
+}

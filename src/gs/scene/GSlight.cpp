@@ -34,3 +34,26 @@ void fn_801E62B8(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_801E1440__FP13GSchannelDatafP7GScolor(s32, s32, f32);
+
+void fn_801E6BB0__7GSlightFP17GSanimationObjectP13GSchannelDatafb(s32 arg0, u8 *arg1, s32 arg2, f32 farg0) {
+    if ((arg2 == 0) && ((s32) (*(u8 *)((u8 *)(arg1) + (1))) == 0x13)) {
+        fn_801E1440__FP13GSchannelDatafP7GScolor((s32) arg1, arg0 + 0x110, farg0);
+    }
+}
+}
+
+extern "C" {
+
+struct S_lbl_8063F398 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063F398 lbl_8063F398;
+
+void fn_801E6BD8() {
+    lbl_8063F398.f_0 = 1;
+    lbl_8063F398.f_2 = 4;
+    lbl_8063F398.f_4 = 0;
+}
+}

@@ -217,3 +217,12 @@ void fn_8004DD24(s32 arg0) {
     }
 }
 }
+
+extern "C" {
+
+void fn_8004DCAC(s32 arg0, u8 *arg1) {
+    if ((arg1 != NULL) && ((*(s32 *)((u8 *)(arg1) + (0x34))) & 1)) {
+        fn_8004DF78((u8 *)((s32) arg1));
+    }
+}
+}

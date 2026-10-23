@@ -112,3 +112,15 @@ u8 *fn_802079B4(u8 *arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80207B8C(s32);
+
+void fn_80207A3C(u8 *arg0) {
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (0x18))) != 0) {
+        (*(u8 *)((u8 *)(arg0) + (0x18))) = 0U;
+        fn_80207B8C((s32) arg0);
+    }
+}
+}
