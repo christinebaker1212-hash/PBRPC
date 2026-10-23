@@ -88,3 +88,12 @@ s32 fn_80167098(s32 arg0, s32 arg1) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_80267CE8(s32, s32, s32, s32, s32, s32, s32);
+
+void fn_80166D6C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    fn_80267CE8(fn_8025E31C((s32)(fn_8025DFD0())), arg0, arg1, arg2, arg3, arg4, arg5);
+}
+}

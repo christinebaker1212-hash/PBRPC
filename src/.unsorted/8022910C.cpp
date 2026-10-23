@@ -25,10 +25,10 @@ void fn_8022D708(void) {}
 
 extern "C" {
 
-s32 fn_80229238(void);
+void fn_80229238(u8 *arg0);
 
 s32 fn_802291C8(s32 arg0) {
-    fn_80229238();
+    ((s32 (*)(void))fn_80229238)();
     return arg0;
 }
 }
@@ -166,5 +166,13 @@ void fn_8022AB74() {
     if (temp_r3 != NULL) {
         *temp_r3 &= 0xFFFFFFFD;
     }
+}
+}
+
+extern "C" {
+
+void fn_80229238(u8 *arg0) {
+    memset((u8 *)((s32)(arg0)), (s32)((s32)(0)), (s32)((s32)(0x80U)));
+    memset((u8 *)((s32)(arg0 + 0x80)), (s32)((s32)(0)), (s32)((s32)(0x40U)));
 }
 }

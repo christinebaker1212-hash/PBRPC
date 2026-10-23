@@ -112,7 +112,7 @@ extern "C" {
 
 s32 __register_global_object(s32 *, s32 *, s32 *);
 s32 fn_80225E94(s32 *, s32, s32 *, s32 *, s32 *);
-void fn_8000AD34(void);
+void fn_8000AD34();
 void fn_80225EE0(void);
 __declspec(section ".data") extern s32 lbl_80474F00;
 __declspec(section ".data") extern s32 lbl_80474F0C;
@@ -120,5 +120,17 @@ __declspec(section ".data") extern s32 lbl_80474F0C;
 void fn_8000AD5C() {
     fn_80225E94((s32 *)(&lbl_80474F0C), (s32)(1), (s32 *)(&fn_8000AD18), (s32 *)(&fn_8000AD34), (s32 *)(&fn_8000AD50));
     __register_global_object((s32 *)(&lbl_80474F0C), (s32 *)(&fn_80225EE0), (s32 *)(&lbl_80474F00));
+}
+}
+
+extern "C" {
+
+s32 fn_802267A8(s32, s32);
+extern u8 lbl_8063E8FC;
+
+void fn_8000AD34() {
+    if ((s32) lbl_8063E8FC != 0) {
+        fn_802267A8(lbl_8063F640, 0x7D0);
+    }
 }
 }

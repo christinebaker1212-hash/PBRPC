@@ -666,3 +666,42 @@ void fn_8015C4F4(u32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8000B210__Fiif(s32, s32, s32, f32);
+extern f32 lbl_806415A0;
+
+void fn_8015BC5C(s32 arg0, u8 *arg1, s32 arg2) {
+    if (((s16) (*(s16 *)((u8 *)(arg1) + (0x1E))) != -1) && ((s32) (*(s32 (*))&lbl_8063EFF0) != 0)) {
+        fn_8000B210__Fiif((*(s32 (*))&lbl_8063EFF0), 0, arg2, lbl_806415A0);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8000B46C__Fii(s32, s32);
+
+void fn_8015BC84(s32 arg0, u8 *arg1) {
+    if (((s16) (*(s16 *)((u8 *)(arg1) + (0x1E))) != -1) && ((s32) (*(s32 (*))&lbl_8063EFF0) != 0)) {
+        fn_8000B46C__Fii((*(s32 (*))&lbl_8063EFF0), 0);
+    }
+}
+}
+
+extern "C" {
+
+s32 __register_global_object(s32, s32, s32);
+void fn_8015D390(void);
+__declspec(section ".data") extern s32 lbl_80487730;
+struct S_lbl_8063EFE8 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063EFE8 lbl_8063EFE8;
+
+void fn_8015D358() {
+    lbl_8063EFE8.f_0 = 1;
+    lbl_8063EFE8.f_2 = 4;
+    lbl_8063EFE8.f_4 = 0;
+    __register_global_object((s32) &(*(s32 (*))&lbl_8048773C), (s32) &fn_8015D390, (s32) &lbl_80487730);
+}
+}
