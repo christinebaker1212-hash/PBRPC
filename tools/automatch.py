@@ -164,6 +164,9 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
                     break
                 if t.endswith(":") or t.startswith(("b", "cmp", "cr", "mtcr", "mfcr")) or re.match(r"^\w+\. ", t):
                     break
+    # `mtctr; bctr` without a jump table is a tail call through a pointer
+    if "jumptable_" not in m.group(0):
+        lines = [re.sub(r"^(/\*.*?\*/\s*)bctr$", r"\1bctrl\n\1blr", l) for l in lines]
     text = "\n".join(cr_to_cr0(lines))
     tables = ""
     for jt in sorted(set(re.findall(r"\b(jumptable_\w+)@ha", text))):
@@ -264,7 +267,22 @@ def expand_macros(src: str, known: bool = False) -> Optional[str]:
 
     expand("M2C_FIELD", lambda e, t, o: f"(*({t})((u8 *)({e}) + ({o})))")
     expand("M2C_BITWISE", lambda t, e: f"(({t})({e}))")
-    if "M2C_" in src:
+    # A struct copy: MWCC copies a struct assignment inline
+    sizes = set()
+
+    def copy(d: str, s_: str, n: str) -> str:
+        sizes.add(int(n, 0))
+        t = f"struct M2C_COPY_{int(n, 0):X}"
+        return f"*({t} *)({d}) = *({t} *)({s_})"
+
+    if "M2C_STRUCT_COPY(" in src:
+        expand("M2C_STRUCT_COPY", copy)
+        d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
+        if d is None:
+            return None
+        defs = "".join(f"struct M2C_COPY_{n:X} {{ u8 b[{n}]; }};\n" for n in sorted(sizes))
+        src = src[: d.start()] + defs + src[d.start() :]
+    if re.search(r"M2C_(?!COPY_)", src):
         return None
     # C++ has no arithmetic on void pointers; m2c means byte offsets.
     src = re.sub(r"\bvoid \*", "u8 *", src)
@@ -1314,6 +1332,7 @@ def merge_into(text: str, src: str, adopt: bool = True) -> str:
         protos[m.group(2)] = [param_type(x) for x in p.split(",")] if p not in ("", "void") else []
         rets[m.group(2)] = m.group(1).strip()
     have = set(re.findall(r"^(?:__declspec\([^)]*\) )?(?:extern )?[^\n(;]*?\b(\w+)\s*[\[(;]", text, re.M))
+    have |= set(re.findall(r"^struct (\w+) \{", text, re.M))
     own = {}
     for m in re.finditer(r"^([A-Za-z_][\w \*]*?)\b(\w+)\(([^;()]*)\);", src, re.M):
         own[m.group(2)] = (m.group(1).strip(), m.group(3).strip() or "void")
