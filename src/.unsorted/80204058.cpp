@@ -169,3 +169,47 @@ void fn_8020572C(u8 *arg0, s32 arg1, s32 arg2) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8023C8B4(s32);
+s32 fn_8023CAD8(s32, s32, s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_80492260;
+__declspec(section ".data") extern s32 lbl_804922DC;
+__declspec(section ".data") extern s32 lbl_804926BC;
+__declspec(section ".data") extern s32 lbl_80492A9C;
+__declspec(section ".data") extern s32 lbl_80492E7C;
+extern f32 lbl_80641F30;
+extern u8 *sInstance__7GSvideo;
+
+void fn_80204058__Fv() {
+    f32 temp_f0;
+
+    fn_8023C8B4((s32) &lbl_804926BC);
+    fn_8023CAD8((s32) &lbl_804926BC, 9, 1, 4, 0);
+    fn_8023CAD8((s32) &lbl_804926BC, 0xA, 0, 4, 0);
+    fn_8023CAD8((s32) &lbl_804926BC, 0xB, 1, 5, 0);
+    fn_8023CAD8((s32) &lbl_804926BC, 0xC, 1, 5, 0);
+    fn_8023CAD8((s32) &lbl_804926BC, 0xD, 1, 3, 0xA);
+    fn_8023C8B4((s32) &lbl_804922DC);
+    fn_8023CAD8((s32) &lbl_804922DC, 9, 1, 4, 0);
+    fn_8023CAD8((s32) &lbl_804922DC, 0xA, 0, 4, 0);
+    fn_8023CAD8((s32) &lbl_804922DC, 0xB, 1, 5, 0);
+    fn_8023CAD8((s32) &lbl_804922DC, 0xD, 1, 3, 0xA);
+    fn_8023C8B4((s32) &lbl_80492E7C);
+    fn_8023CAD8((s32) &lbl_80492E7C, 9, 1, 4, 0);
+    fn_8023CAD8((s32) &lbl_80492E7C, 0xB, 1, 5, 0);
+    fn_8023CAD8((s32) &lbl_80492E7C, 0xC, 1, 5, 0);
+    fn_8023CAD8((s32) &lbl_80492E7C, 0xD, 1, 4, 0);
+    fn_8023C8B4((s32) &lbl_80492A9C);
+    fn_8023CAD8((s32) &lbl_80492A9C, 9, 1, 4, 0);
+    fn_8023CAD8((s32) &lbl_80492A9C, 0xB, 1, 5, 0);
+    fn_8023CAD8((s32) &lbl_80492A9C, 0xD, 1, 4, 0);
+    temp_f0 = lbl_80641F30 / (f32) (*(u8 *)((u8 *)(sInstance__7GSvideo) + (0x59)));
+    (*(f32 *)((u8 *)(&lbl_80492260) + (0))) = temp_f0;
+    (*(f32 *)((u8 *)(&lbl_80492260) + (4))) = temp_f0;
+    (*(f32 *)((u8 *)(&lbl_80492260) + (8))) = temp_f0;
+    (*(f32 *)((u8 *)(&lbl_80492260) + (0xC))) = temp_f0;
+    (*(f32 *)((u8 *)(&lbl_80492260) + (0x10))) = temp_f0;
+}
+}
