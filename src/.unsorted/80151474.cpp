@@ -34,3 +34,39 @@ s32 fn_80154D48(s32 arg0, s32 arg1) {
     return fn_80253E8C((s32) (s16) arg0, arg1, 3, (s32) &sp8);
 }
 }
+
+extern "C" {
+
+s32 fn_80253DB0(s32, s32, s32);
+s32 fn_80253E4C(s32, s32, s32);
+
+void fn_80153398(s32 arg0) {
+    s32 sp8;
+    u16 temp_r3;
+
+    fn_80253E4C(arg0, 8, (s32) &sp8);
+    if ((sp8 != 0) && (fn_80253DD0((s32)(arg0)) == 3)) {
+        temp_r3 = fn_80253DE0((s32)(arg0));
+        switch ((s32) temp_r3) {                    /* irregular */
+        case 6:
+            fn_80253DB0(arg0, 0, 0);
+            return;
+        case 7:
+            fn_80253DB0(arg0, 1, 0);
+            return;
+        case 8:
+            fn_80253DB0(arg0, 2, 0);
+            return;
+        case 9:
+            fn_80253DB0(arg0, 3, 0);
+            return;
+        case 10:
+            fn_80253DB0(arg0, 4, 0);
+            return;
+        case 11:
+            fn_80253DB0(arg0, 5, 0);
+            break;
+        }
+    }
+}
+}
