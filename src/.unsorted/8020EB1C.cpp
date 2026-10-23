@@ -38,3 +38,25 @@ s32 fn_8020F878(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80207B34(u8 *, u8 *);
+
+void fn_8020F230(u8 *arg0, f32 farg0) {
+    u8 *var_r31;
+    u8 *temp_r30;
+
+    if ((s32) (*(u8 *)((u8 *)(arg0) + (0x18))) != 0) {
+        var_r31 = (*(u8 **)((u8 *)(arg0) + (0x10)));
+        while (var_r31 != NULL) {
+            temp_r30 = (*(u8 **)((u8 *)(var_r31) + (0x28)));
+            if (fn_8020EF5C((s32)(var_r31), (s32)((*(s32 *)((u8 *)(arg0) + (0)))), (s32)((*(s32 *)((u8 *)(arg0) + (0x20)))), (f32)(farg0)) == 0) {
+                fn_80207B34(arg0, var_r31);
+            }
+            var_r31 = temp_r30;
+        }
+        (*(f32 *)((u8 *)(arg0) + (0x24))) = (f32) ((*(f32 *)((u8 *)(arg0) + (0x24))) - farg0);
+    }
+}
+}
