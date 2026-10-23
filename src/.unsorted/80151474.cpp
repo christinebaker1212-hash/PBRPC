@@ -70,3 +70,25 @@ void fn_80153398(s32 arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80059A3C(s32, s32);
+s32 fn_80253EDC(s32, s32, s32, s32);
+
+void fn_8015330C(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 sp8;
+
+    fn_80253EDC(arg0, arg1, 3, (s32) &sp8);
+    fn_80253EDC(arg0, arg1, 6, (s32) sp10);
+    switch (sp8) {                                  /* irregular */
+    case 1:
+        fn_80059A3C(0x3D, (s32) sp10);
+        return;
+    case 2:
+        fn_80059A3C(0x3E, (s32) sp10);
+        return;
+    }
+}
+}
