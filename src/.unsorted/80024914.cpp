@@ -183,3 +183,21 @@ void fn_800252EC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32
     fn_80025178(arg0, arg1, fn_8022D02C((s32)(fn_800250E8((s32)(arg0), (s32)(arg1))), (s32)(arg2)), arg3, arg4, arg5, arg6);
 }
 }
+
+extern "C" {
+
+s32 fn_8000B170__Fiif(s32, s32, f32);
+s32 fn_8000C52C__FPCce(...);
+__declspec(section ".data") extern s32 lbl_8040933C;
+extern f32 lbl_80640698;
+
+s32 fn_800248A0__FUl(u32 arg0, s32 arg1) {
+    if ((arg0 < 1U) || (arg0 > 0x1EDU)) {
+        if (arg0 != 0x259U) {
+            fn_8000C52C__FPCce((s32) &lbl_8040933C, arg0);
+        }
+        return 0;
+    }
+    return fn_8000B170__Fiif(arg0 + 0x2F, 0, lbl_80640698);
+}
+}
