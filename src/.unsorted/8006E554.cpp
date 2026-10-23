@@ -43,7 +43,7 @@ void fn_8007C80C(void) {
 extern "C" {
 
 s32 fn_80253CBC(u16);
-extern u16 lbl_8063D4D4;
+extern s16 lbl_8063D4D4;
 
 void fn_8006F134(void) {
     fn_80253CBC(lbl_8063D4D4);
@@ -462,5 +462,14 @@ void fn_8007C3E0(s32 arg0) {
     default:
         return;
     }
+}
+}
+
+extern "C" {
+
+// TODO Identify the handle released by fn_80253CCC.
+void fn_8006F13C(void) {
+    fn_80253CCC((u16) lbl_8063D4D4);
+    lbl_8063D4D4 = -1;
 }
 }
