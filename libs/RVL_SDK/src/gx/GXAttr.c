@@ -124,6 +124,8 @@ static inline void SETVCDATTR(GXAttr Attr, GXAttrType Type) {
     }
 }
 
+void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type, u8* frac);
+
 void GXSetVtxDesc(GXAttr attr, GXAttrType type) {
     SETVCDATTR(attr, type);
 
@@ -600,4 +602,128 @@ void GXGetVtxDescv(GXVtxDescList* vcd) {
 
     attr++;
     vcd[attr].attr = GX_VA_NULL;
+}
+
+void GXSetVtxDescv(const GXVtxDescList *attrPtr) {
+    CHECK_GXBEGIN(313, "GXSetVtxDescv");
+    CHECK_ATTRPTR(314, attrPtr);
+
+    while (attrPtr->attr != GX_VA_NULL) {
+        CHECK_ATTRNAME(318, attrPtr->attr);
+        CHECK_ATTRNAME2(321, attrPtr->attr);
+        CHECK_ATTRTYPE(324, attrPtr->type);
+        SETVCDATTR(attrPtr->attr, attrPtr->type);
+        attrPtr++;
+    }
+
+    if (__GXData->hasNrms || __GXData->hasBiNrms) {
+        GX_SET_REG_FIELD(__GXData->vcdLo, 2, 11, __GXData->nrmType);
+    } else {
+        GX_SET_REG_FIELD(__GXData->vcdLo, 2, 11, 0);
+    }
+    __GXData->dirtyState |= 8;
+}
+
+static inline u8 GetFracForNrm(GXCompType type) {
+    u8 frac;
+
+    switch (type) {
+    case GX_S8:
+        frac = 6;
+        break;
+    case GX_S16:
+        frac = 14;
+        break;
+    default:
+    case GX_U16:
+        frac = 0;
+        break;
+    }
+
+    return frac;
+}
+
+void GXGetVtxAttrFmt(GXVtxFmt fmt, GXAttr attr, GXCompCnt* cnt, GXCompType* type, u8* frac) {
+    u32* va;
+    u32* vb;
+    u32* vc;
+
+    CHECK_GXBEGIN(844, "GXGetVtxAttrFmt");
+    CHECK_VTXFMT(845, fmt);
+
+    va = &__GXData->vatA[fmt];
+    vb = &__GXData->vatB[fmt];
+    vc = &__GXData->vatC[fmt];
+
+    switch (attr) {
+    case GX_VA_POS:
+        *cnt  = CP_VAT_REG_A_GET_POSCNT(*va);
+        *type = CP_VAT_REG_A_GET_POSFMT(*va);
+        *frac = CP_VAT_REG_A_GET_POSSHFT(*va);
+        return;
+    case GX_VA_NRM:
+    case GX_VA_NBT:
+        *cnt = CP_VAT_REG_A_GET_NRMCNT(*va);
+        if (*cnt == GX_TEX_ST && CP_VAT_REG_A_GET_NORMALINDEX3(*va)) {
+            *cnt = GX_NRM_NBT3;
+        }
+        *type = CP_VAT_REG_A_GET_NRMFMT(*va);
+        *frac = GetFracForNrm(*type);
+        return;
+    case GX_VA_CLR0:
+        *cnt  = CP_VAT_REG_A_GET_COL0CNT(*va);
+        *type = CP_VAT_REG_A_GET_COL0FMT(*va);
+        *frac = 0;
+        return;
+    case GX_VA_CLR1:
+        *cnt  = CP_VAT_REG_A_GET_COL1CNT(*va);
+        *type = CP_VAT_REG_A_GET_COL1FMT(*va);
+        *frac = 0;
+        return;
+    case GX_VA_TEX0:
+        *cnt  = CP_VAT_REG_A_GET_TEX0CNT(*va);
+        *type = CP_VAT_REG_A_GET_TEX0FMT(*va);
+        *frac = CP_VAT_REG_A_GET_TEX0SHFT(*va);
+        return;
+    case GX_VA_TEX1:
+        *cnt  = CP_VAT_REG_B_GET_TEX1CNT(*vb);
+        *type = CP_VAT_REG_B_GET_TEX1FMT(*vb);
+        *frac = CP_VAT_REG_B_GET_TEX1SHFT(*vb);
+        return;
+    case GX_VA_TEX2:
+        *cnt  = CP_VAT_REG_B_GET_TEX2CNT(*vb);
+        *type = CP_VAT_REG_B_GET_TEX2FMT(*vb);
+        *frac = CP_VAT_REG_B_GET_TEX2SHFT(*vb);
+        return;
+    case GX_VA_TEX3:
+        *cnt  = CP_VAT_REG_B_GET_TEX3CNT(*vb);
+        *type = CP_VAT_REG_B_GET_TEX3FMT(*vb);
+        *frac = CP_VAT_REG_B_GET_TEX3SHFT(*vb);
+        return;
+    case GX_VA_TEX4:
+        *cnt  = CP_VAT_REG_B_GET_TEX4CNT(*vb);
+        *type = CP_VAT_REG_B_GET_TEX4FMT(*vb);
+        *frac = CP_VAT_REG_C_GET_TEX4SHFT(*vc);
+        return;
+    case GX_VA_TEX5:
+        *cnt  = CP_VAT_REG_C_GET_TEX5CNT(*vc);
+        *type = CP_VAT_REG_C_GET_TEX5FMT(*vc);
+        *frac = CP_VAT_REG_C_GET_TEX5SHFT(*vc);
+        return;
+    case GX_VA_TEX6:
+        *cnt  = CP_VAT_REG_C_GET_TEX6CNT(*vc);
+        *type = CP_VAT_REG_C_GET_TEX6FMT(*vc);
+        *frac = CP_VAT_REG_C_GET_TEX6SHFT(*vc);
+        return;
+    case GX_VA_TEX7:
+        *cnt  = CP_VAT_REG_C_GET_TEX7CNT(*vc);
+        *type = CP_VAT_REG_C_GET_TEX7FMT(*vc);
+        *frac = CP_VAT_REG_C_GET_TEX7SHFT(*vc);
+        return;
+    default:
+        *cnt = GX_POS_XYZ;
+        *type = GX_U8;
+        *frac = 0;
+        return;
+    }
 }

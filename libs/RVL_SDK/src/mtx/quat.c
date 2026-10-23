@@ -4,6 +4,7 @@
 
 #define ASM asm
 #include <math.h>
+#include <revolution/os.h>
 #include <revolution/mtx.h>
 #include <revolution/quat.h>
 
@@ -223,4 +224,39 @@ void PSQUATInverse(const __REGISTER Quaternion* src, __REGISTER Quaternion* inv)
         psq_st sxy, 0x0(inv), 0, 0
         psq_st izz, 0x8(inv), 1, 0
     }
+}
+
+void C_QUATRotAxisRad(Quaternion* r, const Vec* axis, f32 rad) {
+    f32 half, sh, ch;
+    Vec nAxis;
+
+    ASSERTMSGLINE(758, r, "QUATRotAxisRad():  NULL QuaternionPtr 'r' ");
+    ASSERTMSGLINE(759, axis, "QUATRotAxisRad():  NULL VecPtr 'axis' ");
+
+    VECNormalize(axis, &nAxis);
+
+    half = rad * 0.5f;
+    sh = sinf(half);
+    ch = cosf(half);
+
+    r->x = sh * nAxis.x;
+    r->y = sh * nAxis.y;
+    r->z = sh * nAxis.z;
+    r->w = ch;
+}
+
+void C_QUATSquad(const Quaternion* p, const Quaternion* a, const Quaternion* b, const Quaternion* q, Quaternion* r, f32 t) {
+    Quaternion pq, ab;
+    f32 t2;
+
+    ASSERTMSGLINE(927, p, "QUATSquad():  NULL QuaternionPtr 'p' ");
+    ASSERTMSGLINE(928, a, "QUATSquad():  NULL QuaternionPtr 'a' ");
+    ASSERTMSGLINE(929, b, "QUATSquad():  NULL QuaternionPtr 'b' ");
+    ASSERTMSGLINE(930, q, "QUATSquad():  NULL QuaternionPtr 'q' ");
+    ASSERTMSGLINE(931, r, "QUATSquad():  NULL QuaternionPtr 'r' ");
+
+    t2 = 2.0f * t * (1.0f - t);
+    C_QUATSlerp(p, q, &pq, t);
+    C_QUATSlerp(a, b, &ab, t);
+    C_QUATSlerp(&pq, &ab, r, t2);
 }

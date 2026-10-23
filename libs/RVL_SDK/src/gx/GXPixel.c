@@ -259,3 +259,33 @@ void GXSetFieldMode(GXBool field_mode, GXBool half_aspect_ratio) {
     GX_WRITE_RAS_REG(reg);
     __GXFlushTextureState();
 }
+
+void GXInitFogAdjTable(GXFogAdjTable *table, u16 width, const f32 projmtx[4][4]) {
+    f32 xi;
+    f32 iw;
+    f32 rangeVal;
+    f32 nearZ;
+    f32 sideX;
+    u32 i;
+
+    CHECK_GXBEGIN(275, "GXInitFogAdjTable");
+    ASSERTMSGLINE(276, table != NULL, "GXInitFogAdjTable: table pointer is null");
+    ASSERTMSGLINE(277, width <= 640, "GXInitFogAdjTable: invalid width value");
+
+    if (0.0 == projmtx[3][3]) {
+        nearZ = projmtx[2][3] / (projmtx[2][2] - 1.0f);
+        sideX = nearZ / projmtx[0][0];
+    } else {
+        sideX = 1.0f / projmtx[0][0];
+        nearZ = 1.73205f * sideX;
+    }
+
+    iw = 2.0f / width;
+    for (i = 0; i < 10; i++) {
+        xi = (i + 1) << 5;
+        xi *= iw;
+        xi *= sideX;
+        rangeVal = sqrtf(1.0f + ((xi * xi) / (nearZ * nearZ)));
+        table->r[i] = (u32)(256.0f * rangeVal) & 0xFFF;
+    }
+}

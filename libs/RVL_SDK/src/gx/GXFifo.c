@@ -444,3 +444,13 @@ void __GXCleanGPFifo() {
     __GXFifoReadEnable();
     OSRestoreInterrupts(enabled);
 }
+
+void GXDisableBreakPt(void) {
+    BOOL enabled = OSDisableInterrupts();
+
+    SC_CP_REG_ENABLE_SET_FIFOBRK(0, __GXData->cpEnable, 0);
+    SC_CP_REG_ENABLE_SET_FIFOBRKINT(0, __GXData->cpEnable, 0);
+    GX_CP_REG_WRITE_U16(CP_ENABLE, __GXData->cpEnable);
+    __GXCurrentBP = NULL;
+    OSRestoreInterrupts(enabled);
+}

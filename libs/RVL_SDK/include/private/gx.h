@@ -287,6 +287,10 @@ void __GetImageTileCount(GXTexFmt fmt, u16 wd, u16 ht, u32* rowTiles, u32* colTi
         GX_WRITE_U32(value);                                                                                                                         \
     }
 
+// Names from zeldaret/tp's GXRegs.h, for the functions taken from it
+#define GX_WRITE_RA_REG(reg) GX_WRITE_RAS_REG(reg)
+#define GX_CP_REG_WRITE_U16(a, d) GX_SET_CP_REG(a, (u16)(d))
+
 #define GX_WRITE_SOME_REG2(a, b, c, addr)                                                                                                            \
     {                                                                                                                                                \
         GX_WRITE_U8(a);                                                                                                                              \

@@ -292,3 +292,34 @@ void __GXPEInit() {
     GX_SET_REG_FIELD(reg, 1, 1, 1);
     GX_SET_PE_REG(5, reg);
 }
+
+void GXSetDrawSync(u16 token) {
+    BOOL enabled;
+    u32 reg;
+
+    CHECK_GXBEGIN(489, "GXSetDrawSync");
+
+    enabled = OSDisableInterrupts();
+    reg = token | 0x48000000;
+    GX_WRITE_RA_REG(reg);
+    SC_PE_TOKEN_SET_TOKEN(443, reg, token);
+    SC_PE_TOKEN_SET_RID(443, reg, 0x47);
+    GX_WRITE_RA_REG(reg);
+    GXFlush();
+    OSRestoreInterrupts(enabled);
+    __GXData->bpSentNot = 0;
+}
+
+u16 GXReadDrawSync(void) {
+    u16 token = GX_GET_PE_REG(7);
+    return token;
+}
+
+void GXTexModeSync(void) {
+    u32 reg;
+
+    CHECK_GXBEGIN(625, "GXTexModeSync");
+    reg = 0x63000000;
+    GX_WRITE_RAS_REG(reg);
+    __GXData->bpSentNot = 0;
+}
