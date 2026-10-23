@@ -524,6 +524,12 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = single_case_switch(v)
         if w is not None and w not in variants:
             variants.append(w)
+    # A global read and written only at constant offsets: a struct, whose
+    # members MWCC addresses directly (sym+off@sda21) instead of through a base
+    for v in list(variants[:2]):
+        w = struct_globals(v)
+        if w != v and w not in variants:
+            variants.append(w)
     # All the control-flow rewrites together
     for v in list(variants[:2]) + [w for b in buffers for w in b]:
         w = while_loops(inline_cr_temps(v))
@@ -556,6 +562,47 @@ def while_loops(src: str) -> str:
         new = f"{ind}while ({cond}) {{\n{body}{ind}}}\n"
         src = src[: m.start()] + new + src[m.end() :]
         pos = m.start() + len(new)
+
+
+SCALAR_SIZE = {"u8": 1, "s8": 1, "u16": 2, "s16": 2, "u32": 4, "s32": 4, "f32": 4, "f64": 8, "u8 *": 4, "s32 *": 4}
+
+
+def struct_globals(src: str) -> str:
+    access = re.compile(r"\(\*\((u8|s8|u16|s16|u32|s32|f32|f64|u8 \*|s32 \*) \*\)\(\(u8 \*\)\(&(\w+)\) \+ \((0x[0-9A-F]+|\d+)\)\)\)")
+    names = {m.group(2) for m in access.finditer(src)}
+    for name in sorted(names):
+        d = re.search(r"^((?:__declspec\([^)]*\) )?extern )(?:u8|s8|u16|s16|u32|s32|f32) " + re.escape(name) + r";$", src, re.M)
+        if d is None:
+            continue
+        fields: Dict[int, str] = {}
+        ok = True
+        for m in access.finditer(src):
+            if m.group(2) != name:
+                continue
+            off, t = int(m.group(3), 0), m.group(1)
+            if fields.get(off, t) != t or off % SCALAR_SIZE[t]:
+                ok = False
+            fields[off] = t
+        # Every other use of the name would see the struct
+        others = len(re.findall(r"\b" + re.escape(name) + r"\b", src)) - 1 - sum(1 for m in access.finditer(src) if m.group(2) == name)
+        if not ok or others:
+            continue
+        members, cur = [], 0
+        for off in sorted(fields):
+            if off < cur:
+                ok = False
+                break
+            if off > cur:
+                members.append(f"u8 pad_{cur:X}[{off - cur}];")
+            t = fields[off]
+            members.append(f"{t} f_{off:X};")
+            cur = off + SCALAR_SIZE[t]
+        if not ok:
+            continue
+        tag = f"S_{name}"
+        src = src[: d.start()] + f"struct {tag} {{ " + " ".join(members) + " };\n" + f"{d.group(1)}struct {tag} {name};" + src[d.end() :]
+        src = access.sub(lambda m: f"{name}.f_{int(m.group(3), 0):X}" if m.group(2) == name else m.group(0), src)
+    return src
 
 
 def stack_arrays(src: str) -> str:
