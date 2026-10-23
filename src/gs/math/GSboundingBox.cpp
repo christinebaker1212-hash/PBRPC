@@ -78,3 +78,14 @@ void expandBoundingBox(GSboundingBox *dst, const GSboundingBox *src) {
 }
 
 } // namespace GSmath
+
+extern "C" {
+
+s32 calcBoundingBoxCorners__6GSmathFPC13GSboundingBox(s32, f32, f32, f32, f32, f32, f32);
+__declspec(section ".data") extern s32 lbl_80493250;
+
+s32 *fn_80220AF0(s32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3, f32 farg4, f32 farg5) {
+    calcBoundingBoxCorners__6GSmathFPC13GSboundingBox(arg0, farg0, farg1, farg2, farg3, farg4, farg5);
+    return &lbl_80493250;
+}
+}
