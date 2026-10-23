@@ -115,3 +115,37 @@ s32 fn_8025FF74(s32 arg0, s32 arg1) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+void fn_8025F07C(s32 arg0) {
+    s32 var_r31;
+    s32 var_r30;
+
+    var_r31 = arg0 + 0x24;
+    var_r30 = 0;
+    do {
+        if (fn_802609E0((s32)(var_r31)) == 0) {
+            fn_8025FF74((s32)(arg0), (s32)(var_r31));
+        }
+        var_r30 += 1;
+        var_r31 += 0x74;
+    } while (var_r30 < 0x20);
+}
+}
+
+extern "C" {
+
+void fn_8025F0E8(s32 arg0) {
+    s32 var_r31;
+    s32 var_r30;
+
+    var_r31 = arg0 + 0x24;
+    var_r30 = 0;
+    do {
+        fn_80260AD4((s32)(var_r31));
+        var_r30 += 1;
+        var_r31 += 0x74;
+    } while (var_r30 < 0x20);
+}
+}
