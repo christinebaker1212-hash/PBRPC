@@ -1156,7 +1156,8 @@ def compile_cpp(edge: Dict[str, str], src: str, m2c_dir: Path, tmp: Path) -> Opt
         obj = tmp / "scratch.o"
         if obj.exists():
             obj.unlink()
-        cflags = shlex.split(edge["cflags"])
+        # The generated source is C++, whatever language the unit is in
+        cflags = [f for f in shlex.split(edge["cflags"]) if f != "-lang=c"]
         cmd = [
             str(ROOT / "build/tools/wibo"),
             str(ROOT / "build/compilers" / edge["mw_version"] / "mwcceppc.exe"),
@@ -1387,6 +1388,14 @@ def retype_calls(text: str, name: str, old_text: str, new_sig: str) -> str:
     return "".join(out) + text[pos:]
 
 
+def unit_obj(unit: str, version: str) -> str:
+    """The object a unit's source builds to (library units build elsewhere)."""
+    for u in json.loads((ROOT / "objdiff.json").read_text())["units"]:
+        if u["name"] == "main/" + unit and u.get("base_path"):
+            return u["base_path"]
+    return f"build/{version}/{unit}.o"
+
+
 def function_matches(obj: str, target: "Obj", name: str) -> bool:
     base = Obj(ROOT / obj)
     return bool(target.function(name) and base.function(name) and same(target.function(name), base.function(name)))
@@ -1400,7 +1409,7 @@ def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj
         for p in [p["metadata"]["source_path"]]
     )
     original = src_path.read_text(encoding="latin-1")
-    obj = f"build/{version}/{unit}.o"
+    obj = unit_obj(unit, version)
     text = original
     applied: List[str] = []
     # Address order; names that are not fn_<addr> go first.
@@ -1464,7 +1473,7 @@ def main() -> None:
         if f.get("fuzzy_match_percent", 0) < 100 and int(f["size"]) <= args.max_size
     ]
     edges = ninja_edges(args.version)
-    edge = edges[f"build/{args.version}/{unit}.o"]
+    edge = edges[unit_obj(unit, args.version)]
     target = Obj(ROOT / "build" / args.version / "obj" / (unit + ".o"))
     asm = ROOT / "build" / args.version / "asm" / (unit + ".s")
     out_dir = args.out or (ROOT / "build" / args.version / "automatch" / unit)
