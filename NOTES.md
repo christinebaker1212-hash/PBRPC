@@ -86,6 +86,14 @@ dated. Write facts and next steps, not narration.
   than any reference; struct offsets differ.
 - nw4r: the remaining diffs are register allocation or static-local names.
 
+### 2026-10-23, later
+
+- Context trimming is committed and checked: on five functions of
+  `src/.unsorted/8031C124` m2c gives output identical to the full context, in
+  ~0.2-0.4 s instead of ~6 s.
+- GPT's REL24 fix is right (pulled at `7c073ff`). Matches made before it could
+  include a `b`/`bl` mix-up; objdiff's report is the real measure.
+
 ### Pitfalls
 
 - An undefined macro in C compiles as a call to an undeclared function; check
