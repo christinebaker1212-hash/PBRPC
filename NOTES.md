@@ -107,6 +107,18 @@ dated. Write facts and next steps, not narration.
   `relaunch.sh` in Claude's scratchpad; all 224 units requeued, `tried.txt`
   files cleared so units are retried with the new version.
 
+- More automatch fixes (committed): `CLZ` -> `__cntlzw`; undeclared `spXX`
+  stack temporaries declared; call arguments cast on MWCC error 10248; data
+  the target addresses with `@ha/@l` declared `__declspec(section ".data")`
+  (otherwise MWCC uses sda21 for small objects).
+- m2c (checked out at `/home/user/ref/m2c`) is patched with
+  `tools/m2c_ppc.patch`: `crclr cr1eq` before a variadic call clobbers f1-f8,
+  so m2c stops passing stray float arguments. Apply it to a fresh m2c checkout
+  (`git apply`).
+- Sample `src/.unsorted/8031C124` functions 200-229: 10 -> 12 matched, 6 -> 3
+  failing to compile. Remaining near misses: bitfields (m2c shifts/masks),
+  register allocation, and inlined code.
+
 ### Pitfalls
 
 - An undefined macro in C compiles as a call to an undeclared function; check

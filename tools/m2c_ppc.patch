@@ -1,0 +1,14 @@
+diff --git a/m2c/arch_ppc.py b/m2c/arch_ppc.py
+index 018f2b7..e1dc425 100644
+--- a/m2c/arch_ppc.py
++++ b/m2c/arch_ppc.py
+@@ -1450,6 +1450,9 @@ class PpcArch(Arch):
+                 s.set_reg(Register("cr0_lt"), cls.instrs_ppc_compare[mnemonic](a, "<"))
+                 s.set_reg(Register("cr0_so"), Literal(0))
+ 
++        elif mnemonic == "crclr" and str(args[0]) in ("cr1eq", "6"):
++            # Before a variadic call: no float arguments are passed
++            clobbers = [Register(f"f{i}") for i in range(1, 9)]
+         elif mnemonic in cls.instrs_ignore:
+             pass
+         else:

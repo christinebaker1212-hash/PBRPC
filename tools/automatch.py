@@ -389,6 +389,16 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
     # A function m2c only takes the address of is declared as data, which
     # MWCC would address through the small data area
     text = re.sub(r"^extern [\w ]+?\*? ?\b(fn_[0-9A-F]{8})\s*;", r"void \1(void);", text, flags=re.M)
+    # Small data the target addresses absolutely (@ha/@l) would otherwise go
+    # through the small data area
+    asm_text = asm.read_text()
+    absolute = set(re.findall(r"\b([\w$@]+)@(?:ha|l)\b", asm_text)) - set(re.findall(r"\b([\w$@]+)@sda21\b", asm_text))
+    text = re.sub(
+        r"^extern ([^(\n]*?\b(\w+)\s*;)",
+        lambda m: f'__declspec(section ".data") extern {m.group(1)}' if m.group(2) in absolute else m.group(0),
+        text,
+        flags=re.M,
+    )
     for known in (False, True):
         v = expand_macros(text, known)
         if v is not None and v not in variants:
@@ -578,6 +588,7 @@ def split_output(src: str) -> Tuple[List[str], str]:
 
 
 def decl_name(decl: str) -> Optional[str]:
+    decl = re.sub(r"^__declspec\([^)]*\) ", "", decl)
     m = re.search(r"\b(\w+)\s*\(", decl)
     if m and not decl.startswith("extern"):
         return m.group(1)
@@ -657,7 +668,7 @@ def merge_into(text: str, src: str, adopt: bool = True) -> str:
         p = m.group(3).strip()
         protos[m.group(2)] = [param_type(x) for x in p.split(",")] if p not in ("", "void") else []
         rets[m.group(2)] = m.group(1).strip()
-    have = set(re.findall(r"^(?:extern )?[^\n(;]*?\b(\w+)\s*[\[(;]", text, re.M))
+    have = set(re.findall(r"^(?:__declspec\([^)]*\) )?(?:extern )?[^\n(;]*?\b(\w+)\s*[\[(;]", text, re.M))
     own = {}
     for m in re.finditer(r"^([A-Za-z_][\w \*]*?)\b(\w+)\(([^;()]*)\);", src, re.M):
         own[m.group(2)] = (m.group(1).strip(), m.group(3).strip() or "void")
