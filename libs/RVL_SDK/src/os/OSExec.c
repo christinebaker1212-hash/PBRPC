@@ -1,10 +1,25 @@
-// Imported from doldecomp/ogws (CC0), src/revolution/OS/OSExec.c
+// Imported from doldecomp/ogws (CC0), src/revolution/OS/OSExec.c; PackArgs, Run, Callback, callback and
+// __OSBootDol from zeldaret/tp (CC0), libs/revolution/src/os/OSExec.c.
 #include <private/ios.h>
 #include <private/ipc.h>
 #include <private/os.h>
 #include <private/os/OSExec.h>
 #include <revolution/os.h>
+#include <revolution/dvd.h>
+#include <stdio.h>
 #include <string.h>
+
+#ifndef __REGISTER
+#define __REGISTER register
+#endif
+#define __GEKKO__
+
+static int Prepared;
+static u32 DVDLowIntType;
+
+void ICFlashInvalidate(void);
+void __OSBootDolSimple(u32 doloffset, u32 restartCode, void* regionStart, void* regionEnd, BOOL argsUseDefault,
+                       s32 argc, char** argv);
 
 // From doldecomp/ogws (CC0), include/revolution/ESP/esp.h
 enum {
@@ -165,4 +180,94 @@ static s32 _ES_LaunchTitle(s32 *fd, u64 tid, void *pViews) {
     pVectors[1].length = TICKET_VIEW_SIZE;
 
     return IOS_IoctlvReboot(*fd, ES_IOCTLV_LAUNCH_TITLE, 2, 0, pVectors);
+}
+
+int PackArgs(void* addr, s32 argc, char** argv) {
+    s32 numArgs;
+    char* bootInfo2;
+    char* ptr;
+    char** list;
+    u32 i;
+
+    bootInfo2 = (char*)addr;
+    memset(bootInfo2, 0, 0x2000);
+
+    if (argc == 0) {
+        *(u32*)(bootInfo2 + 8) = 0;
+    } else {
+        numArgs = argc;
+        ptr = bootInfo2 + 0x2000;
+        while (--argc >= 0) {
+            ptr -= strlen(argv[argc]) + 1;
+            strcpy(ptr, argv[argc]);
+            argv[argc] = (char*)(ptr - bootInfo2);
+        }
+
+        ptr = bootInfo2 + ((ptr - bootInfo2) & ~0x3);
+        ptr -= ((numArgs + 1) * 4);
+        list = (char**)ptr;
+
+        for (i = 0; i < numArgs + 1; i++) {
+            list[i] = argv[i];
+        }
+
+        ptr -= 4;
+        *(u32*)ptr = numArgs;
+
+        ASSERTMSGLINE(401, ptr - bootInfo2 >= 0x1000U, "OSExec: Argument list is too long");
+
+        *(u32*)(bootInfo2 + 8) = (ptr - bootInfo2);
+    }
+
+    return 1;
+}
+
+asm void Run(__REGISTER void* entryPoint) {
+    fralloc
+
+    bl ICFlashInvalidate
+    sync
+    isync
+    mtctr entryPoint
+    bctr
+
+    frfree
+    blr
+}
+
+void Callback(s32 result, DVDCommandBlock* block) {
+    Prepared = TRUE;
+}
+
+void callback(u32 param_0) {
+    DVDLowIntType = param_0;
+}
+
+void __OSBootDol(u32 doloffset, u32 restartCode, const char** argv) {
+    char doloffInString[20];
+    s32 argvlen;
+    char** argvToPass;
+    s32 i;
+    void* saveStart;
+    void* saveEnd;
+
+    OSGetSaveRegion(&saveStart, &saveEnd);
+    sprintf(doloffInString, "%d", doloffset);
+    argvlen = 0;
+
+    if (argv != 0) {
+        while (argv[argvlen] != 0) {
+            argvlen++;
+        }
+    }
+
+    argvlen++;
+    argvToPass = OSAllocFromMEM1ArenaLo((argvlen + 1) * 4, 1);
+    *argvToPass = doloffInString;
+
+    for (i = 1; i < argvlen; i++) {
+        argvToPass[i] = (char*)argv[i - 1];
+    }
+
+    __OSBootDolSimple(-1, restartCode, saveStart, saveEnd, FALSE, argvlen, argvToPass);
 }
