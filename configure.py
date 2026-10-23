@@ -1052,7 +1052,7 @@ config.libs = [
             Object(Matching, "ds/battle/battle_controller.cpp", extra_cflags=["-O4,s", "-inline noauto"]),
             Object(NonMatching, "ds/battle/battle_controller_player.cpp", extra_cflags=["-O4,s", "-inline noauto"]),
             Object(NonMatching, "ds/battle/battle_lib.cpp", extra_cflags=["-O4,s", "-inline noauto"]),
-            Object(NonMatching, "ds/battle/battle_script.cpp"),
+            Object(NonMatching, "ds/battle/battle_script.cpp", extra_cflags=["-O4,s", "-inline noauto"]),
             Object(Matching, "ds/DSbridge.cpp", extra_cflags=["-O4,s", "-inline noauto"]),
             Object(NonMatching, ".unsorted/800559D4.cpp"),
             Object(NonMatching, ".unsorted/8005B4A4.cpp"),

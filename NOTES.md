@@ -160,6 +160,12 @@ dated. Write facts and next steps, not narration.
   (`fn_802F61FC`, `fn_803541DC`), both restored; and that `lyt_pane`'s static
   initializer stopped matching after the library run (reverted that file).
   GPT's apply-time protection of existing matches would also catch these.
+- Some game code was compiled with `-O4,s` (the `ds/` units already had
+  `extra_cflags=["-O4,s", "-inline noauto"]`; `battle_script` was missing them,
+  +4 functions). Parts of the big `.unsorted` units are size-optimized too
+  (e.g. `_savegpr_28`..`_31`, `mulli` by small constants): automatch now
+  retries near misses wrapped in `#pragma optimize_for_size on` / `reset`,
+  which compiles the same as `-O4,s` and can be applied per function.
 
 ### Pitfalls
 

@@ -774,6 +774,14 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
     return out
 
 
+def size_pragma(src: str) -> str:
+    """The function compiled optimizing for size."""
+    d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
+    if d is None:
+        return src
+    return src[: d.start()] + "#pragma optimize_for_size on\n" + src[d.start() :].rstrip("\n") + "\n#pragma optimize_for_size reset\n"
+
+
 def while_loops(src: str) -> str:
     """`loop_N: if (c) { body goto loop_N; }` as `while (c) { body }`."""
     # `loop_N: if (c) { if (d) { body goto loop_N; } }`: a loop that breaks
@@ -1796,6 +1804,18 @@ def main() -> None:
                     break
                 tried_plain = True
                 variants = m2c(args.m2c, fn_asm, name, use_context=False)
+            if result == "differs":
+                # Some of the game was compiled optimizing for size
+                for src in variants:
+                    obj = compile_cpp(edge, size_pragma(src), args.m2c.parent, tmp)
+                    bf = Obj(obj).function(name) if obj is not None else None
+                    if bf is not None and same(tf, bf):
+                        matched.append((name, int(f["size"])))
+                        (out_dir / f"{name}.cpp").write_text(LAST_SOURCE)
+                        result = f"MATCH ({int(f['size']):#x}, size)"
+                        break
+                    if bf is not None:
+                        best = max(best, (similarity(tf, bf), LAST_SOURCE))
             if result == "differs" and best[0] >= 0:
                 # Near misses are worth finishing by hand.
                 (out_dir / "differs").mkdir(exist_ok=True)
