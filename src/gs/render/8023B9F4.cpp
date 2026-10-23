@@ -94,13 +94,13 @@ extern "C" {
 u8 *fn_8023BC44(s32, s32);
 u8 *fn_8023BD70(s32, s32);
 s32 fn_8023C47C(u8 *);
-s32 fn_8023CB74(void);
+void fn_8023CB74(u8 *arg0, s32 arg1);
 
 void fn_8023CAD8(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s8 arg4) {
     u8 *temp_r3;
     u8 *temp_r3_2;
 
-    fn_8023CB74();
+    ((s32 (*)(void))fn_8023CB74)();
     temp_r3 = fn_8023BD70((s32)(arg0 + 0x1B8), (s32)(arg1));
     (*(s32 *)((u8 *)(temp_r3) + (0))) = arg1;
     (*(s32 *)((u8 *)(temp_r3) + (4))) = 1;
@@ -175,5 +175,57 @@ void fn_8023C054(u8 *arg0) {
         (*(s32 *)((u8 *)(var_r3) + (8))) = temp_r0;
         var_r3 += 0xC;
     }
+}
+}
+
+extern "C" {
+
+s32 fn_8023BA10(s32, s32);
+
+void fn_8023CB74(u8 *arg0, s32 arg1) {
+    u32 var_r31;
+
+    var_r31 = 0U;
+    if (((s32 (*)(s32))fn_8023BA34)((s32)(arg0 + 0x1B8)) != 0) {
+        ((s32 (*)(void))fn_8023C024)();
+        var_r31 = 1U;
+    }
+    if ((arg1 >= 9) || (arg1 < 0)) {
+        if (fn_8023BA10((s32)(arg0 + 8), (s32)(arg1)) != 0) {
+            ((s32 (*)(void))fn_8023BFE4)();
+            var_r31 = 1U;
+        }
+        if (fn_8023BA58((s32)((s32)(arg0 + 0x290)), (s32)((s32)(arg1))) != 0) {
+            ((s32 (*)(void))fn_8023C054)();
+            var_r31 = 1U;
+        }
+    }
+    if (var_r31 == 1U) {
+        fn_8023C47C((u8 *)(arg0));
+        *arg0 |= 6;
+    }
+}
+}
+
+extern "C" {
+
+s32 __register_global_object(s32, s32, s32);
+void fn_801E42B4(void);
+__declspec(section ".data") extern s32 lbl_804967C0;
+__declspec(section ".data") extern s32 lbl_804967CC;
+struct S_lbl_8063F750 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063F750 lbl_8063F750;
+
+void fn_8023CF8C() {
+    lbl_8063F750.f_0 = 1;
+    lbl_8063F750.f_2 = 4;
+    lbl_8063F750.f_4 = 0;
+    (*(s8 *)((u8 *)(&lbl_804967CC) + (0))) = 0;
+    (*(s8 *)((u8 *)(&lbl_804967CC) + (1))) = 0;
+    (*(s8 *)((u8 *)(&lbl_804967CC) + (2))) = 0;
+    (*(s8 *)((u8 *)(&lbl_804967CC) + (3))) = 0;
+    (*(s32 *)((u8 *)(&lbl_804967CC) + (4))) = 0;
+    ((s32 (*)(s32))fn_8023C8B4)((s32) &lbl_804967CC);
+    __register_global_object((s32) &lbl_804967CC, (s32) &fn_801E42B4, (s32) &lbl_804967C0);
 }
 }
