@@ -19,3 +19,15 @@ void fn_801E466C(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+struct S_lbl_8063F380 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063F380 lbl_8063F380;
+
+void fn_801E472C() {
+    lbl_8063F380.f_0 = 1;
+    lbl_8063F380.f_2 = 4;
+    lbl_8063F380.f_4 = 0;
+}
+}
