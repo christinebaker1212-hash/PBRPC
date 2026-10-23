@@ -29,3 +29,12 @@ s32 fn_8005551C(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+extern u8 lbl_8063EB60;
+
+void fn_80055504() {
+    ((s32 (*)(s32 *))fn_8005555C)((s32 *)(&lbl_8063EB60));
+}
+}
