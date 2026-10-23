@@ -78,3 +78,40 @@ s32 fn_8003F51C(s32 arg0, s32 arg1) {
     return arg0;
 }
 }
+
+extern "C" {
+
+s32 fn_80200C54(s32, s32);
+s32 fn_80200D08(s32, s32);
+
+void fn_8003FD78(u8 *arg0, s32 arg1, s32 arg2) {
+    u8 *var_r31;
+    u8 *var_r30;
+    s32 var_r29;
+    s32 var_r28;
+    s32 temp_r4;
+
+    var_r31 = arg0;
+    var_r29 = 0;
+    do {
+        var_r30 = var_r31;
+        var_r28 = 0;
+loop_2:
+        temp_r4 = (*(s32 *)((u8 *)(var_r30) + (0x38)));
+        if (temp_r4 != 0) {
+            if (arg2 != 0) {
+                fn_80200C54(arg1, temp_r4);
+            } else {
+                fn_80200D08(arg1, temp_r4);
+            }
+        }
+        var_r28 += 1;
+        var_r30 += 0x20;
+        if (var_r28 < 5) {
+            goto loop_2;
+        }
+        var_r29 += 1;
+        var_r31 += 0xAC;
+    } while (var_r29 < 0xA);
+}
+}
