@@ -213,3 +213,26 @@ void fn_80204058__Fv() {
     (*(f32 *)((u8 *)(&lbl_80492260) + (0x10))) = temp_f0;
 }
 }
+
+extern "C" {
+
+s32 fn_80207018(s32);
+s32 fn_8023CA6C(s32);
+extern u8 *lbl_8063F488;
+
+void fn_80204270__Fv() {
+    u8 *temp_r31;
+    u8 *var_r3;
+
+    var_r3 = lbl_8063F488;
+    while (var_r3 != NULL) {
+        temp_r31 = (*(u8 **)((u8 *)(var_r3) + (0x150)));
+        fn_80207018((s32) var_r3);
+        var_r3 = temp_r31;
+    }
+    fn_8023CA6C((s32) &lbl_804926BC);
+    fn_8023CA6C((s32) &lbl_804922DC);
+    fn_8023CA6C((s32) &lbl_80492E7C);
+    fn_8023CA6C((s32) &lbl_80492A9C);
+}
+}
