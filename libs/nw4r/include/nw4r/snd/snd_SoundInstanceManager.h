@@ -30,28 +30,24 @@ public:
 
     T *Alloc(int priority) {
         ut::detail::AutoLock<OSMutex> lock(mMutex);
-        T *pSound = NULL;
+        T *pSound;
 
-        while (pSound == NULL) {
-            void *pBuffer = mPool.Alloc();
+        void *pBuffer = mPool.Alloc();
+        if (pBuffer != NULL) {
+            pSound = new (pBuffer) T(this);
+        } else {
+            T *pLowest = GetLowestPrioritySound();
 
-            if (pBuffer != NULL) {
-                pSound = new (pBuffer) T(this);
-            } else {
-                T *pLowest = GetLowestPrioritySound();
-
-                if (pLowest == NULL) {
-                    return NULL;
-                }
-
-                if (priority < pLowest->CalcCurrentPlayerPriority()) {
-                    return NULL;
-                }
-
-                OSUnlockMutex(&mMutex);
-                pLowest->Stop(0);
-                OSLockMutex(&mMutex);
+            if (pLowest == NULL) {
+                return NULL;
             }
+
+            if (priority < pLowest->CalcCurrentPlayerPriority()) {
+                return NULL;
+            }
+
+            pLowest->Stop(0);
+            pSound = new (mPool.Alloc()) T(this);
         }
 
         InsertPriorityList(pSound, priority);
