@@ -222,7 +222,7 @@ s32 fn_80176BC8(s32 arg0) {
 extern "C" {
 
 s32 fn_80176920(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-s32 fn_801769A0(s32, s32);
+void fn_801769A0(s32 arg0, s32 arg1);
 s32 fn_80176C84(s32, s32, s32, s32);
 
 s32 fn_80176C84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
@@ -234,7 +234,7 @@ s32 fn_80176C84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     if (arg3 == 0) {
         return temp_r3;
     }
-    fn_801769A0(arg0, temp_r4);
+    fn_801769A0((s32)(arg0), (s32)(temp_r4));
     return 0;
 }
 }
@@ -252,7 +252,7 @@ s32 fn_80176CEC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     if (arg4 == 0) {
         return temp_r3;
     }
-    fn_801769A0(arg0, temp_r4);
+    fn_801769A0((s32)(arg0), (s32)(temp_r4));
     return 0;
 }
 }
@@ -270,7 +270,7 @@ s32 fn_80176D58(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     if (arg4 == 0) {
         return temp_r3;
     }
-    fn_801769A0(arg0, temp_r4);
+    fn_801769A0((s32)(arg0), (s32)(temp_r4));
     return 0;
 }
 }
@@ -288,7 +288,7 @@ s32 fn_80176DC4(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 == 0) {
         return temp_r3;
     }
-    fn_801769A0(arg0, temp_r4);
+    fn_801769A0((s32)(arg0), (s32)(temp_r4));
     return 0;
 }
 }
@@ -306,7 +306,7 @@ s32 fn_80176E2C(s32 arg0, s32 arg1, s32 arg2) {
     if (arg2 == 0) {
         return temp_r3;
     }
-    fn_801769A0(arg0, temp_r4);
+    fn_801769A0((s32)(arg0), (s32)(temp_r4));
     return 0;
 }
 }
@@ -431,6 +431,30 @@ u8 fn_80170C38(u8 *arg0) {
         return var_r3;
     default:
         return (*(u8 *)((u8 *)(arg0) + (2)));
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_801767CC(s32, s32, s32, s32, s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_80420304;
+
+void fn_80176770(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    (*(s32 *)((u8 *)(arg0) + (8))) = fn_801767CC(arg0, (s32) &lbl_80420304, arg1, arg2, arg3, arg4, arg5);
+}
+}
+
+extern "C" {
+
+void fn_801769A0(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    if ((arg1 != 0) && ((s32) lbl_8063E9B0 != 0)) {
+        temp_r31 = fn_800250E8((s32)(lbl_8063E9B0), (s32)(0));
+        while (fn_8022A900((s32)(temp_r31), (s32)(arg1)) != 0) {
+            sleepCurrentThread__15GSthreadManagerFv((s32)(sInstance__15GSthreadManager));
+        }
     }
 }
 }
