@@ -872,6 +872,9 @@ def split_output(src: str) -> Tuple[List[str], str]:
 
 def decl_name(decl: str) -> Optional[str]:
     decl = re.sub(r"^__declspec\([^)]*\) ", "", decl)
+    p = re.search(r"\(\*+\s*(\w+)\)", decl)
+    if p:
+        return p.group(1)
     m = re.search(r"\b(\w+)\s*\(", decl)
     if m and not decl.startswith("extern"):
         return m.group(1)
@@ -958,6 +961,19 @@ def merge_into(text: str, src: str, adopt: bool = True) -> str:
     decls, body = split_output(src)
     if adopt:
         body = adopt_signature(body, protos, rets)
+    # Data the unit declares with another type: use the unit's symbol through
+    # a cast to the type m2c gave it
+    for d in decls:
+        n = decl_name(d)
+        if n is None or n not in have or not re.match(r"^(?:__declspec\([^)]*\) )?extern\b", d):
+            continue
+        u = re.search(r"^(?:/\*[^*\n]*\*/\s*)?(?:__declspec\([^)]*\) )?extern\b[^\n]*\b" + re.escape(n) + r"\b[^\n]*;", text, re.M)
+        norm = lambda x: re.sub(r"^/\*[^*\n]*\*/|__declspec\([^)]*\) |\s+", "", x)
+        if u is None or norm(u.group(0)) == norm(d):
+            continue
+        t = re.sub(r"^(?:__declspec\([^)]*\) )?extern\s+", "", d).rstrip("; ")
+        t = re.sub(r"\b" + re.escape(n) + r"\b", "(*)", t, count=1)
+        body = re.sub(r"(?<![\w.>])" + re.escape(n) + r"\b", f"(*({t})&{n})", body)
     decls = [d for d in decls if decl_name(d) not in have]
     # m2c offsets symbols in bytes; the unit may type them as arrays or structs
     body = re.sub(r"&(lbl_\w+) \+ ", r"(u8 *)&\1 + ", body)
@@ -1006,7 +1022,7 @@ def remove_definition(text: str, name: str) -> str:
 def retype_calls(text: str, name: str, old_text: str, new_sig: str) -> str:
     """Casts the unit's calls of name to the types of its new signature, and
     their results back to the type the old prototype gave them."""
-    old = re.search(r"^([A-Za-z_][^\n(;{]*?)\b" + re.escape(name) + r"\s*\([^;{]*\)\s*;", old_text, re.M)
+    old = re.search(r"^([A-Za-z_][^\n(;{]*?)\b" + re.escape(name) + r"\s*\(([^;{]*)\)\s*;", old_text, re.M)
     m = re.match(r"^(.*?)\b" + re.escape(name) + r"\(([^)]*)\)$", new_sig)
     if old is None or m is None:
         return text
@@ -1023,6 +1039,12 @@ def retype_calls(text: str, name: str, old_text: str, new_sig: str) -> str:
                 continue
         args, end = split_args(text, c.end() - 1)
         if len(args) != len(params):
+            # Called with another number of arguments: through the old type
+            old_params = old.group(2).strip() or "void"
+            ret = re.sub(r"^extern\s+", "", old_ret) or "void"
+            call = f"(({ret} (*)({old_params})){name})(" + ", ".join(args) + ")"
+            out.append(text[pos : c.start()] + call)
+            pos = end + 1
             continue
         call = name + "(" + ", ".join(f"({t})({a})" if t else a for t, a in zip(params, args)) + ")"
         if old_ret and old_ret != new_ret and old_ret != "void" and new_ret != "void":
