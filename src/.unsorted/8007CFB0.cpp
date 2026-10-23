@@ -110,3 +110,136 @@ void fn_8007ED44(s32 arg0, s32 arg1) {
     return;
 }
 }
+
+extern "C" {
+
+s32 fn_80059A3C(s32, s32);
+s32 fn_80253EDC(s32, s32, s32, s32);
+
+void fn_8007F328(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 sp8;
+
+    fn_80253EDC(arg0, arg1, 3, (s32) &sp8);
+    switch (sp8) {                                  /* irregular */
+    case 2:
+        fn_80253EDC(arg0, arg1, 6, (s32) sp10);
+        fn_80059A3C(2, (s32) sp10);
+        return;
+    case 3:
+        fn_80253EDC(arg0, arg1, 6, (s32) sp10);
+        fn_80059A3C(3, (s32) sp10);
+        return;
+    case 4:
+        if ((s32) (*(u8 *)((u8 *)(&(*(s32 (*))&lbl_8047A968)) + (1))) != 0) {
+            fn_80253EDC(arg0, arg1, 6, (s32) sp10);
+            fn_80059A3C(4, (s32) sp10);
+        }
+        /* fallthrough */
+    case 0:
+        return;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8007F3D8(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 sp8;
+
+    fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {                                  /* irregular */
+    case 1:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(1), (s32)((s32) sp10));
+        return;
+    case 0:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(2), (s32)((s32) sp10));
+        return;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8007F478(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 sp8;
+
+    fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {
+    case 5:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(1), (s32)((s32) sp10));
+        return;
+    case 8:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(2), (s32)((s32) sp10));
+        return;
+    case 11:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(3), (s32)((s32) sp10));
+        return;
+    case 14:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(4), (s32)((s32) sp10));
+        return;
+    case 17:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(5), (s32)((s32) sp10));
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+}
+
+extern "C" {
+
+s32 WPADProbe(s32, s32);
+
+void fn_8007F590(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 spC;
+    s32 sp8;
+
+    WPADProbe(0, (s32) &sp8);
+    fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &spC));
+    switch (spC) {                                  /* irregular */
+    case 3:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(1), (s32)((s32) sp10));
+        return;
+    case 6:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(2), (s32)((s32) sp10));
+        return;
+    case 9:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(3), (s32)((s32) sp10));
+        return;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8007F674(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 sp8;
+
+    fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {                                  /* irregular */
+    case 1:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(1), (s32)((s32) sp10));
+        return;
+    case 2:
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (s32)((s32) sp10));
+        fn_80059A3C((s32)(2), (s32)((s32) sp10));
+        return;
+    }
+}
+}
