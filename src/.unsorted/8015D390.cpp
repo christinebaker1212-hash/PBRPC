@@ -149,29 +149,17 @@ s32 fn_8015D4EC() {
 
 extern "C" {
 
-u8 * fn_8015F690() {
-    return (u8 *)(lbl_80488300 + 0x100);
-}
+
 }
 
 extern "C" {
 
-void fn_8015F72C(u8 arg0) {
-    u8 var_r3;
 
-    var_r3 = arg0;
-    if (var_r3 >= 4U) {
-        var_r3 = 0;
-    }
-    (*(u8 *)((u8 *)(lbl_80488300) + (0x50))) = var_r3;
-}
 }
 
 extern "C" {
 
-u8 fn_8015F748() {
-    return (*(u8 *)((u8 *)(lbl_80488300) + (0x50)));
-}
+
 }
 
 extern "C" {
@@ -197,5 +185,32 @@ extern s32 gUnkHeap2;
 void fn_80162724() {
     freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, (*(s32 *)((u8 *)(&lbl_80488300) + (0x10))));
     (*(s32 *)((u8 *)(&lbl_80488300) + (0x10))) = 0;
+}
+}
+
+extern "C" {
+
+u8 * fn_8015F690() {
+    return (u8 *)(lbl_80488300 + 0x100);
+}
+}
+
+extern "C" {
+
+void fn_8015F72C(u8 arg0) {
+    u8 var_r3;
+
+    var_r3 = arg0;
+    if (var_r3 >= 4U) {
+        var_r3 = 0;
+    }
+    (*(u8 *)((u8 *)(lbl_80488300) + (0x50))) = var_r3;
+}
+}
+
+extern "C" {
+
+u8 fn_8015F748() {
+    return (*(u8 *)((u8 *)(lbl_80488300) + (0x50)));
 }
 }
