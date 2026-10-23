@@ -59,7 +59,7 @@ private:
 
 private:
     void ClearParam();
-    void ExecCommand(SpeakerCommand command);
+    inline void ExecCommand(SpeakerCommand command);
 
     bool IsAllSampleZero(const s16 *pRmtSamples);
     void NotifyCallback(s32 chan, s32 result);
