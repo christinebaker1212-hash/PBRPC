@@ -34,15 +34,13 @@ void fn_80256E80(u8 *p) {
 extern "C" {
 
 s32 LoadGroup__Q34nw4r3snd18SoundArchivePlayerFUlPQ34nw4r3snd22SoundMemoryAllocatableUl(s32, u32, s32, s32);
-u32 fn_80255904(void);
+void fn_80255904(s32 *arg0);
 
 s32 fn_80254A30(u8 *arg0, u32 arg1, s32 arg2, s32 arg3) {
     s32 var_r31;
 
     var_r31 = arg3;
-    if (arg1 >= fn_80255904()) {
-        return 0;
-    }
+
     if ((var_r31 != 0) && (var_r31 & 0x3F)) {
         var_r31 = (var_r31 + 0x1F) & 0xFFFFFFE0;
     }
@@ -230,5 +228,99 @@ s32 fn_80256BC0(s32 arg0, s32 arg1) {
         return var_r3;
     }
     return var_r3;
+}
+}
+
+extern "C" {
+
+s32 Clear__Q44nw4r3snd6detail9FrameHeapFv(s32);
+s32 OSLockMutex(s32);
+s32 OSUnlockMutex(s32);
+
+void fn_80254AD0(u8 *arg0, s32 arg1) {
+    s32 temp_r31;
+    s32 temp_r30;
+
+    temp_r30 = (*(s32 *)((u8 *)(arg0) + (8))) + (arg1 * 0x2C);
+    temp_r31 = temp_r30 + 4;
+    OSLockMutex(temp_r31);
+    Clear__Q44nw4r3snd6detail9FrameHeapFv(temp_r30 + 0x1C);
+    OSUnlockMutex(temp_r31);
+}
+}
+
+extern "C" {
+
+s32 fn_803705F0(s32);
+
+s32 fn_80254B24(u8 *arg0, s32 arg1) {
+    s32 temp_r31;
+    s32 temp_r30_2;
+    s32 temp_r30;
+
+    temp_r30_2 = (*(s32 *)((u8 *)(arg0) + (8))) + (arg1 * 0x2C);
+    temp_r31 = temp_r30_2 + 4;
+    OSLockMutex((s32)(temp_r31));
+    temp_r30 = fn_803705F0(temp_r30_2 + 0x1C);
+    OSUnlockMutex((s32)(temp_r31));
+    return temp_r30;
+}
+}
+
+extern "C" {
+
+s32 GetFreeSize__Q44nw4r3snd6detail9FrameHeapCFv(s32);
+
+s32 fn_80254C18(u8 *arg0, s32 arg1) {
+    s32 temp_r31;
+    s32 temp_r30_2;
+    s32 temp_r30;
+
+    temp_r30_2 = (*(s32 *)((u8 *)(arg0) + (8))) + (arg1 * 0x2C);
+    temp_r31 = temp_r30_2 + 4;
+    OSLockMutex((s32)(temp_r31));
+    temp_r30 = GetFreeSize__Q44nw4r3snd6detail9FrameHeapCFv(temp_r30_2 + 0x1C);
+    OSUnlockMutex((s32)(temp_r31));
+    return temp_r30;
+}
+}
+
+extern "C" {
+
+s32 GetGroupCount__Q34nw4r3snd12SoundArchiveCFv(s32);
+
+void fn_80255904(s32 *arg0) {
+    GetGroupCount__Q34nw4r3snd12SoundArchiveCFv(*arg0);
+}
+}
+
+extern "C" {
+
+s32 fn_80256568(s32, s32);
+
+s32 fn_80256568(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_80256BC0((s32)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            ((s32 (*)(s32))__dl__FPv)(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 DetachSound__Q34nw4r3snd11SoundHandleFv(s32);
+s32 fn_8025948C(s32, s32);
+
+s32 fn_8025948C(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        DetachSound__Q34nw4r3snd11SoundHandleFv(arg0);
+        if (arg1 > 0) {
+            ((s32 (*)(s32))__dl__FPv)(arg0);
+        }
+    }
+    return arg0;
 }
 }
