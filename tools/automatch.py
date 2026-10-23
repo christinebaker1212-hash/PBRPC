@@ -261,6 +261,29 @@ def fold_overlaps(src: str) -> str:
     return src
 
 
+LOAD_TYPES = {"lbz": "u8", "lhz": "u16", "lha": "s16", "lwz": "s32", "lfs": "f32", "lfd": "f64"}
+
+
+def symbol_load_types(asm_text: str) -> Dict[str, str]:
+    """The type each symbol is read as, from the loads through the register
+    that holds its address (`lis/addi rX, sym` then `lhzx rY, rX, ...`)."""
+    lines = [re.sub(r"^/\*.*?\*/\s*", "", l).strip() for l in asm_text.splitlines()]
+    found: Dict[str, Set[str]] = {}
+    for i, l in enumerate(lines):
+        m = re.match(r"^(?:addi|li) (r\d+), (?:r\d+, )?(\w+)@(?:l|sda21)$", l)
+        if not m:
+            continue
+        reg, sym = m.groups()
+        for k in lines[i + 1 : i + 12]:
+            ld = re.match(r"^(lbz|lhz|lha|lwz|lfs|lfd)u?x? (?:r|f)\d+, (?:-?0x[0-9a-f]+\(" + reg + r"\)|" + reg + r", r\d+|r\d+, " + reg + r")$", k)
+            if ld:
+                found.setdefault(sym, set()).add(LOAD_TYPES[ld.group(1)])
+                break
+            if re.match(r"^\w+\.? " + reg + r"\b", k) or k.startswith("bl "):
+                break
+    return {k: v.pop() for k, v in found.items() if len(v) == 1}
+
+
 def float_literals(src: str) -> str:
     """Constants the code reads by value written as literals, as the original
     source likely did: MWCC can move a load of its own constant pool freely,
@@ -673,6 +696,14 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         text,
         flags=re.M,
     )
+    # Symbols m2c could not type: the type the code reads them as
+    loads = symbol_load_types(asm_text)
+    text = re.sub(
+        r"^((?:__declspec\([^)]*\) )?extern )M2C_UNK (\w+);",
+        lambda m: f"{m.group(1)}{loads.get(m.group(2), 'u8')} {m.group(2)};",
+        text,
+        flags=re.M,
+    )
     for known in (False, True):
         v = expand_macros(text, known)
         if v is not None and v not in variants:
@@ -761,7 +792,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         # On the full rewrite, and on a version with only the safe rewrites
         for b in (w, byte_offsets(struct_globals(while_loops(inline_cr_temps(v))))):
             extra += [b, stack_arrays(b), stack_structs(b), stack_structs(b, top), ternaries(b), reverse_locals(b), compound_assignments(b), equality_constants(b)]
-            extra += [widen_params(b), ctr_loops(b)]
+            extra += [widen_params(b), ctr_loops(b), wide_counters(b), reverse_locals(wide_counters(b))]
             extra += [narrow_counters(b, t) for t in ("u16", "u8")]
             extra += [reverse_locals(x) for x in extra[-2:]]
         for x in extra:
@@ -941,6 +972,23 @@ def byte_offsets(src: str) -> str:
         pos = j + 1
     src = "".join(out) + src[pos:]
     # `&sym + n`: m2c counts n in bytes whatever type the declaration has
+    sym_types = dict((n, t) for t, n in re.findall(r"^(?:__declspec\([^)]*\) )?extern ((?:s16|u16|s32|u32|f32|f64)) (\w+);$", src, re.M))
+    # Dereferenced `*(&sym + n)`: keep the element type the declaration gives
+    out, pos = [], 0
+    for m in re.finditer(r"\*\(&(\w+) ([+-]) ", src):
+        if m.start() < pos or m.group(1) not in sym_types:
+            continue
+        depth, j = 0, m.start() + 1
+        while j < len(src):
+            depth += {"(": 1, ")": -1}.get(src[j], 0)
+            if depth == 0:
+                break
+            j += 1
+        if j >= len(src):
+            break
+        out.append(src[pos : m.start()] + f"*({sym_types[m.group(1)]} *)((u8 *)&{m.group(1)} {m.group(2)} {src[m.end() : j]})")
+        pos = j + 1
+    src = "".join(out) + src[pos:]
     src = re.sub(r"(?<![\w)])&([A-Za-z_]\w*) ([+-]) ", r"(u8 *)&\1 \2 ", src)
     return re.sub(
         r"\(([\w ]+\*)\) \((\w+) ([+-]) ",
@@ -1001,6 +1049,19 @@ def ctr_loops(src: str) -> str:
         body = "".join("    " + l if l.strip() else l for l in body.splitlines(keepends=True))
         loop = f"{ind}for ({var} = 0; {var} < {n}; {var}++) {{\n{body}{ind}}}\n"
         src = src[:start] + loop + rest[end:]
+    return src
+
+
+def wide_counters(src: str) -> str:
+    """Small loop counters as int, narrowed only where compared: MWCC then
+    increments without masking and masks at the compare."""
+    for c in set(re.findall(r"^\s+(var_r\d+) \+= 1;$", src, re.M)):
+        d = re.search(r"^(\s+)(u8|u16|s8|s16) " + c + ";$", src, re.M)
+        if d is None:
+            continue
+        t = d.group(2)
+        src = src[: d.start()] + f"{d.group(1)}s32 {c};" + src[d.end() :]
+        src = re.sub(r"(?<![\w)])\b" + c + r" (<|<=|>|>=) ", f"({t}) {c} \\1 ", src)
     return src
 
 
