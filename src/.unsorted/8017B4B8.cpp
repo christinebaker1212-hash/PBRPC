@@ -123,3 +123,24 @@ s32 fn_8017C514(void) {
     return (s32) (*(u8 *)((u8 *)(temp_r3) + (4)));
 }
 }
+
+extern "C" {
+
+s32 memset(s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_8048DF68;
+
+void fn_8017B4B8() {
+    memset((s32) &lbl_8048DF68, 0, 0x20);
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8048DF98;
+
+void fn_8017BE5C(u8 *arg0, s32 arg1, s32 arg2) {
+    (*(s32 *)((u8 *)(arg0) + (0x2C))) = (s32) (arg1 * 4);
+    (*(s32 **)((u8 *)(arg0) + (0x28))) = &lbl_8048DF98;
+    (*(u8 *)((u8 *)(arg0) + (6))) = (u8) ((*(u8 *)((u8 *)(arg0) + (6))) | 0x20);
+}
+}
