@@ -284,6 +284,13 @@ def symbol_load_types(asm_text: str) -> Dict[str, str]:
     return {k: v.pop() for k, v in found.items() if len(v) == 1}
 
 
+def unsigned_shifts(src: str) -> str:
+    """`x >> NU`: m2c's unsigned (logical) shift, which needs an unsigned left
+    operand to compile to srwi."""
+    operand = r"(\b\w+\((?:[^()]|\([^()]*\))*\)|\b[A-Za-z_]\w*)"
+    return re.sub(r"(?<!\(u32\) )(?<![\w.>])" + operand + r" >> ((?:0x[0-9A-F]+|\d+)U)\b", r"(u32) \1 >> \2", src)
+
+
 def float_literals(src: str) -> str:
     """Constants the code reads by value written as literals, as the original
     source likely did: MWCC can move a load of its own constant pool freely,
@@ -800,7 +807,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
                 variants.append(x)
     out = []
     for v in variants:
-        w = fold_overlaps(float_literals(v))
+        w = unsigned_shifts(fold_overlaps(float_literals(v)))
         if w not in out:
             out.append(w)
     return out
