@@ -544,6 +544,16 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
 
 def while_loops(src: str) -> str:
     """`loop_N: if (c) { body goto loop_N; }` as `while (c) { body }`."""
+    # `loop_N: if (c) { if (d) { body goto loop_N; } }`: a loop that breaks
+    nested = re.compile(
+        r"^ *loop_(\d+):\n( *)if \(([^\n]*)\) \{\n\2    if \(([^\n]*)\) \{\n(.*?)^\2        goto loop_\1;\n\2    \}\n\2\}\n",
+        re.S | re.M,
+    )
+    m = nested.search(src)
+    if m and f"loop_{m.group(1)}" not in src[: m.start()] + src[m.end() :] and f"loop_{m.group(1)}" not in m.group(5):
+        ind, body = m.group(2), m.group(5)
+        body = "".join(l[4:] if l.startswith(ind + "        ") else l for l in body.splitlines(keepends=True))
+        src = src[: m.start()] + f"{ind}while ({m.group(3)}) {{\n{ind}    if (!({m.group(4)})) {{\n{ind}        break;\n{ind}    }}\n{body}{ind}}}\n" + src[m.end() :]
     pat = re.compile(r"^ *loop_(\d+):\n( *)if \(([^\n]*)\) \{\n(.*?)^\2    goto loop_\1;\n\2\}\n", re.S | re.M)
     pos = 0
     while True:
