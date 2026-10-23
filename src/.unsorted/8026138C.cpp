@@ -324,3 +324,14 @@ void fn_80262808(s32 arg0) {
     ((s32 (*)(s32))fn_8025F07C)(arg0);
 }
 }
+
+extern "C" {
+
+s32 fn_80262490(u8 *arg0) {
+    switch ((s32) (*(s32 *)((u8 *)(arg0) + (0xFAC)))) {
+    case 6:
+        return 1;
+    }
+    return 0;
+}
+}

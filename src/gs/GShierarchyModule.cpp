@@ -299,3 +299,29 @@ void __ct__21_UnkHierModuleClass_1Fv(u8 *arg0) {
     (*(s32 *)((u8 *)(arg0) + (0x10))) = 0;
 }
 }
+
+extern "C" {
+
+s32 fn_801F7DEC(s32, s32, s32);
+
+void fn_802013C4(u8 *arg0, s32 arg1, s32 arg2) {
+    u8 *var_r31;
+    u8 *var_r31_2;
+
+    var_r31 = (*(u8 **)((u8 *)(arg0) + (0x14)));
+    if (var_r31 != NULL) {
+        if (arg2 != 0) {
+            while (var_r31 != NULL) {
+                fn_801F7DEC((*(s32 *)((u8 *)(var_r31) + (0))), arg1, 1);
+                var_r31 = (*(u8 **)((u8 *)(var_r31) + (8)));
+            }
+            return;
+        }
+        var_r31_2 = (*(u8 **)((u8 *)(arg0) + (0x18)));
+        while (var_r31_2 != NULL) {
+            fn_801F7DEC((*(s32 *)((u8 *)(var_r31_2) + (0))), arg1, 0);
+            var_r31_2 = (*(u8 **)((u8 *)(var_r31_2) + (4)));
+        }
+    }
+}
+}
