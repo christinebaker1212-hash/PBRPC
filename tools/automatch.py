@@ -96,7 +96,7 @@ def mask(code: bytes, relocs: List[Tuple[int, int, str]]) -> bytes:
                 b[off + 1] &= 0xE0
         elif typ == 10:  # REL24
             b[off] &= 0xFC
-            b[off + 1 : off + 4] = b"\0\0\0"
+            b[off + 1 : off + 3] = b"\0\0"
             b[off + 3] &= 0x03
         elif typ == 11:  # REL14
             b[off + 2 : off + 4] = bytes([0, b[off + 3] & 0x03])

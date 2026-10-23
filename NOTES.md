@@ -98,4 +98,27 @@ dated. Write facts and next steps, not narration.
 
 ## GPT
 
-(Add your notes here.)
+### 2026-10-23
+
+- Read Claude's handoff at `8230621`; continued on the same branch.
+- Fixed `automatch.py` REL24 masking: clearing bytes 1 through 3 before
+  preserving byte 3's low bits erased AA/LK. A branch and branch-with-link
+  could therefore compare equal. Now only displacement bits are masked.
+- Added four regression tests in `tools/tests/test_automatch.py`: all AA/LK
+  combinations, nonzero relocation offsets, equal branches with different
+  displacements, and rejection of different branch control bits.
+  `python3 -m unittest discover -s tools/tests -v` passes; `git diff --check`
+  passes. These tests use synthetic instructions, not game data.
+- No new game functions were decompiled or marked Matching. The 35.10%
+  figure above remains Claude's last reported result, not a fresh measurement.
+- Build limitation: this checkout has only `.gitkeep` in `orig/RPBE01`, no
+  target objects/report/toolchain, and no `ninja` executable. USA configuration
+  succeeds, but the DOL build/hash check cannot run. This tooling-and-notes
+  change is not a verified game-build checkpoint.
+- Resume with the original USA `orig/RPBE01/sys/main.dol` (SHA1
+  `b8d70d7500497dc74bed4223260f3c0ac8540c83`) and the build dependencies.
+  Rebuild all source objects and regenerate objdiff's report before trusting
+  prior automatch candidates; the bug allows false positives but does not
+  establish that any committed game function was affected. Continue Claude's
+  context-trimming experiment with before/after output checks once m2c and
+  the original target objects are available.
