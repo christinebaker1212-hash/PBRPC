@@ -1,5 +1,5 @@
 diff --git a/m2c/arch_ppc.py b/m2c/arch_ppc.py
-index 018f2b7..e1dc425 100644
+index 018f2b7..d3e4342 100644
 --- a/m2c/arch_ppc.py
 +++ b/m2c/arch_ppc.py
 @@ -1450,6 +1450,9 @@ class PpcArch(Arch):
@@ -12,3 +12,12 @@ index 018f2b7..e1dc425 100644
          elif mnemonic in cls.instrs_ignore:
              pass
          else:
+@@ -1821,7 +1824,7 @@ class PpcArch(Arch):
+         "cmpw": lambda a, op: BinaryOp.sintptr_cmp(a.reg(1), op, a.reg(2)),
+         "cmpwi": lambda a, op: BinaryOp.sintptr_cmp(a.reg(1), op, a.s16_imm(2)),
+         "cmplw": lambda a, op: BinaryOp.uintptr_cmp(a.reg(1), op, a.reg(2)),
+-        "cmplwi": lambda a, op: BinaryOp.uintptr_cmp(a.reg(1), op, a.s16_imm(2)),
++        "cmplwi": lambda a, op: BinaryOp.uintptr_cmp(a.reg(1), op, a.u16_imm(2)),
+         # Floating point
+         # TODO: There is a difference in how these two instructions handle NaN
+         "fcmpo": lambda a, op: BinaryOp.fcmp(a.reg(1), op, a.reg(2)),

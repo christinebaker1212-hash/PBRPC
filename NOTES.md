@@ -113,8 +113,13 @@ dated. Write facts and next steps, not narration.
   (otherwise MWCC uses sda21 for small objects).
 - m2c (checked out at `/home/user/ref/m2c`) is patched with
   `tools/m2c_ppc.patch`: `crclr cr1eq` before a variadic call clobbers f1-f8,
-  so m2c stops passing stray float arguments. Apply it to a fresh m2c checkout
-  (`git apply`).
+  so m2c stops passing stray float arguments; `cmplwi` takes its immediate
+  unsigned (m2c read `cmplwi r0, 0xffff` as `== -1U`). Apply it to a fresh m2c
+  checkout (`git apply`).
+- `extract_fn` now appends the switch jump tables a function uses (they are in
+  the data asm, `auto_07_*_data.s`, as `fn+offset`), so m2c can decompile
+  switches, and rewrites dtk's `cror eq, gt, eq` to the form m2c's
+  fcmpo/cror pattern expects.
 - Sample `src/.unsorted/8031C124` functions 200-229: 10 -> 12 matched, 6 -> 3
   failing to compile. Remaining near misses: bitfields (m2c shifts/masks),
   register allocation, and inlined code.

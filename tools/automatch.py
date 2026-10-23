@@ -138,9 +138,38 @@ def extract_fn(asm_text: str, fn: str, tmp: Path) -> Optional[Path]:
     m = re.search(r"^\.fn " + re.escape(fn) + r",.*?^\.endfn " + re.escape(fn) + r"$", asm_text, re.S | re.M)
     if not m:
         return None
+    text = re.sub(r"\bcror (eq|2), (lt|gt|0|1), (eq|2)$", lambda c: "cror 2, " + {"lt": "0", "gt": "1"}.get(c.group(2), c.group(2)) + ", 2", m.group(0), flags=re.M)
+    tables = ""
+    for jt in sorted(set(re.findall(r"\b(jumptable_\w+)@ha", text))):
+        entries = JUMP_TABLES().get(jt)
+        if entries is None:
+            continue
+        start = int(re.search(r"^/\* ([0-9A-F]{8}) ", text, re.M).group(1), 16)
+        labels = []
+        for off in entries:
+            addr = f"{start + off:08X}"
+            labels.append(f".L_{addr}")
+            if f".L_{addr}:" not in text:
+                text = re.sub(r"^(?=/\* " + addr + r" )", f".L_{addr}:\n", text, count=1, flags=re.M)
+        tables += f"\n.section .data\n.obj {jt}, global\n" + "".join(f"\t.4byte {l}\n" for l in labels) + f".endobj {jt}\n"
     path = tmp / "fn.s"
-    path.write_text(".text\n" + m.group(0) + "\n")
+    path.write_text(".text\n" + text + "\n" + tables)
     return path
+
+
+_JUMP_TABLES: Optional[Dict[str, List[int]]] = None
+
+
+def JUMP_TABLES() -> Dict[str, List[int]]:
+    """Switch jump tables (in the data asm), as offsets into their function."""
+    global _JUMP_TABLES
+    if _JUMP_TABLES is None:
+        _JUMP_TABLES = {}
+        for f in (ROOT / "build/RPBE01/asm").glob("*.s"):
+            for m in re.finditer(r"^\.obj (jumptable_\w+), \w+\n(.*?)^\.endobj", f.read_text(), re.S | re.M):
+                offs = [int(o, 16) if o else 0 for o in re.findall(r"\.4byte \w+(?:\+0x([0-9A-F]+))?", m.group(2))]
+                _JUMP_TABLES[m.group(1)] = offs
+    return _JUMP_TABLES
 
 
 def expand_macros(src: str, known: bool = False) -> Optional[str]:
