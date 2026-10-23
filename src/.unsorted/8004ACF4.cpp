@@ -370,3 +370,178 @@ void fn_8004C910(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 __nw__FUl(s32);
+s32 fn_8004B23C(s32 arg0, s32 arg1);
+s32 fn_8004B6CC(s32 arg0, s32 arg1);
+s32 fn_8004B76C(s32 arg0, s32 arg1);
+s32 fn_8004B80C(s32, s32);
+s32 fn_8004BBD8(s32 arg0, s32 arg1);
+s32 fn_8004BF58(s32 arg0, s32 arg1);
+s32 fn_8004BFF8(s32, s32);
+s32 fn_8004C3EC(s32, s32);
+s32 fn_8004C6E0(s32, s32);
+s32 fn_8004CB34(s32, s32);
+s32 fn_8004D1FC(s32, s32);
+
+void fn_8004AF3C(s32 arg0, u8 *arg1) {
+    s32 var_r3;
+    s32 var_r3_10;
+    s32 var_r3_11;
+    s32 var_r3_2;
+    s32 var_r3_3;
+    s32 var_r3_4;
+    s32 var_r3_5;
+    s32 var_r3_6;
+    s32 var_r3_7;
+    s32 var_r3_8;
+    s32 var_r3_9;
+    u16 temp_r0;
+
+    temp_r0 = (*(u16 *)((u8 *)(arg1) + (0x38)));
+    switch (temp_r0) {
+    case 0:
+        var_r3 = __nw__FUl(0x8C);
+        if (var_r3 != 0) {
+            var_r3 = fn_8004B23C((s32)(var_r3), (s32)(arg0));
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3;
+        return;
+    case 1:
+        var_r3_2 = __nw__FUl(0x14);
+        if (var_r3_2 != 0) {
+            var_r3_2 = fn_8004B6CC((s32)(var_r3_2), (s32)(arg0));
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_2;
+        return;
+    case 5:
+        var_r3_3 = __nw__FUl(0x14);
+        if (var_r3_3 != 0) {
+            var_r3_3 = fn_8004B76C((s32)(var_r3_3), (s32)(arg0));
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_3;
+        return;
+    case 6:
+        var_r3_4 = __nw__FUl(0x48);
+        if (var_r3_4 != 0) {
+            var_r3_4 = fn_8004B80C(var_r3_4, arg0);
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_4;
+        return;
+    case 7:
+        var_r3_5 = __nw__FUl(0x48);
+        if (var_r3_5 != 0) {
+            var_r3_5 = fn_8004BBD8((s32)(var_r3_5), (s32)(arg0));
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_5;
+        return;
+    case 9:
+        var_r3_6 = __nw__FUl(0x14);
+        if (var_r3_6 != 0) {
+            var_r3_6 = fn_8004BF58((s32)(var_r3_6), (s32)(arg0));
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_6;
+        return;
+    case 10:
+        var_r3_7 = __nw__FUl(0x1C);
+        if (var_r3_7 != 0) {
+            var_r3_7 = fn_8004BFF8(var_r3_7, arg0);
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_7;
+        return;
+    case 11:
+        var_r3_8 = __nw__FUl(0x1C);
+        if (var_r3_8 != 0) {
+            var_r3_8 = fn_8004C3EC(var_r3_8, arg0);
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_8;
+        return;
+    case 12:
+        var_r3_9 = __nw__FUl(0xB8);
+        if (var_r3_9 != 0) {
+            var_r3_9 = fn_8004C6E0(var_r3_9, arg0);
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_9;
+        return;
+    case 13:
+        var_r3_10 = __nw__FUl(0x48);
+        if (var_r3_10 != 0) {
+            var_r3_10 = fn_8004CB34(var_r3_10, arg0);
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_10;
+        return;
+    case 14:
+        var_r3_11 = __nw__FUl(0x4C);
+        if (var_r3_11 != 0) {
+            var_r3_11 = fn_8004D1FC(var_r3_11, arg0);
+        }
+        (*(s32 *)((u8 *)(arg0) + (0x2C))) = var_r3_11;
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_80050B34(s32);
+__declspec(section ".data") extern s32 lbl_8040AA2C;
+
+s32 fn_8004B23C(s32 arg0, s32 arg1) {
+    ((s32)fn_8004B150((EffBase *)(arg0), (EffSource *)(arg1)));
+    (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040AA2C;
+    fn_80050B34(arg0 + 0x1C);
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0xC))) + 8);
+    return arg0;
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040A9E4;
+
+s32 fn_8004B6CC(s32 arg0, s32 arg1) {
+    ((s32)fn_8004B150((EffBase *)(arg0), (EffSource *)(arg1)));
+    (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A9E4;
+    return arg0;
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040A998;
+
+s32 fn_8004B76C(s32 arg0, s32 arg1) {
+    ((s32)fn_8004B150((EffBase *)(arg0), (EffSource *)(arg1)));
+    (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A998;
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80050324(s32);
+__declspec(section ".data") extern s32 lbl_8040A90C;
+
+s32 fn_8004BBD8(s32 arg0, s32 arg1) {
+    ((s32)fn_8004B150((EffBase *)(arg0), (EffSource *)(arg1)));
+    (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A90C;
+    fn_80050324(arg0 + 0x1C);
+    (*(s32 *)((u8 *)(arg0) + (0x14))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0xC))) + 8);
+    return arg0;
+}
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_8040A8C4;
+
+s32 fn_8004BF58(s32 arg0, s32 arg1) {
+    ((s32)fn_8004B150((EffBase *)(arg0), (EffSource *)(arg1)));
+    (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A8C4;
+    return arg0;
+}
+}
