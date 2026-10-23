@@ -102,14 +102,14 @@ s32 fn_8022809C(s32 arg0, s32 arg1) {
 
 extern "C" {
 
-s32 fn_80227804(s32);
+s32 fn_80227804(s32 *arg0);
 s32 fn_80227830(s32);
 s32 fn_8022AB38(s32, s32);
 
 s32 fn_80227830(s32 arg0) {
     s32 var_r3;
 
-    var_r3 = fn_80227804(arg0);
+    var_r3 = fn_80227804((s32 *)(arg0));
     if (var_r3 != 0) {
         var_r3 = fn_8022AB38(var_r3, (*(s32 *)((u8 *)(arg0) + (4))));
     }
@@ -125,7 +125,7 @@ s32 fn_8022AB74(s32, s32);
 s32 fn_8022786C(s32 arg0) {
     s32 var_r3;
 
-    var_r3 = fn_80227804((s32)(arg0));
+    var_r3 = fn_80227804((s32 *)((s32)(arg0)));
     if (var_r3 != 0) {
         var_r3 = fn_8022AB74(var_r3, (*(s32 *)((u8 *)(arg0) + (4))));
     }
@@ -141,7 +141,7 @@ s32 fn_8022A8A8(s32, s32);
 s32 fn_802278A8(s32 arg0) {
     s32 var_r3;
 
-    var_r3 = fn_80227804((s32)(arg0));
+    var_r3 = fn_80227804((s32 *)((s32)(arg0)));
     if (var_r3 != 0) {
         var_r3 = fn_8022A8A8(var_r3, (*(s32 *)((u8 *)(arg0) + (4))));
     }
@@ -413,7 +413,7 @@ s32 fn_8022A900(s32, s32);
 s32 fn_80227964(s32 arg0) {
     s32 temp_r3;
 
-    temp_r3 = fn_80227804((s32)(arg0));
+    temp_r3 = fn_80227804((s32 *)((s32)(arg0)));
     if (temp_r3 == 0) {
         return 0;
     }
@@ -484,5 +484,45 @@ s32 fn_80227E04(u8 *arg0, s32 arg1) {
     case 4:
         return 0;
     }
+}
+}
+
+extern "C" {
+
+struct VT_fn_8022773C_0 { virtual void v0(); virtual s32 v1(s32, s32); };
+struct VT_fn_8022773C_1 { virtual void v0(); virtual void v1(); virtual s32 v2(s32, s32); };
+struct VT_fn_8022773C_2 { virtual void v0(); virtual void v1(); virtual void v2(); virtual s32 v3(s32, s32); };
+struct VT_fn_8022773C_3 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual s32 v4(s32, s32); };
+struct VT_fn_8022773C_4 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual s32 v5(s32, s32); };
+
+s32 fn_8022773C(u8 **arg0, u32 arg1, s32 arg2, s32 arg3) {
+    switch (arg1) {
+    case 1:
+        ((VT_fn_8022773C_0 *)(arg0))->v1((s32)(arg2), (s32)(arg3));
+        break;
+    case 2:
+        ((VT_fn_8022773C_1 *)(arg0))->v2((s32)(arg2), (s32)(arg3));
+        break;
+    case 4:
+        ((VT_fn_8022773C_2 *)(arg0))->v3((s32)(arg2), (s32)(arg3));
+        break;
+    case 6:
+        ((VT_fn_8022773C_3 *)(arg0))->v4((s32)(arg2), (s32)(arg3));
+        break;
+    case 8:
+        ((VT_fn_8022773C_4 *)(arg0))->v5((s32)(arg2), (s32)(arg3));
+        break;
+    }
+    return 1;
+}
+}
+
+extern "C" {
+
+s32 fn_80227804(s32 *arg0) {
+    if ((u32) ((*arg0 & 0xFFFF0000)) == 0x5960000U) {
+        return (*(s32 *)((u8 *)(lbl_8063F640) + (0x20)));
+    }
+    return fn_80226910((s32)(lbl_8063F640));
 }
 }
