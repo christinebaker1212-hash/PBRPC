@@ -49,7 +49,7 @@ void fn_801611CC(void) {
 extern "C" {
 
 u8 SCGetSoundMode(void);
-u8 *fn_8015F690(void);
+s32 fn_8015F690();
 s32 fn_802544D8(s32);
 s32 fn_80259408(s32);
 extern s8 lbl_8063F01A;
@@ -58,7 +58,7 @@ void fn_80161308(void) {
     u8 temp_r3;
     u8 *temp_r30;
 
-    temp_r30 = fn_8015F690();
+    temp_r30 = ((u8 *)fn_8015F690());
     temp_r3 = SCGetSoundMode();
     switch ((s32) temp_r3) {                        /* irregular */
     case 0:
@@ -131,7 +131,7 @@ s32 fn_801610F4(s32 arg0, s32 arg1) {
 
 extern "C" {
 
-s32 fn_8015F6A0(void);
+s32 fn_8015F6A0();
 s32 fn_801612DC(void);
 s32 memset(s32, s32, s32);
 
@@ -169,7 +169,7 @@ s32 fn_8007D224(void);
 void fn_80161294() {
     u8 *temp_r3;
 
-    temp_r3 = (unsigned char *)(((s32)fn_8015F690()));
+    temp_r3 = (unsigned char *)(((s32)((u8 *)fn_8015F690())));
     memset((s32)((s32)(temp_r3)), (s32)((s32)(0)), (s32)((s32)(0x50U)));
     fn_8007D224();
     (*(s8 *)((u8 *)(temp_r3) + (0x45))) = 1;
@@ -190,8 +190,58 @@ void fn_80162724() {
 
 extern "C" {
 
-u8 * fn_8015F690() {
-    return (u8 *)(lbl_80488300 + 0x100);
+
+}
+
+extern "C" {
+
+
+}
+
+extern "C" {
+
+
+}
+
+extern "C" {
+
+s32 fn_8015F670() {
+    return (*(s32 (*))&lbl_80488300);
+}
+}
+
+extern "C" {
+
+s32 fn_8015F67C() {
+    return (*(s32 (*))&lbl_80488300) + 0x1BFF80;
+}
+}
+
+extern "C" {
+
+s32 fn_8015F690() {
+    return (*(s32 (*))&lbl_80488300) + 0x100;
+}
+}
+
+extern "C" {
+
+s32 fn_8015F6A0() {
+    return (*(s32 (*))&lbl_80488300) + 0x180;
+}
+}
+
+extern "C" {
+
+u8 *fn_8015F6E0() {
+    return (*(u8 *(*))&lbl_80488300) + ((*(u8 *)((u8 *)((*(u8 *(*))&lbl_80488300)) + (0x50))) * 0x6FF00) + 0x380;
+}
+}
+
+extern "C" {
+
+u8 *fn_8015F704() {
+    return (*(u8 *(*))&lbl_80488300) + 0x60000 + ((*(u8 *)((u8 *)((*(u8 *(*))&lbl_80488300)) + (0x50))) * 0x6FF00) + 0x64B0;
 }
 }
 
@@ -204,13 +254,13 @@ void fn_8015F72C(u8 arg0) {
     if (var_r3 >= 4U) {
         var_r3 = 0;
     }
-    (*(u8 *)((u8 *)(lbl_80488300) + (0x50))) = var_r3;
+    (*(u8 *)((u8 *)((*(u8 *(*))&lbl_80488300)) + (0x50))) = var_r3;
 }
 }
 
 extern "C" {
 
 u8 fn_8015F748() {
-    return (*(u8 *)((u8 *)(lbl_80488300) + (0x50)));
+    return (*(u8 *)((u8 *)((*(u8 *(*))&lbl_80488300)) + (0x50)));
 }
 }

@@ -165,3 +165,86 @@ void fn_800A6BA8(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80059A3C(s32, u32 *);
+s32 fn_8015C308(s32, s32);
+s32 fn_8015F6E0(void);
+s32 fn_80253EDC(s32, s32, s32, u32 *);
+
+void fn_800A7F84(s32 arg0, s32 arg1) {
+    u32 sp10[8];
+    u32 sp8;
+    s32 var_r31;
+
+    var_r31 = 0xA;
+    fn_8015F6E0();
+    fn_80253EDC(arg0, arg1, 3, &sp8);
+    switch (sp8) {
+    case 6:
+        var_r31 = 0xB;
+        /* fallthrough */
+    case 5:
+        var_r31 += 1;
+        /* fallthrough */
+    case 4:
+        var_r31 += 1;
+        /* fallthrough */
+    case 3:
+        var_r31 += 1;
+        /* fallthrough */
+    case 2:
+        fn_80253EDC(arg0, arg1, 6, sp10);
+        fn_80059A3C(var_r31, sp10);
+        return;
+    case 10:
+        fn_8015C308(0xE, (*(s32 (*))&lbl_8063D4F8) + 0xB4);
+        return;
+    case 14:
+        fn_8015C308(0xE, (*(s32 (*))&lbl_8063D4F8) + 0xCC);
+        return;
+    case 16:
+        fn_8015C308(0xE, (*(s32 (*))&lbl_8063D4F8) + 0xE4);
+        /* fallthrough */
+    default:
+        return;
+    }
+}
+}
+
+extern "C" {
+
+u8 *fn_8011C974(void);
+
+void fn_800A9B70(s32 arg0, u8 *arg1) {
+    s32 sp10[8];
+    s32 sp8;
+    u8 temp_r0;
+    u8 *temp_r29;
+
+    temp_r29 = fn_8011C974();
+    fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(3), (u32 *)(&sp8));
+    switch (sp8) {                                  /* irregular */
+    case 1:
+        temp_r0 = (*(u16 *)((u8 *)(temp_r29) + (0x90))) % 10;
+        if ((temp_r0 == 6) || ((s32) temp_r0 == 0)) {
+            (*(u8 *)((u8 *)(arg1) + (0x10))) = 0x80;
+            (*(u8 *)((u8 *)(arg1) + (0xF))) = 0x80;
+            (*(u8 *)((u8 *)(arg1) + (0xE))) = 0x80;
+        }
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (u32 *)(sp10));
+        fn_80059A3C((s32)(0xA), (u32 *)(sp10));
+        return;
+    case 2:
+        if ((u8) ((*(u16 *)((u8 *)(temp_r29) + (0x90))) % 10) <= 1U) {
+            (*(u8 *)((u8 *)(arg1) + (0x10))) = 0x80;
+            (*(u8 *)((u8 *)(arg1) + (0xF))) = 0x80;
+            (*(u8 *)((u8 *)(arg1) + (0xE))) = 0x80;
+        }
+        fn_80253EDC((s32)(arg0), (s32)(arg1), (s32)(6), (u32 *)(sp10));
+        fn_80059A3C((s32)(0xB), (u32 *)(sp10));
+        return;
+    }
+}
+}
