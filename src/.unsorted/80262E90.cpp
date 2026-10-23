@@ -261,3 +261,18 @@ s32 fn_80263A70(u8 *arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+struct VT_fn_80262EF0_0 { virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual void v4(); virtual void v5(); virtual void v6(); virtual void v7(); virtual void v8(); virtual void v9(); virtual void v10(); virtual void v11(); virtual void v12(); virtual s32 v13(void); };
+
+s32 fn_80262EF0(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0xF0C))) == 0) {
+        return -1;
+    }
+    ((VT_fn_80262EF0_0 *)(arg0))->v13();
+    (*(s32 *)((u8 *)(arg0) + (0xF0C))) = 0;
+    (*(s32 *)((u8 *)(arg0) + (0xF14))) = 1;
+    return 0;
+}
+}
