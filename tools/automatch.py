@@ -345,7 +345,32 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         u = s64_stores(u)
         if u not in variants:
             variants.append(u)
+    # MWCC narrows a small-integer local after every change; source that kept
+    # the value in an int narrows it only where it is stored or returned.
+    for v in list(variants[:2]):
+        w = re.sub(r"^(\s+)(?:u8|s8|u16|s16) ((?:var|temp)_\w+);", r"\1s32 \2;", v, flags=re.M)
+        if w not in variants:
+            variants.append(w)
+    # MWCC assigns registers partly by declaration order; m2c sorts locals by
+    # name, so the other order is worth a try.
+    for v in [variants[0], variants[-1]] if variants else []:
+        r = reverse_locals(v)
+        if r not in variants:
+            variants.append(r)
     return variants
+
+
+def reverse_locals(src: str) -> str:
+    """The function's leading local declarations in reverse order."""
+    lines = src.split("\n")
+    for i, l in enumerate(lines):
+        if re.match(r"^[^ /].*\)\s*\{\s*$", l):
+            j = i + 1
+            while j < len(lines) and re.match(r"^\s+[\w ]+[\s\*]+\w+(?:\[[^\]]*\])?;$", lines[j]):
+                j += 1
+            lines[i + 1 : j] = lines[i + 1 : j][::-1]
+            break
+    return "\n".join(lines)
 
 
 def s64_stores(src: str) -> str:
@@ -591,26 +616,34 @@ def main() -> None:
                 continue
             fn_asm = extract_fn(asm_text, name, tmp)
             variants = m2c(args.m2c, fn_asm, name) if fn_asm else []
-            if fn_asm:
-                variants += [v for v in m2c(args.m2c, fn_asm, name, use_context=False) if v not in variants]
+            if not variants and fn_asm:
+                variants = m2c(args.m2c, fn_asm, name, use_context=False)
             if not variants:
                 print(f"  {name}: m2c failed", flush=True)
                 continue
             result = "compile failed"
             best = (-1.0, "")
-            for src in variants:
-                obj = compile_cpp(edge, src, args.m2c.parent, tmp)
-                if obj is None:
-                    continue
-                bf = Obj(obj).function(name)
-                if bf is not None and same(tf, bf):
-                    matched.append((name, int(f["size"])))
-                    (out_dir / f"{name}.cpp").write_text(src)
-                    result = f"MATCH ({int(f['size']):#x})"
+            tried_plain = False
+            while True:
+                for src in variants:
+                    obj = compile_cpp(edge, src, args.m2c.parent, tmp)
+                    if obj is None:
+                        continue
+                    bf = Obj(obj).function(name)
+                    if bf is not None and same(tf, bf):
+                        matched.append((name, int(f["size"])))
+                        (out_dir / f"{name}.cpp").write_text(src)
+                        result = f"MATCH ({int(f['size']):#x})"
+                        break
+                    if bf is not None:
+                        best = max(best, (similarity(tf, bf), src))
+                    result = "differs"
+                # Without the context m2c infers every type itself, which
+                # compiles where the context's guesses did not.
+                if result != "compile failed" or tried_plain:
                     break
-                if bf is not None:
-                    best = max(best, (similarity(tf, bf), src))
-                result = "differs"
+                tried_plain = True
+                variants = m2c(args.m2c, fn_asm, name, use_context=False)
             if result == "differs" and best[0] >= 0:
                 # Near misses are worth finishing by hand.
                 (out_dir / "differs").mkdir(exist_ok=True)
