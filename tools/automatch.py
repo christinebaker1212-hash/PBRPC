@@ -1127,14 +1127,39 @@ def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
             return None
         lines[i] = new
         return "\n".join(lines)
-    m = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\(10209\) illegal implicit conversion from '[^']*' to\s*\n?#?\s*'([^']+)'", err, re.M)
+    x = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\(10247\) illegal explicit conversion from '[^']*\*' to\s*\n?#?\s*'(?:float|double)'", err, re.M)
+    if x:
+        # m2c reinterprets a pointer as a float (M2C_BITWISE): keep it a pointer
+        lines = src.split("\n")
+        i = int(x.group(1)) - first_line
+        if not 0 <= i < len(lines):
+            return None
+        f = re.match(r"^(\s*)(.+?) = \(\((?:f32|f64)\)\((.+)\)\);\s*$", lines[i])
+        if f is None:
+            return None
+        ind, lhs, val = f.groups()
+        if re.match(r"^\(\*\((?:f32|f64) \*\)", lhs):
+            lines[i] = f"{ind}(*(u8 **){lhs[len('(*(f32 *)'):]} = (u8 *)({val});"
+            return "\n".join(lines)
+        d = re.compile(r"^(\s+)(?:f32|f64) " + re.escape(lhs) + r";$", re.M)
+        if not re.fullmatch(r"\w+", lhs) or not d.search(src):
+            return None
+        lines[i] = f"{ind}{lhs} = (u8 *)({val});"
+        return d.sub(lambda m: f"{m.group(1)}u8 *{lhs};", "\n".join(lines), count=1)
+    m = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\(10209\) illegal implicit conversion from '([^']*)' to\s*\n?#?\s*'([^']+)'", err, re.M)
     if m is None:
         return None
     lines = src.split("\n")
     i = int(m.group(1)) - first_line
     if not 0 <= i < len(lines):
         return None
-    t, l = m.group(2), lines[i]
+    t, l = m.group(3), lines[i]
+    if "*" in m.group(2) and t in ("float", "double"):
+        # A pointer stored where m2c guessed a float: the location holds a pointer
+        f = re.match(r"^(\s*)\(\*\((?:f32|f64) \*\)(.+) = (.+);\s*$", l)
+        if f:
+            lines[i] = f"{f.group(1)}(*(u8 **){f.group(2)} = (u8 *)({f.group(3)});"
+            return "\n".join(lines)
     a = re.match(r"^(\s*)(.+?) = (.+);\s*$", l)
     r = re.match(r"^(\s*)return (.+);\s*$", l)
     if a and not a.group(3).startswith(f"({t})"):
