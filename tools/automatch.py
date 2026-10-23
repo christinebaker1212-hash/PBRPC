@@ -701,10 +701,14 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = range_switch(w) or w
         w = single_case_switch(w) or w
         w = byte_offsets(struct_globals(w))
-        extra = [stack_arrays(w), ternaries(w), reverse_locals(w), compound_assignments(w), equality_constants(w)]
-        extra += [narrow_counters(w, t) for t in ("u16", "u8")]
-        extra += [reverse_locals(x) for x in extra[-2:]]
-        for x in [w] + extra:
+        top = frame_top(asm_text)
+        extra = []
+        # On the full rewrite, and on a version with only the safe rewrites
+        for b in (w, byte_offsets(struct_globals(while_loops(inline_cr_temps(v))))):
+            extra += [b, stack_arrays(b), stack_structs(b), stack_structs(b, top), ternaries(b), reverse_locals(b), compound_assignments(b), equality_constants(b)]
+            extra += [narrow_counters(b, t) for t in ("u16", "u8")]
+            extra += [reverse_locals(x) for x in extra[-2:]]
+        for x in extra:
             if x not in variants:
                 variants.append(x)
     return variants
@@ -915,6 +919,57 @@ def stack_arrays(src: str) -> str:
             else:
                 src = re.sub(r"^    " + t + " " + name + ";\n", "", src, flags=re.M)
                 src = re.sub(r"\b" + name + r"\b", f"sp{base:X}[{k}]", src)
+    return src
+
+
+def frame_top(asm_text: str) -> Optional[int]:
+    """The lowest offset of the target frame's register save area."""
+    f = re.search(r"stwu r1, -0x([0-9a-fA-F]+)\(r1\)", asm_text)
+    if f is None:
+        return None
+    frame = int(f.group(1), 16)
+    saves = [int(x, 16) for x in re.findall(r"\b(?:stw r(?:1[4-9]|2\d|3[01])|stfd f\d+|psq_st f\d+), 0x([0-9a-fA-F]+)\(r1\)", asm_text)]
+    g = re.search(r"bl _savegpr_(\d+)", asm_text)
+    if g:
+        saves.append(frame - 4 * (32 - int(g.group(1))))
+    return min(saves) if saves else frame
+
+
+def stack_structs(src: str, top: Optional[int] = None) -> str:
+    """Stack variables of mixed types following an address-taken one, as one
+    struct local: `s32 sp10; s16 sp14; f(&sp10)` -> `struct {...} sp10`."""
+    decls = {int(m.group(2), 16): m.group(1) for m in re.finditer(r"^    (s8|u8|s16|u16|s32|u32|f32|u8 \*|s32 \*) sp([0-9A-F]+);$", src, re.M)}
+    taken = sorted({int(x, 16) for x in re.findall(r"&sp([0-9A-F]+)\b", src)})
+    for n, base in enumerate(taken):
+        if base not in decls:
+            continue
+        members, cur = [], base
+        while cur in decls and (cur == base or cur not in taken):
+            members.append((cur, decls[cur]))
+            nxt = [o for o in decls if o >= cur + SCALAR_SIZE[decls[cur]] and o < cur + 8]
+            if not nxt:
+                break
+            cur = min(nxt)
+        if len(members) < 2 or len({t for _, t in members}) < 2:
+            continue
+        fields, at = [], base
+        for off, t in members:
+            if off > at:
+                fields.append(f"u8 pad_{at:X}[{off - at}];")
+            fields.append(f"{t} f_{off:X};")
+            at = off + SCALAR_SIZE[t]
+        # Up to the register save area, for a struct larger than its used fields
+        if top is not None and top - at > 4 and base == max(taken):
+            fields.append(f"u8 pad_{at:X}[{(top - at) & ~3}];")
+        name = f"sp{base:X}"
+        src = re.sub(r"^    [\w ]+?\*? ?" + name + ";$", f"    struct {{ {' '.join(fields)} }} @STRUCT@;", src, count=1, flags=re.M)
+        for off, t in members:
+            v = f"sp{off:X}"
+            if off != base:
+                src = re.sub(r"^    [\w ]+?\*? ?" + v + ";\n", "", src, count=1, flags=re.M)
+            src = re.sub(r"(?<![&\w.])" + v + r"\b(?!\.| \{)", f"{name}.f_{off:X}", src)
+        src = src.replace(f"&{name}.f_{base:X}", f"&{name}")
+        src = src.replace("@STRUCT@", name)
     return src
 
 
