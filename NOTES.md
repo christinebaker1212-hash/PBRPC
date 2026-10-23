@@ -118,6 +118,13 @@ dated. Write facts and next steps, not narration.
 - Sample `src/.unsorted/8031C124` functions 200-229: 10 -> 12 matched, 6 -> 3
   failing to compile. Remaining near misses: bitfields (m2c shifts/masks),
   register allocation, and inlined code.
+- Further automatch fixes: callee return types inferred from the caller's
+  extension right after the call (`clrlwi r, r3, 24` -> u8, etc.); known SDK
+  prototypes override the context; variadic prototypes repaired in m2c's
+  no-context output. Same sample: 13/30 matched. 35.87% matched at `c9f00ab`.
+- What remains (by code bytes): functions over 0x400 are ~56% of the
+  unmatched bytes (494 functions, 1.43 MB); 3777 smaller ones hold 1.1 MB.
+  automatch defaults to `--max-size 0x400`.
 
 ### Pitfalls
 
