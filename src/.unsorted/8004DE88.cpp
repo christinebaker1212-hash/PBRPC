@@ -5,11 +5,11 @@
 extern "C" {
 
 s32 __dl__FPv(s32);
-s32 fn_8004DF78(void);
+void fn_8004DF78(u8 *arg0);
 
 s32 fn_8004DEF8(s32 arg0, s32 arg1) {
     if (arg0 != 0) {
-        fn_8004DF78();
+        ((s32 (*)(void))fn_8004DF78)();
         if (arg1 > 0) {
             __dl__FPv(arg0);
         }
@@ -118,5 +118,92 @@ s32 fn_802054E0(s32);
 
 void fn_8004E920() {
     fn_802054E0((s32) &fn_8004E92C);
+}
+}
+
+extern "C" {
+
+s32 decrementRefCount__7GScacheFUlUl(s32, s32);
+s32 fn_80206DF4(s32);
+s32 free__5GSmemFPv(s32);
+struct VT_fn_8004DF78_0 { u8 pad[256];  virtual s32 v0(s32); };
+
+void fn_8004DF78(u8 *arg0) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+    s32 temp_r4;
+    u8 *temp_r0;
+
+    temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x40)));
+    if (!(temp_r0 == NULL)) {
+        if (!(temp_r0 == NULL)) {
+            ((VT_fn_8004DF78_0 *)(temp_r0))->v0((s32)(1));
+        }
+        (*(u8 **)((u8 *)(arg0) + (0x40))) = NULL;
+    }
+    temp_r3 = (*(s32 *)((u8 *)(arg0) + (0x3C)));
+    if (temp_r3 != 0) {
+        temp_r4 = (*(s32 *)((u8 *)(arg0) + (0x34)));
+        if (temp_r4 & 2) {
+            (*(s32 *)((u8 *)(arg0) + (0x34))) = (s32) (temp_r4 & 0xFFFFFFFD);
+            fn_80206DF4(temp_r3);
+        }
+    }
+    temp_r3_2 = (*(s32 *)((u8 *)(arg0) + (0x38)));
+    (*(s32 *)((u8 *)(arg0) + (0x3C))) = 0;
+    if (temp_r3_2 != 0) {
+        free__5GSmemFPv(temp_r3_2);
+        (*(s32 *)((u8 *)(arg0) + (0x38))) = 0;
+    }
+    if ((*(s32 *)((u8 *)(arg0) + (0x34))) & 0x40) {
+        decrementRefCount__7GScacheFUlUl((*(s32 *)((u8 *)(arg0) + (0x44))), (*(s32 *)((u8 *)(arg0) + (0x48))));
+        (*(s32 *)((u8 *)(arg0) + (0x44))) = 0;
+        (*(s32 *)((u8 *)(arg0) + (0x48))) = 0;
+    }
+    (*(s32 *)((u8 *)(arg0) + (0x34))) = 0;
+}
+}
+
+extern "C" {
+
+void fn_8004E504(u8 *arg0, u8 *arg1) {
+    u8 *temp_r4;
+
+    temp_r4 = (*(u8 **)((u8 *)(arg1) + (0x40)));
+    if (temp_r4 != NULL) {
+        (*(f32 *)((u8 *)(arg0) + (0))) = (f32) (*(f32 *)((u8 *)(temp_r4) + (0x20)));
+        (*(f32 *)((u8 *)(arg0) + (4))) = (f32) (*(f32 *)((u8 *)(temp_r4) + (0x24)));
+        (*(f32 *)((u8 *)(arg0) + (8))) = (f32) (*(f32 *)((u8 *)(temp_r4) + (0x28)));
+        return;
+    }
+    (*(f32 *)((u8 *)(arg0) + (0))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (4))) = (f32) (0.0f);
+    (*(f32 *)((u8 *)(arg0) + (8))) = (f32) (0.0f);
+}
+}
+
+extern "C" {
+
+s32 markNeedsUpdate__6GSnullFb(s32, s32);
+struct VT_fn_8004E5D4_0 { u8 pad[48];  virtual s32 v0(void); };
+
+void fn_8004E5D4(u8 *arg0, f32 farg0) {
+    s32 temp_r3_2;
+    u8 *temp_r3;
+
+    (*(f32 *)((u8 *)(arg0) + (0x4C))) = (f32) ((*(f32 *)((u8 *)(arg0) + (0x4C))) - farg0);
+    if (((VT_fn_8004E5D4_0 *)(arg0))->v0() != 0) {
+        temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x40)));
+        if (temp_r3 != NULL) {
+            (*(f32 *)((u8 *)(temp_r3) + (0x20))) = (f32) (*(f32 *)((u8 *)(arg0) + (0x5C)));
+            (*(f32 *)((u8 *)(temp_r3) + (0x24))) = (f32) (*(f32 *)((u8 *)(arg0) + (0x60)));
+            (*(f32 *)((u8 *)(temp_r3) + (0x28))) = (f32) (*(f32 *)((u8 *)(arg0) + (0x64)));
+            markNeedsUpdate__6GSnullFb((s32) temp_r3, 1);
+        }
+    }
+    temp_r3_2 = (*(s32 *)((u8 *)(arg0) + (0x34)));
+    if ((temp_r3_2 & 4) && (temp_r3_2 & 8) && ((*(f32 *)((u8 *)(arg0) + (0x4C))) < (0.0f))) {
+        ((s32 (*)(s32))fn_8004DF78)((s32) arg0);
+    }
 }
 }
