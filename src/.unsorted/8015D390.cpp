@@ -128,3 +128,14 @@ s32 fn_801610F4(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_8015F6A0(void);
+s32 fn_801612DC(void);
+s32 memset(s32, s32, s32);
+
+s32 fn_801612DC(void) {
+    return memset(fn_8015F6A0(), 0, 0x100);
+}
+}

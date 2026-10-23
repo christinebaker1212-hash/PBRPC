@@ -143,6 +143,33 @@ extern "C" {
 
 s32 fn_800BA98C(s32);
 
+
+}
+
+extern "C" {
+
+s32 fn_800BA9CC(s32);
+
+
+}
+
+extern "C" {
+
+s32 fn_800BAA0C(s32);
+
+
+}
+
+extern "C" {
+
+s32 fn_800C4CF8(s32);
+s32 fn_800E55D4(void);
+
+
+}
+
+extern "C" {
+
 s32 fn_800BA98C(s32 arg0) {
     if ((s32) lbl_8063EED8 != 0) {
         return (s32) (*(s16 *)((u8 *)((lbl_8063EED8 + ((arg0 * 2) & 0x1FFFE))) + (0x14)));
@@ -152,8 +179,6 @@ s32 fn_800BA98C(s32 arg0) {
 }
 
 extern "C" {
-
-s32 fn_800BA9CC(s32);
 
 s32 fn_800BA9CC(s32 arg0) {
     if ((s32) lbl_8063EED8 != 0) {
@@ -165,8 +190,6 @@ s32 fn_800BA9CC(s32 arg0) {
 
 extern "C" {
 
-s32 fn_800BAA0C(s32);
-
 s32 fn_800BAA0C(s32 arg0) {
     if ((s32) lbl_8063EED8 != 0) {
         return (*(s32 *)((u8 *)((lbl_8063EED8 + ((arg0 * 4) & 0x3FFFC))) + (0x28C)));
@@ -177,8 +200,58 @@ s32 fn_800BAA0C(s32 arg0) {
 
 extern "C" {
 
-s32 fn_800C4CF8(s32);
-s32 fn_800E55D4(void);
+s32 fn_800C2874(s32, s32);
+s32 fn_80253E8C(s32, s32, s32, s32);
+s32 fn_80253EB4(s32, s32, s32, s32);
+extern u16 lbl_8063EECE;
+
+s32 fn_800C2874(s32 arg0, s32 arg1) {
+    s32 sp8;
+    s32 var_r3;
+
+    var_r3 = fn_80253E8C(arg0, arg1, 3, (s32) &sp8);
+    if (sp8 != 0x20) {
+        return var_r3;
+    }
+    if (!(lbl_8063EECE & 0x400)) {
+        var_r3 = fn_80253EB4(arg0, arg1, 1, 0);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 __ct__7GSsceneFP11GSsceneData(s32, s32);
+s32 allocFromHeap__5GSmemFP12MEMiHeapHeadUl(s32, s32);
+s32 fn_800C4AD4(s32);
+s32 fn_801E34DC__FP11GSsceneDataUl(s32, s32);
+s32 isInitialized__5GSmemFv(void);
+extern s32 gGameHeap;
+
+s32 fn_800C4AD4(s32 arg0) {
+    s32 temp_r3;
+    s32 var_r3;
+
+    var_r3 = arg0;
+    if ((s32) (*(s32 *)((u8 *)(lbl_8063EED8) + (0x2BC))) == 0) {
+        temp_r3 = fn_800BA9CC((s32)((s32) (u16) var_r3));
+        fn_801E34DC__FP11GSsceneDataUl(temp_r3, temp_r3);
+        if (isInitialized__5GSmemFv() != 0) {
+            var_r3 = allocFromHeap__5GSmemFP12MEMiHeapHeadUl(gGameHeap, 0x14);
+        } else {
+            var_r3 = 0;
+        }
+        if (var_r3 != 0) {
+            var_r3 = __ct__7GSsceneFP11GSsceneData(var_r3, temp_r3);
+        }
+        (*(s32 *)((u8 *)(lbl_8063EED8) + (0x2BC))) = var_r3;
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
 
 s32 fn_800C4CF8(s32 arg0) {
     if (arg0 < 0) {

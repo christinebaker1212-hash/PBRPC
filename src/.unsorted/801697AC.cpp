@@ -48,3 +48,15 @@ void fn_80169888(void) {
     fn_80035DA4();
 }
 }
+
+extern "C" {
+
+s32 fn_801697AC(void);
+s32 fn_8016CE24(void);
+extern u8 lbl_8063F15C;
+
+s32 fn_801697AC(void) {
+    ((s32 (*)(s32))fn_80169884)((s32) &lbl_8063F15C);
+    return fn_8016CE24();
+}
+}

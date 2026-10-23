@@ -526,3 +526,30 @@ void fn_8015D350(u32 v) {
     lbl_8063EFF0 = v;
 }
 }
+
+extern "C" {
+
+s32 fn_8015B7F0(s32, s32, s32);
+s32 fn_80250370(s32, s32);
+
+s32 fn_8015B7F0(s32 arg0, s32 arg1, s32 arg2) {
+    s32 var_r5;
+
+    var_r5 = arg2;
+    if (var_r5 != 0) {
+        var_r5 = (s32) (u16) (var_r5 - 1);
+    }
+    return fn_80250370(arg1, (s32) (u8) var_r5);
+}
+}
+
+extern "C" {
+
+s32 fn_8015B8A0(s32, s32, s32);
+s32 fn_802503F0(s32);
+
+s32 fn_8015B8A0(s32 arg0, s32 arg1, s32 arg2) {
+    (*(s8 *)((u8 *)(arg1) + (0x1A))) = (s8) arg2;
+    return fn_802503F0(arg1);
+}
+}

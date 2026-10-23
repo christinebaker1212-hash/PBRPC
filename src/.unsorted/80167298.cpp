@@ -46,3 +46,34 @@ s32 fn_8016747C(s32 arg0, s32 arg1) {
     return 0x6EC;
 }
 }
+
+extern "C" {
+
+s32 fn_801673D8(s32, s32);
+s32 fn_801687D0(void);
+s32 memcpy(s32, s32, s32);
+
+s32 fn_801673D8(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    sp8 = fn_801687D0();
+    memcpy(arg1, (s32) &sp8, 4);
+    return 4;
+}
+}
+
+extern "C" {
+
+s32 fn_80167490(s32, s32);
+s32 fn_801689A0(void);
+s32 fn_80168B6C(s32);
+
+s32 fn_80167490(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    temp_r31 = fn_801689A0();
+    fn_80168B6C(fn_801689A0());
+    memcpy((s32)(arg1), (s32)(temp_r31), (s32)(0x6EC));
+    return 0x6EC;
+}
+}

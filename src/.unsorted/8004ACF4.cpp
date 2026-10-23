@@ -197,3 +197,126 @@ void fn_8004BD24(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 fn_8004B28C(s32, s32);
+
+s32 fn_8004B28C(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004B708(s32, s32);
+
+s32 fn_8004B708(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004B7A8(s32, s32);
+
+s32 fn_8004B7A8(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004B864(s32, s32);
+
+s32 fn_8004B864(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004B8BC(s32);
+s32 fn_8004B900(s32);
+
+s32 fn_8004B8BC(s32 arg0) {
+    s32 var_r3;
+
+    var_r3 = fn_8004B1E4((EffBase *)(arg0));
+    if (var_r3 != 0) {
+        (*(s32 *)((u8 *)(arg0) + (0x44))) = 0;
+        var_r3 = fn_8004B900(arg0);
+    }
+    return var_r3;
+}
+}
+
+extern "C" {
+
+s32 fn_8004BC28(s32, s32);
+
+s32 fn_8004BC28(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004BF94(s32, s32);
+
+s32 fn_8004BF94(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004C740(s32, s32);
+
+s32 fn_8004C740(s32 arg0, s32 arg1) {
+    if (arg0 != 0) {
+        fn_8004B174((void *)(arg0), (s32)(0));
+        if (arg1 > 0) {
+            __dl__FPv(arg0);
+        }
+    }
+    return arg0;
+}
+}

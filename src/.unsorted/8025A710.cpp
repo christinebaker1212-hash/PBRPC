@@ -23,3 +23,13 @@ s32 fn_8025AD28(s32 arg0) {
     return sp8;
 }
 }
+
+extern "C" {
+
+s32 OSSendMessage(s32, s32, s32);
+s32 fn_8025ACE0(s32, s32);
+
+s32 fn_8025ACE0(s32 arg0, s32 arg1) {
+    return OSSendMessage(arg0 + 0x20C, arg1, 1);
+}
+}

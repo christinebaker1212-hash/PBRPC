@@ -259,3 +259,49 @@ void fn_80035DA4(u8 *arg0) {
     (*(u8 **)((u8 *)(arg0) + (0x96C))) = (u8 *) (arg0 + 0x4E0);
 }
 }
+
+extern "C" {
+
+s32 fn_80035CE0(s32);
+
+s32 fn_80035CE0(s32 arg0) {
+    s32 var_r31;
+    u32 var_r30;
+
+    var_r31 = arg0 + 0x340;
+    var_r30 = arg0 + 0x410;
+    do {
+        fn_80035CB0((u8 *)(var_r31));
+        var_r31 += 0x34;
+    } while ((u32) var_r31 < var_r30);
+    do {
+        fn_80035CB0((u8 *)((s32) var_r30));
+        var_r30 += 0x34;
+    } while (var_r30 < (u32) (arg0 + 0x4E0));
+    fn_80035DA4((u8 *)(arg0));
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_80036068(s32);
+s32 fn_8016F628(s32);
+s32 fn_80177080(s32, s32, s32);
+
+s32 fn_80036068(s32 arg0) {
+    s32 temp_r3_2;
+    u16 temp_r3;
+
+    temp_r3 = (*(u16 *)((u8 *)((*(u8 **)((u8 *)(arg0) + (0x970)))) + (8)));
+    if ((s32) temp_r3 == 0) {
+        return 0;
+    }
+    temp_r3_2 = fn_8016F628((s32) temp_r3);
+    if (temp_r3_2 == 0) {
+        return 0;
+    }
+    fn_80177080(arg0 + 0x30, temp_r3_2, 0x80);
+    return arg0 + 0x30;
+}
+}

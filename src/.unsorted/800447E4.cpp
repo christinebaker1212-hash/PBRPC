@@ -75,3 +75,22 @@ void fn_80044CD0(u8 *arg0) {
     fn_80250560(arg0 + 0x90, temp_r4, (f32) (u8) temp_r4);
 }
 }
+
+extern "C" {
+
+s32 fn_80044A9C(s32, s32, s32);
+s32 fn_8015C308(s32, s32);
+
+s32 fn_80044A9C(s32 arg0, s32 arg1, s32 arg2) {
+    return fn_8015C308(arg1, arg2);
+}
+}
+
+extern "C" {
+
+s32 fn_80044C8C(s32, s32, s32);
+
+s32 fn_80044C8C(s32 arg0, s32 arg1, s32 arg2) {
+    return fn_8015C308(arg1, arg2);
+}
+}

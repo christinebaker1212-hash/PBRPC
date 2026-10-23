@@ -41,3 +41,28 @@ void fn_8004E780(u8 *arg0, s32 arg1) {
     (*(s32 *)((u8 *)(arg0) + (0x34))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0x34))) | 0x10);
 }
 }
+
+extern "C" {
+
+s32 fn_8004D80C(void);
+s32 fn_8004DE28(s32, s32);
+s32 fn_8004E85C(s32, s32, s32, s32, f32);
+s32 fn_8004E92C(s32, s32, s32, s32, f32);
+
+s32 fn_8004E92C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, f32 farg0) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+
+    if (arg0 == 0) {
+        return 0;
+    }
+    temp_r3 = fn_8004D80C();
+    if ((temp_r3 != 0) && (arg0 != 0)) {
+        temp_r3_2 = fn_8004DE28(temp_r3, (*(s32 *)((u8 *)(arg0) + (0x13C))));
+        if (temp_r3_2 != 0) {
+            fn_8004E85C(temp_r3_2, arg1, arg2, arg3, farg0);
+        }
+    }
+    return 0;
+}
+}
