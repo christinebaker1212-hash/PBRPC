@@ -107,3 +107,26 @@ void fn_80044850(void) {
     }
 }
 }
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+s32 __nw__FUl(s32);
+s32 fn_8023EB58(s32, s32, s32, s32, s32);
+void fn_80044884(void);
+extern s32 lbl_8063F778;
+
+void fn_800447E4() {
+    s32 var_r3;
+
+    if ((s32) lbl_8063EAA8 != 0) {
+        __dl__FPv(lbl_8063EAA8);
+    }
+    var_r3 = __nw__FUl(0xEC0);
+    if (var_r3 != 0) {
+        var_r3 = ((s32)fn_80044898((u32)(var_r3)));
+    }
+    lbl_8063EAA8 = var_r3;
+    fn_8023EB58(lbl_8063F778, (s32) &fn_80044850, (s32) &fn_80044884, 3, 0xC);
+}
+}
