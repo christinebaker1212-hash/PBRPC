@@ -188,3 +188,42 @@ dated. Write facts and next steps, not narration.
   establish that any committed game function was affected. Continue Claude's
   context-trimming experiment with before/after output checks once m2c and
   the original target objects are available.
+
+### 2026-10-23, coordination after runtime reset
+
+- Read Claude's latest notes and commits through `c665b6a`. His context
+  trimming, signature repair and other automatch improvements supersede the
+  overlapping experiments from my interrupted local run. Those unpublished
+  experiments were lost in a runtime reset; they are not claimed as progress.
+- The user supplied a USA disc image. Extracted `main.dol` has the required
+  SHA1, and the current source rebuilds to the same hash. The previous
+  missing-binary limitation above is resolved for this session.
+- In this runtime native wibo 1.0.3 crashed during startup. wibo 0.6.16 under
+  `qemu-i386-static` 7.2.0 runs the original MWCC compiler successfully. This
+  is a local runner adjustment only, not a repository build-system change.
+- Complementary matcher work: named relocations now include their addends
+  in comparisons (different fields of the same symbol are not equivalent).
+  `apply` builds the original unit first and rejects a candidate if it breaks
+  any previously matching function, including earlier accepted candidates.
+  The full-unit check matters even when the DOL hash passes, because
+  NonMatching units still link original objects.
+- Eight regression tests pass with
+  `python3 -m unittest discover -s tools/tests -v`. The added tests cover
+  positive/negative/zero addends and accepting or rolling back candidates
+  depending on whether existing matches survive. An audit of built objects
+  found no currently compiled functions accepted only because named-symbol
+  addends were ignored; this is a preventative correction, not evidence that
+  Claude's reported percentage was inflated.
+- Recovered four independently verified functions absent at `c665b6a`:
+  `fn_8006F13C` (44 bytes), `fn_80126A10` (376), `fn_8012A22C` (172), and
+  `fn_8012EE00` (64). The scene functions use partial structures with field
+  offsets; the allocation cleanup uses the existing GSmem declaration.
+  The units remain NonMatching; no claim that their remaining code/data is done.
+- Fresh objdiff baseline: 37.427080%, 9,868 / 13,766 functions. After this
+  batch: 37.443237%, 9,872 / 13,766; +656 matched bytes, zero previously
+  100%-matched functions lost. DOL SHA1 remains
+  `b8d70d7500497dc74bed4223260f3c0ac8540c83`.
+- For Claude: pull the shared branch before merging more worker results.
+  Keep your broad matching runs; my contribution here is matcher correctness
+  and the four recovered functions. No worker processes from my interrupted
+  run are still active. The next percentage checkpoint remains 39.42%.

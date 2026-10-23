@@ -84,7 +84,9 @@ def reloc_name(elf: ElfObject, r) -> str:
     if not name or name.startswith("@") or name.startswith(".") or r.symbol.type == 3:
         # Section or anonymous local symbol: identify by section name + addend.
         return f"<{elf.section_name(r.symbol.shndx)}+{r.addend}>"
-    return name
+    # Named symbols may address different fields or instructions via addends.
+    # Masking the relocated bits must not erase that distinction.
+    return f"{name}+{r.addend}"
 
 
 def mask(code: bytes, relocs: List[Tuple[int, int, str]]) -> bytes:
@@ -1471,6 +1473,13 @@ def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj
     obj = unit_obj(unit, version)
     text = original
     applied: List[str] = []
+    if not build_unit([], obj):
+        raise RuntimeError(f"Cannot establish existing matches for {unit}")
+    before = Obj(ROOT / obj)
+    protected = {
+        n for n in target.elf.functions()
+        if before.function(n) and same(target.function(n), before.function(n))
+    }
     # Address order; names that are not fn_<addr> go first.
     def key(n: str) -> int:
         m = re.match(r"fn_([0-9A-F]{8})$", n)
@@ -1491,10 +1500,18 @@ def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj
                 candidates.insert(0, merge_into(reprototyped, src, adopt=False))
         for candidate in candidates:
             src_path.write_text(candidate, encoding="latin-1")
-            if build_unit([], obj) and function_matches(obj, target, name):
-                text = candidate
-                applied.append(name)
-                break
+            if build_unit([], obj):
+                compiled = Obj(ROOT / obj)
+                required = protected | {name}
+                if all(
+                    target.function(n) and compiled.function(n)
+                    and same(target.function(n), compiled.function(n))
+                    for n in required
+                ):
+                    text = candidate
+                    applied.append(name)
+                    protected.add(name)
+                    break
         else:
             src_path.write_text(text, encoding="latin-1")
     src_path.write_text(text, encoding="latin-1")
