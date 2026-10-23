@@ -683,7 +683,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         w = range_switch(w) or w
         w = single_case_switch(w) or w
         w = byte_offsets(struct_globals(w))
-        extra = [stack_arrays(w), ternaries(w), reverse_locals(w)]
+        extra = [stack_arrays(w), ternaries(w), reverse_locals(w), compound_assignments(w)]
         extra += [narrow_counters(w, t) for t in ("u16", "u8")]
         extra += [reverse_locals(x) for x in extra[-2:]]
         for x in [w] + extra:
@@ -765,8 +765,33 @@ def struct_globals(src: str) -> str:
     return src
 
 
+def compound_assignments(src: str) -> str:
+    """`x = (T) (x op y);` as `x op= y;`."""
+    out = []
+    for l in src.split("\n"):
+        m = re.match(r"^(\s*)(.+?) = (?:\([\w ]+\) )?\((.+)\);$", l)
+        if m:
+            lhs, rest = m.group(2), m.group(3)
+            for op in ("|", "&", "^", "+", "-", "<<", ">>"):
+                head = f"{lhs} {op} "
+                if rest.startswith(head):
+                    y = rest[len(head) :]
+                    depth = 0
+                    for ch in y:
+                        depth += {"(": 1, ")": -1}.get(ch, 0)
+                        if depth < 0:
+                            break
+                    if depth == 0:
+                        l = f"{m.group(1)}{lhs} {op}= {y};"
+                    break
+        out.append(l)
+    return "\n".join(out)
+
+
 def byte_offsets(src: str) -> str:
     ptrs = set(re.findall(r"^\s+(?:s16|u16|s32|u32|f32|f64|s64|u64) \*(\w+);$", src, re.M))
+    # `&sym + n`: m2c counts n in bytes whatever type the declaration has
+    src = re.sub(r"(?<![\w)])&(lbl_\w+) ([+-]) ", r"(u8 *)&\1 \2 ", src)
     return re.sub(
         r"\(([\w ]+\*)\) \((\w+) ([+-]) ",
         lambda m: f"({m.group(1)}) ((u8 *){m.group(2)} {m.group(3)} " if m.group(2) in ptrs else m.group(0),
