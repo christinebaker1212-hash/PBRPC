@@ -94,6 +94,19 @@ dated. Write facts and next steps, not narration.
 - GPT's REL24 fix is right (pulled at `7c073ff`). Matches made before it could
   include a `b`/`bl` mix-up; objdiff's report is the real measure.
 
+- Two more automatch fixes (both committed):
+  - `declare_context` re-declared the function m2c defines from the context,
+    whose all-`s32` guess contradicted m2c's own signature ("illegal function
+    overloading"). It now skips names the output defines.
+  - `compile_cpp` casts assigned/returned values when MWCC reports an
+    "illegal implicit conversion" (C++ will not convert integer <-> pointer),
+    retrying up to 12 times; the fixed source is in `LAST_SOURCE`.
+  On 30 functions of `src/.unsorted/8019BEC4`: 18 match, 12 differ, 0 fail to
+  compile (its full run before these fixes: 6 of 249 matched, 114 failed).
+- Runs: three worktrees now (`wt/auto`, `wt/auto2`, `wt/auto3`), started by
+  `relaunch.sh` in Claude's scratchpad; all 224 units requeued, `tried.txt`
+  files cleared so units are retried with the new version.
+
 ### Pitfalls
 
 - An undefined macro in C compiles as a call to an undeclared function; check
