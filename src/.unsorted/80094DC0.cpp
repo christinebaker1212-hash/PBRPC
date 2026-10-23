@@ -30,3 +30,26 @@ s32 fn_80095858(s32 arg0, s32 arg1) {
     return var_r3;
 }
 }
+
+extern "C" {
+
+s32 fn_80059A3C(s32, s32);
+s32 fn_80253EDC(s32, s32, s32, s32);
+
+void fn_800958CC(s32 arg0, s32 arg1) {
+    s32 sp10[10];
+    s32 sp8;
+
+    fn_80253EDC(arg0, arg1, 3, (s32) &sp8);
+    switch (sp8) {                                  /* irregular */
+    case 4:
+        fn_80253EDC(arg0, arg1, 6, (s32) sp10);
+        fn_80059A3C(0x1F, (s32) sp10);
+        return;
+    case 3:
+        fn_80253EDC(arg0, arg1, 6, (s32) sp10);
+        fn_80059A3C(0x20, (s32) sp10);
+        return;
+    }
+}
+}
