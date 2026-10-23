@@ -63,3 +63,23 @@ loop_1:
     goto loop_1;
 }
 }
+
+extern "C" {
+
+s32 Party_GetPokemonBySlotIndex__FPC5Partyl(s32, s32);
+s32 fn_80056C4C__FP7Pokemon(void);
+
+void fn_80150910(s32 arg0) {
+    s32 var_r31;
+    s32 temp_r30;
+
+    var_r31 = 0;
+    do {
+        temp_r30 = Party_GetPokemonBySlotIndex__FPC5Partyl(arg0, var_r31);
+        if (fn_80056C4C__FP7Pokemon() != 0) {
+            ((s32 (*)(s32))fn_80150D24)(temp_r30);
+        }
+        var_r31 += 1;
+    } while (var_r31 < 6);
+}
+}
