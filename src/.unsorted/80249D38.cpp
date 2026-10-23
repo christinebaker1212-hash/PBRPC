@@ -504,3 +504,12 @@ void fn_80250ED4(void) {
     lbl_8063F8D8 = 0.59f;
 }
 }
+
+extern "C" {
+
+s32 fn_80250584(s32, f32);
+
+u16 fn_80250560(s32 arg0, f32 farg0) {
+    return fn_80250584(arg0, farg0);
+}
+}

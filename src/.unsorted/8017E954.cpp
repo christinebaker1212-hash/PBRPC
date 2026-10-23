@@ -329,10 +329,7 @@ u32 fn_8017F740(void *t, void *p) {
     return F16(q, 6);
 }
 
-u32 fn_8017F778(void *t, void *p) {
-    fn_8017D100(lbl_8063F24C);
-    return fn_801C4184(p);
-}
+
 
 u8 fn_8017E9A0(u32 x) {
     u8 i;
@@ -345,10 +342,7 @@ u8 fn_8017E9A0(u32 x) {
     return 0;
 }
 
-u16 fn_80180250(void *t, void *p) {
-    fn_8017D100(lbl_8063F24C);
-    return fn_8018028C(fn_801C3AA4(p));
-}
+
 u32 fn_8018043C(void *t, void *p) {
     return fn_8017F740(t, fn_8017F05C(p));
 }
@@ -2405,4 +2399,163 @@ void fn_8017EC74(void *p, void *q) {
 
 #pragma optimize_for_size reset
 #pragma dont_inline reset
+}
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_804765C0;
+
+void fn_8017F778(s32 arg0, s32 arg1) {
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    ((s32)fn_801C4184((void *)(arg1)));
+}
+}
+
+extern "C" {
+
+void fn_80180250(s32 arg0, s32 arg1) {
+    ((s32)fn_8017F740((void *)(arg0), (void *)(((s32)fn_8017F05C((void *)(arg1))))));
+}
+}
+
+extern "C" {
+
+u16 fn_801849CC(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    temp_r3_2 = ((s32)fn_801C3AC8((void *)(arg1)));
+    if (temp_r3_2 == 0) {
+        return 0U;
+    }
+    temp_r3 = ((s32)fn_8017E398((void *)(temp_r3_2)));
+    if (temp_r3 == 0) {
+        return 0U;
+    }
+    return (*(u16 *)((u8 *)(temp_r3) + (2)));
+}
+}
+
+extern "C" {
+
+u16 fn_80184A30(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    temp_r3_2 = ((s32)fn_801C3AC8((void *)(arg1)));
+    if (temp_r3_2 == 0) {
+        return 0U;
+    }
+    temp_r3 = ((s32)fn_8017E398((void *)(temp_r3_2)));
+    if (temp_r3 == 0) {
+        return 0U;
+    }
+    return (*(u16 *)((u8 *)(temp_r3) + (4)));
+}
+}
+
+extern "C" {
+
+u16 fn_80184A94(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    temp_r3_2 = ((s32)fn_801C3AC8((void *)(arg1)));
+    if (temp_r3_2 == 0) {
+        return 0U;
+    }
+    temp_r3 = ((s32)fn_8017E398((void *)(temp_r3_2)));
+    if (temp_r3 == 0) {
+        return 0U;
+    }
+    return (*(u16 *)((u8 *)(temp_r3) + (6)));
+}
+}
+
+extern "C" {
+
+u16 fn_80184AF8(s32 arg0, s32 arg1) {
+    s32 temp_r3;
+    s32 temp_r3_2;
+
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    temp_r3_2 = ((s32)fn_801C3AC8((void *)(arg1)));
+    if (temp_r3_2 == 0) {
+        return 0U;
+    }
+    temp_r3 = ((s32)fn_8017E398((void *)(temp_r3_2)));
+    if (temp_r3 == 0) {
+        return 0U;
+    }
+    return (*(u16 *)((u8 *)(temp_r3) + (8)));
+}
+}
+
+extern "C" {
+
+u16 fn_80184B9C(s32 arg0);
+
+void fn_80184B5C(s32 arg0, s32 arg1) {
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    ((s32)fn_80184B9C((s32)(((s32)fn_801C3AA4((void *)(arg1))))));
+}
+}
+
+extern "C" {
+
+u16 fn_80184B9C(s32 arg0) {
+    s32 temp_r3;
+
+    if (arg0 == 0) {
+        return 0U;
+    }
+    temp_r3 = ((s32)fn_8017E398((void *)(arg0)));
+    if (temp_r3 == 0) {
+        return 0U;
+    }
+    return (*(u16 *)((u8 *)(temp_r3) + (0xA)));
+}
+}
+
+extern "C" {
+
+u8 fn_80184CF4(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    temp_r31 = ((s32)fn_801C3AA4((void *)(arg1)));
+    if (((s32 (*)(void))fn_801C1730)() == 1U) {
+        if (temp_r31 == 0) {
+            return 0U;
+        }
+        return (*(u8 *)((u8 *)(temp_r31) + (0x63)));
+    }
+    return 0U;
+}
+}
+
+extern "C" {
+
+void fn_80184DDC(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    temp_r31 = ((s32)fn_8017F05C((void *)(arg1)));
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    ((s32)fn_801C4184((void *)(temp_r31)));
+}
+}
+
+extern "C" {
+
+void fn_80184E20(s32 arg0, s32 arg1, s32 arg2) {
+    s32 temp_r31;
+
+    temp_r31 = ((s32)fn_8017F05C((void *)(arg1)));
+    ((s32)fn_8017D100((void *)((s32) &lbl_804765C0)));
+    ((s32)fn_801C3AA4((void *)(temp_r31)));
+    ((s32)fn_8017F7B0((void *)(((s32)fn_801C3AA4((void *)(temp_r31)))), (u32)(arg2)));
+}
 }

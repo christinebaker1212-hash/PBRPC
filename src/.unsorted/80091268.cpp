@@ -105,3 +105,21 @@ void fn_80091294(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+void fn_80091268(s16 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)((s32) arg0), (s32)(arg1), (s32)(3), (s32 *)((s32) &sp8));
+}
+}
+
+extern "C" {
+
+void fn_80094948(s16 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)((s32) arg0), (s32)(arg1), (s32)(3), (s32 *)((s32) &sp8));
+}
+}

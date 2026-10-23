@@ -567,3 +567,30 @@ s32 fn_8015C73C(s32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
     return fn_80250134(arg0, (s32) (lbl_806415F4 + farg0), (s32) (lbl_806415F8 + farg2), 0, 0, -1);
 }
 }
+
+extern "C" {
+
+s32 fn_8015F6E0(void);
+
+void fn_8015BB9C(s32 arg0, s32 arg1) {
+    ((s32)fn_8015AAF0((Unk80158E50 *)(arg0), (Unk8015AAF0 *)(arg1), (void *)(fn_8015F6E0() + 0x10)));
+}
+}
+
+extern "C" {
+
+s32 fn_80158E50(s32, s32, s32);
+
+void fn_8015C308(s32 arg0, s32 arg1) {
+    fn_80158E50((s32) &lbl_8048773C, arg0, arg1);
+}
+}
+
+extern "C" {
+
+s32 fn_801599A8(s32, s32);
+
+void fn_8015C320(s32 arg0) {
+    (*(s8 *)((u8 *)(arg0) + (0x96))) = fn_801599A8((s32) &lbl_8048773C, arg0);
+}
+}
