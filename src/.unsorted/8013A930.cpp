@@ -37,3 +37,40 @@ void fn_8013D004(s32 arg0) {
     fn_800599C8(0x63, 2, 0, 0, 0, 0);
 }
 }
+
+extern "C" {
+
+s32 fn_80253E8C(s32, s32, s32, s32);
+s32 fn_80253EB4(s32, s32, s32, s32);
+
+void fn_8013C3AC(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C(arg0, arg1, 3, (s32) &sp8);
+    switch (sp8) {                                  /* irregular */
+    case 3:
+        fn_80253EB4(arg0, arg1, 2, 0x43E4);
+        return;
+    case 7:
+        fn_80253EB4(arg0, arg1, 2, 0x43E9);
+        return;
+    }
+}
+}
+
+extern "C" {
+
+void fn_8013C75C(s32 arg0, s32 arg1) {
+    s32 sp8;
+
+    fn_80253E8C((s32)(arg0), (s32)(arg1), (s32)(3), (s32)((s32) &sp8));
+    switch (sp8) {                                  /* irregular */
+    case 4:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x43ED));
+        return;
+    case 8:
+        fn_80253EB4((s32)(arg0), (s32)(arg1), (s32)(2), (s32)(0x43EF));
+        return;
+    }
+}
+}
