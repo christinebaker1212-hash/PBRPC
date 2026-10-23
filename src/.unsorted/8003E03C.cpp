@@ -67,3 +67,16 @@ s32 fn_8003E6E0(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_8000739C__Fv(void);
+s32 fn_8003E4B8(s32);
+
+void fn_8003E124(void) {
+    if ((s32) lbl_8063EA80 != 0) {
+        fn_8000739C__Fv();
+        fn_8003E4B8(lbl_8063EA80);
+    }
+}
+}
