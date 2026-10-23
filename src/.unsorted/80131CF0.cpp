@@ -84,3 +84,165 @@ s32 fn_80132B28(s32 arg0, s32 arg1) {
     return fn_80253EB4(arg0, arg1, 1, fn_8005A9F8(0x1A));
 }
 }
+
+extern "C" {
+
+s32 fn_800E5F98(s32);
+
+s32 fn_801371A8(u32 arg0) {
+    s32 var_r5;
+
+    var_r5 = 0;
+    switch (arg0) {
+    case 0x1:
+        fn_800E5F98(4);
+        var_r5 = 1;
+        break;
+    case 0x2:
+        fn_800E5F98(5);
+        var_r5 = 1;
+        break;
+    case 0x3:
+        fn_800E5F98(6);
+        var_r5 = 1;
+        break;
+    case 0x4:
+        fn_800E5F98(7);
+        var_r5 = 1;
+        break;
+    case 0x5:
+        fn_800E5F98(8);
+        var_r5 = 1;
+        break;
+    case 0x6:
+        fn_800E5F98(9);
+        var_r5 = 1;
+        break;
+    case 0x7:
+        fn_800E5F98(0xA);
+        var_r5 = 1;
+        break;
+    case 0x8:
+        fn_800E5F98(0xB);
+        var_r5 = 1;
+        break;
+    case 0x9:
+        fn_800E5F98(0xC);
+        var_r5 = 1;
+        break;
+    case 0xA:
+        fn_800E5F98(0xD);
+        fn_800E5F98(0x16);
+        fn_800E5F98(0x17);
+        fn_800E5F98(0x18);
+        fn_800E5F98(0x19);
+        var_r5 = 1;
+        break;
+    case 0x11:
+        fn_800E5F98(3);
+        var_r5 = 1;
+        break;
+    case 0x12:
+        fn_800E5F98(0xE);
+        var_r5 = 1;
+        break;
+    case 0x13:
+        fn_800E5F98(0xF);
+        var_r5 = 1;
+        break;
+    case 0x14:
+        fn_800E5F98(0x10);
+        var_r5 = 1;
+        break;
+    case 0x15:
+        fn_800E5F98(0x11);
+        var_r5 = 1;
+        break;
+    case 0x16:
+        fn_800E5F98(0x12);
+        var_r5 = 1;
+        break;
+    case 0x17:
+        fn_800E5F98(0x13);
+        var_r5 = 1;
+        break;
+    case 0x18:
+        fn_800E5F98(0x14);
+        var_r5 = 1;
+        break;
+    case 0x19:
+        fn_800E5F98(0x15);
+        var_r5 = 1;
+        break;
+    case 0x1A:
+        fn_800E5F98(0x1A);
+        var_r5 = 1;
+        break;
+    case 0x1B:
+        fn_800E5F98(0x1B);
+        var_r5 = 1;
+        break;
+    case 0x1C:
+        fn_800E5F98(0x1C);
+        var_r5 = 1;
+        break;
+    case 0x1D:
+        fn_800E5F98(0x1D);
+        var_r5 = 1;
+        break;
+    case 0x1E:
+        fn_800E5F98(0x1E);
+        var_r5 = 1;
+        break;
+    case 0x1F:
+        fn_800E5F98(0x1F);
+        var_r5 = 1;
+        break;
+    case 0x20:
+        fn_800E5F98(0x20);
+        var_r5 = 1;
+        break;
+    case 0x21:
+        fn_800E5F98(0x21);
+        var_r5 = 1;
+        break;
+    case 0x22:
+        fn_800E5F98(0x22);
+        var_r5 = 1;
+        break;
+    case 0x23:
+        fn_800E5F98(0x23);
+        var_r5 = 1;
+        break;
+    case 0x24:
+        fn_800E5F98(0x24);
+        var_r5 = 1;
+        break;
+    case 0x25:
+        fn_800E5F98(0x25);
+        var_r5 = 1;
+        break;
+    case 0x32:
+        fn_800E5F98(0x26);
+        var_r5 = 1;
+        break;
+    case 0x33:
+        fn_800E5F98(0x27);
+        var_r5 = 1;
+        break;
+    case 0x34:
+        fn_800E5F98(0x28);
+        var_r5 = 1;
+        break;
+    case 0x35:
+        fn_800E5F98(0x29);
+        var_r5 = 1;
+        break;
+    case 0x36:
+        fn_800E5F98(0x2A);
+        var_r5 = 1;
+        break;
+    }
+    return var_r5;
+}
+}
