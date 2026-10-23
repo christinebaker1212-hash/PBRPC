@@ -311,3 +311,21 @@ void fn_8025C9EC() {
     (*(s32 *)((u8 *)(&lbl_80425110) + (0))) = 0;
 }
 }
+
+extern "C" {
+
+void OSReport(const s8 *, ...);
+s32 fn_802F5364(void);
+s32 fn_802F5894(void);
+__declspec(section ".data") extern s32 lbl_804250F0;
+__declspec(section ".data") extern s32 lbl_804250FC;
+extern u8 lbl_8063D9D8;
+
+void fn_8025BEB4() {
+    OSReport((const s8 *)(&lbl_804250FC));
+    fn_802F5894();
+    OSReport((const s8 *)(&lbl_804250F0));
+    fn_802F5364();
+    OSReport((const s8 *)(&lbl_8063D9D8));
+}
+}
