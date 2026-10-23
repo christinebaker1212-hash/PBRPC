@@ -385,6 +385,7 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
     variants = []
     text = declare_context(out.stdout) if CONTEXT and use_context else out.stdout
     text = fill_parameters(text, fn)
+    text = re.sub(r"\bCLZ\(", "__cntlzw(", text)
     # A function m2c only takes the address of is declared as data, which
     # MWCC would address through the small data area
     text = re.sub(r"^extern [\w ]+?\*? ?\b(fn_[0-9A-F]{8})\s*;", r"void \1(void);", text, flags=re.M)
@@ -461,10 +462,48 @@ typedef double f64;
 LAST_SOURCE = ""
 
 
+def cast_call_arguments(src: str, name: str) -> Optional[str]:
+    """Casts the arguments of calls to name to the types of its prototype
+    (the one in src, or a known library one)."""
+    p = re.search(r"^[^\n(]*\b" + re.escape(name) + r"\(([^)]*)\);", src, re.M) or re.search(
+        r"\b" + re.escape(name) + r"\(([^)]*)\);", KNOWN.get(name, "")
+    )
+    if p is None:
+        return None
+    params = [param_type(x) for x in p.group(1).split(",")] if p.group(1).strip() not in ("", "void") else []
+    if "..." in p.group(1) or "" in params:
+        return None
+    out, pos, changed = [], 0, False
+    for c in re.finditer(r"\b" + re.escape(name) + r"\(", src):
+        if c.start() < pos:
+            continue
+        line_start = src.rfind("\n", 0, c.start()) + 1
+        if re.match(r"^[A-Za-z_]", src[line_start:]):
+            continue
+        args, end = split_args(src, c.end() - 1)
+        if len(args) != len(params):
+            continue
+        new = name + "(" + ", ".join(a if a.startswith(f"({t})") else f"({t})({a})" for t, a in zip(params, args)) + ")"
+        changed |= new != src[c.start() : end + 1]
+        out.append(src[pos : c.start()] + new)
+        pos = end + 1
+    return "".join(out) + src[pos:] if changed else None
+
+
 def cast_conversion(src: str, err: str, first_line: int) -> Optional[str]:
     """Fixes an "illegal implicit conversion" (C++ does not convert between
     integers and pointers as C does) by casting the assigned or returned
     value to the type the compiler wanted."""
+    u = re.search(r"\(10140\) undefined identifier '(sp[0-9A-F]+(?:_\w+)?)'", err)
+    if u:
+        # a stack temporary m2c used without declaring it
+        d = re.search(r"^[A-Za-z_][^\n;]*\)\s*\{\n", src, re.M)
+        if d is None:
+            return None
+        return src[: d.end()] + f"    s32 {u.group(1)};\n" + src[d.end() :]
+    c = re.search(r"\(10248\) function call '(\w+)\(", err)
+    if c:
+        return cast_call_arguments(src, c.group(1))
     m = re.search(r"^#\s+(\d+): .*\n#\s+Error:.*\n#\s+\(10209\) illegal implicit conversion from '[^']*' to\s*\n?#?\s*'([^']+)'", err, re.M)
     if m is None:
         return None
