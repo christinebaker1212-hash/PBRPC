@@ -304,7 +304,9 @@ def load_context(path: Path) -> None:
 
 def declare_context(src: str) -> str:
     """m2c leaves out declarations of functions the context has."""
-    have = set(re.findall(r"^\S[^\n(]*\b(\w+)\s*\([^;{]*\)\s*;", src, re.M))
+    # Declared or defined here already (m2c infers the function's own
+    # signature, which the context's guess would contradict)
+    have = set(re.findall(r"^\S[^\n(]*\b(\w+)\s*\([^;{]*\)\s*[;{]", src, re.M))
     used = set(re.findall(r"\b(\w+)\(", src))
     extra = [CONTEXT[n] for n in sorted(used) if n in CONTEXT and n not in have]
     return "".join(e + "\n" for e in extra) + src
