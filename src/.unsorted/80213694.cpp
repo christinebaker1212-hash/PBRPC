@@ -82,3 +82,23 @@ s32 fn_802180D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     return fn_802182B0(arg0, arg1, arg2, arg3);
 }
 }
+
+extern "C" {
+
+s32 fn_80219D90(s32 arg0, s32 arg1) {
+    s32 temp_r4;
+    u8 *temp_r31;
+
+    if ((arg1 < 0) || (arg1 >= 0x100)) {
+        return 0;
+    }
+    temp_r31 = (unsigned char *)(arg0 + (arg1 * 4));
+    temp_r4 = (*(s32 *)((u8 *)(temp_r31) + (0x438)));
+    if (temp_r4 != 0) {
+        freeToHeap__5GSmemFP12MEMiHeapHeadPv((s32)(gUnkHeap2), (s32)(temp_r4));
+        (*(s32 *)((u8 *)(temp_r31) + (0x438))) = 0;
+        return 1;
+    }
+    return 0;
+}
+}
