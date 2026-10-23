@@ -283,3 +283,23 @@ u8 *fn_802352BC(u8 *arg0) {
     return arg0 + 0xA8;
 }
 }
+
+extern "C" {
+
+s32 GXDrawTorus(s32, s32, f32);
+
+void fn_802336C0(s32 arg0, s32 arg1, s32 arg2, f32 farg0) {
+    ((s32 (*)(s32))sync__8GSrenderFv)(arg0);
+    GXDrawTorus(arg1, arg2, farg0);
+}
+}
+
+extern "C" {
+
+s32 GXDrawSphere1(s32);
+
+void fn_80233758(s32 arg0, s32 arg1) {
+    ((s32 (*)(s32))sync__8GSrenderFv)(arg0);
+    GXDrawSphere1(arg1);
+}
+}
