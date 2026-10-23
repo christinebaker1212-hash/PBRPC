@@ -147,3 +147,12 @@ void fn_800E9668() {
     __register_global_object((s32 *)(&lbl_8047D604), (s32 *)(&fn_800E96C8), (s32 *)(&lbl_8047D5F8));
 }
 }
+
+extern "C" {
+
+s32 fn_800E5674(s32, s32, s32);
+
+void fn_800E59B8(s32 arg0, s32 arg1) {
+    fn_800E5674(arg0, arg1, (*(s32 *)((u8 *)(&lbl_8047D604) + (0))) + ((*(u8 *)((u8 *)(&lbl_8047D604) + (0xC))) * 0x6EC));
+}
+}
