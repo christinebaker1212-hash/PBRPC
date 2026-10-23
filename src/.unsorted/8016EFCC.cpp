@@ -43,3 +43,48 @@ void fn_801700D0(u32 a0, u32 a1, u32 a2, u32 a3, u32 a4, u32 a5, u32 a6, u32 a7)
     fn_8016E2B8((u32)lbl_8048CE68, a1, a2, a3, a4, a5, a6, a7);
 }
 }
+
+extern "C" {
+
+s32 freeToHeap__5GSmemFP12MEMiHeapHeadPv(s32, s32);
+extern s32 gUnkHeap2;
+
+void fn_8016F314() {
+    if ((s32) lbl_8063F1EC != 0) {
+        freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, lbl_8063F1EC);
+        lbl_8063F1EC = 0;
+    }
+    if ((s32) lbl_8063F1E8 != 0) {
+        freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, lbl_8063F1E8);
+        lbl_8063F1E8 = 0;
+    }
+    if ((s32) lbl_8063F1F0 != 0) {
+        freeToHeap__5GSmemFP12MEMiHeapHeadPv(gUnkHeap2, lbl_8063F1F0);
+        lbl_8063F1F0 = 0;
+    }
+}
+}
+
+extern "C" {
+
+s32 memset(s32, s32, s32);
+__declspec(section ".data") extern u8 lbl_8048D068;
+extern s32 lbl_8063F1F8;
+
+void fn_8016F384() {
+    u8 *var_r31;
+    s32 var_r30;
+
+    memset((s32)(lbl_8063F1E8), (s32)(0), (s32)(0x1000U));
+    lbl_8063F1F4 = 0;
+    var_r31 = &lbl_8048D068;
+    var_r30 = 0;
+    lbl_8063F1F8 = 0;
+    lbl_8063F1FC = 0;
+    do {
+        memset((s32)(var_r31), (s32)(0), (s32)(0x3CU));
+        var_r30 += 1;
+        var_r31 += 0x3C;
+    } while (var_r30 < 0x20);
+}
+}
