@@ -476,7 +476,48 @@ def param_type(param: str) -> str:
     return ""
 
 
-def merge_into(text: str, src: str) -> str:
+def adopt_signature(body: str, protos: Dict[str, List[str]], rets: Dict[str, str]) -> str:
+    """When the unit already declares the function m2c defined, with other
+    types, the definition takes the unit's signature (C linkage cannot
+    overload) and converts its parameters and results inside, which compiles
+    to the same code."""
+    m = re.match(r"^([A-Za-z_][\w \*]*?)\b(\w+)\(([^)]*)\) \{", body)
+    if m is None or m.group(2) not in protos:
+        return body
+    name = m.group(2)
+    ret, params = m.group(1).strip(), [x.strip() for x in m.group(3).split(",")] if m.group(3).strip() not in ("", "void") else []
+    old_ret, old_params = rets.get(name, ""), protos[name]
+    if len(old_params) != len(params) or "" in old_params or not old_ret:
+        return body
+    if old_ret == ret and all(param_type(p) == t for p, t in zip(params, old_params)):
+        return body
+    if (old_ret == "void") != (ret == "void"):
+        return body
+    head, rest = body[: m.end()], body[m.end() :]
+    new_params, converts = [], []
+    for p, t in zip(params, old_params):
+        pm = re.match(r"^(.*?)(\w+)$", p)
+        if pm is None:
+            return body
+        pt, pn = pm.group(1).strip(), pm.group(2)
+        if pt == t:
+            new_params.append(p)
+        else:
+            new_params.append(f"{t} {pn}_")
+            converts.append(f"    {pt} {pn} = ({pt}){pn}_;")
+    head = f"{old_ret} {name}(" + ", ".join(new_params) + ") {"
+    if old_ret != ret and old_ret != "void":
+        rest = re.sub(r"\breturn ([^;]+);", lambda r: f"return ({old_ret})({r.group(1)});", rest)
+    # The conversions go after m2c's own declarations
+    lines = rest.split("\n")
+    i = 1
+    while i < len(lines) and re.match(r"^\s+[\w ]+[\s\*]+\w+(?:\[[^\]]*\])?;$", lines[i]):
+        i += 1
+    lines[i:i] = converts
+    return head + "\n".join(lines)
+
+
+def merge_into(text: str, src: str, adopt: bool = True) -> str:
     """Appends an m2c function (with its declarations) to a unit's source:
     declarations the unit already has are dropped, call arguments are cast to
     the unit's parameter types, and calls whose argument count disagrees with
@@ -493,6 +534,8 @@ def merge_into(text: str, src: str) -> str:
     for m in re.finditer(r"^([A-Za-z_][\w \*]*?)\b(\w+)\(([^;()]*)\);", src, re.M):
         own[m.group(2)] = (m.group(1).strip(), m.group(3).strip() or "void")
     decls, body = split_output(src)
+    if adopt:
+        body = adopt_signature(body, protos, rets)
     decls = [d for d in decls if decl_name(d) not in have]
     # m2c offsets symbols in bytes; the unit may type them as arrays or structs
     body = re.sub(r"&(lbl_\w+) \+ ", r"(u8 *)&\1 + ", body)
@@ -538,6 +581,40 @@ def remove_definition(text: str, name: str) -> str:
     return text if r is None else text[: r[0]] + text[r[1] :]
 
 
+def retype_calls(text: str, name: str, old_text: str, new_sig: str) -> str:
+    """Casts the unit's calls of name to the types of its new signature, and
+    their results back to the type the old prototype gave them."""
+    old = re.search(r"^([A-Za-z_][^\n(;{]*?)\b" + re.escape(name) + r"\s*\([^;{]*\)\s*;", old_text, re.M)
+    m = re.match(r"^(.*?)\b" + re.escape(name) + r"\(([^)]*)\)$", new_sig)
+    if old is None or m is None:
+        return text
+    old_ret, new_ret = old.group(1).strip(), m.group(1).strip()
+    params = [param_type(x) for x in m.group(2).split(",")] if m.group(2).strip() not in ("", "void") else []
+    out, pos = [], 0
+    for c in re.finditer(r"\b" + re.escape(name) + r"\(", text):
+        if c.start() < pos:
+            continue
+        line_start = text.rfind("\n", 0, c.start()) + 1
+        if not text[line_start : c.start()].strip() or re.match(r"^[A-Za-z_]", text[line_start:]):
+            # a declaration or definition, not a call
+            if re.match(r"^[A-Za-z_]", text[line_start:]):
+                continue
+        args, end = split_args(text, c.end() - 1)
+        if len(args) != len(params):
+            continue
+        call = name + "(" + ", ".join(f"({t})({a})" if t else a for t, a in zip(params, args)) + ")"
+        if old_ret and old_ret != new_ret and old_ret != "void" and new_ret != "void":
+            call = f"(({old_ret}){call})"
+        out.append(text[pos : c.start()] + call)
+        pos = end + 1
+    return "".join(out) + text[pos:]
+
+
+def function_matches(obj: str, target: "Obj", name: str) -> bool:
+    base = Obj(ROOT / obj)
+    return bool(target.function(name) and base.function(name) and same(target.function(name), base.function(name)))
+
+
 def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj") -> List[str]:
     src_path = next(
         ROOT / p
@@ -557,11 +634,22 @@ def apply(unit: str, version: str, out_dir: Path, names: List[str], target: "Obj
         src = (out_dir / f"{name}.cpp").read_text()
         # A definition already here does not match (or the function would not
         # have been tried), so the matching one replaces it.
-        candidate = merge_into(remove_definition(text, name), src)
-        src_path.write_text(candidate, encoding="latin-1")
-        if build_unit([], obj):
-            text = candidate
-            applied.append(name)
+        base = remove_definition(text, name)
+        # First with m2c's own signature in place of the unit's prototypes
+        # (callers may then need it), else with the unit's signature kept.
+        candidates = [merge_into(base, src)]
+        own = re.search(r"^([A-Za-z_][\w \*]*?\b" + re.escape(name) + r"\([^)]*\)) \{", src, re.M)
+        if own:
+            proto = re.compile(r"^[A-Za-z_][^\n(;{]*\b" + re.escape(name) + r"\s*\([^;{]*\)\s*;", re.M)
+            reprototyped = retype_calls(proto.sub(own.group(1) + ";", base), name, base, own.group(1))
+            if reprototyped != base:
+                candidates.insert(0, merge_into(reprototyped, src, adopt=False))
+        for candidate in candidates:
+            src_path.write_text(candidate, encoding="latin-1")
+            if build_unit([], obj) and function_matches(obj, target, name):
+                text = candidate
+                applied.append(name)
+                break
         else:
             src_path.write_text(text, encoding="latin-1")
     src_path.write_text(text, encoding="latin-1")
