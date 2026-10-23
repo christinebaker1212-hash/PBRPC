@@ -9,8 +9,8 @@ dated. Write facts and next steps, not narration.
 - Target: a matching decomp of Pokémon Battle Revolution, USA (`RPBE01`).
 - Develop on branch `claude/affectionate-faraday-jfatks`; never commit game data.
 - Never make changes to the Moemon Kai repository.
-- Commit and push for every 2% of progress. Next checkpoint: **37.42%** matched (35.50% reached),
-  then 39.42%, and so on.
+- Commit and push for every 2% of progress. Next checkpoint: **39.42%** matched (37.42% reached),
+  then 41.42%, and so on.
 - The build must stay byte-identical: `build/RPBE01/main.dol` SHA1
   `b8d70d7500497dc74bed4223260f3c0ac8540c83`. Check before every commit:
   `python3 configure.py --version RPBE01 && ninja && sha1sum build/RPBE01/main.dol`.
@@ -141,6 +141,16 @@ dated. Write facts and next steps, not narration.
   split units without a source now have empty ones. Fixed sample: 10/60.
   36.78% matched at `a085934`; pass 3 of the runs (all units, fresh
   `tried.txt`) is in progress after a container restart.
+- Apply fix: matches found in isolation were often lost when merged into
+  the unit (conflicting data declarations, calls with another argument count);
+  fixed, which alone recovered ~20% more matches per unit.
+- C++ virtual calls: m2c writes them as calls through vtable slots, which MWCC
+  compiles with the vtable in an argument register; the `virtual_calls`
+  variant declares a class with the slot as a real virtual function (MWCC
+  vtables have an 8-byte header, so slot = (offset - 8) / 4). Matched 4 of 16
+  register-only near misses.
+- SDK prototypes are read from `libs/*/include` into `KNOWN`.
+- 37.42% matched at `d948fff`.
 
 ### Pitfalls
 
