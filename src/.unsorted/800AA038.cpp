@@ -27,3 +27,42 @@ void fn_800AA038(void) {
     fn_800579FC__Fi(1);
 }
 }
+
+extern "C" {
+
+s32 BoxPokemon_GetValue__FP10BoxPokemonUlPv(s32, s32, s32);
+s32 fn_8015F6E0(void);
+extern s32 lbl_8063EEAC;
+
+s32 fn_800AA354(s32 arg0, s32 *arg1, s32 arg2) {
+    s32 temp_r30;
+    s32 temp_r30_2;
+    s32 temp_r31;
+    s32 var_r29;
+
+    var_r29 = *arg1;
+    temp_r31 = fn_8015F6E0();
+    if (arg2 != 0) {
+        do {
+            if (var_r29 == 0) {
+                var_r29 = 0x21C;
+            }
+            var_r29 -= 1;
+            temp_r30_2 = temp_r31 + (var_r29 * 0x88) + 0x5F8;
+        } while (BoxPokemon_GetValue__FP10BoxPokemonUlPv(temp_r30_2, 5, 0) == 0);
+        *arg1 = var_r29;
+        lbl_8063EEAC = BoxPokemon_GetValue__FP10BoxPokemonUlPv(temp_r30_2, 5, 0);
+        return temp_r30_2;
+    }
+    do {
+        var_r29 += 1;
+        if ((u32) var_r29 == 0x21CU) {
+            var_r29 = 0;
+        }
+        temp_r30 = temp_r31 + (var_r29 * 0x88) + 0x5F8;
+    } while (BoxPokemon_GetValue__FP10BoxPokemonUlPv(temp_r30, 5, 0) == 0);
+    *arg1 = var_r29;
+    lbl_8063EEAC = BoxPokemon_GetValue__FP10BoxPokemonUlPv(temp_r30, 5, 0);
+    return temp_r30;
+}
+}
