@@ -221,7 +221,7 @@ s32 fn_80176BC8(s32 arg0) {
 
 extern "C" {
 
-s32 fn_80176920(s32, s32, s32, s32, s32);
+s32 fn_80176920(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
 s32 fn_801769A0(s32, s32);
 s32 fn_80176C84(s32, s32, s32, s32);
 
@@ -229,7 +229,7 @@ s32 fn_80176C84(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     s32 temp_r3;
     s32 temp_r4;
 
-    temp_r3 = fn_80176920(arg0, 0xB, arg1, arg2, 0);
+    temp_r3 = fn_80176920((s32)(arg0), (s32)(0xB), (s32)(arg1), (s32)(arg2), (s32)(0));
     temp_r4 = temp_r3;
     if (arg3 == 0) {
         return temp_r3;
@@ -247,7 +247,7 @@ s32 fn_80176CEC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 temp_r3;
     s32 temp_r4;
 
-    temp_r3 = fn_80176920((s32)(arg0), (s32)(0xF), (s32)(arg1), (s32)(arg2), (s32)(arg3));
+    temp_r3 = fn_80176920((s32)((s32)(arg0)), (s32)((s32)(0xF)), (s32)((s32)(arg1)), (s32)((s32)(arg2)), (s32)((s32)(arg3)));
     temp_r4 = temp_r3;
     if (arg4 == 0) {
         return temp_r3;
@@ -265,7 +265,7 @@ s32 fn_80176D58(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     s32 temp_r3;
     s32 temp_r4;
 
-    temp_r3 = fn_80176920((s32)(arg0), (s32)(5), (s32)(arg1), (s32)(arg2), (s32)(arg3));
+    temp_r3 = fn_80176920((s32)((s32)(arg0)), (s32)((s32)(5)), (s32)((s32)(arg1)), (s32)((s32)(arg2)), (s32)((s32)(arg3)));
     temp_r4 = temp_r3;
     if (arg4 == 0) {
         return temp_r3;
@@ -283,7 +283,7 @@ s32 fn_80176DC4(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_r3;
     s32 temp_r4;
 
-    temp_r3 = fn_80176920((s32)(arg0), (s32)(0x11), (s32)(arg1), (s32)(0), (s32)(0));
+    temp_r3 = fn_80176920((s32)((s32)(arg0)), (s32)((s32)(0x11)), (s32)((s32)(arg1)), (s32)((s32)(0)), (s32)((s32)(0)));
     temp_r4 = temp_r3;
     if (arg2 == 0) {
         return temp_r3;
@@ -301,7 +301,7 @@ s32 fn_80176E2C(s32 arg0, s32 arg1, s32 arg2) {
     s32 temp_r3;
     s32 temp_r4;
 
-    temp_r3 = fn_80176920((s32)(arg0), (s32)(0x10), (s32)(arg1), (s32)(0), (s32)(0));
+    temp_r3 = fn_80176920((s32)((s32)(arg0)), (s32)((s32)(0x10)), (s32)((s32)(arg1)), (s32)((s32)(0)), (s32)((s32)(0)));
     temp_r4 = temp_r3;
     if (arg2 == 0) {
         return temp_r3;
@@ -371,5 +371,22 @@ void fn_80176C04(s32 *arg0) {
         }
         *arg0 = 0;
     }
+}
+}
+
+extern "C" {
+
+s32 fn_800252EC(s32, s32, s32 *, s32, s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_804202F8;
+
+s32 fn_80176920(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    s32 temp_r31;
+
+    temp_r31 = lbl_8063E9B0;
+    if (temp_r31 == 0) {
+        return 0;
+    }
+    fn_800250E8((s32)(temp_r31), (s32)(0));
+    return fn_800252EC(temp_r31, 0, &lbl_804202F8, arg1, arg2, arg3, arg4);
 }
 }
