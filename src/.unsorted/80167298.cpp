@@ -109,3 +109,28 @@ s32 fn_80167430(s32 arg0, u8 *arg1) {
     return 8;
 }
 }
+
+extern "C" {
+
+u8 fn_80058BA4__Fv(void);
+s32 sprintf(s8 *, const s8 *, ...);
+s8 *strcpy(s8 *, const s8 *);
+__declspec(section ".data") extern s32 lbl_8041F390;
+__declspec(section ".data") extern s32 lbl_8041F39C;
+extern s32 lbl_8063D2D0;
+
+u32 fn_801672A0(s32 arg0, u32 arg1) {
+    u32 var_r3;
+    u8 *temp_r30;
+
+    strcpy((s8 *)(&(*(s32 (*))&lbl_8048C928)), (const s8 *)(lbl_8063D2D0));
+    temp_r30 = (u8 *)&(*(s32 (*))&lbl_8048C928) + ((u32)strlen((s32)((const s8 *)(&(*(s32 (*))&lbl_8048C928)))));
+    sprintf((s8 *)(temp_r30), (const s8 *)(&lbl_8041F390), fn_80058BA4__Fv());
+    sprintf((s8 *)((u8 *)&(*(s32 (*))&lbl_8048C928) + ((u32)strlen((s32)((const s8 *)(&(*(s32 (*))&lbl_8048C928)))))), (const s8 *)(&lbl_8041F39C), 1U);
+    var_r3 = ((u32)strlen((s32)((const s8 *)(&(*(s32 (*))&lbl_8048C928))))) + 1;
+    if (var_r3 > arg1) {
+        var_r3 = arg1;
+    }
+    return var_r3;
+}
+}

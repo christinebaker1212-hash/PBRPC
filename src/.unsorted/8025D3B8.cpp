@@ -47,12 +47,22 @@ extern "C" {
 
 extern "C" {
 
+
+}
+
+extern "C" {
+
+
+}
+
+extern "C" {
+
 s32 fn_8025D55C(s32 arg0, s32 arg1) {
     if (arg1 == 0) {
         return 0;
     }
     if (arg1 & 0x1F) {
-        OSReport((s32)((s32)(&lbl_80425430)), 0x20);
+        OSReport((s32)((const s8 *)(&(*(s32 (*))&lbl_80425430))), 0x20);
     }
     return (*(s32 *)((u8 *)(arg1) + (-0x14)));
 }
@@ -65,7 +75,7 @@ u16 fn_8025D5B4(s32 arg0, s32 arg1) {
         return 0U;
     }
     if (arg1 & 0x1F) {
-        OSReport((s32)((s32)(&lbl_80425464)), 0x20);
+        OSReport((s32)((const s8 *)(&(*(s32 (*))&lbl_80425464))), 0x20);
     }
     return (*(u16 *)((u8 *)(arg1) + (-8)));
 }

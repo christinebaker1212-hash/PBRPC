@@ -59,3 +59,37 @@ s32 fn_8025EF54() {
     return temp_r31;
 }
 }
+
+extern "C" {
+
+s32 fn_8025D390(void);
+
+s32 fn_8025EF04() {
+    s32 temp_r31;
+    s32 temp_r30;
+
+    temp_r31 = OSDisableInterrupts();
+    fn_8025DFD0();
+    fn_8025E304();
+    temp_r30 = fn_8025D390();
+    OSRestoreInterrupts((s32)(temp_r31));
+    return temp_r30;
+}
+}
+
+extern "C" {
+
+s32 fn_8025D2E8(void);
+
+s32 fn_8025F00C() {
+    s32 temp_r31;
+    s32 temp_r30;
+
+    temp_r30 = OSDisableInterrupts();
+    fn_8025DFD0();
+    fn_8025E304();
+    temp_r31 = fn_8025D2E8();
+    OSRestoreInterrupts((s32)(temp_r30));
+    return temp_r31;
+}
+}
