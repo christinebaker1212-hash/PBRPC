@@ -325,3 +325,56 @@ void fn_802013C4(u8 *arg0, s32 arg1, s32 arg2) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_801E64DC(s32, s32);
+extern u8 *sInstance__17GShierarchyModule;
+
+void fn_802027FC__17GShierarchyModuleFP6GSvec3(s32 arg0) {
+    u8 *temp_r3;
+    u8 *var_r31;
+
+    var_r31 = (*(u8 **)((u8 *)(sInstance__17GShierarchyModule) + (0x10C)));
+    while (var_r31 != NULL) {
+        temp_r3 = (*(u8 **)((u8 *)(var_r31) + (0)));
+        if ((u32) ((*(s32 *)((u8 *)(temp_r3) + (0x104))) & 1) == 1) {
+            fn_801E64DC((s32) temp_r3, arg0);
+        }
+        var_r31 = (*(u8 **)((u8 *)(var_r31) + (4)));
+    }
+}
+}
+
+extern "C" {
+
+s32 findTarget__14GSrenderTargetFl(s32);
+s32 fn_8023B420__14GSrenderTargetFUl(s32, s32);
+s32 freeNode__12GSlinkedListFP10GSlistNode(s32);
+
+void fn_80200D78(u8 *arg0) {
+    s32 temp_r3;
+    u32 temp_r31;
+    u8 *temp_r31_2;
+    u8 *var_r3;
+
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (4))) != 0) {
+        temp_r31 = (*(u32 *)((u8 *)(sInstance__17GShierarchyModule) + (0x130)));
+        temp_r3 = findTarget__14GSrenderTargetFl((s32) (u8) (temp_r31 >> 0x10U));
+        if (temp_r3 != 0) {
+            fn_8023B420__14GSrenderTargetFUl(temp_r3, (s32) temp_r31);
+        }
+        var_r3 = (*(u8 **)((u8 *)(arg0) + (0x10)));
+        if (var_r3 != NULL) {
+            while (var_r3 != NULL) {
+                temp_r31_2 = (*(u8 **)((u8 *)(var_r3) + (4)));
+                freeNode__12GSlinkedListFP10GSlistNode((s32) var_r3);
+                var_r3 = temp_r31_2;
+            }
+            (*(u8 **)((u8 *)(arg0) + (0x10))) = NULL;
+        }
+        (*(s32 *)((u8 *)(arg0) + (4))) = 0;
+        (*(u16 *)((u8 *)(sInstance__17GShierarchyModule) + (0x10A))) = (u16) ((*(u16 *)((u8 *)(sInstance__17GShierarchyModule) + (0x10A))) - 1);
+    }
+}
+}
