@@ -45,3 +45,13 @@ s32 fn_8016358C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return fn_8016359C(arg0, arg1);
 }
 }
+
+extern "C" {
+
+void fn_80163614(u8 *arg0) {
+    if ((u32) (*(u32 *)((u8 *)(arg0) + (0x18))) == 1U) {
+        ((s32 (*)(void))fn_801634C0)();
+    }
+    (*(u32 *)((u8 *)(arg0) + (0x18))) = 0U;
+}
+}
