@@ -135,6 +135,12 @@ dated. Write facts and next steps, not narration.
   top level -> one-case `switch` (MWCC's beq/b). On a fixed 60-function random
   sample (`fixed60.txt` in Claude's scratchpad) matches went 3 -> 9 over today's
   fixes.
+- Later variants/fixes: stack arrays for vectors passed by address, stack
+  buffers sized to the target frame, case-range switches, inlined `temp_crN`
+  comparisons, mid-function tail calls given to m2c as `bl; blr`, and the ten
+  split units without a source now have empty ones. Fixed sample: 10/60.
+  36.78% matched at `a085934`; pass 3 of the runs (all units, fresh
+  `tried.txt`) is in progress after a container restart.
 
 ### Pitfalls
 
