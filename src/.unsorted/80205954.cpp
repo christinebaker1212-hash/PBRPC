@@ -19,9 +19,7 @@ extern "C" {
 s32 fn_80207864(u8 *arg0);
 s32 fn_802093CC(s32);
 
-void fn_802077D8(s32 arg0) {
 
-}
 }
 
 extern "C" {
@@ -189,5 +187,14 @@ s32 fn_80207864(u8 *arg0) {
         return *(*(s32 **)((u8 *)(arg0) + (0x104))) & 1;
     }
     return 0;
+}
+}
+
+extern "C" {
+
+void fn_802077D8(s32 arg0) {
+    if (fn_80207864((u8 *)(arg0)) != 0) {
+        fn_802093CC((s32)(arg0 + 8));
+    }
 }
 }
