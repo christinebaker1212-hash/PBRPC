@@ -324,3 +324,12 @@ Pane *Layout::BuildPaneObj(s32 kind, const void *pBinary, const ResBlockSet &rBl
 
 } // namespace lyt
 } // namespace nw4r
+
+#include "common.hpp"
+
+extern "C" {
+
+void fn_80386DB4(s32 *arg0) {
+    *arg0 = -1;
+}
+}

@@ -24,3 +24,26 @@ MidiSeqPlayer::MidiSeqPlayer() {}
 } // namespace detail
 } // namespace snd
 } // namespace nw4r
+
+#include "common.hpp"
+
+extern "C" {
+
+s32 fn_80371E14(u8 *arg0) {
+    return (*(u8 *)((u8 *)(arg0) + (0x8E))) != 0;
+}
+}
+
+extern "C" {
+
+s32 fn_80371E28(u8 *arg0) {
+    return (*(u8 *)((u8 *)(arg0) + (0x8D))) != 0;
+}
+}
+
+extern "C" {
+
+s32 fn_80371E3C(u8 *arg0) {
+    return (*(u8 *)((u8 *)(arg0) + (0x8C))) != 0;
+}
+}
