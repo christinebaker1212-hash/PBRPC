@@ -458,3 +458,45 @@ void fn_801769A0(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+void fn_80174530(u8 *arg0, u8 *arg1) {
+    struct { u8 f_8; u8 pad_9[1]; s8 f_A; u8 pad_B[1]; s16 f_C; u8 pad_E[24]; } sp8;
+    s32 temp_r8;
+    s32 var_r29;
+    u8 temp_r0;
+    u8 *var_r28;
+
+    var_r29 = 0;
+    memset((u8 *)((u8 *)(&sp8)), (s32)((s32)(0)), (s32)((s32)(0x1C)));
+    sp8.f_A = 2;
+    var_r28 = (unsigned char *)((*(s32 *)((u8 *)(arg1) + (0))) + (*(s32 *)((u8 *)(arg1) + (0xC))));
+    while (var_r29 == 0) {
+        temp_r0 = (*(u8 *)((u8 *)(var_r28) + (0)));
+        switch ((s32) temp_r0) {                    /* irregular */
+        case 16:
+            if ((u16) (*(u16 *)((u8 *)(var_r28) + (4))) == 0x108) {
+                sp8.f_C = 0x8F;
+                sp8.f_8 = (*(u8 *)((u8 *)(var_r28) + (1)));
+                sp8.f_A = 2;
+                temp_r8 = (*(s32 *)((u8 *)(arg1) + (0xC)));
+                (*(s32 *)((u8 *)(arg1) + (0xC))) = (s32) (temp_r8 + 8);
+                var_r28 = ((u8 * (*)(u8 *, u8 *, u8 *, s32, s32, s32))fn_80170D68)((u8 *)(var_r28 + 8), (u8 *)(&sp8), (u8 *)(arg1), (s32)(0), (s32)(0), (s32)(temp_r8));
+                if ((u8) (*(u8 *)((u8 *)(arg0) + (0x26))) == 0xFF) {
+                    (*(u8 *)((u8 *)(arg0) + (0x26))) = ((u8)fn_801709B4((s32)((u8 *)(arg1)), (s32)((u8 *)(&sp8)), (s32)((s32)(0))));
+                } else {
+                    ((u8)fn_801709B4((s32)((u8 *)(arg1)), (s32)((u8 *)(&sp8)), (s32)((s32)(1))));
+                }
+            }
+            break;
+        case 3:
+            var_r29 = 2;
+            break;
+        default:
+            var_r29 = 2;
+            break;
+        }
+    }
+}
+}
