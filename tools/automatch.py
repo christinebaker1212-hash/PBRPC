@@ -480,12 +480,40 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         r = reverse_locals(v)
         if r not in variants:
             variants.append(r)
+    # m2c writes `while (c) {}` as `loop: if (c) { ... goto loop; }`, which
+    # MWCC lays out with the test at the top instead of the bottom
+    for v in list(variants):
+        w = while_loops(v)
+        if w != v and w not in variants:
+            variants.append(w)
     # MWCC compiles a one-case switch as beq/b; m2c turns it into an early return
     for v in variants[:2]:
         w = single_case_switch(v)
         if w is not None and w not in variants:
             variants.append(w)
     return variants
+
+
+def while_loops(src: str) -> str:
+    """`loop_N: if (c) { body goto loop_N; }` as `while (c) { body }`."""
+    pat = re.compile(r"^ *loop_(\d+):\n( *)if \(([^\n]*)\) \{\n(.*?)^\2    goto loop_\1;\n\2\}\n", re.S | re.M)
+    pos = 0
+    while True:
+        m = pat.search(src, pos)
+        if m is None:
+            return src
+        n, ind, cond, body = m.groups()
+        pos = m.end()
+        if f"loop_{n}" in src[: m.start()] + src[m.end() :]:
+            continue
+        if f"goto loop_{n};" in body:
+            # Becomes `continue`, which a nested loop would capture
+            if re.search(r"^\s*(?:for|while|do)\b|^\s*loop_\d+:", body, re.M):
+                continue
+            body = body.replace(f"goto loop_{n};", "continue;")
+        new = f"{ind}while ({cond}) {{\n{body}{ind}}}\n"
+        src = src[: m.start()] + new + src[m.end() :]
+        pos = m.start() + len(new)
 
 
 def single_case_switch(src: str) -> Optional[str]:

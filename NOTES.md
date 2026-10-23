@@ -130,6 +130,11 @@ dated. Write facts and next steps, not narration.
 - What remains (by code bytes): functions over 0x400 are ~56% of the
   unmatched bytes (494 functions, 1.43 MB); 3777 smaller ones hold 1.1 MB.
   automatch defaults to `--max-size 0x400`.
+- Variants added for m2c control flow MWCC lays out differently: `loop_N: if
+  (c) { ... goto loop_N; }` -> `while (c) {...}`; `if (x != K) return;` at the
+  top level -> one-case `switch` (MWCC's beq/b). On a fixed 60-function random
+  sample (`fixed60.txt` in Claude's scratchpad) matches went 3 -> 9 over today's
+  fixes.
 
 ### Pitfalls
 
