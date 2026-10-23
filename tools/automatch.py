@@ -449,15 +449,20 @@ def merge_into(text: str, src: str) -> str:
     the unit's parameter types, and calls whose argument count disagrees with
     the unit go through a cast to the m2c prototype."""
     protos = {}
-    for m in re.finditer(r"^(?:extern\s+)?[\w\s\*]+?\b(\w+)\(([^;(){}]*)\)\s*(?:;|\{)", text, re.M):
-        p = m.group(2).strip()
-        protos[m.group(1)] = [param_type(x) for x in p.split(",")] if p not in ("", "void") else []
+    rets = {}
+    # Top-level declarations only: an indented call statement is not a prototype
+    for m in re.finditer(r"^(?:extern\s+)?([A-Za-z_][\w \*]*?)\b(\w+)\(([^;(){}]*)\)\s*(?:;|\{)", text, re.M):
+        p = m.group(3).strip()
+        protos[m.group(2)] = [param_type(x) for x in p.split(",")] if p not in ("", "void") else []
+        rets[m.group(2)] = m.group(1).strip()
     have = set(re.findall(r"^(?:extern )?[^\n(;]*?\b(\w+)\s*[\[(;]", text, re.M))
     own = {}
-    for m in re.finditer(r"^([\w\s\*]+?)\b(\w+)\(([^;()]*)\);", src, re.M):
+    for m in re.finditer(r"^([A-Za-z_][\w \*]*?)\b(\w+)\(([^;()]*)\);", src, re.M):
         own[m.group(2)] = (m.group(1).strip(), m.group(3).strip() or "void")
     decls, body = split_output(src)
     decls = [d for d in decls if decl_name(d) not in have]
+    # m2c offsets symbols in bytes; the unit may type them as arrays or structs
+    body = re.sub(r"&(lbl_\w+) \+ ", r"(u8 *)&\1 + ", body)
     for name, params in protos.items():
         if "..." in params:
             continue
@@ -469,6 +474,12 @@ def merge_into(text: str, src: str) -> str:
             args, end = split_args(body, m.end() - 1)
             if len(args) == len(params):
                 new = name + "(" + ", ".join(f"({t})({a})" if t else a for t, a in zip(params, args)) + ")"
+                # A result the unit types differently is cast to what m2c expected
+                if name in own and rets.get(name) and own[name][0] != rets[name] and own[name][0] != "void":
+                    if rets[name] == "void":
+                        new = f"(({own[name][0]} (*)({own[name][1]})){name})(" + ", ".join(args) + ")"
+                    else:
+                        new = f"(({own[name][0]}){new})"
             elif name in own:
                 ret, ps = own[name]
                 new = f"(({ret} (*)({ps})){name})(" + ", ".join(args) + ")"

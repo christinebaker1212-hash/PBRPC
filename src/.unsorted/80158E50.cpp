@@ -553,3 +553,17 @@ s32 fn_8015B8A0(s32 arg0, s32 arg1, s32 arg2) {
     return fn_802503F0(arg1);
 }
 }
+
+extern "C" {
+
+s32 fn_8015C73C(s32, f32, f32, f32, f32);
+s32 fn_8015C7D4(s32, f32, f32, f32, f32);
+s32 fn_80250134(s32, s32, s32, s32, s32, s32);
+extern f32 lbl_806415F4;
+extern f32 lbl_806415F8;
+
+s32 fn_8015C73C(s32 arg0, f32 farg0, f32 farg1, f32 farg2, f32 farg3) {
+    fn_8015C7D4((s32) &lbl_8048773C, farg0, farg1, farg2, farg3);
+    return fn_80250134(arg0, (s32) (lbl_806415F4 + farg0), (s32) (lbl_806415F8 + farg2), 0, 0, -1);
+}
+}

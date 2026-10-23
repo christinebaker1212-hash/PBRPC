@@ -108,3 +108,21 @@ void fn_80228B48(u8 *arg0) {
     }
 }
 }
+
+extern "C" {
+
+s32 fn_80228E44(u8 *arg0, s32 arg1) {
+    s32 temp_r31;
+    s32 temp_r4;
+    s32 temp_r5;
+
+    temp_r4 = (*(s32 *)((u8 *)(arg0) + (0)));
+    temp_r5 = (*(s32 *)((u8 *)(arg0) + (4))) + 1;
+    (*(s32 *)((u8 *)(arg0) + (4))) = temp_r5;
+    temp_r31 = temp_r4 + (temp_r5 * 0x224);
+    ((s32 (*)(s32, s32, s32))fn_80228B8C)(temp_r31, temp_r4, temp_r5);
+    ((s32 (*)(s32))fn_80228BC0)(temp_r31);
+    ((s32 (*)(s32, s32))fn_80228C24)(temp_r31, arg1);
+    return temp_r31;
+}
+}
