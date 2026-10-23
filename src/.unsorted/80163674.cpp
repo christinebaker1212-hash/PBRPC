@@ -45,7 +45,7 @@ s32 fn_80164794(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 extern "C" {
 
 s32 fn_80163C74(s32);
-s32 fn_80163DC4(s32);
+s32 fn_80163DC4(s32 arg0);
 s32 fn_8025DFC0(s32, s32);
 s32 fn_8025DFD0(void);
 extern s32 lbl_8063F080;
@@ -54,7 +54,7 @@ s32 fn_80163C74(s32 arg0) {
     if ((s32) lbl_8063F080 == 0) {
         lbl_8063F080 = fn_8025DFC0(fn_8025DFD0(), 0x588);
     }
-    return fn_80163DC4(0);
+    return fn_80163DC4((s32)(0));
 }
 }
 
@@ -181,5 +181,40 @@ void fn_80163764() {
     (*(s8 *)((u8 *)(&lbl_8041F1A8) + (0x3A))) = 1;
     (*(s8 *)((u8 *)(&lbl_8041F1A8) + (0x44))) = 1;
     (*(s8 *)((u8 *)(&lbl_8041F1A8) + (0x4E))) = 1;
+}
+}
+
+extern "C" {
+
+s32 fn_8025E31C(s32);
+s32 fn_8026745C__Q25gsapi11WiFiNetworkFPl(s32, s32);
+__declspec(section ".data") extern s32 lbl_8041F1F8;
+extern s32 lbl_8063D5E8;
+extern s32 lbl_8063F084;
+
+s32 fn_80163DC4(s32 arg0) {
+    s32 sp8;
+    s32 temp_r3;
+
+    if ((s32) lbl_8063D5E8 != 0) {
+        return lbl_8063F084;
+    }
+    if (arg0 != 0) {
+        return -1;
+    }
+    temp_r3 = fn_8026745C__Q25gsapi11WiFiNetworkFPl(fn_8025E31C(fn_8025DFD0()), (s32) &sp8);
+    if (temp_r3 == 0) {
+        return -1;
+    }
+    if (temp_r3 < 0) {
+        sp8 = 0;
+    }
+    if (((s32)fn_80163E70()) == 0) {
+        sp8 = 0;
+    }
+    lbl_8063D5E8 = 1;
+    lbl_8063F084 = sp8;
+    fn_80164824((s32)(0), (s32)((s32) &lbl_8041F1F8), (s32)((s32) &lbl_8063F084), (s32)(4));
+    return sp8;
 }
 }
