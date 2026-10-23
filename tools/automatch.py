@@ -310,6 +310,15 @@ def declare_context(src: str) -> str:
     return "".join(e + "\n" for e in extra) + src
 
 
+_CONTEXT_LINES: List[str] = []
+
+
+def CONTEXT_TEXT() -> List[str]:
+    if not _CONTEXT_LINES:
+        _CONTEXT_LINES.extend(CONTEXT_FILE.read_text().splitlines())
+    return _CONTEXT_LINES
+
+
 def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[str]:
     """m2c's output as plain C, as is and with known library prototypes."""
     ctx = []
@@ -317,9 +326,17 @@ def m2c(m2c_path: Path, asm: Path, fn: str, use_context: bool = True) -> List[st
         # The context's guess at fn's own prototype types every parameter as
         # s32, which keeps m2c from seeing pointers; let m2c infer fn's own.
         own = asm.parent / "context.c"
-        own.write_text(
-            "".join(l + "\n" for l in CONTEXT_FILE.read_text().splitlines() if not re.search(r"\b" + re.escape(fn) + r"\(", l))
-        )
+        # Only what the function refers to: m2c parses the whole context on
+        # every run, which took most of the time.
+        used = set(re.findall(r"[A-Za-z_][\w@$]*", asm.read_text()))
+        keep = []
+        for l in CONTEXT_TEXT():
+            m = re.search(r"\b(\w+)\s*(?:\(|\[|;)", l)
+            if l.startswith("typedef"):
+                keep.append(l)
+            elif m and m.group(1) in used and m.group(1) != fn:
+                keep.append(l)
+        own.write_text("".join(l + "\n" for l in keep))
         ctx = ["--context", str(own)]
     try:
         out = subprocess.run(
