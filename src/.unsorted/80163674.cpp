@@ -98,3 +98,10 @@ s32 fn_80164B14(s32 arg0, s32 arg1, s32 arg2) {
     return fn_8025EB78(temp_r3, (s32) (u16) temp_r3_2, arg1, arg2);
 }
 }
+
+extern "C" {
+
+s32 fn_80164C04() {
+    return (((u32)fn_80163AFC()) >> 0x1FU) ^ 1;
+}
+}
