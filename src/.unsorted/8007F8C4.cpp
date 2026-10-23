@@ -301,3 +301,54 @@ loop_1:
     }
 }
 }
+
+extern "C" {
+
+s32 BoxPokemon_GetValue__FP10BoxPokemonUlPv(s32, s32, s32);
+__declspec(section ".data") extern s32 lbl_8047B100;
+extern u32 lbl_8063ED40;
+
+u8 *fn_80089D50(s32 arg0, s32 *arg1, s32 arg2) {
+    u8 *temp_r30_2;
+    u8 *temp_r30;
+    s32 var_r29;
+
+    var_r29 = *arg1;
+    if (arg2 != 0) {
+        do {
+            if (var_r29 == 0) {
+                var_r29 = (s32) lbl_8063ED40;
+            }
+            var_r29 -= 1;
+            temp_r30_2 = (u8 *)(u8 *)&lbl_8047B100 + (var_r29 * 0x8C);
+        } while (BoxPokemon_GetValue__FP10BoxPokemonUlPv((s32) temp_r30_2, 5, 0) == 0);
+        *arg1 = var_r29;
+        return temp_r30_2;
+    }
+    do {
+        var_r29 += 1;
+        if ((u32) var_r29 == (u32) lbl_8063ED40) {
+            var_r29 = 0;
+        }
+        temp_r30 = (u8 *)(u8 *)&lbl_8047B100 + (var_r29 * 0x8C);
+    } while (BoxPokemon_GetValue__FP10BoxPokemonUlPv((s32) temp_r30, 5, 0) == 0);
+    *arg1 = var_r29;
+    return temp_r30;
+}
+}
+
+extern "C" {
+
+s32 __construct_array(s32, s32, s32, s32, s32);
+void fn_8002A84C(void);
+__declspec(section ".data") extern s32 lbl_8047B0A0;
+struct S_lbl_8063ECD0 { s8 f_0; u8 pad_1[1]; s16 f_2; s8 f_4; };
+extern struct S_lbl_8063ECD0 lbl_8063ECD0;
+
+void fn_8008A298() {
+    lbl_8063ECD0.f_0 = 1;
+    lbl_8063ECD0.f_2 = 4;
+    lbl_8063ECD0.f_4 = 0;
+    __construct_array((s32) &lbl_8047B0A0, (s32) &fn_8002A84C, 0, 4, 0x18);
+}
+}

@@ -63,3 +63,16 @@ void fn_801FA7C4(u8 *arg0) {
     (*(u8 **)((u8 *)(arg0) + (0x18))) = NULL;
 }
 }
+
+extern "C" {
+
+s32 fn_801FA46C(u8 *arg0, u32 arg1) {
+    if (arg1 == 0xFFFF) {
+        return 0;
+    }
+    if (arg1 >= (u16) (*(u16 *)((u8 *)(arg0) + (0x14)))) {
+        return 0;
+    }
+    return *(s32 *)((u8 *)0 + ((*(s32 *)((u8 *)(arg0) + (0x10))) + (arg1 * 0x44)));
+}
+}
