@@ -695,12 +695,20 @@ def main() -> None:
 
     asm_text = asm.read_text()
     matched = []
+    # A run that was cut short resumes: functions already tried are skipped,
+    # and the ones that matched are applied with the rest.
+    tried_file = out_dir / "tried.txt"
+    tried = set(tried_file.read_text().split()) if tried_file.exists() else set()
     with tempfile.TemporaryDirectory() as t:
         tmp = Path(t)
         for f in todo:
             name = f["name"]
             tf = target.function(name)
             if tf is None:
+                continue
+            if name in tried:
+                if (out_dir / f"{name}.cpp").exists():
+                    matched.append((name, int(f["size"])))
                 continue
             fn_asm = extract_fn(asm_text, name, tmp)
             variants = m2c(args.m2c, fn_asm, name) if fn_asm else []
@@ -738,7 +746,10 @@ def main() -> None:
                 (out_dir / "differs" / f"{name}.cpp").write_text(f"// similarity {best[0]:.3f}\n" + best[1])
                 result = f"differs ({best[0]:.3f})"
             print(f"  {name}: {result}", flush=True)
+            with tried_file.open("a") as tf_out:
+                tf_out.write(name + "\n")
     total = sum(s for _, s in matched)
+    tried_file.unlink(missing_ok=True)
     print(f"{unit}: {len(matched)}/{len(todo)} matched, {total:#x} bytes")
     if args.apply and matched:
         applied = apply(unit, args.version, out_dir, [n for n, _ in matched], target)
