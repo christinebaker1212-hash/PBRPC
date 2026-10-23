@@ -147,3 +147,31 @@ s32 fn_8017DB9C(s32 arg0, s32 arg1) {
     return arg0 + (arg1 * 0x6C) + 4;
 }
 }
+
+extern "C" {
+
+void fn_8017D130(s32 arg0, s32 arg1, s16 arg2) {
+    s16 *temp_r3;
+
+    if (arg0 != 0) {
+        temp_r3 = ((s16 * (*)(void))fn_8017D170)();
+        if (temp_r3 != NULL) {
+            *temp_r3 = arg2;
+        }
+    }
+}
+}
+
+extern "C" {
+
+void fn_8017DA20(s32 arg0, s32 arg1, s16 arg2) {
+    s16 *temp_r3;
+
+    if (arg0 != 0) {
+        temp_r3 = ((s16 * (*)(void))fn_8017D190)();
+        if (temp_r3 != NULL) {
+            *temp_r3 = arg2;
+        }
+    }
+}
+}
