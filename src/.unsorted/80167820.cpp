@@ -50,3 +50,18 @@ s32 fn_801678F4(s32 arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_80166D3C(s32, s32);
+
+s32 fn_80167934(s32 arg0, s32 arg1, s32 *arg2) {
+    s32 temp_r3;
+
+    temp_r3 = fn_80164C2C((s32)(arg0));
+    if (temp_r3 != 0) {
+        fn_80166D3C(temp_r3, *arg2);
+    }
+    return 0;
+}
+}

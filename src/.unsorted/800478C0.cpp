@@ -76,3 +76,14 @@ s32 fn_800481A0(s32 arg0) {
     return fn_80035970__FP11Unk80035380(temp_r3);
 }
 }
+
+extern "C" {
+
+s32 fn_8004828C(u32 *arg0, s32 arg1) {
+    switch (arg1) {
+    case 0:
+        return ((u32) *arg0 >> 1U) & 1;
+    }
+    return 0;
+}
+}

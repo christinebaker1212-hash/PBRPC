@@ -36,3 +36,46 @@ s32 fn_80236530(s32 arg0, s32 arg1, s32 arg2) {
     return 0;
 }
 }
+
+extern "C" {
+
+s32 fn_8023B298(s32, s32);
+extern s32 sHead__14GSrenderTarget;
+
+void fn_80236618__FP14GSrenderModule(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    temp_r31 = sHead__14GSrenderTarget;
+    while (temp_r31 != 0) {
+        fn_8023B298(temp_r31, arg0);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8023B240(s32, s32);
+
+void fn_802365CC(s32 arg0, s32 arg1) {
+    s32 temp_r31;
+
+    temp_r31 = sHead__14GSrenderTarget;
+    while (temp_r31 != 0) {
+        fn_8023B240(temp_r31, arg0);
+    }
+}
+}
+
+extern "C" {
+
+s32 fn_8023B2F0__14GSrenderTargetFv(s32);
+
+void fn_80236664() {
+    s32 temp_r31;
+
+    temp_r31 = sHead__14GSrenderTarget;
+    while (temp_r31 != 0) {
+        fn_8023B2F0__14GSrenderTargetFv(temp_r31);
+    }
+}
+}
