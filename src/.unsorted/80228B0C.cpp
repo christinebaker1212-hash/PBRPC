@@ -190,3 +190,44 @@ void fn_80229098(u8 *arg0) {
     ((s32 (*)(s32))fn_80228C70)((*(s32 *)((u8 *)(arg0) + (0))) + ((*(s32 *)((u8 *)(arg0) + (4))) * 0x224));
 }
 }
+
+extern "C" {
+
+s32 freeFileCacheEntry__7GScacheFUlUl(s32, s32);
+
+void fn_80228C84(s32 arg0) {
+    s32 temp_r3;
+    u8 *var_r30;
+
+    var_r30 = (unsigned char *)(arg0 + 0x20);
+    while ((u32) var_r30 != (u32) (arg0 + 0x220)) {
+        temp_r3 = (*(s32 *)((u8 *)(var_r30) + (0)));
+        if (temp_r3 != 0) {
+            freeFileCacheEntry__7GScacheFUlUl(temp_r3, (*(s32 *)((u8 *)(var_r30) + (4))));
+        }
+        var_r30 += 8;
+    }
+    ((s32)memset((u8 *)(arg0 + 0x20), (s32)(0), (u32)(0x200U)));
+}
+}
+
+extern "C" {
+
+s32 __dl__FPv(s32);
+
+s32 *fn_80228DDC(s32 *arg0, s32 arg1) {
+    s32 temp_r3;
+
+    if (arg0 != NULL) {
+        temp_r3 = *arg0;
+        if (temp_r3 != 0) {
+            __dl__FPv(temp_r3);
+            *arg0 = 0;
+        }
+        if (arg1 > 0) {
+            __dl__FPv((s32) arg0);
+        }
+    }
+    return arg0;
+}
+}

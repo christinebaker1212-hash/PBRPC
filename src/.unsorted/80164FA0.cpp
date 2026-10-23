@@ -103,3 +103,17 @@ s32 fn_801653A8(s32 arg0) {
     return fn_80265C1C__Q25gsapi11WiFiNetworkFl(((s32 (*)(s32))fn_8025E31C)(fn_8025DFD0()), arg0);
 }
 }
+
+extern "C" {
+
+s32 fn_80265488__Q25gsapi11WiFiNetworkFPll(s32, s32, s32);
+
+s32 fn_801652E8() {
+    s32 sp8[10];
+
+    if (fn_80265488__Q25gsapi11WiFiNetworkFPll(((s32 (*)(s32))fn_8025E31C)(fn_8025DFD0()), (s32) sp8, 8) <= 0) {
+        return -1;
+    }
+    return sp8[0];
+}
+}
