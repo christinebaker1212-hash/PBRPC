@@ -420,3 +420,104 @@ s32 fn_8025D2CC(u8 *arg0) {
     return 0;
 }
 }
+
+extern "C" {
+
+struct S_lbl_80502548 { s32 f_0; s32 f_4; s32 f_8; s32 f_C; };
+
+void fn_8025CAA8(s32 arg0, s32 arg1) {
+    (*(struct S_lbl_80502548 (*))&lbl_80502548).f_0 = 1;
+    (*(struct S_lbl_80502548 (*))&lbl_80502548).f_4 = 0;
+    (*(struct S_lbl_80502548 (*))&lbl_80502548).f_C = arg1;
+    (*(struct S_lbl_80502548 (*))&lbl_80502548).f_8 = arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8031C550(void);
+__declspec(section ".data") extern s32 lbl_80425268;
+
+s32 fn_8025CDD4(u32 arg0) {
+    s32 var_r31;
+
+    ((s32 (*)(u8 *, ...))OSReport)((u8 *)(u8 *)&lbl_80425268 + 0x7C, arg0);
+    switch (arg0) {
+    case 0:
+    case 1:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 9:
+    case 10:
+    case 14:
+    case 20:
+    case 21:
+    case 22:
+    case 23:
+    case 32:
+        var_r31 = -2;
+        break;
+    case 2:
+    case 8:
+    case 25:
+        var_r31 = -2;
+        break;
+    case 11:
+        ((s32 (*)(u8 *, ...))OSReport)((u8 *)(u8 *)&lbl_80425268 + 0x98);
+        var_r31 = -3;
+        break;
+    case 12:
+    case 13:
+        ((s32 (*)(u8 *, ...))OSReport)((u8 *)(u8 *)&lbl_80425268 + 0xB8);
+        var_r31 = -3;
+        break;
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 26:
+    case 27:
+    case 28:
+    case 29:
+    case 31:
+        ((s32 (*)(u8 *, ...))OSReport)((u8 *)(u8 *)&lbl_80425268 + 0xD8);
+        var_r31 = -1;
+        break;
+    case 15:
+    case 30:
+        ((s32 (*)(u8 *, ...))OSReport)((u8 *)(u8 *)&lbl_80425268 + 0x120);
+        var_r31 = -1;
+        break;
+    default:
+        var_r31 = -2;
+        break;
+    }
+    if (var_r31 != -2) {
+        fn_8031C550();
+    }
+    return var_r31;
+}
+}
+
+extern "C" {
+
+s32 fn_8025D2E8(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0x6058))) != 0) {
+        return ((s32 (*)(u8 *))fn_8025DBA0)(arg0 + 0x6010);
+    }
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8025D60C(u8 *);
+
+void fn_8025D304(u8 *arg0) {
+    if ((s32) (*(s32 *)((u8 *)(arg0) + (0x6058))) != 0) {
+        fn_8025D60C(arg0 + 0x6000);
+    }
+}
+}

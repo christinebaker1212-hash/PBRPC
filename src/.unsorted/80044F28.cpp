@@ -423,3 +423,61 @@ void fn_800474F0(u8 *arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+struct VT_fn_80046458_0 { u8 pad[256];  virtual s32 v0(s32); };
+
+void fn_80046458(u8 *arg0) {
+    u8 *temp_r0;
+
+    temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x164)));
+    if (!(temp_r0 == NULL)) {
+        if (!(temp_r0 == NULL)) {
+            ((VT_fn_80046458_0 *)(temp_r0))->v0((s32)(1));
+        }
+        (*(u8 **)((u8 *)(arg0) + (0x164))) = NULL;
+    }
+}
+}
+
+extern "C" {
+
+struct VT_fn_80046860_0 { u8 pad[256];  virtual s32 v0(s32); };
+
+void fn_80046860(u8 *arg0) {
+    u8 *var_r30;
+    u8 *temp_r3_3;
+    u8 *temp_r3_2;
+    u8 *temp_r3;
+    s32 var_r29;
+
+    var_r30 = arg0;
+    var_r29 = 0;
+    do {
+        temp_r3 = (*(u8 **)((u8 *)(var_r30) + (0x12C)));
+        if (!(temp_r3 == NULL)) {
+            if (!(temp_r3 == NULL)) {
+                ((VT_fn_80046860_0 *)(temp_r3))->v0((s32)(1));
+            }
+            (*(u8 **)((u8 *)(var_r30) + (0x12C))) = NULL;
+        }
+        temp_r3_2 = (*(u8 **)((u8 *)(var_r30) + (0x13C)));
+        if (!(temp_r3_2 == NULL)) {
+            if (!(temp_r3_2 == NULL)) {
+                ((VT_fn_80046860_0 *)(temp_r3_2))->v0((s32)(1));
+            }
+            (*(u8 **)((u8 *)(var_r30) + (0x13C))) = NULL;
+        }
+        temp_r3_3 = (*(u8 **)((u8 *)(var_r30) + (0x14C)));
+        if (!(temp_r3_3 == NULL)) {
+            if (!(temp_r3_3 == NULL)) {
+                ((VT_fn_80046860_0 *)(temp_r3_3))->v0((s32)(1));
+            }
+            (*(u8 **)((u8 *)(var_r30) + (0x14C))) = NULL;
+        }
+        var_r29 += 1;
+        var_r30 += 4;
+    } while (var_r29 < 4);
+}
+}

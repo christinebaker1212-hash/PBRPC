@@ -162,3 +162,39 @@ void fn_8008B3FC(u32 arg0) {
     lbl_8063ECFC = 1;
 }
 }
+
+extern "C" {
+
+s32 fn_80162A90(u16);
+u16 fn_80397F34(u8 *, s32, s32);
+__declspec(section ".data") extern s32 lbl_8063CE34;
+
+s32 fn_8008AF50(s32 arg0) {
+    u16 temp_r3;
+
+    temp_r3 = fn_80397F34((u8 *)(u8 *)&lbl_8063CE34 + 0x60, fn_8008A5D4(), (arg0 - 2) == 0);
+    if (temp_r3 != 0) {
+        return fn_80162A90(temp_r3) + 1;
+    }
+    return 0;
+}
+}
+
+extern "C" {
+
+s32 fn_8008AEC0(void);
+u16 fn_80398068(u8 *, s32, s32 *);
+
+s32 fn_8008B344() {
+    u16 temp_r3;
+
+    if (fn_8008AEC0() == 0) {
+        return 0;
+    }
+    temp_r3 = fn_80398068((u8 *)(u8 *)&lbl_8063CE34 + 0x60, fn_8008A5D4(), &lbl_8063CE34);
+    if (temp_r3 == 0) {
+        return 0;
+    }
+    return fn_80162A90((u16)(temp_r3)) == 0;
+}
+}

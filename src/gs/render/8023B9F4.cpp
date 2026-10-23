@@ -229,3 +229,12 @@ void fn_8023CF8C() {
     __register_global_object((s32) &lbl_804967CC, (s32) &fn_801E42B4, (s32) &lbl_804967C0);
 }
 }
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_804944D4;
+
+u8 *fn_8023CF1C(s32 arg0) {
+    return (u8 *)(u8 *)&lbl_804944D4 + (arg0 * 0x3D4);
+}
+}

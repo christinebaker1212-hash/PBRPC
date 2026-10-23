@@ -91,26 +91,11 @@ void fn_8004AD60(f32 *in, u8 *color) {
     color[3] = a;
 }
 
-void fn_8004B0E4(EffOwner *owner) {
-    EffObj *eff = owner->effect;
-    if (eff != NULL) {
-        eff->vt->fnC(eff);
-    }
-}
 
-void fn_8004B108(EffOwner *owner) {
-    EffObj *eff = owner->effect;
-    if (eff != NULL) {
-        eff->vt->fn10(eff);
-    }
-}
 
-void fn_8004B12C(EffOwner *owner) {
-    EffObj *eff = owner->effect;
-    if (eff != NULL) {
-        eff->vt->fn14(eff);
-    }
-}
+
+
+
 
 EffBase *fn_8004B150(EffBase *self, EffSource *src) {
     self->owner = (EffLink *)src;
@@ -638,6 +623,163 @@ u8 *fn_8004D1FC(u8 *arg0) {
     (*(s32 *)((u8 *)(arg0) + (0x14))) = (s32) ((*(s32 *)((u8 *)(arg0) + (0xC))) + 8);
     (*(s32 *)((u8 *)(arg0) + (0x18))) = 0;
     (*(u16 *)((u8 *)(arg0) + (0x1C))) = 0xFFFF;
+    return arg0;
+}
+}
+
+extern "C" {
+
+s32 fn_8004911C(u8 *);
+struct VT_fn_8004AE74_0 { u8 pad[16];  virtual s32 v0(s32); };
+
+void fn_8004AE74(u8 *arg0) {
+    u8 *temp_r0;
+
+    temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x2C)));
+    if (!(temp_r0 == NULL)) {
+        if (!(temp_r0 == NULL)) {
+            ((VT_fn_8004AE74_0 *)(temp_r0))->v0((s32)(1));
+        }
+        (*(u8 **)((u8 *)(arg0) + (0x2C))) = NULL;
+    }
+    fn_8004911C(arg0);
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004B0E4_0 { u8 pad[16]; virtual void v0(); virtual s32 v1(void); };
+
+void fn_8004B0E4(u8 *arg0) {
+    u8 *temp_r3;
+
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x2C)));
+    if (temp_r3 != NULL) {
+        ((VT_fn_8004B0E4_0 *)(temp_r3))->v1();
+    }
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004B108_0 { u8 pad[16]; virtual void v0(); virtual void v1(); virtual s32 v2(void); };
+
+void fn_8004B108(u8 *arg0) {
+    u8 *temp_r3;
+
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x2C)));
+    if (temp_r3 != NULL) {
+        ((VT_fn_8004B108_0 *)(temp_r3))->v2();
+    }
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004B12C_0 { u8 pad[16]; virtual void v0(); virtual void v1(); virtual void v2(); virtual s32 v3(void); };
+
+void fn_8004B12C(u8 *arg0) {
+    u8 *temp_r3;
+
+    temp_r3 = (*(u8 **)((u8 *)(arg0) + (0x2C)));
+    if (temp_r3 != NULL) {
+        ((VT_fn_8004B12C_0 *)(temp_r3))->v3();
+    }
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004C048_0 { u8 pad[12]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual s32 v4(s32); };
+
+u8 *fn_8004C048(u8 *arg0, s32 arg1) {
+    u8 *temp_r0;
+
+    if (arg0 != NULL) {
+        temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x18)));
+        (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A87C;
+        if (!(temp_r0 == NULL)) {
+            if (!(temp_r0 == NULL)) {
+                ((VT_fn_8004C048_0 *)(temp_r0))->v4((s32)(1));
+            }
+            (*(u8 **)((u8 *)(arg0) + (0x18))) = NULL;
+        }
+        ((s32)fn_8004B174((void *)(arg0), (s32)(0)));
+        if (arg1 > 0) {
+            __dl__FPv((s32)(arg0));
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004C43C_0 { u8 pad[12]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual s32 v4(s32); };
+
+u8 *fn_8004C43C(u8 *arg0, s32 arg1) {
+    u8 *temp_r0;
+
+    if (arg0 != NULL) {
+        temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x18)));
+        (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A834;
+        if ((temp_r0 == NULL)) {
+            if (!(temp_r0 == NULL)) {
+                ((VT_fn_8004C43C_0 *)(temp_r0))->v4((s32)(1));
+            }
+            (*(u8 **)((u8 *)(arg0) + (0x18))) = NULL;
+        }
+        ((s32)fn_8004B174((void *)(arg0), (s32)(0)));
+        if (arg1 > 0) {
+            __dl__FPv((s32)(arg0));
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004CB90_0 { u8 pad[12]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual s32 v4(s32); };
+
+u8 *fn_8004CB90(u8 *arg0, s32 arg1) {
+    u8 *temp_r0;
+
+    if (arg0 != NULL) {
+        temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x18)));
+        (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A7AC;
+        if ((!(temp_r0 == NULL)) && (!(temp_r0 == NULL))) {
+            ((VT_fn_8004CB90_0 *)(temp_r0))->v4((s32)(1));
+        }
+        (*(u16 *)((u8 *)(arg0) + (0x1C))) = 0xFFFF;
+        ((s32)fn_8004B174((void *)(arg0), (s32)(0)));
+        if (arg1 > 0) {
+            __dl__FPv((s32)(arg0));
+        }
+    }
+    return arg0;
+}
+}
+
+extern "C" {
+
+struct VT_fn_8004D258_0 { u8 pad[12]; virtual void v0(); virtual void v1(); virtual void v2(); virtual void v3(); virtual s32 v4(s32); };
+
+u8 *fn_8004D258(u8 *arg0, s32 arg1) {
+    u8 *temp_r0;
+
+    if (arg0 != NULL) {
+        temp_r0 = (*(u8 **)((u8 *)(arg0) + (0x18)));
+        (*(s32 **)((u8 *)(arg0) + (0x10))) = &lbl_8040A764;
+        if ((!(temp_r0 == NULL)) && (!(temp_r0 == NULL))) {
+            ((VT_fn_8004D258_0 *)(temp_r0))->v4((s32)(1));
+        }
+        (*(u16 *)((u8 *)(arg0) + (0x1C))) = 0xFFFF;
+        ((s32)fn_8004B174((void *)(arg0), (s32)(0)));
+        if (arg1 > 0) {
+            __dl__FPv((s32)(arg0));
+        }
+    }
     return arg0;
 }
 }

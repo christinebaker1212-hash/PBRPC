@@ -70,3 +70,15 @@ void fn_80099044(s32 arg0, s32 arg1) {
     }
 }
 }
+
+extern "C" {
+
+__declspec(section ".data") extern s32 lbl_803FBB68;
+
+u8 fn_8009598C(s32 arg0) {
+    if ((arg0 >= 0) && (arg0 <= 0x11)) {
+        return *((u8 *)(u8 *)&lbl_803FBB68 + arg0);
+    }
+    return 0U;
+}
+}
