@@ -3006,7 +3006,7 @@ BOOL Battler_IsTrappedMsg(BattleSystem *battleSys, BattleContext *battleCtx, int
         }
 
         msgOut->tags = TAG_NONE;
-        msgOut->id = 0x7F00;
+        msgOut->id = 0x31A;
         return TRUE;
     }
 

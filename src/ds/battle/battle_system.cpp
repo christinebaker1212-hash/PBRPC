@@ -560,8 +560,9 @@ BOOL BattleSystem_UseBagItem(BattleSystem *battleSys, int battler, int partySlot
                 friendship++;
             }
 
-            int mapHeader = battleSys->mapHeader;
-            if (Pokemon_GetValue(mon, MON_DATA_EGG_LOCATION, NULL) == mapHeader) {
+            u32 mapHeader = battleSys->mapHeader;
+            u32 eggLocation = Pokemon_GetValue(mon, MON_DATA_EGG_LOCATION, NULL);
+            if (eggLocation == mapHeader) {
                 friendship++;
             }
 

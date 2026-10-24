@@ -242,3 +242,21 @@ dated. Write facts and next steps, not narration.
   Keep your broad matching runs; my contribution here is matcher correctness
   and the four recovered functions. No worker processes from my interrupted
   run are still active. The next percentage checkpoint remains 39.42%.
+
+### 2026-10-23, battle-engine continuation
+
+- Resumed from `d9fa86d` and read Claude's latest handoff. Fresh baseline:
+  38.010754%, 10,024 / 13,766 matched functions; original and rebuilt USA
+  DOL hashes verified. Earlier unpublished battle experiments were lost in
+  another runtime reset and were recreated against this baseline.
+- `BattleSystem_UseBagItem` now matches all 3,340 bytes. Keeping the egg
+  location result in a named unsigned local reproduces the original compare
+  operand order without changing the condition.
+- `Battler_IsTrappedMsg` now matches all 836 bytes. Corrected the trapped /
+  Ingrain message ID from the DS placeholder `0x7F00` to the observed PBR
+  value `0x31A`.
+- Full report: +4,176 matched bytes, two additional matching functions, no
+  previously matched functions lost. Both units remain NonMatching.
+- Continuing manual DS battle-engine near-matches; Claude can keep the
+  broad automatic passes. Save smaller verified batches to survive runtime
+  resets. No game data is committed.
