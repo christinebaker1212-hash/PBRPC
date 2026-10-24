@@ -1199,7 +1199,6 @@ enum MonCondCheckState {
     MON_COND_CHECK_END,
 };
 
-// TODO Does not match yet: only the register allocation of four turn counters differs (99.76 %).
 static void BattleControllerPlayer_CheckMonConditions(BattleSystem *battleSys, BattleContext *battleCtx) {
     u8 state = STATE_PROCESSING;
     int maxBattlers = BattleSystem_GetMaxBattlers(battleSys);
@@ -1435,7 +1434,7 @@ static void BattleControllerPlayer_CheckMonConditions(BattleSystem *battleSys, B
                 if (battleCtx->battleMons[battler].statusVolatile & VOLATILE_CONDITION_UPROAR) {
                     u8 j;
                     for (j = 0; j < maxBattlers; j++) {
-                        if ((battleCtx->battleMons[j].status & MON_CONDITION_SLEEP) && battleCtx->battleMons[j].curHP &&
+                        if ((battleCtx->battleMons[j].status & MON_CONDITION_SLEEP) &&
                             Battler_Ability(battleCtx, j) != ABILITY_SOUNDPROOF) {
                             battleCtx->msgBattlerTemp = j;
                             PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_WAKE_UP);
@@ -1571,52 +1570,60 @@ static void BattleControllerPlayer_CheckMonConditions(BattleSystem *battleSys, B
                 break;
 
             case MON_COND_CHECK_STATE_TAUNT:
-                if (battleCtx->battleMons[battler].moveEffectsData.tauntedTurns &&
-                    --battleCtx->battleMons[battler].moveEffectsData.tauntedTurns == 0) {
-                    battleCtx->msgBattlerTemp = battler;
+                if (battleCtx->battleMons[battler].moveEffectsData.tauntedTurns) {
+                    battleCtx->battleMons[battler].moveEffectsData.tauntedTurns--;
+                    if (battleCtx->battleMons[battler].moveEffectsData.tauntedTurns == 0) {
+                        battleCtx->msgBattlerTemp = battler;
 
-                    PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_TAUNT_END);
-                    state = STATE_BREAK_OUT;
-                    lbl_8048CE28._0C = battler;
+                        PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_TAUNT_END);
+                        state = STATE_BREAK_OUT;
+                        lbl_8048CE28._0C = battler;
+                    }
                 }
 
                 battleCtx->monConditionCheckState++;
                 break;
 
             case MON_COND_CHECK_STATE_MAGNET_RISE:
-                if (battleCtx->battleMons[battler].moveEffectsData.magnetRiseTurns &&
-                    --battleCtx->battleMons[battler].moveEffectsData.magnetRiseTurns == 0) {
-                    battleCtx->msgBattlerTemp = battler;
+                if (battleCtx->battleMons[battler].moveEffectsData.magnetRiseTurns) {
+                    battleCtx->battleMons[battler].moveEffectsData.magnetRiseTurns--;
+                    if (battleCtx->battleMons[battler].moveEffectsData.magnetRiseTurns == 0) {
+                        battleCtx->msgBattlerTemp = battler;
 
-                    PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_MAGNET_RISE_END);
-                    state = STATE_BREAK_OUT;
-                    lbl_8048CE28._0C = battler;
+                        PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_MAGNET_RISE_END);
+                        state = STATE_BREAK_OUT;
+                        lbl_8048CE28._0C = battler;
+                    }
                 }
 
                 battleCtx->monConditionCheckState++;
                 break;
 
             case MON_COND_CHECK_STATE_HEAL_BLOCK:
-                if (battleCtx->battleMons[battler].moveEffectsData.healBlockTurns &&
-                    --battleCtx->battleMons[battler].moveEffectsData.healBlockTurns == 0) {
-                    battleCtx->msgBattlerTemp = battler;
+                if (battleCtx->battleMons[battler].moveEffectsData.healBlockTurns) {
+                    battleCtx->battleMons[battler].moveEffectsData.healBlockTurns--;
+                    if (battleCtx->battleMons[battler].moveEffectsData.healBlockTurns == 0) {
+                        battleCtx->msgBattlerTemp = battler;
 
-                    PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_HEAL_BLOCK_END);
-                    state = STATE_BREAK_OUT;
-                    lbl_8048CE28._0C = battler;
+                        PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_HEAL_BLOCK_END);
+                        state = STATE_BREAK_OUT;
+                        lbl_8048CE28._0C = battler;
+                    }
                 }
 
                 battleCtx->monConditionCheckState++;
                 break;
 
             case MON_COND_CHECK_STATE_EMBARGO:
-                if (battleCtx->battleMons[battler].moveEffectsData.embargoTurns &&
-                    --battleCtx->battleMons[battler].moveEffectsData.embargoTurns == 0) {
-                    battleCtx->msgBattlerTemp = battler;
+                if (battleCtx->battleMons[battler].moveEffectsData.embargoTurns) {
+                    battleCtx->battleMons[battler].moveEffectsData.embargoTurns--;
+                    if (battleCtx->battleMons[battler].moveEffectsData.embargoTurns == 0) {
+                        battleCtx->msgBattlerTemp = battler;
 
-                    PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_EMBARGO_END);
-                    state = STATE_BREAK_OUT;
-                    lbl_8048CE28._0C = battler;
+                        PREPARE_SUBROUTINE_SEQUENCE(BATTLE_SUBSCRIPT_EMBARGO_END);
+                        state = STATE_BREAK_OUT;
+                        lbl_8048CE28._0C = battler;
+                    }
                 }
 
                 battleCtx->monConditionCheckState++;
@@ -2276,8 +2283,7 @@ static int BattleControllerPlayer_CheckMoveHitOverrides(
         CURRENT_MOVE_DATA.range != RANGE_OPPONENT_SIDE &&
         (((battleCtx->battleStatusMask & SYSCTL_HIT_DURING_FLY) == FALSE &&
           (battleCtx->battleMons[defender].moveEffectsMask & MOVE_EFFECT_AIRBORNE)) ||
-         ((battleCtx->battleStatusMask & SYSCTL_HIT_DURING_SHADOW_FORCE) == FALSE &&
-          (battleCtx->battleMons[defender].moveEffectsMask & MOVE_EFFECT_SHADOW_FORCE)) ||
+         (battleCtx->battleMons[defender].moveEffectsMask & MOVE_EFFECT_SHADOW_FORCE) ||
          ((battleCtx->battleStatusMask & SYSCTL_HIT_DURING_DIG) == FALSE &&
           (battleCtx->battleMons[defender].moveEffectsMask & MOVE_EFFECT_UNDERGROUND)) ||
          ((battleCtx->battleStatusMask & SYSCTL_HIT_DURING_DIVE) == FALSE &&
@@ -3773,7 +3779,6 @@ static void BattleControllerPlayer_UpdateMoveBuffers(BattleSystem *battleSys, Ba
         if (itemEffect == HOLD_EFFECT_CHOICE_ATK || itemEffect == HOLD_EFFECT_CHOICE_SPEED ||
             itemEffect == HOLD_EFFECT_CHOICE_SPATK) {
             if (battleCtx->moveTemp != MOVE_STRUGGLE &&
-                (battleCtx->moveTemp != MOVE_U_TURN || (battleCtx->battleStatusMask2 & SYSCTL_UTURN_ACTIVE) == FALSE) &&
                 (battleCtx->moveTemp != MOVE_BATON_PASS ||
                  (battleCtx->battleStatusMask2 & SYSCTL_MOVE_SUCCEEDED) == FALSE)) {
                 ATTACKING_MON.moveEffectsData.choiceLockedMove = battleCtx->moveTemp;

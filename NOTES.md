@@ -260,3 +260,22 @@ dated. Write facts and next steps, not narration.
 - Continuing manual DS battle-engine near-matches; Claude can keep the
   broad automatic passes. Save smaller verified batches to survive runtime
   resets. No game data is committed.
+
+### 2026-10-23, player controller checkpoint
+
+- Matched `BattleControllerPlayer_CheckMonConditions` (3,340 bytes): PBR's
+  Uproar wake-up loop lacks Platinum's extra current-HP guard; separate
+  decrement and zero checks reproduce the four bitfield turn-counter updates.
+- Matched `BattleControllerPlayer_CheckMoveHitOverrides` (624 bytes): PBR
+  checks Shadow Force's semi-invulnerability directly, without the extra
+  `SYSCTL_HIT_DURING_SHADOW_FORCE` exception in the imported DS code.
+- Matched `BattleControllerPlayer_UpdateMoveBuffers` (388 bytes): PBR does
+  not include the additional U-turn / active-switch exemption in the Choice
+  item move-lock check. The Baton Pass check remains.
+- Current report: 38.220848%, 10,029 / 13,766 functions. These three add
+  4,352 bytes beyond the previous checkpoint. No previously matching
+  functions lost; USA DOL hash verified unchanged. The player controller
+  stays NonMatching: `CheckBattleOver` still differs.
+- In progress separately: testing the remaining battle-script functions.
+  Register/scope variations tried for `AnyReplacementMons` and
+  `CheckBattleOver` have not produced exact matches and were not applied.
